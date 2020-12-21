@@ -1,0 +1,10 @@
+{
+    "SECRET_KEY": "",
+    "DB": {
+        "NAME": "",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": ""
+    }
+}
