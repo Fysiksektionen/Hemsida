@@ -10,7 +10,7 @@ För att ladda ner och köra servern lokalt behöver du sätta upp en del grejer
 
 2. Installera och sätt upp databasen i mysql genom att köra:
     1. ```sudo apt update```
-    2. ```sudo apt install mysql-server```
+    2. ```sudo apt install mariadb-server```
     3. ```sudo mysql_secure_installation``` (följ instruktioner för att sätta upp ett lösenord för root).
     4. ```sudo mysql```
     5. ```CREATE USER 'fdev'@'localhost' IDENTIFIED BY 'password';```
