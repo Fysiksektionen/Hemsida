@@ -53,6 +53,15 @@ För att ladda ner och köra servern lokalt behöver du sätta upp en del grejer
     1. ```collectstatic```
     2. ```makemigrations```
     3. ```migrate```
-    4. ```createsuperuser``` (Följ instruktionerna. Här får du välja själv vilka inloggningsdetaljer du ska ha. 'admin' är ett passand användarnamn.)
+    4. ```createsuperuser``` (Följ instruktionerna. Här får du välja själv vilka inloggningsdetaljer du ska ha. 'admin' är ett passande användarnamn.)
 
-7. Nu är du klar! Starta servern i development-mode genom att trycka på play-knappen.
+8. Nu är du klar! Starta servern i development-mode genom att trycka på play-knappen.
+
+### Windows (med PyCharm)
+1. Öppna PyCharm och välj "Get from VCS". Logga in med Github och ladda ned projektet.
+
+2. Ladda ned MariaDB (open source MySQL-databas) från [downloads.mariadb.org/mariadb/](downloads.mariadb.org/mariadb/). Följ installeringen.
+
+3. Öppna det nya programmet "MySQL Client". Du bör få en terminal med prompten MariaDB [(None)]> när du angivit lösenord. Skriv samma kommandon som listas som punkterna 5-9 under punkt 2 i "Unix-baserade system (utan PyCharm)".
+
+4. Följ instruktion 2 - 7 i "Unix-baserade system (med PyCharm)".
