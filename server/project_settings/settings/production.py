@@ -16,7 +16,7 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = (
-    'f.kth.se'
+    'f.kth.se', 'fysiksektionen.se'
 )
 
 # Password validation
