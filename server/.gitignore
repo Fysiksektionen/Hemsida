@@ -3,3 +3,4 @@
 public/mediafiles/*
 public/staticfiles/*
 !*/.gitkeep
+project_settings/settings/local.py

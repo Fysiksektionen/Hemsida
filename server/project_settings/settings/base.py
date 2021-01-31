@@ -10,11 +10,32 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 from django.utils.log import DEFAULT_LOGGING
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from .local import *
+
+
+def join_paths(*args, leading_slash=False, trailing_slash=True):
+    return ("/" if leading_slash else "") + "/".join([arg.strip('/') for arg in args]) + ("/" if trailing_slash else "")
+
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+# Version settings
+BASE_SETTINGS_VERSION = 1
+assert BASE_SETTINGS_VERSION == LOCAL_SETTINGS_VERSION
+
+
+# Security
+DEBUG = False
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+with open(SECRET_KEY_PATH) as f:
+    SECRET_KEY = f.read().strip()
+
+ADMINS = [('admin', 'webmaster@f.kth.se')]
+MANAGERS = ADMINS
+
 
 # Application definition
 ROOT_URLCONF = 'project_settings.urls'
@@ -28,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'authentication',
+    'website'
 ]
 
 MIDDLEWARE = [
@@ -56,6 +79,35 @@ TEMPLATES = [
     },
 ]
 
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.authentication.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.authentication.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.authentication.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.authentication.password_validation.NumericPasswordValidator',
+    },
+]
+
+
+# Database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT
+    }
+}
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 LANGUAGE_CODE = 'sv'
@@ -68,8 +120,11 @@ FIRST_DAY_OF_WEEK = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_URL = '/staticfiles/'
-MEDIA_URL = '/mediafiles/'
+STATIC_URL = join_paths(ROOT_URL, 'public', 'staticfiles')
+STATIC_ROOT = PUBLIC_ROOT / 'staticfiles'
+
+MEDIA_URL = join_paths(ROOT_URL, 'public' 'mediafiles')
+MEDIA_ROOT = PUBLIC_ROOT / 'mediafiles'
 
 
 # Assure that errors end up to Apache error logs via console output
@@ -81,3 +136,7 @@ DEFAULT_LOGGING['loggers'][''] = {
     'level': 'INFO',
     'propagate': True
 }
+
+
+# Code configuration
+# AUTH_USER_MODEL = "authentication.models.User"
