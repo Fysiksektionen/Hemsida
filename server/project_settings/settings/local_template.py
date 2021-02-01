@@ -11,8 +11,7 @@ from pathlib import Path
 LOCAL_SETTINGS_VERSION = 1
 
 # URLs
-ROOT_URL = Path("")  # Without leading slash (no root url: Path(""))
-DOMAIN_URL = Path("https://localhost/")
+ROOT_URL = ""  # Without leading slash (no root url: "")
 
 # Static files
 PUBLIC_ROOT = Path(__file__).resolve().parent.parent.parent / 'public'

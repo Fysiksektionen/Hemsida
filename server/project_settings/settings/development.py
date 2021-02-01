@@ -2,6 +2,8 @@ from .base import *
 
 DEBUG = True
 
+ALLOWED_HOSTS = ['*']
+
 if USE_DB_TEST_IN_DEBUG:
     DATABASES['default'] = {
         {
