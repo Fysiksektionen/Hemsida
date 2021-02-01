@@ -23,3 +23,10 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npn run css`
+
+Compiles the .css and .scss files to one main.css located in src/main.css.
+This compiles the entire bootstrap-library together with our own styling.
+
+(If this throws an error. Make sure you have sass installed using `npm install -g sass`.)

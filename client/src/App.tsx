@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from './Fysiksektionen_logo.svg';
-import './App.css';
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
           Tja F.dev! Redigera <code>client/src/App.tsx</code> och hacka på!
         </p>
         <a
-          className="App-link"
+          className="btn btn-primary"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
