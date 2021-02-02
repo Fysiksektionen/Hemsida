@@ -16,8 +16,8 @@ class MenuItem(models.Model):
     @property
     def url(self):
         """Url value of MenuItem.
-        :raises RuntimeError if link is ambiguous
-        :return Url of MenuItem based of url of page or url specified. Empty string if both Page and Url is None
+        :raises RuntimeError if link is ambiguous.
+        :return Url of MenuItem based of url of page or url specified. Empty string if both Page and Url is None.
         """
         if self._page is not None and self._url is not None:
             raise RuntimeError("Url is ambiguous, both Page and Url is set.")
@@ -25,10 +25,8 @@ class MenuItem(models.Model):
 
     def clean(self):
         """Validation of url values.
-        :raises ValidationError if both Page and Url are None or both are not None.
+        :raises ValidationError if both Page and Url are not None.
         """
-        if self._page is None and self._url is None:
-            raise ValidationError(_('The item does not link to anything. Set either Page or Url on the MenuItem.'))
         if self._page is not None and self._url is not None:
             raise ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
 
@@ -54,4 +52,13 @@ class MenuThroughRel(models.Model):
     menu = models.ForeignKey('Menu', related_name='item_relation', on_delete=models.CASCADE)
     item = models.ForeignKey('MenuItem', related_name='menu_relation', on_delete=models.CASCADE)
 
+    def clean(self):
+        """Validation of menu and item relation
+        :raises ValidationError if menu contains itself or menu-item already belongs to a menu.
+        """
+        if self.menu == self.item:
+            raise ValidationError(_("A menu can not be an item inside itself."))
 
+        if not Menu.objects.filter(pk=self.item.pk).exists() and \
+                self.__class__.objects.filter(item__pk=self.item.pk).exclude(pk=self.pk).exists():
+            raise ValidationError(_("A non-menu MenuItem can not be a child of multiple different menus."))
