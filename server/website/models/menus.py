@@ -30,6 +30,9 @@ class MenuItem(models.Model):
         if self.page is not None and self.url is not None:
             raise ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
 
+    def __str__(self):
+        return self.name
+
 
 class Menu(MenuItem):
     """Model for ordered collection of MenuItems. Relationship through MenuRel."""
@@ -49,20 +52,42 @@ class MenuRel(models.Model):
         unique_together = [('order_num', 'menu'), ('item', 'menu')]
 
     order_num = models.PositiveIntegerField(verbose_name=_('Order'))
-    menu = models.ForeignKey('Menu', related_name='item_relation', on_delete=models.CASCADE)
-    item = models.ForeignKey('MenuItem', related_name='menu_relation', on_delete=models.CASCADE)
+    menu = models.ForeignKey('Menu', null=False, blank=False, related_name='item_relation', on_delete=models.CASCADE)
+    item = models.ForeignKey('MenuItem', null=False, blank=False, related_name='menu_relation', on_delete=models.CASCADE)
 
     def clean(self):
         """Validation of menu and item relation
         :raises ValidationError if menu contains itself, item (non-menu) already belongs to a menu or
         ('item.name', 'menu') is not unique.
         """
-        if self.menu == self.item:
-            raise ValidationError(_("A menu can not be an item inside itself."))
+        errors = []
 
-        if self.__class__.objects.filter(item__name=self.item.name, menu=self.menu).exclude(pk=self.pk).exists():
-            raise ValidationError(_("A menu can not have multiple items with the same name."))
+        has_item = False
+        try:
+            has_item = self.item is not None
+        except MenuItem.DoesNotExist:
+            pass
 
-        if not Menu.objects.filter(pk=self.item.pk).exists() and \
-                self.__class__.objects.filter(item__pk=self.item.pk).exclude(pk=self.pk).exists():
-            raise ValidationError(_("A non-menu MenuItem can not be a child of multiple different menus."))
+        has_menu = False
+        try:
+            has_menu = self.menu is not None
+        except MenuItem.DoesNotExist:
+            pass
+
+        if has_item:
+            if has_menu:
+                if self.menu.pk == self.item.pk:
+                    errors.append(ValidationError(_("A menu can not be an item inside itself.")))
+
+                if self.__class__.objects.filter(item__name=self.item.name, menu=self.menu).exclude(pk=self.pk).exists():
+                    errors.append(ValidationError(_("A menu can not have multiple items with the same name.")))
+
+            if not Menu.objects.filter(pk=self.item.pk).exists() and \
+                    self.__class__.objects.filter(item__pk=self.item.pk).exclude(pk=self.pk).exists():
+                errors.append(ValidationError(_("A non-menu MenuItem can not be a child of multiple different menus.")))
+
+        if errors:
+            raise ValidationError(errors)
+
+    def __str__(self):
+        return "%s: (%d) %s" % (self.menu, self.order_num, self.item)
