@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 
-from website.models.menus import MenuItem, Menu, MenuThroughRel
+from website.models.menus import MenuItem, Menu, MenuRel
 from website.models.pages import Page
 
 
@@ -45,7 +45,7 @@ class MenuThroughRelModelTest(TestCase):
         self.menu_2 = Menu(name="menu_2")
 
         # Named using menu_item_order
-        self.menu_rel_1_1_0 = MenuThroughRel(order_num=0, menu=self.menu_1, item=self.menu_item_1)
+        self.menu_rel_1_1_0 = MenuRel(order_num=0, menu=self.menu_1, item=self.menu_item_1)
 
         self.menu_item_1.save()
         self.menu_item_2.save()
@@ -58,37 +58,43 @@ class MenuThroughRelModelTest(TestCase):
 
         Not accepted:
         - Menu as a child of itself.
-        - MenuThroughRel.menu is non-Menu item.
+        - MenuRel.menu is non-Menu item.
         - The same MenuItem multiple times as a child in the same Menu.
         - The same non-Menu item multiple times as a child (in any menu).
         - The same order_num multiple times in the same Menu.
+        - The same MenuItem.name in the same Menu.
         """
 
         # Menu as a child of itself.
-        self.menu_rel_2_m2_0 = MenuThroughRel(order_num=0, menu=self.menu_2, item=self.menu_2)
-        self.assertRaises(ValidationError, self.menu_rel_2_m2_0.full_clean)
+        menu_rel_2_m2_0 = MenuRel(order_num=0, menu=self.menu_2, item=self.menu_2)
+        self.assertRaises(ValidationError, menu_rel_2_m2_0.full_clean)
 
-        # MenuThroughRel.menu is non-Menu item.
-        self.assertRaises(ValueError, MenuThroughRel, order_num=0, menu=self.menu_item_1, item=self.menu_item_2)
+        # MenuRel.menu is non-Menu item.
+        self.assertRaises(ValueError, MenuRel, order_num=0, menu=self.menu_item_1, item=self.menu_item_2)
 
         # The same MenuItem multiple times as a child in the same Menu.
-        self.menu_rel_1_1_1 = MenuThroughRel(order_num=1, menu=self.menu_1, item=self.menu_item_1)
-        self.assertRaises(ValidationError, self.menu_rel_1_1_1.full_clean)
+        menu_rel_1_1_1 = MenuRel(order_num=1, menu=self.menu_1, item=self.menu_item_1)
+        self.assertRaises(ValidationError, menu_rel_1_1_1.full_clean)
 
         # The same non-Menu item multiple times as a child (in any menu).
-        self.menu_rel_2_1_0 = MenuThroughRel(order_num=1, menu=self.menu_2, item=self.menu_item_1)
-        self.assertRaises(ValidationError, self.menu_rel_2_1_0.full_clean)
+        menu_rel_2_1_0 = MenuRel(order_num=1, menu=self.menu_2, item=self.menu_item_1)
+        self.assertRaises(ValidationError, menu_rel_2_1_0.full_clean)
 
         # The same order_num multiple times in the same Menu.
-        self.menu_rel_1_2_0 = MenuThroughRel(order_num=0, menu=self.menu_1, item=self.menu_item_2)
-        self.assertRaises(ValidationError, self.menu_rel_1_2_0.full_clean)
+        menu_rel_1_2_0 = MenuRel(order_num=0, menu=self.menu_1, item=self.menu_item_2)
+        self.assertRaises(ValidationError, menu_rel_1_2_0.full_clean)
+
+        # The same MenuItem.name in the same Menu.
+        item3 = MenuItem(name="item1", _url="https://f.kth.se")
+        menu_rel_1_3_1 = MenuRel(order_num=1, menu=self.menu_1, item=item3)
+        self.assertRaises(ValidationError, menu_rel_1_3_1.full_clean)
 
         # Check that validation does not block normal usage (other order_num and item, same menu)
-        self.menu_rel_1_2_1 = MenuThroughRel(order_num=1, menu=self.menu_1, item=self.menu_item_2)
-        self.assertEqual(self.menu_rel_1_2_1.full_clean(), None)
+        menu_rel_1_2_1 = MenuRel(order_num=1, menu=self.menu_1, item=self.menu_item_2)
+        self.assertEqual(menu_rel_1_2_1.full_clean(), None)
 
         # Check that validation is menu-specific (same order_num and item, different menu)
-        self.menu_rel_2_2_0 = MenuThroughRel(order_num=0, menu=self.menu_2, item=self.menu_item_2)
-        self.assertEqual(self.menu_rel_2_2_0.full_clean(), None)
+        menu_rel_2_2_0 = MenuRel(order_num=0, menu=self.menu_2, item=self.menu_item_2)
+        self.assertEqual(menu_rel_2_2_0.full_clean(), None)
 
 

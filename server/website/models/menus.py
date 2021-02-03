@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 class MenuItem(models.Model):
     """Model for item in a menu.
     The item can link to a url or dynamically to a Page.
-    The objects can be related to each other in a tree structure using Menu and MenuThroughRel.
+    The objects can be related to each other in a tree structure using Menu and MenuRel.
     """
 
     name = models.CharField(verbose_name='Name', max_length=255)
@@ -32,17 +32,17 @@ class MenuItem(models.Model):
 
 
 class Menu(MenuItem):
-    """Model for ordered collection of MenuItems. Relationship through MenuThroughRel."""
+    """Model for ordered collection of MenuItems. Relationship through MenuRel."""
 
     items = models.ManyToManyField(
         'MenuItem',
-        through='MenuThroughRel',
+        through='MenuRel',
         through_fields=('menu', 'item'),
         related_name='menus'
     )
 
 
-class MenuThroughRel(models.Model):
+class MenuRel(models.Model):
     """Model for ordered tree relations between Menus and MenuItems."""
 
     class Meta:
@@ -54,10 +54,14 @@ class MenuThroughRel(models.Model):
 
     def clean(self):
         """Validation of menu and item relation
-        :raises ValidationError if menu contains itself or menu-item already belongs to a menu.
+        :raises ValidationError if menu contains itself, item (non-menu) already belongs to a menu or
+        ('item.name', 'menu') is not unique.
         """
         if self.menu == self.item:
             raise ValidationError(_("A menu can not be an item inside itself."))
+
+        if self.__class__.objects.filter(item__name=self.item.name, menu=self.menu).exclude(pk=self.pk).exists():
+            raise ValidationError(_("A menu can not have multiple items with the same name."))
 
         if not Menu.objects.filter(pk=self.item.pk).exists() and \
                 self.__class__.objects.filter(item__pk=self.item.pk).exclude(pk=self.pk).exists():
