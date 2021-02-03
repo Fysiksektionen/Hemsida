@@ -12,25 +12,25 @@ class MenuItemModelTest(TestCase):
     def setUp(self):
         """Creation of objects"""
         self.page = Page(url="https://f.kth.se")
-        self.menu_item_page = MenuItem(name="1", _page=self.page)
-        self.menu_item_url = MenuItem(name="2", _url="https://ths.kth.se")
-        self.menu_item_both = MenuItem(name="3", _page=self.page, _url="https://ths.kth.se")
+        self.menu_item_page = MenuItem(name="1", page=self.page)
+        self.menu_item_url = MenuItem(name="2", url="https://ths.kth.se")
+        self.menu_item_both = MenuItem(name="3", page=self.page, url="https://ths.kth.se")
         self.menu_item_none = MenuItem(name="4")
 
-        self.menu_item_no_name = MenuItem(_page=self.page)
-        self.menu_item_bad_url = MenuItem(name="5", _url="bad_url")
+        self.menu_item_no_name = MenuItem(page=self.page)
+        self.menu_item_bad_url = MenuItem(name="5", url="bad_url")
 
     def test_url_property(self):
         """Tests that the url property gives correct url."""
-        self.assertEqual(self.menu_item_page.url, "https://f.kth.se")
-        self.assertEqual(self.menu_item_url.url, "https://ths.kth.se")
+        self.assertEqual(self.menu_item_page.link, "https://f.kth.se")
+        self.assertEqual(self.menu_item_url.link, "https://ths.kth.se")
         self.assertRaisesMessage(
             RuntimeError,
             _("Url is ambiguous, both Page and Url is set."),
-            MenuItem.url.__get__,
+            MenuItem.link.__get__,
             self.menu_item_both
         )
-        self.assertEqual(self.menu_item_none.url, "")
+        self.assertEqual(self.menu_item_none.link, "")
 
     def test_field_validation(self):
         """Tests the validation and check that the correct error is thrown."""
@@ -47,8 +47,8 @@ class MenuThroughRelModelTest(TestCase):
 
     def setUp(self):
         """Creation of objects"""
-        self.menu_item_1 = MenuItem(name="item1", _url="https://f.kth.se")
-        self.menu_item_2 = MenuItem(name="item2", _url="https://f.kth.se")
+        self.menu_item_1 = MenuItem(name="item1", url="https://f.kth.se")
+        self.menu_item_2 = MenuItem(name="item2", url="https://f.kth.se")
         self.menu_1 = Menu(name="menu_1")
         self.menu_2 = Menu(name="menu_2")
 
@@ -101,7 +101,7 @@ class MenuThroughRelModelTest(TestCase):
         self.assertRaises(ValidationError, menu_rel_1_2_0.full_clean)
 
         # The same MenuItem.name in the same Menu.
-        item3 = MenuItem(name="item1", _url="https://f.kth.se")
+        item3 = MenuItem(name="item1", url="https://f.kth.se")
         menu_rel_1_3_1 = MenuRel(order_num=1, menu=self.menu_1, item=item3)
         self.assertRaisesMessage(
             ValidationError,

@@ -10,24 +10,24 @@ class MenuItem(models.Model):
     """
 
     name = models.CharField(verbose_name=_('Name'), max_length=255)
-    _url = models.URLField(verbose_name=_('Url'), blank=True, null=True, default=None)
-    _page = models.ForeignKey('Page', verbose_name=_('Page'), blank=True, null=True, on_delete=models.CASCADE)
+    url = models.URLField(verbose_name=_('Url'), blank=True, null=True, default=None)
+    page = models.ForeignKey('Page', verbose_name=_('Page'), blank=True, null=True, on_delete=models.CASCADE)
 
     @property
-    def url(self):
+    def link(self):
         """Url value of MenuItem.
         :raises RuntimeError if link is ambiguous.
         :return Url of MenuItem based of url of page or url specified. Empty string if both Page and Url is None.
         """
-        if self._page is not None and self._url is not None:
+        if self.page is not None and self.url is not None:
             raise RuntimeError(_("Url is ambiguous, both Page and Url is set."))
-        return self._page.url if self._page is not None else (self._url if self._url is not None else "")
+        return self.page.url if self.page is not None else (self.url if self.url is not None else "")
 
     def clean(self):
         """Validation of url values.
         :raises ValidationError if both Page and Url are not None.
         """
-        if self._page is not None and self._url is not None:
+        if self.page is not None and self.url is not None:
             raise ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
 
 

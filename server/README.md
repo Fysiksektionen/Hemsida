@@ -82,9 +82,11 @@ I normalfallet kommer endast en person jobba åt gången på varje branch. Det g
 När utvecklingen sedan är färdig och det är dags att skapa en pull-request så ska alla de migrations som ha skapats sedan senaste synkning med `main` squashas ihop till **en** migration. Denna ska namnet `<branch-name>_YYYYMMDD.py`. Detta görs med:
 
 ```
-python manage.py squashmigrations --squashed-name=<branch-name>_YYYYMMDD <appname> <start_migration_name> <migration_name>
+python manage.py squashmigrations <appname> <start_migration_name> <migration_name> --squashed-name=<branch-name>_YYYYMMDD
 ```
-For example `python manage.py squashmigrations --squashed-name=backend-menu-model_20210203 website 0001 0004` 
+Exempelvis `python manage.py squashmigrations website 0001 0004 --squashed-name=backend-menu-model_20210203` 
+
+Slutligen ska du verifiera att din nya migration fungerar som tänkt. Det kan du göra genom att migrera tillbaka till den senaste migrationen innan din branch med `python manage.py migrate <appname> <migration_to_revert_to>`. Och sedan köra `migrate`.
 
 
 ## Använda `locale` och `gettext`
