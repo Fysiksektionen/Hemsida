@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+from django.utils.translation import gettext as _
 
 from website.models.menus import MenuItem, Menu, MenuRel
 from website.models.pages import Page
@@ -23,15 +24,22 @@ class MenuItemModelTest(TestCase):
         """Tests that the url property gives correct url."""
         self.assertEqual(self.menu_item_page.url, "https://f.kth.se")
         self.assertEqual(self.menu_item_url.url, "https://ths.kth.se")
-        self.assertRaises(RuntimeError, MenuItem.url.__get__, self.menu_item_both)
+        self.assertRaisesMessage(
+            RuntimeError,
+            _("Url is ambiguous, both Page and Url is set."),
+            MenuItem.url.__get__,
+            self.menu_item_both
+        )
         self.assertEqual(self.menu_item_none.url, "")
 
     def test_field_validation(self):
         """Tests the validation and check that the correct error is thrown."""
-        self.assertRaisesRegexp(ValidationError, 'name', self.menu_item_no_name.full_clean)
-        self.assertRaisesRegexp(ValidationError, '_url', self.menu_item_bad_url.full_clean)
         self.assertEqual(self.menu_item_none.full_clean(), None)
-        self.assertRaisesRegexp(ValidationError, 'Url is ambiguous.', self.menu_item_both.full_clean)
+        self.assertRaisesMessage(
+            ValidationError,
+            _('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'),
+            self.menu_item_both.full_clean
+        )
 
 
 class MenuThroughRelModelTest(TestCase):
@@ -67,7 +75,11 @@ class MenuThroughRelModelTest(TestCase):
 
         # Menu as a child of itself.
         menu_rel_2_m2_0 = MenuRel(order_num=0, menu=self.menu_2, item=self.menu_2)
-        self.assertRaises(ValidationError, menu_rel_2_m2_0.full_clean)
+        self.assertRaisesMessage(
+            ValidationError,
+            _("A menu can not be an item inside itself."),
+            menu_rel_2_m2_0.full_clean
+        )
 
         # MenuRel.menu is non-Menu item.
         self.assertRaises(ValueError, MenuRel, order_num=0, menu=self.menu_item_1, item=self.menu_item_2)
@@ -78,7 +90,11 @@ class MenuThroughRelModelTest(TestCase):
 
         # The same non-Menu item multiple times as a child (in any menu).
         menu_rel_2_1_0 = MenuRel(order_num=1, menu=self.menu_2, item=self.menu_item_1)
-        self.assertRaises(ValidationError, menu_rel_2_1_0.full_clean)
+        self.assertRaisesMessage(
+            ValidationError,
+            _("A non-menu MenuItem can not be a child of multiple different menus."),
+            menu_rel_2_1_0.full_clean
+        )
 
         # The same order_num multiple times in the same Menu.
         menu_rel_1_2_0 = MenuRel(order_num=0, menu=self.menu_1, item=self.menu_item_2)
@@ -87,7 +103,11 @@ class MenuThroughRelModelTest(TestCase):
         # The same MenuItem.name in the same Menu.
         item3 = MenuItem(name="item1", _url="https://f.kth.se")
         menu_rel_1_3_1 = MenuRel(order_num=1, menu=self.menu_1, item=item3)
-        self.assertRaises(ValidationError, menu_rel_1_3_1.full_clean)
+        self.assertRaisesMessage(
+            ValidationError,
+            _("A menu can not have multiple items with the same name."),
+            menu_rel_1_3_1.full_clean
+        )
 
         # Check that validation does not block normal usage (other order_num and item, same menu)
         menu_rel_1_2_1 = MenuRel(order_num=1, menu=self.menu_1, item=self.menu_item_2)

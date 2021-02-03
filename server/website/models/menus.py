@@ -20,7 +20,7 @@ class MenuItem(models.Model):
         :return Url of MenuItem based of url of page or url specified. Empty string if both Page and Url is None.
         """
         if self._page is not None and self._url is not None:
-            raise RuntimeError("Url is ambiguous, both Page and Url is set.")
+            raise RuntimeError(_("Url is ambiguous, both Page and Url is set."))
         return self._page.url if self._page is not None else (self._url if self._url is not None else "")
 
     def clean(self):
