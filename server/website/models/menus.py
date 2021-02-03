@@ -9,9 +9,9 @@ class MenuItem(models.Model):
     The objects can be related to each other in a tree structure using Menu and MenuRel.
     """
 
-    name = models.CharField(verbose_name='Name', max_length=255)
-    _url = models.URLField(verbose_name='Url', blank=True, null=True, default=None)
-    _page = models.ForeignKey('Page', verbose_name='Page', blank=True, null=True, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name=_('Name'), max_length=255)
+    _url = models.URLField(verbose_name=_('Url'), blank=True, null=True, default=None)
+    _page = models.ForeignKey('Page', verbose_name=_('Page'), blank=True, null=True, on_delete=models.CASCADE)
 
     @property
     def url(self):
@@ -48,7 +48,7 @@ class MenuRel(models.Model):
     class Meta:
         unique_together = [('order_num', 'menu'), ('item', 'menu')]
 
-    order_num = models.PositiveIntegerField(verbose_name='Order')
+    order_num = models.PositiveIntegerField(verbose_name=_('Order'))
     menu = models.ForeignKey('Menu', related_name='item_relation', on_delete=models.CASCADE)
     item = models.ForeignKey('MenuItem', related_name='menu_relation', on_delete=models.CASCADE)
 
