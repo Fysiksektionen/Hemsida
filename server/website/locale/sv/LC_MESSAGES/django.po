@@ -1,0 +1,57 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-07 14:14+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: F.dev <fedv@f.kth.se>\n"
+"Language: Swedish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: website/models/menus.py:16
+msgid "Name"
+msgstr "Namn"
+
+#: website/models/menus.py:17
+msgid "Url"
+msgstr "Url"
+
+#: website/models/menus.py:18
+msgid "Page"
+msgstr "Sida"
+
+#: website/models/menus.py:20
+msgid "Order"
+msgstr "Ordning"
+
+#: website/models/menus.py:24
+msgid "Menu"
+msgstr "Meny"
+
+#: website/models/menus.py:26
+msgid "Is menu"
+msgstr "Är meny"
+
+#: website/models/menus.py:35 website/tests/test_menus.py:34
+msgid "Url is ambiguous, both Page and Url is set."
+msgstr "Url:en är tvetydig. Både 'Page' och 'Url' har värde."
+
+#: website/models/menus.py:47 website/tests/test_menus.py:47
+msgid "Url is ambiguous. Set either Page or Url on the MenuItem, not both."
+msgstr "Url:en är tvetydig. Sätt antingen 'Page' eller 'Url' på MenuItem, inte båda."
+
+#: website/models/menus.py:52 website/tests/test_menus.py:55
+msgid "Item can not have a parent menu but not have an order number."
+msgstr "Menyobjekt kan inte vara del av en meny men inte ha ett ordningsnummer."
+
+#: website/models/menus.py:56 website/tests/test_menus.py:64
+msgid "Item can not have an order number but not have a parent menu."
+msgstr "Menyobjekt kan inte ha ett ordningsnummer men inte vara del av en meny."

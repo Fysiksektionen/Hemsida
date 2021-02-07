@@ -64,8 +64,66 @@ För att ladda ner och köra servern lokalt behöver du sätta upp en del grejer
 ### Windows (med PyCharm)
 1. Öppna PyCharm och välj "Get from VCS". Logga in med Github och ladda ned projektet.
 
-1. Ladda ned MariaDB (open source MySQL-databas) från [downloads.mariadb.org/mariadb/](downloads.mariadb.org/mariadb/). Följ installeringen.
+1. Ladda ned MariaDB (open source MySQL-databas) från [downloads.mariadb.org/mariadb/](https://downloads.mariadb.org/mariadb/). Följ installeringen.
 
 1. Öppna det nya programmet "MySQL Client". Du bör få en terminal med prompten MariaDB [(None)]> när du angivit lösenord. Skriv samma kommandon som listas som punkterna 5-9 under punkt 2 i "Unix-baserade system (utan PyCharm)".
 
 1. Följ instruktion 2 - 7 i "Unix-baserade system (med PyCharm)".
+
+
+## Jobba med Migrations i VSC
+Migrations är filer eller rättare sagt instruktioner som berättar hur databasen ska byggas upp. Dessa genereras automatiskt från hur modellerna är skrivna. Se mer här: [Django - Migrations](https://docs.djangoproject.com/en/dev/topics/migrations).
+
+Filerna bygger på varandra och bygger upp en logisk följd av instruktioner för att återskapa det nuvarande tillståndet. Eftersom vi jobbar parallellt finns det risk att dessa inte längre har en logisk följd.
+
+### Squash migration per app per pull-request.
+I normalfallet kommer endast en person jobba åt gången på varje branch. Det gör att under utvecklingsfasen av en branch får det finnas flera nyskapade och trackade migrations. Dessa migrations kan heta vad som helst och det smidigaste är att låta Django autogenerera namnet.
+
+När utvecklingen sedan är färdig och det är dags att skapa en pull-request så ska alla de migrations som ha skapats sedan senaste synkning med `main` squashas ihop till **en** migration. Denna ska namnet `<branch-name>_YYYYMMDD.py`. Detta görs med:
+
+```
+python manage.py squashmigrations <appname> <start_migration_name> <migration_name> --squashed-name=<branch-name>_YYYYMMDD
+```
+Exempelvis `python manage.py squashmigrations website 0001 0004 --squashed-name=backend-menu-model_20210203` 
+
+Slutligen ska du verifiera att din nya migration fungerar som tänkt. Det kan du göra genom att migrera tillbaka till den senaste migrationen innan din branch med `python manage.py migrate <appname> <migration_to_revert_to>`. Och sedan köra `migrate`.
+
+
+## Använda `locale` och `gettext`
+
+### Vad är `locale`?
+Locale är ett sammanfattande ord för allt som skiljer sig beroende på vilket språk användaren har valt. Det handlar om allt från faktiskt språk på text till format på datum.
+
+Locale kommer att vara viktigt i backenden när det kommer till felmeddelanden och feedback till frontenden när objekt försöker ändras på felaktigt sätt. Sannolikt kommer frontenden i vissa fallt att visa felmeddelandet för användaren och då måste en korrekt översättning göras.
+
+### `gettext` för att översätta
+Django har ett inbyggt system för att det ska ske smidigt. Det bygger på att alla texter som ska översättas körs genom en funktion, `gettext`. Exempelvis såhär:
+
+```
+from django.utils.translation import gettext
+
+def raise_in_correct_lang():
+   raise ValidationError(gettext("Text that can be translated"))
+```
+
+Detta har två problem. 
+
+1. Det är jobbigt att skriva en funktion kring alla strängar. **Lösningen** är att importera funktionen med namnet `_`. Då blir koden ovan som följer:
+   
+```
+from django.utils.translation import gettext as _
+
+def raise_in_correct_lang():
+   raise ValidationError(_("Text that can be translated"))
+```
+
+2. Vissa strängar utvärderas inte när ett anrop görs, utan tidigare när Django laddas. Exempelvis textsträngar i Models. **Lösningen** är att använda funktionen `gettext_lazy`. Då utvärderas strängen så sent som möjligt.
+   
+### Django messages
+Eftersom översättningar sällan blir så bra så har Django ett system för oss att explicit specificera alla översättningar. Detta görs genom att manuellt fylla i översättningar i filer som Django genererar.
+
+`python manage.py makemessages --locale=sv` skapar översättningsfiler (*.po*) i mapparna *locale/sv* som finns i varje app och en övergripande. Dessa ska sedan redigeras manuellt.
+
+`python manage.py compilemessages` kompilerar locale-filerna till mer effektiva filer (*.mo*). Dessa ska inte redigeras manuellt.
+
+
