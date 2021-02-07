@@ -14,6 +14,8 @@ class MenuItemBase(models.Model):
         unique_together = [('menu', 'order'), ('menu', 'name')]
 
     name = models.CharField(verbose_name=_('Name'), max_length=255)
+
+    # Url and page are validated in clean method to ensure non-ambiguity.
     url = models.URLField(verbose_name=_('Url'), blank=True, null=True, default=None)
     page = models.ForeignKey('Page', verbose_name=_('Page'), blank=True, null=True, on_delete=models.CASCADE)
     order = models.PositiveIntegerField(
@@ -93,4 +95,3 @@ class Menu(MenuItemBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._is_menu = True
-
