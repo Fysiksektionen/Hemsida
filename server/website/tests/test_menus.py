@@ -87,7 +87,7 @@ class MenuItemModelTest(TestCase):
         except ValidationError as e:
             print(e.message_dict)
             self.assertDictEqual(
-                e.message_dict, {'__all__': ['Menu item base with this Menu och Ordning already exists.']}
+                e.message_dict, {'__all__': ['Menu item base with this Meny och Ordning already exists.']}
             )
 
         # Name <--> Menu
@@ -97,7 +97,7 @@ class MenuItemModelTest(TestCase):
         except ValidationError as e:
             print(e.message_dict)
             self.assertDictEqual(
-                e.message_dict, {'__all__': ['Menu item base with this Menu och Namn already exists.']}
+                e.message_dict, {'__all__': ['Menu item base with this Meny och Namn already exists.']}
             )
 
 
