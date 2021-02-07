@@ -52,7 +52,7 @@ class MenuItemModelTest(TestCase):
             self.menu_item_no_order.full_clean()
         except ValidationError as e:
             self.assertDictEqual(
-                e.message_dict, {'__all__': [_('Item can not have a parent menu and not have an order number.')]}
+                e.message_dict, {'__all__': [_('Item can not have a parent menu but not have an order number.')]}
             )
 
         try:
@@ -61,7 +61,7 @@ class MenuItemModelTest(TestCase):
         except ValidationError as e:
             self.assertDictEqual(
                 e.message_dict, {
-                    '__all__': [_('Item can not have an order number and not have a parent menu.')],
+                    '__all__': [_('Item can not have an order number but not have a parent menu.')],
                     'menu': [self.menu_item_no_menu._meta.get_field('menu').error_messages['blank']]
                 }
             )

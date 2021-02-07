@@ -49,11 +49,11 @@ class MenuItemBase(models.Model):
 
         if self.order is None and self.menu is not None:
             errors_all_list.append(
-                ValidationError(_('Item can not have a parent menu and not have an order number.'))
+                ValidationError(_('Item can not have a parent menu but not have an order number.'))
             )
         elif self.order is not None and self.menu is None:
             errors_all_list.append(
-                ValidationError(_('Item can not have an order number and not have a parent menu.'))
+                ValidationError(_('Item can not have an order number but not have a parent menu.'))
             )
 
         if not self.is_menu and self.menu is None:
