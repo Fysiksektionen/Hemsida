@@ -1,17 +1,29 @@
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-class MenuItem(models.Model):
-    """Model for item in a menu.
-    The item can link to a url or dynamically to a Page.
-    The objects can be related to each other in a tree structure using Menu and MenuRel.
+class MenuItemBase(models.Model):
     """
+    Model for item in a menu structure.
+    The item can link to a url or dynamically to a Page.
+    The objects can be related to each other in a tree structure.
+    """
+
+    class Meta:
+        unique_together = [('menu', 'order'), ('menu', 'name')]
 
     name = models.CharField(verbose_name=_('Name'), max_length=255)
     url = models.URLField(verbose_name=_('Url'), blank=True, null=True, default=None)
     page = models.ForeignKey('Page', verbose_name=_('Page'), blank=True, null=True, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(
+        verbose_name=_('Order'), null=True, blank=True,
+        validators=[]
+    )
+    menu = models.ForeignKey(
+        'Menu', related_name='items', verbose_name=_('Menu'), null=True, blank=True, on_delete=models.SET_NULL
+    )
+    _is_menu = models.BooleanField(verbose_name=_('Is menu'), null=False, blank=False)
 
     @property
     def link(self):
@@ -24,70 +36,61 @@ class MenuItem(models.Model):
         return self.page.url if self.page is not None else (self.url if self.url is not None else "")
 
     def clean(self):
-        """Validation of url values.
-        :raises ValidationError if both Page and Url are not None.
+        """Validation of state of values in item.
+        :raises ValidationError with all errors.
         """
+        errors = {}
+        errors_all_list = []
+
         if self.page is not None and self.url is not None:
-            raise ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
+            errors_all_list.append(
+                ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
+            )
 
-    def __str__(self):
-        return self.name
+        if self.order is None and self.menu is not None:
+            errors_all_list.append(
+                ValidationError(_('Item can not have a parent menu and not have an order number.'))
+            )
+        elif self.order is not None and self.menu is None:
+            errors_all_list.append(
+                ValidationError(_('Item can not have an order number and not have a parent menu.'))
+            )
 
+        if not self.is_menu and self.menu is None:
+            errors['menu'] = ValidationError(self._meta.get_field('menu').error_messages['blank'], code='blank')
 
-class Menu(MenuItem):
-    """Model for ordered collection of MenuItems. Relationship through MenuRel."""
-
-    items = models.ManyToManyField(
-        'MenuItem',
-        through='MenuRel',
-        through_fields=('menu', 'item'),
-        related_name='menus'
-    )
-
-
-class MenuRel(models.Model):
-    """Model for ordered tree relations between Menus and MenuItems."""
-
-    class Meta:
-        unique_together = [('order_num', 'menu'), ('item', 'menu')]
-
-    order_num = models.PositiveIntegerField(verbose_name=_('Order'))
-    menu = models.ForeignKey('Menu', null=False, blank=False, related_name='item_relation', on_delete=models.CASCADE)
-    item = models.ForeignKey('MenuItem', null=False, blank=False, related_name='menu_relation', on_delete=models.CASCADE)
-
-    def clean(self):
-        """Validation of menu and item relation
-        :raises ValidationError if menu contains itself, item (non-menu) already belongs to a menu or
-        ('item.name', 'menu') is not unique.
-        """
-        errors = []
-
-        has_item = False
-        try:
-            has_item = self.item is not None
-        except MenuItem.DoesNotExist:
-            pass
-
-        has_menu = False
-        try:
-            has_menu = self.menu is not None
-        except MenuItem.DoesNotExist:
-            pass
-
-        if has_item:
-            if has_menu:
-                if self.menu.pk == self.item.pk:
-                    errors.append(ValidationError(_("A menu can not be an item inside itself.")))
-
-                if self.__class__.objects.filter(item__name=self.item.name, menu=self.menu).exclude(pk=self.pk).exists():
-                    errors.append(ValidationError(_("A menu can not have multiple items with the same name.")))
-
-            if not Menu.objects.filter(pk=self.item.pk).exists() and \
-                    self.__class__.objects.filter(item__pk=self.item.pk).exclude(pk=self.pk).exists():
-                errors.append(ValidationError(_("A non-menu MenuItem can not be a child of multiple different menus.")))
+        if errors_all_list:
+            errors[NON_FIELD_ERRORS] = errors_all_list
 
         if errors:
             raise ValidationError(errors)
 
     def __str__(self):
-        return "%s: (%d) %s" % (self.menu, self.order_num, self.item)
+        return self.name
+
+    @property
+    def is_menu(self):
+        return self._is_menu
+
+
+class MenuItem(MenuItemBase):
+    """Model for item in menu."""
+
+    class Meta:
+        proxy = True
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._is_menu = False
+
+
+class Menu(MenuItemBase):
+    """Model for ordered collection of MenuItems."""
+
+    class Meta:
+        proxy = True
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._is_menu = True
+
