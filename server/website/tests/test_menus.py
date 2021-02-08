@@ -85,7 +85,6 @@ class MenuItemModelTest(TestCase):
             self.menu_item_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
             self.menu_item_order_1.full_clean()
         except ValidationError as e:
-            print(e.message_dict)
             self.assertDictEqual(
                 e.message_dict, {'__all__': ['Menu item base with this Meny och Ordning already exists.']}
             )
@@ -95,7 +94,6 @@ class MenuItemModelTest(TestCase):
             self.menu_item_saved_2 = MenuItem(name="Saved", page=self.page, menu=self.menu, order=0)
             self.menu_item_saved_2.full_clean()
         except ValidationError as e:
-            print(e.message_dict)
             self.assertDictEqual(
                 e.message_dict, {'__all__': ['Menu item base with this Meny och Namn already exists.']}
             )
