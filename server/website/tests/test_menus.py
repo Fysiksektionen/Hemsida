@@ -1,12 +1,11 @@
-from django.core.exceptions import ValidationError
-from django.test import TestCase
 from django.utils.translation import gettext as _
 
-from website.models.menus import MenuItem, Menu
+from website.models.menus import MenuItem, Menu, MenuItemBase
 from website.models.pages import Page
+from . import ValidationTestCase
 
 
-class MenuItemModelTest(TestCase):
+class MenuItemModelTest(ValidationTestCase):
     """Test the functionality of MenuItem model."""
 
     def setUp(self):
@@ -40,40 +39,28 @@ class MenuItemModelTest(TestCase):
     def test_field_validation(self):
         """Tests the validation and check that the correct error is thrown."""
         self.assertEqual(self.menu_item_none.full_clean(), None)
-        try:
-            self.menu_item_both.full_clean()
-        except ValidationError as e:
-            self.assertDictEqual(
-                e.message_dict, {'__all__': [_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.')]}
-            )
+        self.assertRaisesValidationError(
+            msg=_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'),
+            field=None,
+            exclusive=True,
+            func=self.menu_item_both.full_clean
+        )
 
-        try:
-            self.menu_item_no_order = MenuItem(name="No order", menu=self.menu)
-            self.menu_item_no_order.full_clean()
-        except ValidationError as e:
-            self.assertDictEqual(
-                e.message_dict, {'__all__': [_('Item can not have a parent menu but not have an order number.')]}
-            )
+        self.menu_item_no_order = MenuItem(name="No order", menu=self.menu)
+        self.assertRaisesValidationError(
+            msg=self.menu_item_no_order._meta.get_field('order').error_messages['blank'],
+            field='order',
+            exclusive=True,
+            func=self.menu_item_no_order.full_clean
+        )
 
-        try:
-            self.menu_item_no_menu = MenuItem(name="No menu", order=0)
-            self.menu_item_no_menu.full_clean()
-        except ValidationError as e:
-            self.assertDictEqual(
-                e.message_dict, {
-                    '__all__': [_('Item can not have an order number but not have a parent menu.')],
-                    'menu': [self.menu_item_no_menu._meta.get_field('menu').error_messages['blank']]
-                }
-            )
-        try:
-            self.menu_item_loose = MenuItem(name="Loose item")
-            self.menu_item_loose.full_clean()
-        except ValidationError as e:
-            self.assertDictEqual(
-                e.message_dict, {
-                    'menu': [self.menu_item_loose._meta.get_field('menu').error_messages['blank']]
-                }
-            )
+        self.menu_item_no_menu = MenuItem(name="No menu", order=0)
+        self.assertRaisesValidationError(
+            msg=self.menu_item_no_menu._meta.get_field('menu').error_messages['blank'],
+            field='menu',
+            exclusive=True,
+            func=self.menu_item_no_menu.full_clean
+        )
 
     def test_uniqueness_rules(self):
         """"""
@@ -81,33 +68,66 @@ class MenuItemModelTest(TestCase):
         self.menu_item_saved.save()
 
         # Order <--> Menu
-        try:
-            self.menu_item_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
-            self.menu_item_order_1.full_clean()
-        except ValidationError as e:
-            self.assertDictEqual(
-                e.message_dict, {'__all__': ['Menu item base with this Meny och Ordning already exists.']}
-            )
+        self.menu_item_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
+        self.assertRaisesValidationError(
+            msg=self.menu_item_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
+            field=None,
+            exclusive=True,
+            func=self.menu_item_order_1.full_clean
+        )
 
         # Name <--> Menu
-        try:
-            self.menu_item_saved_2 = MenuItem(name="Saved", page=self.page, menu=self.menu, order=0)
-            self.menu_item_saved_2.full_clean()
-        except ValidationError as e:
-            self.assertDictEqual(
-                e.message_dict, {'__all__': ['Menu item base with this Meny och Namn already exists.']}
-            )
+        self.menu_item_saved_2 = MenuItem(name="Saved", page=self.page, menu=self.menu, order=0)
+        self.assertRaisesValidationError(
+            msg=self.menu_item_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
+            field=None,
+            exclusive=True,
+            func=self.menu_item_saved_2.full_clean
+        )
 
 
-class MenuModelTest(TestCase):
+class MenuModelTest(ValidationTestCase):
     """Test the functionality of Menu model."""
 
     def setUp(self):
         """Creation of objects"""
-        pass
+        self.page = Page(url="https://f.kth.se")
+        self.menu = Menu(name="Menu", page=self.page)
+
+        self.page.save()
+        self.menu.save()
 
     def test_field_vailidation(self):
         """Tests Menu-specific field validation."""
         # Check that no parent menu is accepted
-        self.menu_empty = Menu(name="Empty menu")
-        self.assertEqual(self.menu_empty.full_clean(), None)
+        self.assertEqual(self.menu.full_clean(), None)
+
+        self.menu_child_no_order = Menu(name="No order child menu", menu=self.menu)
+        self.assertRaisesValidationError(
+            msg=self.menu_child_no_order._meta.get_field('order').error_messages['blank'],
+            field='order',
+            exclusive=True,
+            func=self.menu_child_no_order.full_clean
+        )
+
+    def test_uniqueness_rules(self):
+        self.menu_item_saved = MenuItem(name="Saved", page=self.page, menu=self.menu, order=1)
+        self.menu_item_saved.save()
+
+        # Order <--> Menu
+        self.menu_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
+        self.assertRaisesValidationError(
+            msg=self.menu_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
+            field=None,
+            exclusive=True,
+            func=self.menu_order_1.full_clean
+        )
+
+        # Name <--> Menu
+        self.menu_saved_2 = Menu(name="Saved", page=self.page, menu=self.menu, order=0)
+        self.assertRaisesValidationError(
+            msg=self.menu_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
+            field=None,
+            exclusive=True,
+            func=self.menu_saved_2.full_clean
+        )
