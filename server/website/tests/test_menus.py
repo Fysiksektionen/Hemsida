@@ -38,7 +38,11 @@ class MenuItemModelTest(ValidationTestCase):
 
     def test_field_validation(self):
         """Tests the validation and check that the correct error is thrown."""
+
+        # Check normal behaviour
         self.assertEqual(self.menu_item_none.full_clean(), None)
+
+        # Ambiguous url
         self.assertRaisesValidationError(
             msg=_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'),
             field=None,
@@ -46,6 +50,7 @@ class MenuItemModelTest(ValidationTestCase):
             func=self.menu_item_both.full_clean
         )
 
+        # MenuItem with no order
         self.menu_item_no_order = MenuItem(name="No order", menu=self.menu)
         self.assertRaisesValidationError(
             msg=self.menu_item_no_order._meta.get_field('order').error_messages['blank'],
@@ -54,6 +59,7 @@ class MenuItemModelTest(ValidationTestCase):
             func=self.menu_item_no_order.full_clean
         )
 
+        # MenuItem with no menu
         self.menu_item_no_menu = MenuItem(name="No menu", order=0)
         self.assertRaisesValidationError(
             msg=self.menu_item_no_menu._meta.get_field('menu').error_messages['blank'],
@@ -62,33 +68,42 @@ class MenuItemModelTest(ValidationTestCase):
             func=self.menu_item_no_menu.full_clean
         )
 
-    def test_uniqueness_rules(self):
-        """"""
-        self.menu_item_saved = MenuItem(name="Saved", page=self.page, menu=self.menu, order=1)
-        self.menu_item_saved.save()
-
-        # Order <--> Menu
-        self.menu_item_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
+        # Adding non-menu as menu
+        self.menu_item_non_menu_menu = MenuItem(name="Non menu as menu", order=0, menu=self.menu_item_page)
         self.assertRaisesValidationError(
-            msg=self.menu_item_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
-            field=None,
+            msg=_('Menu field must relate to a Menu object.'),
+            field='menu',
             exclusive=True,
-            func=self.menu_item_order_1.full_clean
+            func=self.menu_item_non_menu_menu.full_clean
         )
 
-        # Name <--> Menu
-        self.menu_item_saved_2 = MenuItem(name="Saved", page=self.page, menu=self.menu, order=0)
-        self.assertRaisesValidationError(
-            msg=self.menu_item_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
-            field=None,
-            exclusive=True,
-            func=self.menu_item_saved_2.full_clean
-        )
+
+def test_uniqueness_rules(self):
+    """Tests uniqueness rules."""
+    self.menu_item_saved = MenuItem(name="Saved", page=self.page, menu=self.menu, order=1)
+    self.menu_item_saved.save()
+
+    # Order <--> Menu
+    self.menu_item_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
+    self.assertRaisesValidationError(
+        msg=self.menu_item_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
+        field=None,
+        exclusive=True,
+        func=self.menu_item_order_1.full_clean
+    )
+
+    # Name <--> Menu
+    self.menu_item_saved_2 = MenuItem(name="Saved", page=self.page, menu=self.menu, order=0)
+    self.assertRaisesValidationError(
+        msg=self.menu_item_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
+        field=None,
+        exclusive=True,
+        func=self.menu_item_saved_2.full_clean
+    )
 
 
 class MenuModelTest(ValidationTestCase):
     """Test the functionality of Menu model."""
-    # TODO: Test for self-adding as menu.
 
     def setUp(self):
         """Creation of objects"""
@@ -109,6 +124,30 @@ class MenuModelTest(ValidationTestCase):
             field='order',
             exclusive=True,
             func=self.menu_child_no_order.full_clean
+        )
+
+        # Linking to itself (python objects)
+        self.menu_link_to_itself = Menu(name="Menu linking to itself", order=0)
+        self.menu_link_to_itself.menu = self.menu_link_to_itself
+        self.assertRaisesValidationError(
+            msg=_('Menu relates to itself.'),
+            field='menu',
+            exclusive=True,
+            func=self.menu_link_to_itself.full_clean
+        )
+
+        # Linking to itself (same db-object)
+        self.menu_link_to_itself.menu = None
+        self.menu_link_to_itself.save()
+
+        same_item = MenuItemBase.objects.get(pk=self.menu_link_to_itself.pk)  # Same in db, not same in python
+        self.menu_link_to_itself.menu = same_item
+
+        self.assertRaisesValidationError(
+            msg=_('Menu relates to itself.'),
+            field='menu',
+            exclusive=True,
+            func=self.menu_link_to_itself.full_clean
         )
 
     def test_uniqueness_rules(self):
