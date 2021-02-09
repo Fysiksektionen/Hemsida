@@ -19,9 +19,9 @@ class MenuItemBase(models.Model):
     url = models.URLField(verbose_name=_('Url'), blank=True, null=True, default=None)
     page = models.ForeignKey('Page', verbose_name=_('Page'), blank=True, null=True, on_delete=models.CASCADE)
     order = models.PositiveIntegerField(
-        verbose_name=_('Order'), null=True, blank=True,
-        validators=[]
+        verbose_name=_('Order'), null=True, blank=True
     )
+    # TODO: Validate not adding itself as menu.
     menu = models.ForeignKey(
         'Menu', related_name='items', verbose_name=_('Menu'), null=True, blank=True, on_delete=models.SET_NULL
     )
@@ -38,34 +38,20 @@ class MenuItemBase(models.Model):
         return self.page.url if self.page is not None else (self.url if self.url is not None else "")
 
     def clean(self):
-        """Validation of state of values in item.
-        :raises ValidationError with all errors.
+        """ Raising error on clean of MenuItemBase object. Each MenuItemBase should be cleaned separately.
+        :raises NotImplementedError
         """
-        errors = {}
-        errors_all_list = []
+        raise NotImplementedError(
+            _("Cleaning of MenuItemBase is not allowed. Clean object in the form of a child class.")
+        )
 
+    def clean_link(self):
+        """Validation of state of values in item.
+
+        :raises ValidationError if link-value is ambiguous (i.e. when both 'self.page' and 'self.url' is not None).
+        """
         if self.page is not None and self.url is not None:
-            errors_all_list.append(
-                ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
-            )
-
-        if self.order is None and self.menu is not None:
-            errors_all_list.append(
-                ValidationError(_('Item can not have a parent menu but not have an order number.'))
-            )
-        elif self.order is not None and self.menu is None:
-            errors_all_list.append(
-                ValidationError(_('Item can not have an order number but not have a parent menu.'))
-            )
-
-        if not self.is_menu and self.menu is None:
-            errors['menu'] = ValidationError(self._meta.get_field('menu').error_messages['blank'], code='blank')
-
-        if errors_all_list:
-            errors[NON_FIELD_ERRORS] = errors_all_list
-
-        if errors:
-            raise ValidationError(errors)
+            raise ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
 
     def __str__(self):
         return self.name
@@ -85,6 +71,33 @@ class MenuItem(MenuItemBase):
         super().__init__(*args, **kwargs)
         self._is_menu = False
 
+    def clean(self):
+        """Validation method for fields
+
+        :raises Validation error if
+            - link is ambiguous,
+            - menu is None,
+            - order is None
+        """
+        error_dict = {}
+
+        # Link is ambiguous
+        try:
+            super(MenuItem, self).clean_link()
+        except ValidationError as e:
+            error_dict[NON_FIELD_ERRORS] = e
+
+        # Menu is None
+        if self.menu is None:
+            error_dict['menu'] = ValidationError(self._meta.get_field('menu').error_messages['blank'], code='blank')
+
+        # Order is None
+        if self.order is None:
+            error_dict['order'] = ValidationError(self._meta.get_field('order').error_messages['blank'], code='blank')
+
+        if error_dict:
+            raise ValidationError(error_dict)
+
 
 class Menu(MenuItemBase):
     """Model for ordered collection of MenuItems."""
@@ -95,3 +108,25 @@ class Menu(MenuItemBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._is_menu = True
+
+    def clean(self):
+        """Validation method for fields
+
+        :raises Validation error if
+            - link is ambiguous,
+            - menu is not None and order is None
+        """
+        error_dict = {}
+
+        # Link is ambiguous
+        try:
+            super(Menu, self).clean_link()
+        except ValidationError as e:
+            error_dict[NON_FIELD_ERRORS] = e
+
+        # Menu is not None and order is None
+        if self.menu is not None and self.order is None:
+            error_dict['order'] = ValidationError(self._meta.get_field('order').error_messages['blank'], code='blank')
+
+        if error_dict:
+            raise ValidationError(error_dict)
