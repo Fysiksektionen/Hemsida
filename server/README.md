@@ -122,7 +122,7 @@ def raise_in_correct_lang():
 ### Django messages
 Eftersom översättningar sällan blir så bra så har Django ett system för oss att explicit specificera alla översättningar. Detta görs genom att manuellt fylla i översättningar i filer som Django genererar.
 
-`python manage.py makemessages -l sv --ignore venv` skapar översättningsfiler (*.po*) i mapparna *locale/sv* som finns i varje app. Dessa ska sedan redigeras manuellt.
+`python manage.py makemessages -l sv --ignore venv --no-wrap --no-obsolete` skapar översättningsfiler (*.po*) i mapparna *locale/sv* som finns i varje app. Dessa ska sedan redigeras manuellt.
 
 `python manage.py compilemessages` kompilerar locale-filerna till mer effektiva filer (*.mo*). Dessa ska inte redigeras manuellt.
 

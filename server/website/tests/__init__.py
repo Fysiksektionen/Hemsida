@@ -4,9 +4,9 @@ from django.test import TestCase
 
 
 class ValidationTestCase(TestCase):
-    def assertRaisesValidationError(self, msg, field, exclusive, func, *args, **kwargs):
+    def assertRaisesValidationError(self, err, field, exclusive, func, *args, **kwargs):
         """Method to assert that the correct ValidationError is thrown.
-        :param msg: Message to be thrown (str or ValidationError with message without fields).
+        :param err: Message to be thrown (str or ValidationError with only one message).
                     If None, no message content validation will be done.
         :param field: Field for error to be thrown. If None, no field association. If '__any__', any field is accepted.
         :param exclusive: Boolean if the error should be exclusive.
@@ -24,16 +24,19 @@ class ValidationTestCase(TestCase):
         else:
             raise self.failureException("{} not raised by {}".format(ValidationError.__name__, func.__name__))
 
-        # If ValidationError was given as message, convert to message. Else throw error.
-        if isinstance(msg, ValidationError):
-            if hasattr(msg, 'message'):
-                if msg.params is None:
-                    msg = str(msg.message)
+        # If ValidationError or string was given as message, convert to message. Else throw error.
+        if isinstance(err, ValidationError):
+            if len(err.messages) == 0:
+                msg = None
+            elif len(err.messages) == 1:
+                if err.params is None:
+                    msg = str(err.message)
                 else:
-                    msg = str(msg.message % msg.params)
+                    msg = str(err.message % err.params)
             else:
-                raise ValueError("'msg' can only be string or validation message without dictionary.")
-
+                raise ValueError("ValidationError can only have one message.")
+        else:
+            msg = str(err)
 
         # If message is not None.
         if msg is not None:
