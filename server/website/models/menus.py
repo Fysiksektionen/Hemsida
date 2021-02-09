@@ -34,7 +34,7 @@ class MenuItemBase(models.Model):
         :return Url of MenuItem based of url of page or url specified. Empty string if both Page and Url is None.
         """
         if self.page is not None and self.url is not None:
-            raise RuntimeError(_("Url is ambiguous, both Page and Url is set."))
+            raise RuntimeError("Url is ambiguous, both Page and Url is set.")
         return self.page.url if self.page is not None else (self.url if self.url is not None else "")
 
     def clean(self):
@@ -52,6 +52,44 @@ class MenuItemBase(models.Model):
         """
         if self.page is not None and self.url is not None:
             raise ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
+
+    def cast_to_proxy_model(self, proxy_model):
+        """Casts object to a proxy model.
+        :param proxy_model: Model to be casted to.
+        :return: self object with type proxy_model.
+        """
+
+        kwargs = {}
+        for field in self._meta.fields:
+            kwargs[field.attname] = getattr(self, field.attname)
+
+        return proxy_model(**kwargs)
+
+    def cast_to_true_model(self):
+        """Casts object to a proxy model based on the value of self._is_menu.
+        :return: self object with type Menu or MenuItem.
+        """
+
+        kwargs = {}
+        for field in self._meta.fields:
+            kwargs[field.attname] = getattr(self, field.attname)
+
+        if self._is_menu:
+            return Menu(**kwargs)
+        else:
+            return MenuItem(**kwargs)
+
+    @classmethod
+    def cast_query_to_true_model(cls, query):
+        """Casts query of objects to a proxy model based on the value of self._is_menu on each object.
+        :param query: Query of objects to be cast.
+        :return: List of object of type Menu or MenuItem.
+        """
+        if not isinstance(query, models.query.QuerySet):
+            raise TypeError("'query' needs to be a django query object (django.db.models.QuerySet).")
+
+        return [Menu(**vals) if vals['_is_menu'] else MenuItem(**vals)
+                for vals in query.values(*[field.attname for field in cls._meta.fields])]
 
     def __str__(self):
         return self.name

@@ -30,7 +30,7 @@ class MenuItemModelTest(ValidationTestCase):
         self.assertEqual(self.menu_item_url.link, "https://ths.kth.se")
         self.assertRaisesMessage(
             RuntimeError,
-            _("Url is ambiguous, both Page and Url is set."),
+            "Url is ambiguous, both Page and Url is set.",
             MenuItem.link.__get__,
             self.menu_item_both
         )
@@ -88,6 +88,7 @@ class MenuItemModelTest(ValidationTestCase):
 
 class MenuModelTest(ValidationTestCase):
     """Test the functionality of Menu model."""
+    # TODO: Test for self-adding as menu.
 
     def setUp(self):
         """Creation of objects"""
