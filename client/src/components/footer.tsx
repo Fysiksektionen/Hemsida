@@ -1,17 +1,17 @@
 import React from 'react';
-import logo from '../Fysiksektionen_logo.svg';
 import './footer.css'
 
 function Footer() {
-  return (
-    <div className="container-fluid py-4 bg-dark text-white text-center">
+    
+    return (
+        <div className="container-fluid py-4 bg-dark text-white text-center">
 
-        <h2>Hitta hit</h2>
+            <h3>Hitta hit</h3>
 
-        Brinellvägen 89, 114 28 Stockholm
+            Brinellvägen 89, 114 28 Stockholm
 
-    </div>
-  )
+        </div>
+    )
 }
 
 export default Footer;

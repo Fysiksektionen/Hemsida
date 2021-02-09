@@ -6,7 +6,7 @@ function Header() {
   return (
     <div className="navbar sticky-top bg-light">
 
-        <a className="navbar-brand mx-5 text-center" href="#">
+        <a className="navbar-brand mx-5 text-center" href="/">
             <img src={logo} width="80" height="80" alt="" />
             <h2>Fysiksektionen</h2>
         </a>
