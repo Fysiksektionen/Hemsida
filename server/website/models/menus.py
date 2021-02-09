@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+# TODO: Fix locale-values for field names and field names in ValidationErrors.
+
 class MenuItemBase(models.Model):
     """
     Model for item in a menu structure.
@@ -21,10 +23,10 @@ class MenuItemBase(models.Model):
     order = models.PositiveIntegerField(
         verbose_name=_('Order'), null=True, blank=True
     )
-    # TODO: Validate not adding itself as menu.
     menu = models.ForeignKey(
         'Menu', related_name='items', verbose_name=_('Menu'), null=True, blank=True, on_delete=models.SET_NULL
     )
+    # Should never be changed.
     _is_menu = models.BooleanField(verbose_name=_('Is menu'), null=False, blank=False)
 
     @property
@@ -38,20 +40,38 @@ class MenuItemBase(models.Model):
         return self.page.url if self.page is not None else (self.url if self.url is not None else "")
 
     def clean(self):
-        """ Raising error on clean of MenuItemBase object. Each MenuItemBase should be cleaned separately.
-        :raises NotImplementedError
-        """
-        raise NotImplementedError(
-            _("Cleaning of MenuItemBase is not allowed. Clean object in the form of a child class.")
-        )
-
-    def clean_link(self):
         """Validation of state of values in item.
 
-        :raises ValidationError if link-value is ambiguous (i.e. when both 'self.page' and 'self.url' is not None).
+        :raises ValidationError if
+            - link-value is ambiguous (i.e. when both 'self.page' and 'self.url' is not None) or
+            - menu relation is to itself or
+            - meun relation is to a non-menu item.
         """
+        errors = {}
+
+        # Link ambiguity
         if self.page is not None and self.url is not None:
-            raise ValidationError(_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'))
+            errors.update({
+                NON_FIELD_ERRORS: ValidationError(
+                    _('Url is ambiguous. Set either Page or Url on the MenuItem, not both.')
+                )
+            })
+
+        if self.menu:
+            # Menu relating to a non menu item
+            if not self.menu.is_menu:
+                errors.update({
+                    'menu': ValidationError(_('Menu field must relate to a Menu object.'))
+                })
+
+            # Menu relating to itself
+            elif (self.menu.pk is not None and self.menu.pk == self.pk) or self is self.menu:
+                errors.update({
+                    'menu': ValidationError(_('Menu relates to itself.'))
+                })
+
+        if errors:
+            raise ValidationError(errors)
 
     def cast_to_proxy_model(self, proxy_model):
         """Casts object to a proxy model.
@@ -117,24 +137,28 @@ class MenuItem(MenuItemBase):
             - menu is None,
             - order is None
         """
-        error_dict = {}
+        errors = {}
 
         # Link is ambiguous
         try:
-            super(MenuItem, self).clean_link()
+            super(MenuItem, self).clean()
         except ValidationError as e:
-            error_dict[NON_FIELD_ERRORS] = e
+            errors = e.update_error_dict(errors)
 
         # Menu is None
         if self.menu is None:
-            error_dict['menu'] = ValidationError(self._meta.get_field('menu').error_messages['blank'], code='blank')
+            errors.update(
+                {'menu': ValidationError(self._meta.get_field('menu').error_messages['blank'], code='blank')}
+            )
 
         # Order is None
         if self.order is None:
-            error_dict['order'] = ValidationError(self._meta.get_field('order').error_messages['blank'], code='blank')
+            errors.update(
+                {'order': ValidationError(self._meta.get_field('order').error_messages['blank'], code='blank')}
+            )
 
-        if error_dict:
-            raise ValidationError(error_dict)
+        if errors:
+            raise ValidationError(errors)
 
 
 class Menu(MenuItemBase):
@@ -154,17 +178,19 @@ class Menu(MenuItemBase):
             - link is ambiguous,
             - menu is not None and order is None
         """
-        error_dict = {}
+        errors = {}
 
         # Link is ambiguous
         try:
-            super(Menu, self).clean_link()
+            super(Menu, self).clean()
         except ValidationError as e:
-            error_dict[NON_FIELD_ERRORS] = e
+            errors = e.update_error_dict(errors)
 
         # Menu is not None and order is None
         if self.menu is not None and self.order is None:
-            error_dict['order'] = ValidationError(self._meta.get_field('order').error_messages['blank'], code='blank')
+            errors.update(
+                {'order': ValidationError(self._meta.get_field('order').error_messages['blank'], code='blank')}
+            )
 
-        if error_dict:
-            raise ValidationError(error_dict)
+        if errors:
+            raise ValidationError(errors)
