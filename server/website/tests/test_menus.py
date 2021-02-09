@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
 from website.models.menus import MenuItem, Menu, MenuItemBase
@@ -30,7 +31,7 @@ class MenuItemModelTest(ValidationTestCase):
         self.assertEqual(self.menu_item_url.link, "https://ths.kth.se")
         self.assertRaisesMessage(
             RuntimeError,
-            "Url is ambiguous, both Page and Url is set.",
+            "Link is ambiguous, both 'page' and 'url' is set.",
             MenuItem.link.__get__,
             self.menu_item_both
         )
@@ -44,7 +45,10 @@ class MenuItemModelTest(ValidationTestCase):
 
         # Ambiguous url
         self.assertRaisesValidationError(
-            msg=_('Url is ambiguous. Set either Page or Url on the MenuItem, not both.'),
+            err=ValidationError(
+                _("Link is ambiguous. Set either %(page_field_name)s or %(url_field_name)s, not both."),
+                params={'page_field_name': _('page'), 'url_field_name': _('url')}
+            ),
             field=None,
             exclusive=True,
             func=self.menu_item_both.full_clean
@@ -53,7 +57,7 @@ class MenuItemModelTest(ValidationTestCase):
         # MenuItem with no order
         self.menu_item_no_order = MenuItem(name="No order", menu=self.menu)
         self.assertRaisesValidationError(
-            msg=self.menu_item_no_order._meta.get_field('order').error_messages['blank'],
+            err=self.menu_item_no_order._meta.get_field('order').error_messages['blank'],
             field='order',
             exclusive=True,
             func=self.menu_item_no_order.full_clean
@@ -62,7 +66,7 @@ class MenuItemModelTest(ValidationTestCase):
         # MenuItem with no menu
         self.menu_item_no_menu = MenuItem(name="No menu", order=0)
         self.assertRaisesValidationError(
-            msg=self.menu_item_no_menu._meta.get_field('menu').error_messages['blank'],
+            err=self.menu_item_no_menu._meta.get_field('menu').error_messages['blank'],
             field='menu',
             exclusive=True,
             func=self.menu_item_no_menu.full_clean
@@ -71,7 +75,10 @@ class MenuItemModelTest(ValidationTestCase):
         # Adding non-menu as menu
         self.menu_item_non_menu_menu = MenuItem(name="Non menu as menu", order=0, menu=self.menu_item_page)
         self.assertRaisesValidationError(
-            msg=_('Menu field must relate to a Menu object.'),
+            err=ValidationError(
+                _('%(menu_field_name)s field must relate to a %(menu_model_name)s object.'),
+                params={'menu_field_name': _('menu'), 'menu_model_name': _('menu')}
+            ),
             field='menu',
             exclusive=True,
             func=self.menu_item_non_menu_menu.full_clean
@@ -86,7 +93,7 @@ def test_uniqueness_rules(self):
     # Order <--> Menu
     self.menu_item_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
     self.assertRaisesValidationError(
-        msg=self.menu_item_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
+        err=self.menu_item_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
         field=None,
         exclusive=True,
         func=self.menu_item_order_1.full_clean
@@ -95,7 +102,7 @@ def test_uniqueness_rules(self):
     # Name <--> Menu
     self.menu_item_saved_2 = MenuItem(name="Saved", page=self.page, menu=self.menu, order=0)
     self.assertRaisesValidationError(
-        msg=self.menu_item_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
+        err=self.menu_item_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
         field=None,
         exclusive=True,
         func=self.menu_item_saved_2.full_clean
@@ -120,7 +127,7 @@ class MenuModelTest(ValidationTestCase):
 
         self.menu_child_no_order = Menu(name="No order child menu", menu=self.menu)
         self.assertRaisesValidationError(
-            msg=self.menu_child_no_order._meta.get_field('order').error_messages['blank'],
+            err=self.menu_child_no_order._meta.get_field('order').error_messages['blank'],
             field='order',
             exclusive=True,
             func=self.menu_child_no_order.full_clean
@@ -130,7 +137,10 @@ class MenuModelTest(ValidationTestCase):
         self.menu_link_to_itself = Menu(name="Menu linking to itself", order=0)
         self.menu_link_to_itself.menu = self.menu_link_to_itself
         self.assertRaisesValidationError(
-            msg=_('Menu relates to itself.'),
+            err=ValidationError(
+                _('%(menu_model_name)s relates to itself.'),
+                params={'menu_model_name': _('menu')}
+            ),
             field='menu',
             exclusive=True,
             func=self.menu_link_to_itself.full_clean
@@ -144,7 +154,10 @@ class MenuModelTest(ValidationTestCase):
         self.menu_link_to_itself.menu = same_item
 
         self.assertRaisesValidationError(
-            msg=_('Menu relates to itself.'),
+            err=ValidationError(
+                _('%(menu_model_name)s relates to itself.'),
+                params={'menu_model_name': _('menu')}
+            ),
             field='menu',
             exclusive=True,
             func=self.menu_link_to_itself.full_clean
@@ -157,7 +170,7 @@ class MenuModelTest(ValidationTestCase):
         # Order <--> Menu
         self.menu_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
         self.assertRaisesValidationError(
-            msg=self.menu_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
+            err=self.menu_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
             field=None,
             exclusive=True,
             func=self.menu_order_1.full_clean
@@ -166,7 +179,7 @@ class MenuModelTest(ValidationTestCase):
         # Name <--> Menu
         self.menu_saved_2 = Menu(name="Saved", page=self.page, menu=self.menu, order=0)
         self.assertRaisesValidationError(
-            msg=self.menu_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
+            err=self.menu_saved_2.unique_error_message(MenuItemBase, ('menu', 'name')),
             field=None,
             exclusive=True,
             func=self.menu_saved_2.full_clean

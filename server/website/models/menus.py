@@ -13,21 +13,23 @@ class MenuItemBase(models.Model):
     """
 
     class Meta:
+        verbose_name = _("base menu item")
+        verbose_name_plural = _("base menu items")
         unique_together = [('menu', 'order'), ('menu', 'name')]
 
-    name = models.CharField(verbose_name=_('Name'), max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
 
     # Url and page are validated in clean method to ensure non-ambiguity.
-    url = models.URLField(verbose_name=_('Url'), blank=True, null=True, default=None)
-    page = models.ForeignKey('Page', verbose_name=_('Page'), blank=True, null=True, on_delete=models.CASCADE)
+    url = models.URLField(verbose_name=_('url'), blank=True, null=True, default=None)
+    page = models.ForeignKey('Page', verbose_name=_('page'), blank=True, null=True, on_delete=models.CASCADE)
     order = models.PositiveIntegerField(
-        verbose_name=_('Order'), null=True, blank=True
+        verbose_name=_('order'), null=True, blank=True
     )
     menu = models.ForeignKey(
-        'Menu', related_name='items', verbose_name=_('Menu'), null=True, blank=True, on_delete=models.SET_NULL
+        'Menu', related_name='items', verbose_name=_('menu'), null=True, blank=True, on_delete=models.SET_NULL
     )
     # Should never be changed.
-    _is_menu = models.BooleanField(verbose_name=_('Is menu'), null=False, blank=False)
+    _is_menu = models.BooleanField(verbose_name=_('is menu'), null=False, blank=False)
 
     @property
     def link(self):
@@ -36,7 +38,7 @@ class MenuItemBase(models.Model):
         :return Url of MenuItem based of url of page or url specified. Empty string if both Page and Url is None.
         """
         if self.page is not None and self.url is not None:
-            raise RuntimeError("Url is ambiguous, both Page and Url is set.")
+            raise RuntimeError("Link is ambiguous, both 'page' and 'url' is set.")
         return self.page.url if self.page is not None else (self.url if self.url is not None else "")
 
     def clean(self):
@@ -53,7 +55,12 @@ class MenuItemBase(models.Model):
         if self.page is not None and self.url is not None:
             errors.update({
                 NON_FIELD_ERRORS: ValidationError(
-                    _('Url is ambiguous. Set either Page or Url on the MenuItem, not both.')
+                    _("Link is ambiguous. Set either %(page_field_name)s "
+                      "or %(url_field_name)s, not both."),
+                    params={
+                        'page_field_name': _('page'),
+                        'url_field_name': _('url')
+                    }
                 )
             })
 
@@ -61,13 +68,24 @@ class MenuItemBase(models.Model):
             # Menu relating to a non menu item
             if not self.menu.is_menu:
                 errors.update({
-                    'menu': ValidationError(_('Menu field must relate to a Menu object.'))
+                    'menu': ValidationError(
+                        _('%(menu_field_name)s field must relate to a %(menu_model_name)s object.'),
+                        params={
+                            'menu_field_name': _('menu'),
+                            'menu_model_name': _('menu')
+                        }
+                    )
                 })
 
             # Menu relating to itself
             elif (self.menu.pk is not None and self.menu.pk == self.pk) or self is self.menu:
                 errors.update({
-                    'menu': ValidationError(_('Menu relates to itself.'))
+                    'menu': ValidationError(
+                        _('%(menu_model_name)s relates to itself.'),
+                        params={
+                            'menu_model_name': _('menu')
+                        }
+                    )
                 })
 
         if errors:
@@ -123,6 +141,8 @@ class MenuItem(MenuItemBase):
     """Model for item in menu."""
 
     class Meta:
+        verbose_name = _("menu item")
+        verbose_name_plural = _("menu items")
         proxy = True
 
     def __init__(self, *args, **kwargs):
@@ -165,6 +185,8 @@ class Menu(MenuItemBase):
     """Model for ordered collection of MenuItems."""
 
     class Meta:
+        verbose_name = _("menu")
+        verbose_name_plural = _("menus")
         proxy = True
 
     def __init__(self, *args, **kwargs):
