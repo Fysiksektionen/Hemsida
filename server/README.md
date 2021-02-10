@@ -126,4 +126,8 @@ Eftersom översättningar sällan blir så bra så har Django ett system för os
 
 `python manage.py compilemessages` kompilerar locale-filerna till mer effektiva filer (*.mo*). Dessa ska inte redigeras manuellt.
 
+#### `adminsortable` Swedish translation
+För att få svensk översättning till paketet adminsortable så ska du kopiera mappen `/locale/sv/LC_MESSAGES_adminsortable/` till `/venv/lib/python3.X/site-packages/adminsortable/locales/sv/LC_MESSAGES`
+
+Därefter kan du köra `python manage.py compilemessages`
 
