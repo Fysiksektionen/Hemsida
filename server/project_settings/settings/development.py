@@ -5,6 +5,19 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
 
 ALLOWED_HOSTS = ['*']
+INSTALLED_APPS += [
+    'debug_toolbar'
+]
+
+MIDDLEWARE += [
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
+]
+
+INTERNAL_IPS = [
+    '0.0.0.0',
+    '127.0.0.1',
+    'localhost'
+]
 
 if USE_DB_TEST_IN_DEBUG:
     DATABASES['default'] = {
