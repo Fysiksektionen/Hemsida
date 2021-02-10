@@ -1,11 +1,10 @@
+from adminsortable.models import SortableMixin
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-# TODO: Fix locale-values for field names and field names in ValidationErrors.
-
-class MenuItemBase(models.Model):
+class MenuItemBase(SortableMixin, models.Model):
     """
     Model for item in a menu structure.
     The item can link to a url or dynamically to a Page.
@@ -15,21 +14,22 @@ class MenuItemBase(models.Model):
     class Meta:
         verbose_name = _("base menu item")
         verbose_name_plural = _("base menu items")
-        unique_together = [('menu', 'order'), ('menu', 'name')]
+        ordering = ['order']
+        unique_together = [('menu', 'name')]
 
     name = models.CharField(verbose_name=_('name'), max_length=255)
 
     # Url and page are validated in clean method to ensure non-ambiguity.
     url = models.URLField(verbose_name=_('url'), blank=True, null=True, default=None)
     page = models.ForeignKey('Page', verbose_name=_('page'), blank=True, null=True, on_delete=models.CASCADE)
-    order = models.PositiveIntegerField(
-        verbose_name=_('order'), null=True, blank=True
+    order = models.PositiveSmallIntegerField(
+        verbose_name=_('order'), null=True, blank=True, default=0, db_index=True
     )
     menu = models.ForeignKey(
         'Menu', related_name='items', verbose_name=_('menu'), null=True, blank=True, on_delete=models.SET_NULL
     )
     # Should never be changed.
-    _is_menu = models.BooleanField(verbose_name=_('is menu'), null=False, blank=False)
+    is_menu = models.BooleanField(verbose_name=_('is menu'), null=False, blank=False)
 
     @property
     def link(self):
@@ -104,7 +104,7 @@ class MenuItemBase(models.Model):
         return proxy_model(**kwargs)
 
     def cast_to_true_model(self):
-        """Casts object to a proxy model based on the value of self._is_menu.
+        """Casts object to a proxy model based on the value of self.is_menu.
         :return: self object with type Menu or MenuItem.
         """
 
@@ -112,29 +112,25 @@ class MenuItemBase(models.Model):
         for field in self._meta.fields:
             kwargs[field.attname] = getattr(self, field.attname)
 
-        if self._is_menu:
+        if self.is_menu:
             return Menu(**kwargs)
         else:
             return MenuItem(**kwargs)
 
     @classmethod
     def cast_query_to_true_model(cls, query):
-        """Casts query of objects to a proxy model based on the value of self._is_menu on each object.
+        """Casts query of objects to a proxy model based on the value of self.is_menu on each object.
         :param query: Query of objects to be cast.
         :return: List of object of type Menu or MenuItem.
         """
         if not isinstance(query, models.query.QuerySet):
             raise TypeError("'query' needs to be a django query object (django.db.models.QuerySet).")
 
-        return [Menu(**vals) if vals['_is_menu'] else MenuItem(**vals)
+        return [Menu(**vals) if vals['is_menu'] else MenuItem(**vals)
                 for vals in query.values(*[field.attname for field in cls._meta.fields])]
 
     def __str__(self):
         return self.name
-
-    @property
-    def is_menu(self):
-        return self._is_menu
 
 
 class MenuItem(MenuItemBase):
@@ -145,9 +141,16 @@ class MenuItem(MenuItemBase):
         verbose_name_plural = _("menu items")
         proxy = True
 
+    class MenuItemManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(is_menu=False)
+
+    objects = MenuItemManager()
+    default_objects = models.Manager()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._is_menu = False
+        self.is_menu = False
 
     def clean(self):
         """Validation method for fields
@@ -189,9 +192,16 @@ class Menu(MenuItemBase):
         verbose_name_plural = _("menus")
         proxy = True
 
+    class MenuManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(is_menu=True)
+
+    objects = MenuManager()
+    default_objects = models.Manager()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._is_menu = True
+        self.is_menu = True
 
     def clean(self):
         """Validation method for fields

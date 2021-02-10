@@ -1,8 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
-
 from website.models.menus import MenuItem, Menu, MenuItemBase
 from website.models.pages import Page
+
 from .utils import ValidationTestCase
 
 
@@ -55,7 +55,7 @@ class MenuItemModelTest(ValidationTestCase):
         )
 
         # MenuItem with no order
-        self.menu_item_no_order = MenuItem(name="No order", menu=self.menu)
+        self.menu_item_no_order = MenuItem(name="No order", menu=self.menu, order=None)
         self.assertRaisesValidationError(
             err=self.menu_item_no_order._meta.get_field('order').error_messages['blank'],
             field='order',
@@ -64,7 +64,7 @@ class MenuItemModelTest(ValidationTestCase):
         )
 
         # MenuItem with no menu
-        self.menu_item_no_menu = MenuItem(name="No menu", order=0)
+        self.menu_item_no_menu = MenuItem(name="No menu", order=0,)
         self.assertRaisesValidationError(
             err=self.menu_item_no_menu._meta.get_field('menu').error_messages['blank'],
             field='menu',
@@ -125,7 +125,7 @@ class MenuModelTest(ValidationTestCase):
         # Check that no parent menu is accepted
         self.assertEqual(self.menu.full_clean(), None)
 
-        self.menu_child_no_order = Menu(name="No order child menu", menu=self.menu)
+        self.menu_child_no_order = Menu(name="No order child menu", menu=self.menu, order=None)
         self.assertRaisesValidationError(
             err=self.menu_child_no_order._meta.get_field('order').error_messages['blank'],
             field='order',
@@ -166,15 +166,6 @@ class MenuModelTest(ValidationTestCase):
     def test_uniqueness_rules(self):
         self.menu_item_saved = MenuItem(name="Saved", page=self.page, menu=self.menu, order=1)
         self.menu_item_saved.save()
-
-        # Order <--> Menu
-        self.menu_order_1 = MenuItem(name="Order 1", page=self.page, menu=self.menu, order=1)
-        self.assertRaisesValidationError(
-            err=self.menu_order_1.unique_error_message(MenuItemBase, ('menu', 'order')),
-            field=None,
-            exclusive=True,
-            func=self.menu_order_1.full_clean
-        )
 
         # Name <--> Menu
         self.menu_saved_2 = Menu(name="Saved", page=self.page, menu=self.menu, order=0)
