@@ -11,7 +11,7 @@ class SingletonModel(models.Model):
     # Cache to store the instance of the singleton. Reduces database calls.
     _cached_instance = None # DO NOT ACCESS THIS ONE!  use instance()
     # Primary key to find object in database, leave constant.
-    _singleton_pk = 1
+    _singleton_pk = 1 # should be the same value as the migration creating the objects
 
     # Using a 'metaclass' doesn't work. So don't refactor it using that.
     # Makes sure there is only one instance.
@@ -57,7 +57,6 @@ class SingletonModel(models.Model):
         :return self"""
         type(self)._cached_instance = self
         return self
-
 
     def __str__(self):
         """:return verbose_name if verbose_name exist in Meta class, else the type name"""
