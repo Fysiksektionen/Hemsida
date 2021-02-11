@@ -10,10 +10,15 @@ Follow the following guidelines:
 - Only include url files that are intended for use in api_v1.
 """
 
+from authentication.urls import urlpatterns as authentication_urlpatterns
 from django.urls import path, include
-from django.template.response import TemplateResponse
+from rest_framework.urlpatterns import format_suffix_patterns
+from website.urls import urlpatterns as website_urlpatterns
 
 app_name = 'api_v1'
-urlpatterns = [
-
+urlpatterns = website_urlpatterns
+urlpatterns += [
+    path('auth/', include(authentication_urlpatterns))
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
