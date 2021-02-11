@@ -2,7 +2,6 @@ from adminsortable.models import SortableMixin
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from rest_framework.reverse import reverse_lazy
 
 
 class MenuItemBase(SortableMixin, models.Model):
@@ -17,10 +16,6 @@ class MenuItemBase(SortableMixin, models.Model):
         verbose_name_plural = _("base menu items")
         ordering = ['order']
         unique_together = [('menu', 'name')]
-
-    class ObjectMeta:
-        detail_url = reverse_lazy('api:menus:object')
-        detail_url_fields = ['pk']
 
     name = models.CharField(verbose_name=_('name'), max_length=255)
 
@@ -196,6 +191,9 @@ class Menu(MenuItemBase):
         verbose_name = _("menu")
         verbose_name_plural = _("menus")
         proxy = True
+
+    class ObjectMeta:
+        detail_view_name = 'api:menus:object'
 
     class MenuManager(models.Manager):
         def get_queryset(self):

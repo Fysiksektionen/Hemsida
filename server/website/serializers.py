@@ -5,9 +5,6 @@ from rest_framework.utils.field_mapping import get_nested_relation_kwargs
 
 
 class ExtendedModelSerializer(ModelSerializer):
-    # nested_serialization = {}
-    # inf_depth = False
-
     NestedSerializerParentClass = None
 
     def __init__(self, *args, **kwargs):
@@ -66,24 +63,26 @@ class DBObjectSerializer(ExtendedModelSerializer):
         field_names = list(super().get_field_names(declared_fields, info))
         exclude = getattr(self.Meta, 'exclude', None)
 
-        # TODO: Lägg bara till self.url_field_name om self.Meta.model.ObjectMeta finns.
-        if exclude is None or self.url_field_name not in exclude:
-            if self.url_field_name not in field_names:
-                field_names.insert(0, self.url_field_name)
-
         if exclude is None or 'id' not in exclude:
             if 'id' not in field_names:
                 field_names.insert(0, 'id')
 
+        if hasattr(self.Meta.model, 'ObjectMeta') and hasattr(self.Meta.model.ObjectMeta, 'detail_view_name'):
+            if exclude is None or self.url_field_name not in exclude:
+                if self.url_field_name not in field_names:
+                    field_names.insert(1, self.url_field_name)
+
+        return field_names
+
     def build_url_field(self, field_name, model_class):
-        # TODO: Skriv ny serializer_url_field som kan hantera flera fält och basera svaret på vad som finns
-        #  i model_class.ObjectMeta.
         """
         Create a field representing the object's own URL.
         """
         field_class = self.serializer_url_field
+        if hasattr(self.Meta.model, 'ObjectMeta'):
+            getattr(self.Meta.model.ObjectMeta, 'detail_view_name', "")
         field_kwargs = {
-            'view_name': None
+            'view_name': getattr(self.Meta.model.ObjectMeta, 'detail_view_name', "")
         }
 
         return field_class, field_kwargs
