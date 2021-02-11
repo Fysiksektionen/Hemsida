@@ -134,7 +134,10 @@ class MenuItemBase(SortableMixin, models.Model):
 
 
 class MenuItem(MenuItemBase):
-    """Model for item in menu."""
+    """Model for item in menu.
+    Manager of the class is overwritten with manager filtering on is_menu=False.
+    If you want to query all items in the database table, use MenuItemBase or default_objects.
+    """
 
     class Meta:
         verbose_name = _("menu item")
@@ -142,6 +145,7 @@ class MenuItem(MenuItemBase):
         proxy = True
 
     class MenuItemManager(models.Manager):
+        """Manager to define special querying behaviour."""
         def get_queryset(self):
             return super().get_queryset().filter(is_menu=False)
 
@@ -185,7 +189,10 @@ class MenuItem(MenuItemBase):
 
 
 class Menu(MenuItemBase):
-    """Model for ordered collection of MenuItems."""
+    """Model for ordered collection of MenuItems.
+    Manager of the class is overwritten with manager filtering on is_menu=True.
+    If you want to query all items in the database table, use MenuItemBase or default_objects.
+    """
 
     class Meta:
         verbose_name = _("menu")
@@ -193,6 +200,7 @@ class Menu(MenuItemBase):
         proxy = True
 
     class MenuManager(models.Manager):
+        """Manager to define special querying behaviour."""
         def get_queryset(self):
             return super().get_queryset().filter(is_menu=True)
 
