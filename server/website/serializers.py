@@ -86,4 +86,3 @@ class DBObjectSerializer(ExtendedModelSerializer):
         }
 
         return field_class, field_kwargs
-
