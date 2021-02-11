@@ -1,46 +1,50 @@
-from django.core.cache import cache
 from django.db import models
 from django.db.models.base import ModelBase
 
 
-class SingletonBase(ModelBase):
-    """I have seen like +5 different ways to override __new__ but none for the current version of DJango
-        I have a somewhat informed guess that this would be the best way to override for this django version.
-        I don't even know if this is a proper way to code the function, it is also a guess.
-        Please comment on this.
-    """
-    def __new__(cls, *args, **kwargs):
-        new_obj = cache.get(cls.__name__)
-        if new_obj is None:
-            new_obj = super.__new__()
-        return new_obj
-
-
-class SingletonModel(models.Model, metaclass=SingletonBase):
+class SingletonModel(models.Model):
     """
     An abstract singleton setup for a model.
     """
 
-    class Meta:
-        abstract = True
+    # Using 'django.core.cache.cache' doesn't work nicely for this intent.
+    # Cache to store the instance of the singleton. Reduces database calls.
+    _cached_instance = None # DO NOT ACCESS THIS ONE!  use instance()
+    # Primary key to find object in database, leave constant.
+    _singleton_pk = 1
 
-    # Overriding the __new__ is done in  SingletonBase
+    # Using a 'metaclass' doesn't work. So don't refactor it using that.
+    # Makes sure there is only one instance.
+    def __new__(cls, *args, **kwargs):
+        """Creates this singleton if it hasn't been created already.
+        :raise TypeError if attempt to create second instance"""
+        # Ugly way to check for database access. Another way would be to inspect stack, that is more resilient but still ugly and arbitrary.
+        if (len(args) > 0 and args[0] == cls._singleton_pk):
+            # Nessesary, because the database doesn't cache already created instances. It tries to create new every time.
+            if cls._cached_instance is None:
+                return super().__new__(cls).set_cache() # creates this singleton and caches it.
+            else:
+                return cls._cached_instance
+        else:
+            raise TypeError("Cannot create more than one instance of a singleton!")  # this is a singleton, can't create objects of this class. Only exist in database
 
     @classmethod
     def instance(cls):
         """Gets the instance of this singleton"""
-        inst = cache.get(cls.__name__)  # use cache to reduce database requests, could also make your own cache
-        if inst is None:
-            inst, created = cls.objects.get_or_create(pk=1)
-            if not created:
-                inst.set_cache()
-        return inst
+        if cls._cached_instance is None:
+            # if DoesNotExist error then your database doesn't contain this singleton!
+            cls._cached_instance = cls.objects.get(pk=cls._singleton_pk)
+        return cls._cached_instance
+
+
+    class Meta:
+        abstract = True
 
     def save(self, *args, **kwargs):
-        """Save singleton, always with primary key = 1"""
-        self.pk = 1
+        """Save singleton to database"""
+        self.pk = self._singleton_pk
         super().save(*args, **kwargs)
-        self.set_cache()
+        #self.set_cache() probably not needed
 
     def delete(self, *args, **kwargs):
         """Not supported / not deletable.
@@ -49,8 +53,11 @@ class SingletonModel(models.Model, metaclass=SingletonBase):
         pass
 
     def set_cache(self):
-        """Uses django cache to store this instance by its class name."""
-        cache.set(self.__class__.__name__, self)
+        """Uses a cache to store this instance by its class.
+        :return self"""
+        type(self)._cached_instance = self
+        return self
+
 
     def __str__(self):
         """:return verbose_name if verbose_name exist in Meta class, else the type name"""

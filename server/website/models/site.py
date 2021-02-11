@@ -1,8 +1,10 @@
 from django.db import models
-from abstract_singleton import SingletonModel
 from django.utils.translation import gettext_lazy as _
-from content_collection import ContentCollection
-from pages import Page
+
+from website.models.abstract_singleton import SingletonModel
+from website.models.content_collection import ContentCollection
+from website.models.pages import Page
+
 
 class SiteModel(SingletonModel):
 
@@ -14,8 +16,9 @@ class SiteModel(SingletonModel):
 
     root_page = models.ForeignKey(Page, verbose_name=_('root page'), blank=False, null=False, on_delete=models.RESTRICT)
 
-    footer_content = models.ForeignKey(ContentCollection, verbose_name=_('footer content'), blank=True, null=True, on_delete=models.RESTRICT)
-    banner_content = models.ForeignKey(ContentCollection, verbose_name=_('banner content'), blank=True, null=True, on_delete=models.RESTRICT)
+    # Didn't find a nice way to do this but what ever...
+    banner_content = models.ForeignKey(ContentCollection, verbose_name=_('banner content'), related_name='banner_content', blank=True, null=True, on_delete=models.RESTRICT)
+    footer_content = models.ForeignKey(ContentCollection, verbose_name=_('footer content'), related_name='footer_content', blank=True, null=True, on_delete=models.RESTRICT)
 
 
     # Override
