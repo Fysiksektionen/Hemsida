@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from django.utils.log import DEFAULT_LOGGING
+from django.utils.translation import gettext_lazy as _
 
 from .local import *
 
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'adminsortable',
     'authentication',
     'website'
 ]
@@ -75,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static'
             ],
         },
     },
@@ -112,6 +115,13 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 LANGUAGE_CODE = 'sv'
+LANGUAGES = [
+    ('sv', _('Swedish')),
+    ('en', _('English'))
+]
+LOCALE_PATHS = [
+    PROJECT_ROOT / 'locale'
+]
 TIME_ZONE = 'Europe/Stockholm'
 USE_I18N = True
 USE_L10N = True
@@ -123,6 +133,9 @@ FIRST_DAY_OF_WEEK = 1
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = join_paths(ROOT_URL, 'public', 'staticfiles')
 STATIC_ROOT = PUBLIC_ROOT / 'staticfiles'
+STATICFILES_DIRS = [
+    "static"
+]
 
 MEDIA_URL = join_paths(ROOT_URL, 'public' 'mediafiles')
 MEDIA_ROOT = PUBLIC_ROOT / 'mediafiles'

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 03:04+0100\n"
+"POT-Creation-Date: 2021-02-10 08:39+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -16,11 +16,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: website/models/menus.py:16
+#: website/admin.py:12
+msgid "Admin page"
+msgstr "Adminsidan"
+
+#: website/admin.py:13
+msgid "The Physics Chapter - Administration"
+msgstr "Fysiksektionen - Administration"
+
+#: website/admin.py:14
+msgid "Site Management"
+msgstr "Sidhantering"
+
+#: website/admin.py:38
+msgid "about"
+msgstr "om"
+
+#: website/admin.py:41
+msgid "link"
+msgstr "länk"
+
+#: website/admin.py:56
+msgid "is sub menu"
+msgstr "är sub-meny"
+
+#: website/admin.py:60
+msgid "number of items"
+msgstr "antal menyobjekt"
+
+#: website/apps.py:6
+msgid "website"
+msgstr "websida"
+
+#: website/apps.py:7
+msgid "website app"
+msgstr "websideappen"
+
+#: website/models/menus.py:15
 msgid "base menu item"
 msgstr "basmenyobjekt"
 
-#: website/models/menus.py:17
+#: website/models/menus.py:16
 msgid "base menu items"
 msgstr "basmenyobjekt"
 
@@ -29,12 +65,12 @@ msgid "name"
 msgstr "namn"
 
 #: website/models/menus.py:23 website/models/menus.py:62
-#: website/tests/test_menus.py:50
+#: website/models/pages.py:14 website/tests/test_menus.py:50
 msgid "url"
 msgstr "url"
 
 #: website/models/menus.py:24 website/models/menus.py:61
-#: website/tests/test_menus.py:50
+#: website/models/pages.py:11 website/tests/test_menus.py:50
 msgid "page"
 msgstr "sida"
 
@@ -44,14 +80,12 @@ msgstr "ordning"
 
 #: website/models/menus.py:29 website/models/menus.py:74
 #: website/models/menus.py:75 website/models/menus.py:86
-#: website/models/menus.py:188 website/tests/test_menus.py:80
+#: website/models/menus.py:191 website/tests/test_menus.py:80
 #: website/tests/test_menus.py:142 website/tests/test_menus.py:159
 msgid "menu"
 msgstr "meny"
 
 #: website/models/menus.py:32
-#, fuzzy
-#| msgid "Is menu"
 msgid "is menu"
 msgstr "är meny"
 
@@ -71,14 +105,18 @@ msgstr "%(menu_field_name)s fältet måste länka till ett %(menu_model_name)s o
 msgid "%(menu_model_name)s relates to itself."
 msgstr "%(menu_model_name)s länkar till sig själv."
 
-#: website/models/menus.py:144
+#: website/models/menus.py:140
 msgid "menu item"
 msgstr "menyobjekt"
 
-#: website/models/menus.py:145
+#: website/models/menus.py:141
 msgid "menu items"
 msgstr "menyobjekt"
 
-#: website/models/menus.py:189
+#: website/models/menus.py:192
 msgid "menus"
 msgstr "menyer"
+
+#: website/models/pages.py:12
+msgid "pages"
+msgstr "sidor"
