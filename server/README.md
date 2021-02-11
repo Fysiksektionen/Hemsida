@@ -23,7 +23,7 @@ För att ladda ner och köra servern lokalt behöver du sätta upp en del grejer
 
 1. Kör ```echo 'export PYTHONPATH="$PYTHONPATH:$VIRTUAL_ENV/.."' >> venv/bin/activate```. Sedan ```source venv/bin/activate``` (Det aktiverar din virtual enviroment, något du måste göra varje gång du vill starta servern!)
 
-1. Installera alla python-paket genom att använda ```pip install -r requirements/development.txt```. (Notera att det _ska_ vara ```pip``` här.)
+1. Installera alla python-paket genom att använda ```pip install -r requirements.txt```. (Notera att det _ska_ vara ```pip``` här.)
 
 1. Kopiera filen server/project_settings/settings/local_template.py till server/project_settings/settings/local.py och fyll i informationen baserat på användarnamn och dylikt som du använder under steg 1 och 2.
    
@@ -40,7 +40,7 @@ För att ladda ner och köra servern lokalt behöver du sätta upp en del grejer
 
 1. Öppna 'server'-mappen med PyCharm. För att skapa en egen vitual enviroment; gå till _File -> Settings -> Project: server -> Python interpreter -> \[kugghjulet\] -> Add -> \[Använd standard-inställningarna för Virtualenv Enviroment och tryck ok\]_.
 
-1. Börja med att installera alla pythonpaket som behövs. Det gör du genom att i nedre högra hörnet välja en python-interpreter som du nu skapat. Sedan öppnar du terminalen i PyCharm (det bör då stå _(venv)_ innan prompten). Kör ```pip install -r requirements/development.txt```.
+1. Börja med att installera alla pythonpaket som behövs. Det gör du genom att i nedre högra hörnet välja en python-interpreter som du nu skapat. Sedan öppnar du terminalen i PyCharm (det bör då stå _(venv)_ innan prompten). Kör ```pip install -r requirements.txt```.
 
 1. Kopiera filen server/project_settings/settings/local_template.py till server/project_settings/settings/local.py och fyll i informationen baserat på användarnamn och dylikt som du använder under steg 1 och 2.
 
@@ -122,7 +122,7 @@ def raise_in_correct_lang():
 ### Django messages
 Eftersom översättningar sällan blir så bra så har Django ett system för oss att explicit specificera alla översättningar. Detta görs genom att manuellt fylla i översättningar i filer som Django genererar.
 
-`python manage.py makemessages --locale=sv` skapar översättningsfiler (*.po*) i mapparna *locale/sv* som finns i varje app och en övergripande. Dessa ska sedan redigeras manuellt.
+`python manage.py makemessages -l sv --ignore venv --no-wrap --no-obsolete` skapar översättningsfiler (*.po*) i mapparna *locale/sv* som finns i varje app. Dessa ska sedan redigeras manuellt.
 
 `python manage.py compilemessages` kompilerar locale-filerna till mer effektiva filer (*.mo*). Dessa ska inte redigeras manuellt.
 
