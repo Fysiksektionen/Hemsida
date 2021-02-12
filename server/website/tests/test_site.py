@@ -17,7 +17,7 @@ class SiteModelTest(TestCase):
         site.root_url = "http://svt.se"
         site.save()
         # reset to simulate restart
-        SiteModel._cached_instance = None
+        SiteModel._cached_instance = None # Do not change _cached_instance
         #print("=Setup completed=")
 
     def test_singleton_database_initalization(self):
@@ -27,6 +27,7 @@ class SiteModelTest(TestCase):
         self.assertNotEqual(SiteModel.objects.get(pk=SiteModel._singleton_pk), None)
 
     def test_singleton_behaviour(self):
+        # Check that you cannot initalize it again
         with self.assertRaises(TypeError):
             site = SiteModel(root_page=self.page)
         with self.assertRaises(TypeError):
