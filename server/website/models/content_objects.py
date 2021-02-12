@@ -1,5 +1,5 @@
 from django.db import models
 
 
-class ContentCollection(models.Model):
+class ContentObjectBase(models.Model):
     pass

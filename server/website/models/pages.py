@@ -1,29 +1,44 @@
 from django.db import models
 from django.utils.text import slugify
-from contentcollection import ContentCollection
+from django.utils.translation import gettext_lazy as _
+from content_objects import ContentObjectBase
 
+
+class PageDraft(models.Model):
+    """
+    Model for a Page draft.
+    """
+    page_type = models.CharField(verbose_name=_('page type'), max_length=255)
+    content_sv = models.ForeignKey('ContentObjectBase', verbose_name=_('swedish content'), blank=True, null=True,
+                                   on_delete=models.SET_NULL)
+    content_en = models.ForeignKey('ContentObjectBase', verbose_name=_('english content'), blank=True, null=True,
+                                   on_delete=models.SET_NULL)
+    last_edited_at = models.DateField(verbose_name=_('last edited at'), null=False, blank=False, auto_now_add=True)
 
 class Page(models.Model):
     """
     Model for a Page.
     """
     class Meta:
-        unique_together = [('name', parent.name), ('slug', parent.slug)]
+        unique_together = [('name', 'parent'), ('slug', 'parent')]
 
-    url = models.URLField(verbose_name='Url', blank=False, null=False)
-    name = models.CharField(verbose_name='Name', max_length=255)
-    page_type = models.CharField(verbose_name='Page type')
-    language = models.CharField(verbose_name='Language', choices=[('sv', 'Svenska'), ('eng', 'English')])
-    parent = models.ForeignKey('Page', verbose_name='Parent page', blank=True, null=True, on_delete=models.SET_NULL)
-
+    url = models.URLField(verbose_name=_('URL'), blank=False, null=False)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    page_type = models.CharField(verbose_name=_('page type'), max_length=255)
+    parent = models.ForeignKey('Page', verbose_name=_('parent page'), blank=True, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(verbose_name='Slug', null=False, blank=False)
 
-    has_draft = models.BooleanField(verbose_name='Has draft', null=False, blank=False)
-    published = models.BooleanField(verbose_name='Is published', null=False, blank=False)
-    published_at = models.DateField(verbose_name='Published at', null=True, blank=True, auto_now_add=False)
-    last_edited_at = models.DateField(verbose_name='Last edited at', null=False, blank=False, auto_now_add=False)
+    page_draft = models.OneToOneField(verbose_name=_('page draft'), null=True, blank=True)
+    has_draft = models.BooleanField(verbose_name=_('has draft'))
 
-    content = models.ForeignKey('ContentCollection', verbose_name='Content', blank=True, null=True, on_delete=models.SET_NULL))
+    published = models.BooleanField(verbose_name=_('is published'))
+    published_at = models.DateField(verbose_name=_('published at'), null=True, blank=True, auto_now_add=False)
+    last_edited_at = models.DateField(verbose_name=_('last edited at'), null=False, blank=False, auto_now_add=True)
+
+    content_sv = models.ForeignKey('ContentObjectBase', verbose_name=_('swedish content'), blank=True, null=True,
+                                   on_delete=models.SET_NULL)
+    content_en = models.ForeignKey('ContentObjectBase', verbose_name=_('english content'), blank=True, null=True,
+                                   on_delete=models.SET_NULL)
 
     def __init__(self, *args, **kwargs):
         # Set default slug if not specified
@@ -33,3 +48,4 @@ class Page(models.Model):
             else:
                 kwargs['slug'] = ''
         super().__init__(*args, **kwargs)
+
