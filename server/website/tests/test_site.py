@@ -13,6 +13,7 @@ class SiteModelTest(TestCase):
         page.save()
         self.page = page
         site = SiteModel((1), root_page=page) # Do not initialize this way!
+            # ^^^^ if this doesn't work that means the coresponding migration will also not work!
         site.root_url = "http://svt.se"
         site.save()
         # reset to simulate restart

@@ -1,3 +1,6 @@
+from __future__ import annotations
+from typing import ClassVar
+
 from django.db import models
 from django.db.models.base import ModelBase
 
@@ -9,9 +12,9 @@ class SingletonModel(models.Model):
 
     # Using 'django.core.cache.cache' doesn't work nicely for this intent.
     # Cache to store the instance of the singleton. Reduces database calls.
-    _cached_instance = None # DO NOT ACCESS THIS ONE!  use instance()
+    _cached_instance : ClassVar[SingletonModel] = None # DO NOT ACCESS THIS ONE!  use instance()
     # Primary key to find object in database, leave constant.
-    _singleton_pk = 1 # should be the same value as the migration creating the objects
+    _singleton_pk : ClassVar[int] = 1 # should be the same value as the migration creating the objects
 
     # Using a 'metaclass' doesn't work. So don't refactor it using that.
     # Makes sure there is only one instance.
@@ -29,7 +32,7 @@ class SingletonModel(models.Model):
             raise TypeError("Cannot create more than one instance of a singleton!")  # this is a singleton, can't create objects of this class. Only exist in database
 
     @classmethod
-    def instance(cls):
+    def instance(cls) -> SingletonModel:
         """Gets the instance of this singleton"""
         if cls._cached_instance is None:
             # if DoesNotExist error then your database doesn't contain this singleton!
@@ -40,25 +43,25 @@ class SingletonModel(models.Model):
     class Meta:
         abstract = True
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         """Save singleton to database"""
         self.pk = self._singleton_pk
         super().save(*args, **kwargs)
         #self.set_cache() probably not needed
 
-    def delete(self, *args, **kwargs):
+    def delete(self, *args, **kwargs) -> None:
         """Not supported / not deletable.
         :return None
         """
         pass
 
-    def set_cache(self):
+    def set_cache(self) -> SingletonModel:
         """Uses a cache to store this instance by its class.
         :return self"""
         type(self)._cached_instance = self
         return self
 
-    def __str__(self):
+    def __str__(self) -> str:
         """:return verbose_name if verbose_name exist in Meta class, else the type name"""
         # probably not translate
         if hasattr(self._meta, 'verbose_name'):
