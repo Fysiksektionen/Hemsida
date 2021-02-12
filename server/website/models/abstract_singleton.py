@@ -2,7 +2,6 @@ from __future__ import annotations
 from typing import ClassVar
 
 from django.db import models
-from django.db.models.base import ModelBase
 
 
 class SingletonModel(models.Model):
@@ -32,12 +31,12 @@ class SingletonModel(models.Model):
             raise TypeError("Cannot create more than one instance of a singleton!")  # this is a singleton, can't create objects of this class. Only exist in database
 
     @classmethod
-    def instance(cls) -> SingletonModel:
+    def instance(cls) -> SingletonModel: # Generics not implemented in python 3.8, this will do
         """Gets the instance of this singleton"""
-        if cls._cached_instance is None:
-            # if DoesNotExist error then your database doesn't contain this singleton!
-            cls._cached_instance = cls.objects.get(pk=cls._singleton_pk)
-        return cls._cached_instance
+        # If DoesNotExist error then your database doesn't contain this singleton!
+        #  then the migration have gone wrong!
+        # cache is set automatically
+        return cls.objects.get(pk=cls._singleton_pk) if cls._cached_instance is None else cls._cached_instance
 
 
     class Meta:
@@ -55,7 +54,7 @@ class SingletonModel(models.Model):
         """
         pass
 
-    def set_cache(self) -> SingletonModel:
+    def set_cache(self) -> SingletonModel: # Generics not implemented in python 3.8, this will do
         """Uses a cache to store this instance by its class.
         :return self"""
         type(self)._cached_instance = self
@@ -68,3 +67,4 @@ class SingletonModel(models.Model):
             return self._meta.verbose_name
         else:
             return type(self).__name__
+

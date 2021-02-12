@@ -36,6 +36,7 @@ class SiteModelTest(TestCase):
 
         # Check that the instance function works
         site = SiteModel.instance()
+        self.assertTrue(isinstance(site, SiteModel))
         self.assertNotEqual(site, None)
         self.assertNotEqual(None, SiteModel.instance())
         self.assertEqual(site, SiteModel.instance())
