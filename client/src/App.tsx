@@ -8,6 +8,7 @@ import './App.css'
 import { title } from 'process';
 import {DummyData2} from './components/news/frontpage_news_widget'
 
+
 function App() {
   return (
     <div className="App">
