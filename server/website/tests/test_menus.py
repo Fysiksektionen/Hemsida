@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 from website.models.menus import MenuItem, Menu, MenuItemBase
 from website.models.pages import Page
 
-from .utils import ValidationTestCase
+from tests.utils import ValidationTestCase
 
 
 class MenuItemModelTest(ValidationTestCase):

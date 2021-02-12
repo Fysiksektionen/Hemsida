@@ -8,3 +8,4 @@ mysqlclient==2.0.2
 pytz==2020.4
 sqlparse==0.4.1
 django-admin-sortable>=2.2.3
+optional.py=1.1.0
