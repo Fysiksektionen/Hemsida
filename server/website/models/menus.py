@@ -17,6 +17,9 @@ class MenuItemBase(SortableMixin, models.Model):
         ordering = ['order']
         unique_together = [('menu', 'name')]
 
+    class ObjectMeta:
+        detail_view_name = 'api:menu-detail'
+
     name = models.CharField(verbose_name=_('name'), max_length=255)
 
     # Url and page are validated in clean method to ensure non-ambiguity.
@@ -198,9 +201,6 @@ class Menu(MenuItemBase):
         verbose_name = _("menu")
         verbose_name_plural = _("menus")
         proxy = True
-
-    class ObjectMeta:
-        detail_view_name = 'api:menu-detail'
 
     class MenuManager(models.Manager):
         """Manager to define special querying behaviour."""

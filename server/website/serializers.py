@@ -3,6 +3,7 @@ import copy
 from collections import OrderedDict
 
 from rest_framework.fields import Field
+from rest_framework.relations import HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.settings import api_settings
 from rest_framework.utils import model_meta
@@ -10,6 +11,23 @@ from rest_framework.utils.field_mapping import get_nested_relation_kwargs
 
 
 class ExtendedModelSerializer(ModelSerializer):
+    """Serializer extending ModelSerializer to define nested behaviour through Meta class.
+
+    NestedSerializerParentClass [Serializer]: Serializer class for nested objects. (Default = self.__class__).
+
+    Meta-class:
+        - inf_depth [Bool]: If true no limit to depth (indep. of depth value). (Default = False).
+        - nested_serialization [Dict]: Dictionary specifying meta-class attributes for related (nested) objects.
+                                             May specify any of the attributes of the Meta-class ('depth', 'inf_depth'
+                                             and 'model' are ignored if specified).
+
+                                             If 'reuse_nested_serialization = True' for field the nested objects inherit
+                                             'nested_serialization'.
+
+                                             If 'use_base_meta = True' the meta-class will copy the metaclass of its
+                                             parent.
+    """
+
     NestedSerializerParentClass = None
 
     def __init__(self, *args, **kwargs):
@@ -20,12 +38,8 @@ class ExtendedModelSerializer(ModelSerializer):
             self.NestedSerializerParentClass = self.__class__
 
     def get_fields(self):
-        """
-        (Exact copy of parent with constraint on depth removed.)
+        """Exact copy of parent with constraint on depth removed."""
 
-        Return the dict of field names -> field instances that should be
-        used for `self.fields` when instantiating the serializer.
-        """
         if self.url_field_name is None:
             self.url_field_name = api_settings.URL_FIELD_NAME
 
@@ -97,6 +111,7 @@ class ExtendedModelSerializer(ModelSerializer):
         """
 
         if field_name in getattr(self.Meta, 'nested_serialization', {}):
+            Meta = self.Meta
             full_nested_ser = self.Meta.nested_serialization
             nested_ser = full_nested_ser[field_name]
 
@@ -107,13 +122,32 @@ class ExtendedModelSerializer(ModelSerializer):
                 class NestedMeta:
                     model = relation_info.related_model
                     depth = nested_depth - 1 if not getattr(self.Meta, 'inf_depth', False) else nested_depth
+                    inf_depth = getattr(self.Meta, 'inf_depth', False)
 
                     def __init__(self):
-                        if 'reuse_nested_serialization' in nested_ser and nested_ser['reuse_nested_serialization']:
+                        if nested_ser.get('reuse_nested_serialization', False):
                             self.nested_serialization = full_nested_ser
-                        for meta_field_name, value in nested_ser.items():
-                            if meta_field_name != 'reuse_nested_serialization':
-                                self.__setattr__(meta_field_name, value)
+
+                        if nested_ser.get('use_base_meta', False):
+                            metaclass_values_dict = {
+                                key: val
+                                for key, val in Meta.__dict__.items()
+                                if not (len(key) > 2 and key[:2] == "__")
+                            }
+                        else:
+                            metaclass_values_dict = nested_ser
+
+                        metaclass_values_dict = {
+                            key: val
+                            for key, val in metaclass_values_dict.items()
+                            if key not in [
+                                'model', 'depth', 'inf_depth', 'nested_serialization',
+                                'use_base_meta', 'reuse_nested_serialization'
+                            ]
+                        }
+
+                        for meta_field_name, value in metaclass_values_dict.items():
+                            self.__setattr__(meta_field_name, value)
                         super().__init__()
 
                 class NestedSerializer(self.NestedSerializerParentClass):
@@ -131,12 +165,13 @@ class ExtendedModelSerializer(ModelSerializer):
 
 
 class DBObjectSerializer(ExtendedModelSerializer):
-    """Serializer forcing id, detail_url,
-
+    """Serializer forcing id as field and adding 'url_field_name' (default: 'detail_url') if objects model
+    has 'ObjectMeta'-class with 'detail_view_name' to view taking 'pk'.
     """
     url_field_name = 'detail_url'
 
     def get_field_names(self, declared_fields, info):
+        """Adds fields 'id' and self.url_field_name if not explicitly said otherwise in exclude of metaclass."""
         field_names = list(super().get_field_names(declared_fields, info))
         exclude = getattr(self.Meta, 'exclude', None)
 
@@ -153,14 +188,37 @@ class DBObjectSerializer(ExtendedModelSerializer):
 
     def build_url_field(self, field_name, model_class):
         """
-        Create a field representing the object's own URL.
+        Create a field representing the object's own URL. Uses objects
         """
         field_class = self.serializer_url_field
         if hasattr(self.Meta.model, 'ObjectMeta'):
-            getattr(self.Meta.model.ObjectMeta, 'detail_view_name', "")
-        field_kwargs = {
-            'view_name': getattr(self.Meta.model.ObjectMeta, 'detail_view_name', "")
-        }
+            field_kwargs = {
+                'view_name': getattr(self.Meta.model.ObjectMeta, 'detail_view_name', ""),
+            }
+        else:
+            field_kwargs = {
+                'view_name': ""
+            }
 
         return field_class, field_kwargs
 
+
+class OptionalHyperlinkedIdentityField(HyperlinkedIdentityField):
+    """Field allowing to give null url based on boolean evaluation
+    of url_null_deciding_attribute specified in extra_kwargs.
+    """
+
+    def __init__(self, view_name=None, url_null_deciding_attribute=None, **kwargs):
+        self.url_null_deciding_attribute = url_null_deciding_attribute or ""
+        super().__init__(view_name, **kwargs)
+
+    def get_url(self, obj, view_name, request, format):
+        """Get url or None depending on evaluation of attribute null_deciding_attribute on object."""
+
+        if hasattr(obj, self.url_null_deciding_attribute):
+            if getattr(obj, self.url_null_deciding_attribute):
+                return super().get_url(obj, view_name, request, format)
+            else:
+                return None
+        else:
+            return super().get_url(obj, view_name, request, format)
