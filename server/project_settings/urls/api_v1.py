@@ -12,7 +12,6 @@ Follow the following guidelines:
 
 from authentication.urls import urlpatterns as authentication_urlpatterns
 from django.urls import path, include
-from rest_framework.urlpatterns import format_suffix_patterns
 from website.urls import urlpatterns as website_urlpatterns
 
 app_name = 'api_v1'
@@ -20,5 +19,3 @@ urlpatterns = website_urlpatterns
 urlpatterns += [
     path('auth/', include(authentication_urlpatterns))
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)

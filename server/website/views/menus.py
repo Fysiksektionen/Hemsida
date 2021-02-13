@@ -1,11 +1,12 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from website.models.menus import Menu, MenuItemBase
-from website.serializers import DBObjectSerializer, ExtendedModelSerializer
+from rest_framework import viewsets, mixins
+from rest_framework.routers import DefaultRouter
+
+from website.models.menus import Menu
+from website.serializers import DBObjectSerializer
 
 
+# TODO: Fix detail-url for all Menu objects nested.
 class MenuSerializer(DBObjectSerializer):
-    NestedSerializerParentClass = ExtendedModelSerializer
 
     class Meta:
         model = Menu
@@ -19,43 +20,13 @@ class MenuSerializer(DBObjectSerializer):
         }
 
 
-@api_view(['GET'])
-def menus_list(request):
-    data = MenuSerializer(
-        Menu.objects.all(), many=True,
-        context={'request': request}
-    ).data
-    return Response(data)
+class MenuViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    A simple ViewSet for listing or retrieving Menus.
+    """
+    serializer_class = MenuSerializer
+    queryset = Menu.objects.all()
 
 
-@api_view(['GET'])
-def menu_object(request, pk):
-    data = MenuSerializer(
-        Menu.objects.get(pk=pk),
-        context={'request': request}
-    ).data
-    return Response(data)
-
-
-class MenuItemSerializer(DBObjectSerializer):
-    class Meta:
-        model = MenuItemBase
-        fields = ['id', 'name', 'link', 'is_menu', 'order']
-
-
-@api_view(['GET'])
-def menu_items_list(request):
-    data = MenuItemSerializer(
-        MenuItemBase.objects.all(), many=True,
-        context={'request': request}
-    ).data
-    return Response(data)
-
-
-@api_view(['GET'])
-def menu_items_object(request, pk):
-    data = MenuItemSerializer(
-        MenuItemBase.objects.get(pk=pk),
-        context={'request': request}
-    ).data
-    return Response(data)
+menu_router = DefaultRouter()
+menu_router.register(r'menus', MenuViewSet, basename='menu')
