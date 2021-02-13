@@ -2,7 +2,8 @@
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
-import { TextField, InputAdornment } from '@material-ui/core';
+import { InputAdornment } from '@material-ui/core';
+import FTextField from './f-styled/FTextField';
 
 interface ISearchField {
   // Need this to access InputProps since it is passed by Autocomplete-component.
@@ -13,7 +14,7 @@ interface ISearchField {
 export function SearchField({InputProps, ...params}: ISearchField) {
   // TODO applicera locale sv/en på denna label.
   return (
-    <TextField
+    <FTextField
     variant="standard"
     placeholder="Sök..."
     // Note ordering of InputProps *after* params

@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../Fysiksektionen_logo.svg';
 import './header.css'
-import { GroupedSearch, SearchField } from './search-box';
+import { GroupedSearch } from './search-box';
 
 function Header() {
   return (
