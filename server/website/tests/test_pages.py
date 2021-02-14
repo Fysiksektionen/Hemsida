@@ -14,6 +14,9 @@ class PageTest(ValidationTestCase):
         self.content_sv = ContentObjectBase(content="swedish content")
         self.content_en = ContentObjectBase(content="english content")
 
+        self.content_sv.save()
+        self.content_en.save()
+
         self.parent = Page(name='Parent page', page_type='0', url="https://f.kth.se", slug='parent',
                            content_sv=self.content_sv, content_en=self.content_en)
         self.page_draft = PageDraft(page_type='1', content_en=self.content_en, content_sv=self.content_sv)
@@ -26,7 +29,7 @@ class PageTest(ValidationTestCase):
         # Check normal behaviour
         self.page_with_slug = Page(name='0', page_type='0', url="https://f.kth.se/0", slug='fkm',
                                    content_sv=self.content_sv, content_en=self.content_en)
-        self.assertEqual(self.page_with_slug, 'fkm')
+        self.assertEqual(self.page_with_slug.slug, 'fkm')
 
         # If slug is not specified -> slug = slugify('name')
         self.page_no_slug = Page(name='1', page_type='0', url="https://f.kth.se/1",
@@ -34,23 +37,23 @@ class PageTest(ValidationTestCase):
         self.assertEqual(self.page_no_slug.slug, '1')
 
         # If slug is None -> slug = ''
-        self.page_none_slug = Page(name='2', page_type='0', url="https://f.kth.se/2",
+        self.page_none_slug = Page(name='2', page_type='0', url="https://f.kth.se/2", slug=None,
                                    content_sv=self.content_sv, content_en=self.content_en)
 
-        self.assertEqual(self.page_none_slug, '')
+        self.assertEqual(self.page_none_slug.slug, '')
 
         # If slug is '' then it should stay as ''
         self.page_empty_slug_no_parent = Page(name='3', page_type='0', url="https://f.kth.se/3", slug='',
                                               content_sv=self.content_sv, content_en=self.content_en)
-        self.assertEqual(self.page_empty_slug_no_parent, '')
+        self.assertEqual(self.page_empty_slug_no_parent.slug, '')
 
         # If the page has a parent then slug = '' should raise ValidationError
-        self.page_empty_slug_with_parent = Page(name='3', page_type='0', url="https://f.kth.se/3", slug='',
-                                                parent_page=self.parent, content_sv=self.content_sv,
+        self.page_empty_slug_with_parent = Page(name='4', page_type='0', url="https://f.kth.se/4", slug='',
+                                                parent=self.parent, content_sv=self.content_sv,
                                                 content_en=self.content_en)
         self.assertRaisesMessage(
             ValidationError, _("Slug cannot be '' if parent page is not None."),
-            self.page_empty_slug_with_parent.full_clean()
+            self.page_empty_slug_with_parent.full_clean
         )
 
     def test_get_content(self):
@@ -60,34 +63,38 @@ class PageTest(ValidationTestCase):
         self.assertEqual(Page.get_content(self.parent, 'en'), self.content_en)
 
         # Request that is not string should raise TypeError
-        self.assertRaisesMessage(TypeError, _("Request must be string."), Page.get_content(self.parent, 1))
-        self.assertRaisesMessage(TypeError, _("Request must be string."), Page.get_content(self.parent, None))
+        self.assertRaisesMessage(TypeError, _("Request must be string."), self.parent.get_content, 1)
+        self.assertRaisesMessage(TypeError, _("Request must be string."), self.parent.get_content, None)
 
         # Request that is string but not 'en' or 'sv' should raise ValueError
         self.assertRaisesMessage(
-            ValueError, _("Request is invalid, must be 'sv' or 'en'."), Page.get_content(self.parent, '')
-        )
+            ValueError, _("Request is invalid, must be 'sv' or 'en'."), self.parent.get_content, '')
         self.assertRaisesMessage(
-            ValueError, _("Request is invalid, must be 'sv' or 'en'."), Page.get_content(self.parent, 'de')
-        )
+            ValueError, _("Request is invalid, must be 'sv' or 'en'."), self.parent.get_content, 'de')
 
     def test_uniqueness_rules(self):
         """Tests uniqueness rules."""
         # name <--> parent
-        self.page_same_name = Page(name='Parent page', page_type='0', url="https://f.kth.se/4", slug='fdev',
-                                   content_sv=self.content_sv, content_en=self.content_en, parent=self.parent)
+        self.page_same_name1 = Page(name='name', page_type='0', url="https://f.kth.se/4", slug='fdev',
+                                   parent=self.parent)
+        self.page_same_name1.save()
+        self.page_same_name2 = Page(name='name', page_type='0', url="https://f.kth.se/5", slug='fdev1',
+                                   parent=self.parent)
         self.assertRaisesValidationError(
-            err=self.page_same_name.unique_error_message(Page, ('name', 'parent')),
+            err=self.page_same_name2.unique_error_message(Page, ('name', 'parent')),
             field=None,
             exclusive=True,
-            func=self.page_same_name.full_clean
+            func=self.page_same_name2.full_clean
         )
         # slug <--> parent
-        self.page_same_slug = Page(name='Not parent page', page_type='0', url="https://f.kth.se/5", slug='parent',
-                                   content_sv=self.content_sv, content_en=self.content_en, parent=self.parent)
+        self.page_same_slug1 = Page(name='other name', page_type='0', url="https://f.kth.se/5", slug='fkm',
+                                    parent=self.parent)
+        self.page_same_slug1.save()
+        self.page_same_slug2 = Page(name='another other name', page_type='0', url="https://f.kth.se/7", slug='fkm',
+                                    parent=self.parent)
         self.assertRaisesValidationError(
-            err=self.page_same_name.unique_error_message(Page, ('name', 'parent')),
+            err=self.page_same_name2.unique_error_message(Page, ('slug', 'parent')),
             field=None,
             exclusive=True,
-            func=self.page_same_slug.full_clean
+            func=self.page_same_slug2.full_clean
         )
