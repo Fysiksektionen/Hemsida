@@ -1,9 +1,9 @@
 import placeholder from '../placeholder.jpg'
 import React from 'react';
-import FButton from '../components/buttons/FButton';
+import FButton from '../components/f-styled/buttons/FButton';
 import { AccountBalance, Menu, Search } from '@material-ui/icons';
-import FDateButton from '../components/buttons/FDateButton';
-import FLargeIconButton from '../components/buttons/FLargeIconButton';
+import FDateButton from '../components/f-styled/buttons/FDateButton';
+import FLargeIconButton from '../components/f-styled/buttons/FLargeIconButton';
 
 
 function Frontpage() {

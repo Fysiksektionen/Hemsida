@@ -1,5 +1,5 @@
 import React from 'react';
-import FButton from './buttons/FButton';
+import FButton from './f-styled/buttons/FButton';
 import { Search, Menu } from '@material-ui/icons';
 import logo from '../Fysiksektionen_logo.svg';
 import './header.css'
