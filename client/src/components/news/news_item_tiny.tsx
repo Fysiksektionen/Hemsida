@@ -1,4 +1,8 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 export interface INewsItemTiny {
   thumbnail: string
@@ -7,16 +11,22 @@ export interface INewsItemTiny {
 }
 
 function NewsItemTiny(props : INewsItemTiny) {
+  // I tried using <Media>, it is great but it doesn't have a proper relative postion anchor.
+  // This works just fine as well, just not as pretty code-wise. 
   return (
-    <div className="" style={{width: "400px", marginBottom: "1em", display: "flex", backgroundColor: "#f0f0f0"}}>
-      <div style={{width: "150px"}}>
-        <img src={props.thumbnail} style={{width: "100%"}} />
-      </div>
-      <div style={{width: "250px", paddingLeft: "10px", paddingTop: "2px", position: "relative"}}>
-        <h6>{props.title}</h6>
-        <small style={{display: "inline", position: "absolute", bottom: 0, right: 0, marginBottom: "3px", marginRight: "4px"}}>{props.published.toLocaleDateString()}</small>
-      </div>
-    </div>
+    <li className="mb-3" style={{backgroundColor: "#f0f0f0"}}>
+    <Container>
+      <Row>
+        <Col className="col-5 pl-0">
+          <img src={props.thumbnail} width={150} alt='' />
+        </Col>
+        <Col className="col-7 pt-2 pl-0">
+          <h6>{props.title}</h6>
+          <small className="position-absolute" style={{bottom: "0.5rem"}}>{props.published.toLocaleDateString()}</small>
+        </Col>
+      </Row>
+    </Container>
+    </li>
   )
 }
 

@@ -5,7 +5,7 @@ function Banner() {
     // TODO: Temporary, should be improved in another branch
   return (
     <div className="" style={{}}>
-        <img src={placeholder} style={{width: "100%", marginTop: "50px"}}></img>
+        <img src={placeholder} style={{width: "100%", marginTop: "50px"}} alt=''/>
     </div>
   )
 }

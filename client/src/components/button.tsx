@@ -1,15 +1,17 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 export interface IButton {
     text: string,
-    color: string
+    type: string,
+    class?: string
 }
 
-function Button(props: IButton) {
+function OurButton(props: IButton) {
     // TODO: Temporary, should be improved in another branch
     return (
-        <button style={{color: "white", backgroundColor: props.color, fontFamily: "MONOSPACE"}}>{props.text}</button>
+        <Button className={props.class} variant={props.type}>{props.text}</Button>
     )
 }
 
-export default Button;
+export default OurButton;

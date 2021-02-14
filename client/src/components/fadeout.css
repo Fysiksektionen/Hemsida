@@ -1,0 +1,14 @@
+.our-fade-anchor {
+    position: relative;
+}
+
+.our-fade {
+    content: '';
+    width: 100%;
+    height: 100%;    
+    position: absolute;
+    left: 0;
+    top: 0px;
+    /* in the .tsx file instead */
+    /* background: linear-gradient(transparent, 25px, white); */ 
+}

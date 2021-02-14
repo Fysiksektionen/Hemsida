@@ -5,7 +5,6 @@ import Header from './components/header'
 import Footer from './components/footer'
 import { Switch, Route } from "react-router-dom";
 import './App.css'
-import { title } from 'process';
 import {DummyData2} from './components/news/frontpage_news_widget'
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 export interface INewsItem {
   image: string,
   title: string,
@@ -7,19 +8,34 @@ export interface INewsItem {
   text: string
 }
 
+
 function NewsArticle(props : INewsItem) {
   return (
-    <div className="" style={{width: "600px", marginBottom: "2em", backgroundColor: "#f0f0f0", marginRight: "1em"}}>
+    <NewsArticleBase {...props}>
+      <NewsArticleText text={props.text} />
+    </NewsArticleBase> 
+  )
+}
+
+export function NewsArticleBase(props : INewsItem & {children?: React.ReactNode}) {
+  return (
+    <div className="news-article-base" style={{backgroundColor: "#f0f0f0"}}>
       <div style={{width: "100%"}}>
-        <img src={props.image} style={{width: "100%"}} />
+        <img src={props.image} style={{width: "100%"}} alt='' />
       </div>
-      <div style={{padding: "1em"}}>
-        <h4>{props.title}</h4>
+      <div className="p-4 news-article-base-text">
+        <h4 className="mb-0">{props.title}</h4>
         <small>{props.published.toLocaleDateString()}</small>
-        <div>
-          {props.text}
-        </div>
+        {props.children}
       </div>
+    </div>
+  )
+}
+
+export function NewsArticleText(props : {text: string}) {
+  return (
+    <div className="mt-3">
+      {props.text}
     </div>
   )
 }

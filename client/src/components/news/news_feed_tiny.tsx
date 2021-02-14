@@ -1,6 +1,8 @@
 import React from 'react';
 import NewsItemTiny, {INewsItemTiny} from './news_item_tiny';
-import Button, {IButton} from '../button';
+import SomeButton, {IButton} from '../button';
+import Container from 'react-bootstrap/Container';
+
 
 export interface INewsFeedTiny {
   items : INewsItemTiny[]
@@ -8,14 +10,19 @@ export interface INewsFeedTiny {
 
 
 // TODO: remove
-const DummyData : IButton = {color: "blue", text: "Fler nyheter"}
+const DummyData : IButton = {type: "secondary", text: "Fler nyheter"}
+
 
 function NewsFeedTiny(props : INewsFeedTiny) {
   return (
-    <div className="" style={{}}>
-      { props.items.map(item => <NewsItemTiny {...item}/>) }
-      <Button {...DummyData}/>
-    </div>
+    <Container>
+      <ul className="list-unstyled">
+        { props.items.map(item => <NewsItemTiny {...item}/>) }
+      </ul>
+      <div className="text-center">
+        <SomeButton {...DummyData}/>
+      </div>
+    </Container>
   )
 }
 

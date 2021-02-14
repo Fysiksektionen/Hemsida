@@ -1,17 +1,21 @@
 import React from 'react';
 import NewsArticle, {INewsItem} from '../components/news/news_item';
 import MenuMonths from '../components/menu_months'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 function NewsArticlePage(props: INewsItem) {
     return (
-      <div>
-        <h1>Nyheter</h1>
-        <div  style={{display: "flex"}}>
-          <NewsArticle {...props}/>
-          <MenuMonths />
-        </div>
-      </div>
+      <Container className="pb-5">
+        <h1 className="pb-4">Nyheter</h1>
+        <Row>
+          <Col className="col-7 ml-5"> <NewsArticle {...props}/> </Col>
+          <Col className="col-2 ml-5"> <MenuMonths /> </Col>
+        </Row>
+      </Container>
     )
   }
   
-  export default NewsArticlePage;
+export default NewsArticlePage;
