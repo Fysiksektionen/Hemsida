@@ -2,14 +2,14 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from website.models.abstract_singleton import SingletonModel
-from website.models.content_collection import ContentCollection
+from website.models.content_objects import ContentCollection
 from website.models.pages import Page
 
 
 class SiteModel(SingletonModel):
 
     class Meta:
-        verbose_name = _("Site Manager")
+        verbose_name = _("site manager")
 
     root_url = models.URLField(verbose_name=_('root URL'), blank=False, null=False)
     api_root_url = models.URLField(verbose_name=_('API root URL'), blank=False, null=False)
