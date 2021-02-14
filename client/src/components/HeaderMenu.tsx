@@ -24,7 +24,7 @@ const mock_data: IMenuItem[] = [
   { category: "Resurser", itemText: "Möteshandlingar", isHeader: false },
 ]
 
-export default function SidebarMenu() {
+export default function HeaderMenu() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const toggleDrawer = (open: boolean) => (

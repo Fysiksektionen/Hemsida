@@ -1,6 +1,6 @@
 import React from "react";
 import { List, ListItem } from "@material-ui/core";
-import { IMenuItem } from "./SidebarMenu";
+import { IMenuItem } from "./HeaderMenu";
 
 <div
   className="bg-dark text-white px-4"

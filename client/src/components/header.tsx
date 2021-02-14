@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import logo from '../Fysiksektionen_logo.svg';
 import { GroupedSearch } from './search-box';
-import SidebarMenu from './SidebarMenu';
+import HeaderMenu from './HeaderMenu';
 
 
 function Header() {
@@ -18,7 +18,7 @@ function Header() {
         <div className="mx-4">
           <GroupedSearch/>
         </div>
-        <SidebarMenu/>
+        <HeaderMenu/>
       </div>
     </>
   );
