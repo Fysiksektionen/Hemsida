@@ -1,5 +1,4 @@
-import React, { PropsWithChildren } from "react";
-import { Menu, SvgIconComponent } from '@material-ui/icons';
+import Reac from "react";
 import { Button } from "@material-ui/core";
 
 interface IFButtonProps {
@@ -21,7 +20,7 @@ export default function FButton({ text, Icon, version="light", style } : IFButto
   }
   return (
     <Button
-      className={clr_string + " text-center px-3 py-2"}
+      className={clr_string + " text-center px-3 py-2 m-1"}
       endIcon={Icon}
       style={{
         minWidth: '8rem',
