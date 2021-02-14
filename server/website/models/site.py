@@ -21,13 +21,3 @@ class SiteModel(SingletonModel):
     footer_content = models.ForeignKey(ContentCollection, verbose_name=_('footer content'), related_name='footer_content', blank=True, null=True, on_delete=models.RESTRICT)
 
 
-    # Override
-    def clean(self):
-        """Validation of state of values in this model.
-        :raises ValidationError with all errors.
-        """
-        super().clean()
-
-        # Nulls are checked by Django
-        # URLs are checked by Django
-
