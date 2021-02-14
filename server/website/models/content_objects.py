@@ -19,31 +19,36 @@ class ContentObjectBase(SortableMixin, models.Model):
     Model for ContentObjects. Non-abstract since we want to query all objects on
     The objects can be related to each other in a tree structure.
     """
+    # TODO: Should we really use SortableMixin? Maybe implement our own mixin for this. Would be nice.
+    #       Issue is that stuff happen on save, which is generally not so nice.
 
     class Meta:
         verbose_name = _("base content object")
         verbose_name_plural = _("base content objects")
         ordering = ['order']
 
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    component = models.CharField(verbose_name=_('component'), max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255, null=False, blank=True, default="")
+    component = models.CharField(verbose_name=_('component'), max_length=255, null=False, blank=True, default="")
 
     db_type = models.CharField(
         verbose_name=_('database type'),
         choices=[(val, val) for val in CONTENT_DB_TYPES.keys()],
         max_length=max([len(val) for val in CONTENT_DB_TYPES.keys()]),
-        default='text',
         null=False, blank=True
     )
 
-    attributes = JSONField(verbose_name=_('attributes'))
+    attributes = JSONField(
+        verbose_name=_('attributes'),
+        null=False, blank=True, default="{}"
+    )
 
     collection = models.ForeignKey(
         'website.ContentCollection',
-        verbose_name=_('parent'),
+        verbose_name=_('collection'),
         related_name='items',
         on_delete=models.CASCADE,
-        db_index=True  # For slightly faster lookup.
+        db_index=True,  # For slightly faster lookup.,
+        null=True, blank=True
     )
     order = models.PositiveSmallIntegerField(
         verbose_name=_('order'),
@@ -72,9 +77,9 @@ class ContentObjectBase(SortableMixin, models.Model):
 
         extra_unique_togethers = []
         if self.collection.is_ordered:
-            extra_unique_togethers.append((self.__class__, ('collection', 'order')))
+            extra_unique_togethers.append((ContentObjectBase, [('collection', 'order')]))
         else:
-            extra_unique_togethers.append((self.__class__, ('collection', 'name')))
+            extra_unique_togethers.append((ContentObjectBase, [('collection', 'name')]))
 
         for model_class, unique_together in extra_unique_togethers:
             for check in unique_together:
@@ -103,6 +108,8 @@ class ContentCollection(ContentObjectBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.is_ordered = False
+        if 'db_type' not in kwargs:
+            self.db_type = 'dict'
 
     def get_value(self):
         return self.items.all()
@@ -120,6 +127,8 @@ class ContentCollectionList(ContentCollection):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.is_ordered = True
+        if 'db_type' not in kwargs:
+            self.db_type = 'list'
 
     def get_value(self):
         return self.items.all().order_by('order')
@@ -135,6 +144,11 @@ class ContentText(ContentObjectBase):
         verbose_name_plural = _("text content objects")
 
     text = models.TextField(verbose_name=_('text'), null=True, blank=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'db_type' not in kwargs:
+            self.db_type = 'text'
 
     def get_value(self):
         return self.text
@@ -152,9 +166,15 @@ class ContentImage(ContentObjectBase):
     image = models.ForeignKey(
         'website.Image',
         verbose_name=_('image'),
+        related_name='content_objects',
         on_delete=models.SET_NULL,
         null=True, blank=True
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'db_type' not in kwargs:
+            self.db_type = 'image'
 
     def get_value(self):
         return self.image
@@ -172,9 +192,15 @@ class ContentMenu(ContentObjectBase):
     menu = models.ForeignKey(
         'website.Menu',
         verbose_name=_('menu'),
+        related_name='content_objects',
         on_delete=models.SET_NULL,
         null=True, blank=True
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'db_type' not in kwargs:
+            self.db_type = 'menu'
 
     def get_value(self):
         return self.menu
@@ -192,9 +218,15 @@ class ContentPage(ContentObjectBase):
     page = models.ForeignKey(
         'website.Page',
         verbose_name=_('page'),
+        related_name='content_objects',
         on_delete=models.SET_NULL,
         null=True, blank=True
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'db_type' not in kwargs:
+            self.db_type = 'page'
 
     def get_value(self):
         return self.page
