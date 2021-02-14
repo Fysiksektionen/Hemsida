@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Drawer } from '@material-ui/core';
+import { IconButton, Button, Drawer } from '@material-ui/core';
 import MenuList from "./MenuList";
+import { CloseRounded } from "@material-ui/icons";
 
 export interface IMenuItem {
   category: String,
@@ -42,8 +43,26 @@ export default function SidebarMenu() {
 
   return (
     <React.Fragment key={'right'}>
-      <Button className="mx-3" onClick={toggleDrawer(true)}>{"Menu"}</Button>
-      <Drawer anchor={'right'} open={isOpen} onClose={toggleDrawer(false)}>
+      <Button className="mx-3" onClick={toggleDrawer(true)}>
+        {"Meny"}
+      </Button>
+      <Drawer
+        anchor={'right'}
+        open={isOpen}
+        onClose={toggleDrawer(false)}
+      >
+        <div
+          className="bg-dark text-white"
+          style={{ textAlign: "right" }}
+        >
+          <IconButton
+            onClick={toggleDrawer(false)}
+            color="secondary"
+            style={{ color: "white" }}
+          >
+            <CloseRounded/>
+          </IconButton>
+        </div>
         <MenuList data={mock_data}/>
       </Drawer>
     </React.Fragment>

@@ -25,14 +25,14 @@ export default function MenuList({ data }: IMenuListProps ) {
         minWidth: window.innerWidth * 0.4
       }}
     >
-      <List style={{ marginTop: "3rem" }}>
+      <List>
         {data.map(val => (
             <ListItem>
               <div 
                 style={{
                   fontWeight: "bold",
                   fontSize: val.isHeader ? "170%" : "100%",
-                  marginLeft: val.isHeader ? "2rem" : "3rem",
+                  marginLeft: val.isHeader ? "3rem" : "4rem",
                   marginTop: val.isHeader ? "1rem" : 0 
                 }}
               >
