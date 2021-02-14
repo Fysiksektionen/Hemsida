@@ -1,5 +1,5 @@
 import React from 'react';
-import FButton from '../components/FButton';
+import FButton from './buttons/FButton';
 import { Search, Menu } from '@material-ui/icons';
 import logo from '../Fysiksektionen_logo.svg';
 import './header.css'
@@ -21,12 +21,12 @@ function Header() {
         <div>
           <FButton
             text="Menu"
-            Icon={<Menu/>}
+            Icon={Menu}
             style={{ float: "right" }}
           />
           <FButton
             text="Search"
-            Icon={<Search/>}
+            Icon={Search}
             version="dark"
             style={{ float: "right" }}
           />

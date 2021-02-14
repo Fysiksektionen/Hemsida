@@ -1,9 +1,10 @@
-import Reac from "react";
-import { Button } from "@material-ui/core";
+import React from "react";
+import { Button, SvgIconTypeMap } from "@material-ui/core";
+import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 
-interface IFButtonProps {
+export interface IFButtonProps {
   text: String;
-  Icon?: React.ReactNode;
+  Icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
   version?: "light" | "dark";
   style?: React.CSSProperties | undefined;
 }
@@ -21,7 +22,7 @@ export default function FButton({ text, Icon, version="light", style } : IFButto
   return (
     <Button
       className={clr_string + " text-center px-3 py-2 m-1"}
-      endIcon={Icon}
+      endIcon={Icon ? <Icon/> : undefined}
       style={{
         minWidth: '8rem',
         textTransform: 'none',

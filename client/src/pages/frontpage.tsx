@@ -1,8 +1,9 @@
 import placeholder from '../placeholder.jpg'
 import React from 'react';
-import FButton from '../components/FButton';
-import { Menu, Search } from '@material-ui/icons';
-import FDateButton from '../components/FDateButton';
+import FButton from '../components/buttons/FButton';
+import { AccountBalance, Menu, Search } from '@material-ui/icons';
+import FDateButton from '../components/buttons/FDateButton';
+import FLargeIconButton from '../components/buttons/FLargeIconButton';
 
 
 function Frontpage() {
@@ -40,6 +41,15 @@ function Frontpage() {
       >
         <FDateButton text="Namn på möte" date="1997-10-10"/>
         <FDateButton text="Namn på möte" date="1997-10-10" version="dark"/>
+      </div>
+      <div
+        className="px-4 my-4"
+        style={{
+          display: "flex",
+          justifyContent: "center"
+        }}
+      >
+        <FLargeIconButton text="Budget" Icon={AccountBalance}/>
       </div>
     </>
   )
