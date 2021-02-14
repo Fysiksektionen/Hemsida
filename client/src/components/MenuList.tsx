@@ -1,6 +1,6 @@
 import React from "react";
-import { List, ListItem, ListItemText } from "@material-ui/core";
-import { IMenuItem } from "./Sidebar";
+import { List, ListItem } from "@material-ui/core";
+import { IMenuItem } from "./SidebarMenu";
 
 <div
   className="bg-dark text-white px-4"
@@ -32,7 +32,7 @@ export default function MenuList({ data }: IMenuListProps ) {
                 style={{
                   fontWeight: "bold",
                   fontSize: val.isHeader ? "170%" : "100%",
-                  marginLeft: "2rem",
+                  marginLeft: val.isHeader ? "2rem" : "3rem",
                   marginTop: val.isHeader ? "1rem" : 0 
                 }}
               >

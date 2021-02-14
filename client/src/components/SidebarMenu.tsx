@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Button, Drawer } from '@material-ui/core';
 import MenuList from "./MenuList";
 
 export interface IMenuItem {
@@ -23,7 +23,7 @@ const mock_data: IMenuItem[] = [
   { category: "Resurser", itemText: "Möteshandlingar", isHeader: false },
 ]
 
-export default function Sidebar() {
+export default function SidebarMenu() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const toggleDrawer = (open: boolean) => (
@@ -39,30 +39,6 @@ export default function Sidebar() {
 
     setIsOpen(open);
   };
-
-  const list = () => (
-    <div
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
 
   return (
     <React.Fragment key={'right'}>
