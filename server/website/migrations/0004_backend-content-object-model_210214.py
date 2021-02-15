@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
             name='ContentCollection',
             fields=[
                 ('contentobjectbase_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='website.contentobjectbase')),
-                ('is_ordered', models.BooleanField(verbose_name='is ordered')),
+                ('is_ordered', models.BooleanField(default=False, verbose_name='is ordered')),
             ],
             options={
                 'verbose_name': 'content collection',

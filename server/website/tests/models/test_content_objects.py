@@ -1,9 +1,9 @@
+from utils.tests import ValidationTestCase
 from website.models.content_objects import *
 from website.models.media import Image
 from website.models.menus import Menu
 from website.models.pages import Page
 from website.selectors.content_obejcts import get_collection_items
-from website.tests.utils import ValidationTestCase
 
 
 class ContentObjectModelTest(ValidationTestCase):

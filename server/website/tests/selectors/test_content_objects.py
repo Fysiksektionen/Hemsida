@@ -1,7 +1,7 @@
 from django.apps import apps
+from utils.tests import ValidationTestCase
 from website.models.content_objects import *
 from website.selectors.content_obejcts import get_collection_items
-from website.tests.utils import ValidationTestCase
 
 
 class ContentObjectSelectorTest(ValidationTestCase):

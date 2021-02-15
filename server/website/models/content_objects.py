@@ -103,7 +103,7 @@ class ContentCollection(ContentObjectBase):
         verbose_name_plural = _("content collections")
 
     # Should never be changed.
-    is_ordered = models.BooleanField(verbose_name=_('is ordered'), null=False, blank=False)
+    is_ordered = models.BooleanField(verbose_name=_('is ordered'), null=False, blank=False, default=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
