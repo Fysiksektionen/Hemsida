@@ -109,25 +109,35 @@ class ExtendedModelSerializer(ModelSerializer):
         """
         Create nested fields for forward and reverse relationships.
         """
-
+        # If there is custom serialization defined for som nested fields
         if field_name in getattr(self.Meta, 'nested_serialization', {}):
             Meta = self.Meta
             full_nested_ser = self.Meta.nested_serialization
             nested_ser = full_nested_ser[field_name]
 
+            # If nested serialization is specified with a Field, use that field as field serialization
             if isinstance(nested_ser, type) and issubclass(nested_ser, Field):
                 return nested_ser
 
+            # If a dict was given
             elif isinstance(nested_ser, dict):
+
+                # Class to be used as the Meta-class of the serializer for the nested field.
                 class NestedMeta:
                     model = relation_info.related_model
+
+                    # Decrease depth if not inf_depth
                     depth = nested_depth - 1 if not getattr(self.Meta, 'inf_depth', False) else nested_depth
                     inf_depth = getattr(self.Meta, 'inf_depth', False)
 
                     def __init__(self):
+                        # If reuse_nested_serialization is True, use the same nested_serialization for serialization of
+                        # nested field.
                         if nested_ser.get('reuse_nested_serialization', False):
                             self.nested_serialization = full_nested_ser
 
+                        # If use_base_meta is True, add all meta-attributes of the parent object, else use the
+                        # attributes specified in dictionary for field.
                         if nested_ser.get('use_base_meta', False):
                             metaclass_values_dict = {
                                 key: val
@@ -137,6 +147,7 @@ class ExtendedModelSerializer(ModelSerializer):
                         else:
                             metaclass_values_dict = nested_ser
 
+                        # Ignore the attributes already specified.
                         metaclass_values_dict = {
                             key: val
                             for key, val in metaclass_values_dict.items()
@@ -150,6 +161,7 @@ class ExtendedModelSerializer(ModelSerializer):
                             self.__setattr__(meta_field_name, value)
                         super().__init__()
 
+                # Created the serializer class with the desired metaclass. Using an object as Metaclass to run __init__.
                 class NestedSerializer(self.NestedSerializerParentClass):
                     Meta = NestedMeta()
 
@@ -175,10 +187,13 @@ class DBObjectSerializer(ExtendedModelSerializer):
         field_names = list(super().get_field_names(declared_fields, info))
         exclude = getattr(self.Meta, 'exclude', None)
 
+        # If not explicitly excluded, add 'id' to fields.
         if exclude is None or 'id' not in exclude:
             if 'id' not in field_names:
                 field_names.insert(0, 'id')
 
+        # If not explicitly excluded and if the Model specifies detail_view_name in ObjectMeta,
+        # add url_field_name to fields.
         if hasattr(self.Meta.model, 'ObjectMeta') and hasattr(self.Meta.model.ObjectMeta, 'detail_view_name'):
             if exclude is None or self.url_field_name not in exclude:
                 if self.url_field_name not in field_names:
@@ -191,14 +206,14 @@ class DBObjectSerializer(ExtendedModelSerializer):
         Create a field representing the object's own URL. Uses objects
         """
         field_class = self.serializer_url_field
-        if hasattr(self.Meta.model, 'ObjectMeta'):
+        if hasattr(self.Meta.model, 'ObjectMeta') and hasattr(self.Meta.model.ObjectMeta, 'detail_view_name'):
             field_kwargs = {
-                'view_name': getattr(self.Meta.model.ObjectMeta, 'detail_view_name', ""),
+                'view_name': self.Meta.model.ObjectMeta.detail_view_name
             }
         else:
-            field_kwargs = {
-                'view_name': ""
-            }
+            raise TypeError(
+                "Class to serialize with url-field (%s) does not have detail_view_name specified in ObjectMeta class."
+            )
 
         return field_class, field_kwargs
 
