@@ -33,3 +33,8 @@ if USE_DB_TEST_IN_DEBUG:
     }
 
 AUTH_PASSWORD_VALIDATORS = []
+
+REST_FRAMEWORK.update({
+    'COMPACT_JSON': False,
+    'DEFAULT_METADATA_CLASS': 'rest_framework.metadata.SimpleMetadata'
+})
