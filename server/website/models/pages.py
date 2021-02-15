@@ -1,7 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 
 
 class PageDraft(models.Model):
@@ -69,7 +69,13 @@ class Page(models.Model):
 
     def clean(self):
         if self.slug == '' and self.parent is not None:
-            raise ValidationError(_("Slug cannot be '' if parent page is not None."))
+            raise ValidationError(
+                _("%(slug_field)s cannot be '' if %(parent_field)s is not None."),
+                params={
+                   'slug_field': self.Meta.get_field('slug').verbose_name,
+                   'parent_field': self.Meta.get_field('parent').verbose_name
+                }
+            )
 
     def get_content(self, language):
         if not isinstance(language, str):

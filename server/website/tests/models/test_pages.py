@@ -1,9 +1,8 @@
-from django.utils.translation import gettext as _
-from website.models.pages import Page, PageDraft
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
+from utils.tests import ValidationTestCase
 from website.models.content_objects import ContentObjectBase
-
-from .utils import ValidationTestCase
+from website.models.pages import Page, PageDraft
 
 
 class PageTest(ValidationTestCase):
@@ -52,7 +51,13 @@ class PageTest(ValidationTestCase):
                                                 parent=self.parent, content_sv=self.content_sv,
                                                 content_en=self.content_en)
         self.assertRaisesMessage(
-            ValidationError, _("Slug cannot be '' if parent page is not None."),
+            ValidationError(
+                _("%(slug_field)s cannot be '' if %(parent_field)s is not None."),
+                params={
+                    'slug_field': self.Meta.get_field('slug').verbose_name,
+                    'parent_field': self.Meta.get_field('parent').verbose_name
+                }
+            ),
             self.page_empty_slug_with_parent.full_clean
         )
 
@@ -63,23 +68,23 @@ class PageTest(ValidationTestCase):
         self.assertEqual(Page.get_content(self.parent, 'en'), self.content_en)
 
         # Request that is not string should raise TypeError
-        self.assertRaisesMessage(TypeError, _("Request must be string."), self.parent.get_content, 1)
-        self.assertRaisesMessage(TypeError, _("Request must be string."), self.parent.get_content, None)
+        self.assertRaisesMessage(TypeError, "Request must be string.", self.parent.get_content, 1)
+        self.assertRaisesMessage(TypeError, "Request must be string.", self.parent.get_content, None)
 
         # Request that is string but not 'en' or 'sv' should raise ValueError
         self.assertRaisesMessage(
-            ValueError, _("Request is invalid, must be 'sv' or 'en'."), self.parent.get_content, '')
+            ValueError, "Request is invalid, must be 'sv' or 'en'.", self.parent.get_content, '')
         self.assertRaisesMessage(
-            ValueError, _("Request is invalid, must be 'sv' or 'en'."), self.parent.get_content, 'de')
+            ValueError, "Request is invalid, must be 'sv' or 'en'.", self.parent.get_content, 'de')
 
     def test_uniqueness_rules(self):
         """Tests uniqueness rules."""
         # name <--> parent
         self.page_same_name1 = Page(name='name', page_type='0', url="https://f.kth.se/4", slug='fdev',
-                                   parent=self.parent)
+                                    parent=self.parent)
         self.page_same_name1.save()
         self.page_same_name2 = Page(name='name', page_type='0', url="https://f.kth.se/5", slug='fdev1',
-                                   parent=self.parent)
+                                    parent=self.parent)
         self.assertRaisesValidationError(
             err=self.page_same_name2.unique_error_message(Page, ('name', 'parent')),
             field=None,
