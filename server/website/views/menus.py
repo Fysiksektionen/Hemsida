@@ -25,13 +25,7 @@ class MenuItemSerializer(DBObjectSerializer):
         }
 
 
-class MenuViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """A simple ViewSet for listing Menus."""
-    serializer_class = MenuItemSerializer
-    queryset = Menu.objects.all()
-
-
-class MenuItemViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    """A simple ViewSet for retrieving MenuItems."""
+class MenuViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    """A simple ViewSet for listing and retrieving Menus."""
     serializer_class = MenuItemSerializer
     queryset = Menu.objects.all()
