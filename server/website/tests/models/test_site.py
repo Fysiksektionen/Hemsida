@@ -1,8 +1,7 @@
 from django.test import TestCase
-
-from website.models.site import SiteModel
-from website.models.pages import Page
 from website.models.abstract_singleton import SingletonModel
+from website.models.pages import Page
+from website.models.site import SiteModel
 
 
 class SiteModelTest(TestCase):

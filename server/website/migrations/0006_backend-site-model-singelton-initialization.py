@@ -1,8 +1,7 @@
 from django.db import migrations
-
 from website.apps import WebsiteAppConfig
-from website.models.site import SiteModel
 from website.models.pages import Page
+from website.models.site import SiteModel
 
 singelton_pk = 1  # this value should be the same as in SiteModel._singelton_pk
 
@@ -34,7 +33,7 @@ class Migration(migrations.Migration):
     """This migration has to be run after the singelton models have been created in the database."""
 
     dependencies = [
-        ('website', '0003_backend-site-model_20210211'),
+        ('website', '0005_backend-site-model_20210211'),
     ]
 
     operations = [
