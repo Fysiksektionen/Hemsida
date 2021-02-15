@@ -8,6 +8,10 @@ class PageDraft(models.Model):
     """
     Model for a Page draft.
     """
+    class Meta:
+        verbose_name = _('page draft')
+        verbose_name_plural = _('page drafts')
+
     page_type = models.CharField(verbose_name=_('page type'), max_length=255)
     content_sv = models.OneToOneField(
         'website.ContentObjectBase', verbose_name=_('swedish content'), blank=True, null=True,
@@ -17,7 +21,7 @@ class PageDraft(models.Model):
         'website.ContentObjectBase', verbose_name=_('english content'), blank=True, null=True,
         on_delete=models.SET_NULL, related_name='page_draft_en'
     )
-    last_edited_at = models.DateField(verbose_name=_('last edited at'), null=False, blank=False, auto_now_add=True)
+    last_edited_at = models.DateField(verbose_name=_('last edited at'), null=False, blank=False, auto_now=True)
 
 
 class Page(models.Model):
@@ -26,6 +30,8 @@ class Page(models.Model):
     """
     class Meta:
         unique_together = [('name', 'parent'), ('slug', 'parent')]
+        verbose_name = _('page')
+        verbose_name_plural = _('pages')
 
     url = models.URLField(verbose_name=_('URL'), blank=False, null=False, unique=True)
     name = models.CharField(verbose_name=_('name'), null=False, blank=True, max_length=255)
@@ -40,9 +46,9 @@ class Page(models.Model):
         'website.PageDraft', verbose_name=_('page draft'), null=True, blank=True, on_delete=models.SET_NULL,
         related_name='page'
     )
-    has_draft = models.BooleanField(verbose_name=_('has draft'), default=False)
     published = models.BooleanField(verbose_name=_('is published'), default=False)
-    published_at = models.DateField(verbose_name=_('published at'), null=True, blank=True, auto_now_add=False)
+    # TODO: fix publish method so timestamp is automatically updated
+    published_at = models.DateField(verbose_name=_('published at'), null=True, blank=True)
     last_edited_at = models.DateTimeField(verbose_name=_('last edited at'), null=False, blank=False,
                                           auto_now=True)
     content_sv = models.OneToOneField('website.ContentObjectBase', verbose_name=_('swedish content'), blank=True,
@@ -67,10 +73,10 @@ class Page(models.Model):
 
     def get_content(self, language):
         if not isinstance(language, str):
-            raise TypeError(_("Request must be string."))
+            raise TypeError("Request must be string.")
         elif language == 'sv':
             return self.content_sv
         elif language == 'en':
             return self.content_en
         else:
-            raise ValueError(_("Request is invalid, must be 'sv' or 'en'."))
+            raise ValueError("Request is invalid, must be 'sv' or 'en'.")
