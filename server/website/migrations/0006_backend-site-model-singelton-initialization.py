@@ -14,9 +14,9 @@ def create_singleton_site(apps, schema_editor):
     """
     the_model = apps.get_model(WebsiteAppConfig.name, SiteModel.__name__)
     if not the_model.objects.filter(pk=singelton_pk).exists():
-        root_page = Page(url='') # might not be needed in the future
+        root_page = Page(name="Start", slug='')  # might not be needed in the future
         root_page.save()
-        site = SiteModel(1, root_page=root_page) # don't initialize the SiteModel, use instance()
+        site = SiteModel(1, root_page=root_page)  # don't initialize the SiteModel, use instance()
         site.save()
 
 def delete_create_singleton_site(apps, schema_editor):
@@ -26,7 +26,7 @@ def delete_create_singleton_site(apps, schema_editor):
     """
     the_model = apps.get_model(WebsiteAppConfig.name, SiteModel.__name__)
     site = the_model.objects.get(pk=singelton_pk)
-    site.delete() # don't worry it doesn't run my code, but works anyway.
+    site.delete()  # don't worry it doesn't run my code, but works anyway.
 
 
 class Migration(migrations.Migration):
@@ -34,6 +34,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('website', '0005_backend-site-model_20210211'),
+        ('website', '0005_backend-page-model_210214'),
     ]
 
     operations = [

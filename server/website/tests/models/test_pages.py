@@ -10,8 +10,8 @@ class PageTest(ValidationTestCase):
 
     def setUp(self):
         """Creation of objects"""
-        self.content_sv = ContentObjectBase(content="swedish content")
-        self.content_en = ContentObjectBase(content="english content")
+        self.content_sv = ContentObjectBase()
+        self.content_en = ContentObjectBase()
 
         self.content_sv.save()
         self.content_en.save()
@@ -54,8 +54,8 @@ class PageTest(ValidationTestCase):
             ValidationError(
                 _("%(slug_field)s cannot be '' if %(parent_field)s is not None."),
                 params={
-                    'slug_field': self.Meta.get_field('slug').verbose_name,
-                    'parent_field': self.Meta.get_field('parent').verbose_name
+                    'slug_field': Page._meta.get_field('slug').verbose_name,
+                    'parent_field': Page._meta.get_field('parent').verbose_name
                 }
             ),
             self.page_empty_slug_with_parent.full_clean
