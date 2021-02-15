@@ -8,7 +8,7 @@ class SiteModelTest(TestCase):
 
     def setUp(self):
         # create object
-        page = Page()
+        page = Page(name="page", url='f.kth.se')
         page.save()
         self.page = page
         site = SiteModel((1), root_page=page) # Do not initialize this way!
