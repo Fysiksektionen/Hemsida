@@ -18,6 +18,9 @@ class User(AbstractUser):
         verbose_name = _("user")
         verbose_name_plural = _("users")
 
+    class ObjectMeta:
+        detail_view_name = 'api:authentication:user-detail'
+
     # Override of inherited fields
     is_active = True
 
