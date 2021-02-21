@@ -14,7 +14,7 @@ export interface IProfileCard {
 
 // TODO The styling of the <a> might be able to done without an inner <p> tag. I had difficulties making it having the
 // same width as the other <p> tags without it however.
-function Profile_card(personInfo: IProfileCard){
+function ProfileCard(personInfo: IProfileCard){
     let image_alt_text = personInfo.role + " " + personInfo.name;
     return (
         <Container>
@@ -38,4 +38,4 @@ function Profile_card(personInfo: IProfileCard){
     )
 }
 
-export {Profile_card};
+export {ProfileCard};

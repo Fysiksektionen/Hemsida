@@ -1,7 +1,7 @@
 import React from 'react'
 import Col from "react-bootstrap/Col";
 import Row from 'react-bootstrap/Row'
-import {IProfileCard, Profile_card} from './profile_card'
+import {IProfileCard, ProfileCard} from './profile_card'
 
 export interface IProfileCards {
     cards: IProfileCard[]
@@ -15,7 +15,7 @@ function ProfileCards(props: IProfileCards){
         <Row>
             {props.cards.map((cardData) =>
                 <Col className={"col-lg-4 col-md-6 col-sm-12"}>
-                    <Profile_card {...cardData}/>
+                    <ProfileCard {...cardData}/>
                 </Col>
             )}
         </Row>
