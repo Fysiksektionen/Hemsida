@@ -1,7 +1,14 @@
+import os
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+
+def _image_filename(instance, filename):
+    filename = "%d_profile.%s" % (instance.id, filename.split('.')[-1])  # Filename with correct extension
+    return os.path.join('users', filename)  # Return path users/<id>_profile.<ext>
 
 
 class User(AbstractUser):
@@ -47,12 +54,13 @@ class User(AbstractUser):
         verbose_name=_('profile image'),
         null=True,
         blank=True,
-        upload_to='users',
+        upload_to=_image_filename,
     )
     language = models.CharField(
         verbose_name=_('language'),
         choices=settings.LANGUAGES,
         max_length=2,
         null=False,
-        blank=False
+        blank=False,
+        default=settings.LANGUAGE_CODE
     )

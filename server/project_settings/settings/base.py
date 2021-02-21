@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+# TODO: Check all settings and which forces new migration. Add comments as warnings.
+
 from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import gettext_lazy as _
 
@@ -168,7 +170,8 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'authentication.user'
 
 # Årskursnamn
+# (Attention! adding to, removing from or changing any of the objects of the list requires a migration)
 CHAPTER_YEARS = [
-    ("F-20", "Fotnot"), ("F-19", "Fasett"), ("F-18", "Flingsalt"), ("F-17", "Förarlös"),
-    ("F-16", "Fuskbygge"), ("F-15", "Fanclub"), ("F-14", "Folkvett"), ("F-13", "Frågvis?")
+    ("F-20", "F-20 Fotnot"), ("F-19", "F-19 Fasett"), ("F-18", "F-18 Flingsalt"), ("F-17", "F-17 Förarlös"),
+    ("F-16", "F-16 Fuskbygge"), ("F-15", "F-15 Fanclub"), ("F-14", "F-14 Folkvett"), ("F-13", "F-13 Frågvis?")
 ]
