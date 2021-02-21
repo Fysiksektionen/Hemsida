@@ -20,7 +20,7 @@ class UserModelAdmin(admin.ModelAdmin):
     """
 
     # Change view
-    form = UserChangeForm
+    form = UserChangeForm  # Same behaviour as default form, better implementation => reduce approx 80 queries.
     fieldsets = (
         (_('profile'), {
             'fields': (

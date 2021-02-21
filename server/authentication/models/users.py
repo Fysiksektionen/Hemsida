@@ -34,8 +34,8 @@ class User(AbstractUser):
     user_type = models.PositiveSmallIntegerField(
         verbose_name=_("user type"),
         choices=UserType.choices,
-        blank=False,
-        null=False
+        null=True,
+        blank=True
     )
     kth_id = models.CharField(
         verbose_name=_('KTH-id'),
