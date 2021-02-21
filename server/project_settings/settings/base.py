@@ -17,7 +17,7 @@ from .local import *
 
 
 def join_paths(*args, leading_slash=False, trailing_slash=True):
-    return ("/" if leading_slash else "") + "/".join([arg.strip('/') for arg in args]) + ("/" if trailing_slash else "")
+    return ("/" if leading_slash else "") + "/".join([str(arg).strip('/') for arg in args]) + ("/" if trailing_slash else "")
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
     "static"
 ]
 
-MEDIA_URL = join_paths(ROOT_URL, 'public' 'mediafiles')
+MEDIA_URL = join_paths(ROOT_URL, 'public', 'mediafiles')
 MEDIA_ROOT = PUBLIC_ROOT / 'mediafiles'
 
 
@@ -164,3 +164,11 @@ REST_FRAMEWORK = {
     ],
     'URL_FIELD_NAME': 'detail_url'
 }
+
+AUTH_USER_MODEL = 'authentication.user'
+
+# Årskursnamn
+CHAPTER_YEARS = [
+    ("F-20", "Fotnot"), ("F-19", "Fasett"), ("F-18", "Flingsalt"), ("F-17", "Förarlös"),
+    ("F-16", "Fuskbygge"), ("F-15", "Fanclub"), ("F-14", "Folkvett"), ("F-13", "Frågvis?")
+]
