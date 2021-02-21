@@ -1,6 +1,7 @@
 import React from 'react';
 import Frontpage from './pages/frontpage'
 import NewsArticlePage from './pages/news_article_page'
+import StyretPage from './pages/styret_page'
 import Header from './components/header'
 import Footer from './components/footer'
 import { Switch, Route } from "react-router-dom";
@@ -19,6 +20,10 @@ function App() {
 
                 <Route path="/newsarticle">
                     <NewsArticlePage {...DummyData2} />
+                </Route>
+
+                <Route path="/styret">
+                    <StyretPage/>
                 </Route>
 
                 <Route path="/">

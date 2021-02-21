@@ -1,6 +1,8 @@
 import React from 'react'
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 
-type ProfileCardProps = {
+export interface IProfileCard {
     image_url: string,  // image url
     role: string, // Ordförande, Kassör ...
     year_code: string, // F-17, F-18 or similar
@@ -9,16 +11,21 @@ type ProfileCardProps = {
     description: string // Short description of person
 }
 
-function ProfileCard(personInfo: ProfileCardProps){
+function ProfileCard(personInfo: IProfileCard){
     let image_alt_text = personInfo.role + " " + personInfo.name;
     return (
-        <div className={"container"}>
-                <img src={"https://www.w3schools.com/html/pic_trulli.jpg"} alt={image_alt_text} style={{width: "100%"}}/>
-                <h1>{personInfo.role}</h1>
-                <h2>{personInfo.name}</h2>
-                <h3>{personInfo.description}</h3>
-        </div>
+        <Container>
+            <Col>
+                <img src={personInfo.image_url} alt={image_alt_text} className={"rounded"} style={{width: "100%"}}/>
+                <div className={"pt-4"}>
+                    <h4>{personInfo.role}</h4>
+                    <h4>{personInfo.name}</h4>
+                    <p>{personInfo.description}</p>
+                </div>
+            </Col>
+        </Container>
+
     )
 }
 
-export default ProfileCard;
+export {ProfileCard};
