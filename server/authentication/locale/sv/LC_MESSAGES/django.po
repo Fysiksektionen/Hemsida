@@ -56,8 +56,8 @@ msgstr "årskurs"
 
 #: authentication/models/users.py:47
 msgid "profile image"
-msgstr ""
+msgstr "profilbild"
 
 #: authentication/models/users.py:53
 msgid "language"
-msgstr ""
+msgstr "språk"
