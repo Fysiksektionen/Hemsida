@@ -22,7 +22,7 @@ class UserModelAdmin(admin.ModelAdmin):
     # Change view
     form = UserChangeForm
     fieldsets = (
-        (_('profile settings'), {
+        (_('profile'), {
             'fields': (
                 'username',
                 'email',

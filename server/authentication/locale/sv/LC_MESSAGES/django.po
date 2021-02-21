@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-21 01:34+0100\n"
+"POT-Creation-Date: 2021-02-21 02:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,46 +18,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authentication/models/users.py:11
+#: authentication/admin.py:25
+msgid "profile"
+msgstr "profil"
+
+#: authentication/admin.py:36
+msgid "advanced options"
+msgstr "avancerade alternativ"
+
+#: authentication/models/users.py:18
 msgid "user"
 msgstr "användare"
 
-#: authentication/models/users.py:12
+#: authentication/models/users.py:19
 msgid "users"
 msgstr "användare"
 
-#: authentication/models/users.py:21
+#: authentication/models/users.py:28
 msgid "Student"
 msgstr "Studerande"
 
-#: authentication/models/users.py:22
+#: authentication/models/users.py:29
 msgid "Senior"
 msgstr "Senior"
 
-#: authentication/models/users.py:23
+#: authentication/models/users.py:30
 msgid "External"
 msgstr "Extern"
 
-#: authentication/models/users.py:24
+#: authentication/models/users.py:31
 msgid "Admin"
 msgstr "Admin"
 
-#: authentication/models/users.py:28
+#: authentication/models/users.py:35
 msgid "user type"
 msgstr "användartyp"
 
-#: authentication/models/users.py:34
+#: authentication/models/users.py:41
 msgid "KTH-id"
 msgstr "KTH-id"
 
-#: authentication/models/users.py:40
+#: authentication/models/users.py:47
 msgid "chapter year"
 msgstr "årskurs"
 
-#: authentication/models/users.py:47
+#: authentication/models/users.py:54
 msgid "profile image"
 msgstr "profilbild"
 
-#: authentication/models/users.py:53
+#: authentication/models/users.py:60
 msgid "language"
 msgstr "språk"
