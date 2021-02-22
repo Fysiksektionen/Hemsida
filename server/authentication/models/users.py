@@ -28,6 +28,8 @@ class User(AbstractUser):
         """Enum type for choices of User.user_type
         Note that numbers do not matter. They should never be exposed.
         """
+
+        # TODO: Add NONE-type and enforce type with default=NONE
         STUDERANDE = 1, _("Student")
         SENIOR = 2, _("Senior")
         EXTERNAL = 3, _("External")
