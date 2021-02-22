@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 def _image_filename(instance, filename):
     filename = "%d_group_image.%s" % (instance.id, filename.split('.')[-1])  # Filename with correct extension
-    return os.path.join('groups', filename)  # Return path users/<id>_profile.<ext>
+    return os.path.join('groups', filename)  # Return path groups/<id>_group_image.<ext>
 
 
 class Group(django_Group):
