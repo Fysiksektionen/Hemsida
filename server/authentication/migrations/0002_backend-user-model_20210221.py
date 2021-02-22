@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='user_type',
-            field=models.PositiveSmallIntegerField(blank=True, choices=[(1, 'Student'), (2, 'Senior'), (3, 'External'), (4, 'Admin')], null=True, verbose_name='user type'),
+            field=models.PositiveSmallIntegerField(choices=[(0, ''), (1, 'Student'), (2, 'Senior'), (3, 'External'), (4, 'Admin')], default=0, verbose_name='user type'),
         ),
         migrations.AddField(
             model_name='user',

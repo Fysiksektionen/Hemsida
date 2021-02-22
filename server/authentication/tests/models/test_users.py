@@ -11,8 +11,7 @@ class UserModelTest(ValidationTestCase):
         """Creation of objects"""
         self.user = User.objects.create_user(
             username="test",
-            email="test@f.kth.se",
-            user_type=User.UserType.ADMIN
+            email="test@f.kth.se"
         )
         self.user.set_unusable_password()
         self.user.save()

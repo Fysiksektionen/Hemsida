@@ -69,16 +69,14 @@ admin.site.unregister(django_Group)  # Remove Django's default group.
 
 @admin.register(Group)
 class GroupModelAdmin(admin.ModelAdmin):
-    """Admin interface for the User model.
+    """Admin interface for the Group model.
 
     Notable implementations:
         - Removes editing user permissions since other implementation of permission will be implemented later.
-        - Removes seeing the password (even in hashed form), since it is unnecessary.
         - Displays the image in the list view.
         - Not all field in list is searchable and not all is filterable.
     """
     # Change view
-    # form = UserChangeForm  # Same behaviour as default form, better implementation => reduce approx 80 queries.
     fieldsets = (
         (_('general'), {
             'fields': (

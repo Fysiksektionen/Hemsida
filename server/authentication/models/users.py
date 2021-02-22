@@ -29,7 +29,7 @@ class User(AbstractUser):
         Note that numbers do not matter. They should never be exposed.
         """
 
-        # TODO: Add NONE-type and enforce type with default=NONE
+        NONE = 0, ""
         STUDERANDE = 1, _("Student")
         SENIOR = 2, _("Senior")
         EXTERNAL = 3, _("External")
@@ -39,8 +39,7 @@ class User(AbstractUser):
     user_type = models.PositiveSmallIntegerField(
         verbose_name=_("user type"),
         choices=UserType.choices,
-        null=True,
-        blank=True
+        default=UserType.NONE
     )
     kth_id = models.CharField(
         verbose_name=_('KTH-id'),
