@@ -1,23 +1,40 @@
 """Specifications for the django admin panel"""
 
-from adminsortable.admin import SortableTabularInline, SortableAdmin
+from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInline
 from django.contrib import admin
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from website.models.menus import Menu, MenuItemBase
-from website.models.pages import Page
+from website.models.pages import Page, PageDraft
 
 admin.site.index_title = _('Admin page')
 admin.site.site_header = _('The Physics Chapter - Administration')
 admin.site.site_title = _('Site Management')
 
 
+class PageDraftInline(TabularInline):
+    model = PageDraft
+    extra = 1
+    fields = ('page_type', 'content_sv', 'content_en')
+
+
 @admin.register(Page)
 class PageModelAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'url')
-    search_fields = ('url',)
+    list_display = ('name', 'slug', 'published', 'published_at', 'last_edited_at')
+    search_fields = ('name', 'url',)
+    prepopulated_fields = {'slug': ('name',), }
 
-    fields = ('url',)
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'url', 'slug', 'page_type', 'parent')
+        }),
+        (capfirst(_('content')), {
+            'fields': ('content_sv', 'content_en')
+        }),
+    )
+    inlines = [
+        PageDraftInline
+    ]
 
 
 class MenuItemInline(SortableTabularInline):

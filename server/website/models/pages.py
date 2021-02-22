@@ -13,6 +13,12 @@ class PageDraft(models.Model):
         verbose_name_plural = _('page drafts')
 
     page_type = models.CharField(verbose_name=_('page type'), max_length=255)
+    """Note: should probably move relationship to page model when we have our own admin page, 
+    because it will probably lead to a faster lookup. """
+    page = models.OneToOneField(
+        'website.Page', verbose_name=_('page'), null=True, blank=False, on_delete=models.CASCADE,
+        related_name='page_draft'
+    )
     content_sv = models.OneToOneField(
         'website.ContentObjectBase', verbose_name=_('swedish content'), blank=True, null=True,
         on_delete=models.SET_NULL, related_name='page_draft_sv'
@@ -34,27 +40,23 @@ class Page(models.Model):
         verbose_name_plural = _('pages')
 
     url = models.URLField(verbose_name=_('URL'), blank=False, null=False, unique=True)
-    name = models.CharField(verbose_name=_('name'), null=False, blank=True, max_length=255)
+    name = models.CharField(verbose_name=_('name'), max_length=255)
     page_type = models.CharField(verbose_name=_('page type'), max_length=255)
     parent = models.ForeignKey(
         'website.Page', verbose_name=_('parent page'), blank=True, null=True, on_delete=models.SET_NULL,
         related_name='children'
     )
-    slug = models.SlugField(verbose_name='Slug', null=False, blank=False)
+    slug = models.SlugField(verbose_name='Slug', null=True, blank=True)
 
-    page_draft = models.OneToOneField(
-        'website.PageDraft', verbose_name=_('page draft'), null=True, blank=True, on_delete=models.SET_NULL,
-        related_name='page'
-    )
     published = models.BooleanField(verbose_name=_('is published'), default=False)
     # TODO: fix publish method so timestamp is automatically updated
     published_at = models.DateField(verbose_name=_('published at'), null=True, blank=True)
     last_edited_at = models.DateTimeField(verbose_name=_('last edited at'), null=False, blank=False,
                                           auto_now=True)
     content_sv = models.OneToOneField('website.ContentObjectBase', verbose_name=_('swedish content'), blank=True,
-                                   null=True, on_delete=models.SET_NULL, related_name='page_sv')
+                                      null=True, on_delete=models.SET_NULL, related_name='page_sv')
     content_en = models.OneToOneField('website.ContentObjectBase', verbose_name=_('english content'), blank=True,
-                                   null=True, on_delete=models.SET_NULL, related_name='page_en')
+                                      null=True, on_delete=models.SET_NULL, related_name='page_en')
 
     def __init__(self, *args, **kwargs):
         # Set default slug if not specified
