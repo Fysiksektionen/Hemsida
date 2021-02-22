@@ -1,13 +1,15 @@
+from authentication.views.groups import GroupViewSet
 from authentication.views.users import UserViewSet
 from rest_framework.routers import DefaultRouter
 
 app_name = 'authentication'
 
 # Routs/urls for menus and menu-items
-user_router = DefaultRouter()
-user_router.register(r'users', UserViewSet, basename='user')
+main_router = DefaultRouter()
+main_router.register(r'users', UserViewSet, basename='user')
+main_router.register(r'groups', GroupViewSet, basename='group')
 
 # Url-patterns for website app.
 urlpatterns = [
-    *user_router.urls
+    *main_router.urls
 ]

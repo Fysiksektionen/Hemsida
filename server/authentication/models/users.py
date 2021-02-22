@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .groups import Group
+
 
 def _image_filename(instance, filename):
     filename = "%d_profile.%s" % (instance.id, filename.split('.')[-1])  # Filename with correct extension
@@ -23,6 +25,17 @@ class User(AbstractUser):
 
     # Override of inherited fields
     is_active = True
+    groups = models.ManyToManyField(  # Changes only the related model from built in Group to our Group model.
+        Group,
+        verbose_name=_('groups'),
+        blank=True,
+        help_text=_(
+            'The groups this user belongs to. A user will get all permissions '
+            'granted to each of their groups.'
+        ),
+        related_name="user_set",
+        related_query_name="user",
+    )
 
     class UserType(models.IntegerChoices):
         """Enum type for choices of User.user_type

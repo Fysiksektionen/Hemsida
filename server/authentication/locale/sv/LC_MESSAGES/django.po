@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-22 15:15+0100\n"
+"POT-Creation-Date: 2021-02-22 16:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr "autentisering och rättigheter"
 msgid "group"
 msgstr "grupp"
 
-#: authentication/models/groups.py:18
+#: authentication/models/groups.py:18 authentication/models/users.py:30
 msgid "groups"
 msgstr "grupper"
 
@@ -46,11 +46,11 @@ msgstr "grupper"
 msgid "Chapter group"
 msgstr "Nämnd"
 
-#: authentication/models/groups.py:29 authentication/models/users.py:35
+#: authentication/models/groups.py:29 authentication/models/users.py:48
 msgid "External"
 msgstr "Extern"
 
-#: authentication/models/groups.py:30 authentication/models/users.py:36
+#: authentication/models/groups.py:30 authentication/models/users.py:49
 msgid "Admin"
 msgstr "Admin"
 
@@ -66,38 +66,42 @@ msgstr "beskrivning"
 msgid "group image"
 msgstr "gruppbild"
 
-#: authentication/models/users.py:18
+#: authentication/models/users.py:20
 msgid "user"
 msgstr "användare"
 
-#: authentication/models/users.py:19
+#: authentication/models/users.py:21
 msgid "users"
 msgstr "användare"
 
 #: authentication/models/users.py:33
+msgid "The groups this user belongs to. A user will get all permissions granted to each of their groups."
+msgstr "De grupper som användaren är medlem i. Användare får tillgång till alla rättigheter som deras grupper har."
+
+#: authentication/models/users.py:46
 msgid "Student"
 msgstr "Studerande"
 
-#: authentication/models/users.py:34
+#: authentication/models/users.py:47
 msgid "Senior"
 msgstr "Senior"
 
-#: authentication/models/users.py:40
+#: authentication/models/users.py:53
 msgid "user type"
 msgstr "användartyp"
 
-#: authentication/models/users.py:45
+#: authentication/models/users.py:58
 msgid "KTH-id"
 msgstr "KTH-id"
 
-#: authentication/models/users.py:51
+#: authentication/models/users.py:64
 msgid "chapter year"
 msgstr "årskurs"
 
-#: authentication/models/users.py:58
+#: authentication/models/users.py:71
 msgid "profile image"
 msgstr "profilbild"
 
-#: authentication/models/users.py:64
+#: authentication/models/users.py:77
 msgid "language"
 msgstr "språk"

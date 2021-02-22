@@ -17,8 +17,8 @@ class Group(django_Group):
         verbose_name = _("group")
         verbose_name_plural = _("groups")
 
-    # class ObjectMeta:
-    #     detail_view_name = 'api:authentication:group-detail'
+    class ObjectMeta:
+        detail_view_name = 'api:authentication:group-detail'
 
     class GroupType(models.IntegerChoices):
         """Enum type for choices of Group.group_type

@@ -1,4 +1,4 @@
-from authentication.models.users import User
+from authentication.models import Group, User
 from rest_framework import viewsets, mixins, serializers
 from utils.serializers import DBObjectSerializer
 
@@ -11,14 +11,35 @@ class UserSerializer(DBObjectSerializer):
     class Meta:
         model = User
         exclude = ('password', 'user_permissions', 'is_superuser', 'is_staff')
+        depth = 1
+
+        nested_serialization = {
+            'groups': {
+                'fields': ('name', 'description', 'group_type', 'image')
+            }
+        }
 
     @staticmethod
     def get_user_type(obj):
         """Return human readable name instead of number for user_type"""
-        if obj.user_type:
-            return {key: val for key, val in User.UserType.choices}[obj.user_type]
-        else:
-            return None
+        return {key: val for key, val in User.UserType.choices}[obj.user_type]
+
+    @staticmethod
+    def get_group_type(obj):
+        """Return human readable name instead of number for group_type"""
+        return {key: val for key, val in Group.GroupType.choices}[obj.group_type]
+
+    def build_standard_field(self, field_name, model_field):
+        """Special behaviour for the nested field 'group_type' to show text and not int."""
+        field_class, field_kwargs = super(UserSerializer, self).build_standard_field(field_name, model_field)
+        if field_name == 'group_type':
+            field_class = serializers.SerializerMethodField  # Change field type
+
+            # Remove invalid arguments for SerializerMethodField if they are present in field_kwargs.
+            field_kwargs.pop('choices', None)
+            field_kwargs.pop('allow_blank', None)
+
+        return field_class, field_kwargs
 
 
 class UserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
