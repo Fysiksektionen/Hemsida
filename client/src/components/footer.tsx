@@ -1,4 +1,5 @@
 import React from 'react';
+import GoogleMap from './googleMap'
 import './footer.css'
 import Toe from './Toe';
 
@@ -11,6 +12,8 @@ function Footer() {
             <h3>Hitta hit</h3>
 
             Brinellvägen 89, 114 28 Stockholm
+
+            <GoogleMap />
 
         </div>
         <Toe

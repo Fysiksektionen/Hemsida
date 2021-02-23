@@ -6,8 +6,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('website', '0003_backend-menu-admin_210210'), ('website', '0004_auto_20210211_1945')]
-
     dependencies = [
         ('website', '0002_backend-menu-model_210207'),
     ]

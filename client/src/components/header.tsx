@@ -1,8 +1,11 @@
-import React from 'react';
-import FButton from './f-styled/buttons/FButton';
-import { Search, Menu } from '@material-ui/icons';
-import logo from '../Fysiksektionen_logo.svg';
+import { Button, Container } from '@material-ui/core';
 import './header.css'
+import React, { useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import logo from '../Fysiksektionen_logo.svg';
+import { GroupedSearch } from './search-box';
+import HeaderMenu from './HeaderMenu';
+
 
 function Header() {
   return (
@@ -13,25 +16,17 @@ function Header() {
         justifyContent: "space-between"
       }}
     >
-        
         <a className="navbar-brand mx-5 text-center" href="/">
             <img src={logo} width="80" height="80" alt="" />
             <h2>Fysiksektionen</h2>
         </a>
         <div>
-          <FButton
-            text="Menu"
-            Icon={Menu}
-            style={{ float: "right" }}
-          />
-          <FButton
-            text="Search"
-            Icon={Search}
-            version="dark"
-            style={{ float: "right" }}
-          />
+          <div className="mx-4">
+            <GroupedSearch/>
+          </div>
+          <HeaderMenu/>
         </div>
-    </div>
+      </div>
   );
 }
 
