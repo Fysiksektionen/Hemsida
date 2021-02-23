@@ -9,18 +9,24 @@ import HeaderMenu from './HeaderMenu';
 
 function Header() {
   return (
-    <>
-      <div className="navbar sticky-top bg-light">
+    <div 
+      className="navbar sticky-top bg-light px-4" 
+      style={{
+        display: "flex",
+        justifyContent: "space-between"
+      }}
+    >
         <a className="navbar-brand mx-5 text-center" href="/">
             <img src={logo} width="80" height="80" alt="" />
             <h2>Fysiksektionen</h2>
         </a>
-        <div className="mx-4">
-          <GroupedSearch/>
+        <div>
+          <div className="mx-4">
+            <GroupedSearch/>
+          </div>
+          <HeaderMenu/>
         </div>
-        <HeaderMenu/>
       </div>
-    </>
   );
 }
 
