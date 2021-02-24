@@ -1,0 +1,107 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-22 16:58+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: authentication/admin.py:26
+msgid "profile"
+msgstr "profil"
+
+#: authentication/admin.py:37
+msgid "advanced options"
+msgstr "avancerade alternativ"
+
+#: authentication/admin.py:81
+msgid "general"
+msgstr "allmänt"
+
+#: authentication/apps.py:7
+msgid "authentication app"
+msgstr "autentisering och rättigheter"
+
+#: authentication/models/groups.py:17
+msgid "group"
+msgstr "grupp"
+
+#: authentication/models/groups.py:18 authentication/models/users.py:30
+msgid "groups"
+msgstr "grupper"
+
+#: authentication/models/groups.py:28
+msgid "Chapter group"
+msgstr "Nämnd"
+
+#: authentication/models/groups.py:29 authentication/models/users.py:48
+msgid "External"
+msgstr "Extern"
+
+#: authentication/models/groups.py:30 authentication/models/users.py:49
+msgid "Admin"
+msgstr "Admin"
+
+#: authentication/models/groups.py:34
+msgid "group type"
+msgstr "grupptyp"
+
+#: authentication/models/groups.py:39
+msgid "description"
+msgstr "beskrivning"
+
+#: authentication/models/groups.py:44
+msgid "group image"
+msgstr "gruppbild"
+
+#: authentication/models/users.py:20
+msgid "user"
+msgstr "användare"
+
+#: authentication/models/users.py:21
+msgid "users"
+msgstr "användare"
+
+#: authentication/models/users.py:33
+msgid "The groups this user belongs to. A user will get all permissions granted to each of their groups."
+msgstr "De grupper som användaren är medlem i. Användare får tillgång till alla rättigheter som deras grupper har."
+
+#: authentication/models/users.py:46
+msgid "Student"
+msgstr "Studerande"
+
+#: authentication/models/users.py:47
+msgid "Senior"
+msgstr "Senior"
+
+#: authentication/models/users.py:53
+msgid "user type"
+msgstr "användartyp"
+
+#: authentication/models/users.py:58
+msgid "KTH-id"
+msgstr "KTH-id"
+
+#: authentication/models/users.py:64
+msgid "chapter year"
+msgstr "årskurs"
+
+#: authentication/models/users.py:71
+msgid "profile image"
+msgstr "profilbild"
+
+#: authentication/models/users.py:77
+msgid "language"
+msgstr "språk"
