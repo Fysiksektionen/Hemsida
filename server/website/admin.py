@@ -4,8 +4,11 @@ from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInl
 from django.contrib import admin
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
+
 from website.models.menus import Menu, MenuItemBase
 from website.models.pages import Page, PageDraft
+from utils.admin import GuardedModelAdmin
+
 
 admin.site.index_title = _('Admin page')
 admin.site.site_header = _('The Physics Chapter - Administration')
@@ -19,7 +22,7 @@ class PageDraftInline(TabularInline):
 
 
 @admin.register(Page)
-class PageModelAdmin(admin.ModelAdmin):
+class PageModelAdmin(GuardedModelAdmin):
     list_display = ('name', 'slug', 'published', 'published_at', 'last_edited_at')
     search_fields = ('name', 'url',)
     prepopulated_fields = {'slug': ('name',), }
@@ -44,7 +47,7 @@ class MenuItemInline(SortableTabularInline):
 
 
 @admin.register(Menu)
-class MenuModelAdmin(SortableAdmin):
+class MenuModelAdmin(GuardedModelAdmin):
     list_display = ('name', 'link', 'is_sub_menu', 'num_of_items')
     search_fields = ('name', 'link')
     list_select_related = True

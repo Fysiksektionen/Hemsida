@@ -7,11 +7,11 @@ from django.contrib.auth.models import Group as django_Group
 from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from utils.admin import AlteredGuardedModelAdmin as ModelAdmin
+from utils.admin import GuardedModelAdmin
 
 
 @admin.register(User)
-class UserModelAdmin(ModelAdmin):
+class UserModelAdmin(GuardedModelAdmin):
     """Admin interface for the User model.
 
     Notable implementations:
@@ -42,6 +42,7 @@ class UserModelAdmin(ModelAdmin):
                 'is_staff',
                 'is_superuser',
                 'groups',
+                'user_permissions',
             ),
         }),
     )
@@ -69,7 +70,7 @@ admin.site.unregister(django_Group)  # Remove Django's default group.
 
 
 @admin.register(Group)
-class GroupModelAdmin(ModelAdmin):
+class GroupModelAdmin(GuardedModelAdmin):
     """Admin interface for the Group model.
 
     Notable implementations:
