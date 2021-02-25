@@ -1,6 +1,6 @@
 import os
 
-from django.contrib.auth.models import Group as django_Group
+from django.contrib.auth.models import Group as DjangoGroup
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -10,7 +10,7 @@ def _image_filename(instance, filename):
     return os.path.join('groups', filename)  # Return path groups/<id>_group_image.<ext>
 
 
-class Group(django_Group):
+class Group(DjangoGroup):
     """Model for Group with fields specific to our needs."""
 
     class Meta:
