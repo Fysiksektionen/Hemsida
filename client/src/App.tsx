@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { LocaleContext, locales } from './contexts'
 import Frontpage from './pages/frontpage'
 import NewsArticlePage from './pages/news_article_page'
 import Header from './components/header'
@@ -9,29 +10,34 @@ import {DummyData2} from './components/news/frontpage_news_widget'
 
 
 function App() {
-  return (
-    <div className="App">
 
-        <Header />
+    const [locale, setLocale] = useState(locales.sv)
 
-        <div className="content container">
-            <Switch>
+    return (
+        <div className="App">
+        <LocaleContext.Provider value={locale}>
 
-                <Route path="/newsarticle">
-                    <NewsArticlePage {...DummyData2} />
-                </Route>
+            <Header setLocale={setLocale}/>
 
-                <Route path="/">
-                    <Frontpage />
-                </Route>
+            <div className="content container">
+                <Switch>
 
-            </Switch>
+                    <Route path="/newsarticle">
+                        <NewsArticlePage {...DummyData2} />
+                    </Route>
+
+                    <Route path="/">
+                        <Frontpage />
+                    </Route>
+
+                </Switch>
+            </div>
+
+            <Footer />
+
+        </LocaleContext.Provider>
         </div>
-
-        <Footer />
-
-    </div>
-  );
+    );
 }
 
 export default App;
