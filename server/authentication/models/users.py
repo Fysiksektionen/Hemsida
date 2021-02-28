@@ -74,7 +74,7 @@ class User(AbstractUser, ModelPermissionCacheMixin):
 
     def __setattr__(self, key, value):
         """Overrides setting value of 'is_active' on the user.
-        This value defaults to Tru and should never be set to anything else."""
+        This value defaults to True and should never be set to anything else."""
 
         if key == 'is_active' and value is not True:
             raise ValueError("Can't set attribute 'is_active' to anything else than True. "
