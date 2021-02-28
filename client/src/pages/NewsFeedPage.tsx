@@ -1,7 +1,7 @@
 import { List, ListItem } from "@material-ui/core";
 import React from  "react";
 import NewsArticle, { INewsItem } from "../components/news/NewsArticle";
-import { SidebarMenu } from "../components/SidebarMenu";
+import { IMenuItem, SidebarMenu } from "../components/SidebarMenu";
 import news_placeholder from '../placeholder_images/news_placeholder.jpg';
 import news_placeholder_image1 from '../placeholder_images/news_placeholder1.jpg';
 import news_placeholder_image2 from '../placeholder_images/news_placeholder2.jpg';
@@ -42,24 +42,35 @@ interface INewsFeedProps {
   newsArticles: INewsItem[];
 }
 
-export interface IMonthYear {
-  month: number;
-  year: number;
-}
 
-export interface IFeedItem {
-  content: INewsItem;
-  linkedBy?: IMonthYear;
-  ref?: any;
-}
+const months: string[] = [
+  "Januari",
+  "Februari",
+  "Mars",
+  "April",
+  "Maj",
+  "Juni",
+  "Juli",
+  "Augusti",
+  "September",
+  "Oktober",
+  "November",
+  "December"
+];
 
-export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
-  // assumes newsArticles is sorted by date
-  let menuItems: IMonthYear[] = []
-  let mostRecent = { month: newsArticles[0].published.getMonth(), year: newsArticles[0].published.getFullYear() };
+const getMonthYearString = (item: Date) => (
+  months[item.getMonth()] + " " + item.getFullYear()
+);
+
+const NUM_RECENT_MONTHS = 10;
+
+const getRecentMonths = (): Date[] => {
+  const now = new Date();
+  let recentMonths: Date[] = [];
+  let mostRecent = { month: now.getMonth(), year: now.getFullYear() };
   let i: number;
-  for ( i = 0; i < 12; ++i ) {
-    menuItems.push({...mostRecent});
+  for ( i = 0; i < NUM_RECENT_MONTHS; ++i ) {
+    recentMonths.push(new Date(mostRecent.year, mostRecent.month));
     mostRecent.month -= 1;
     if (mostRecent.month === -1) {
       mostRecent.month = 11;
@@ -67,36 +78,53 @@ export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
     }
   }
 
-  let usedMonth = (mostRecent.month + 1) % 12;
-  let thisMonth: number;
-  let linking: IMonthYear | undefined;
-  let feedItems: IFeedItem[] = [];
-  newsArticles.forEach(article => {
-    thisMonth = article.published.getMonth();
-    if (thisMonth < usedMonth || (thisMonth === 11 && usedMonth === 0)) {
-      linking = { month: thisMonth, year: article.published.getFullYear() };
-      usedMonth = thisMonth;
-    } else {
-      linking = undefined;
-    }
-    feedItems.push(
-      {
-        content: article,
-        linkedBy: linking,
-      }
-    );
+  return recentMonths;
+}
+
+const HEADER_HEIGHT = "150px";
+
+export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
+  // assumes newsArticles is sorted by date
+  const recentMonths = getRecentMonths();  
+  let menuItems: IMenuItem[] = [];
+  recentMonths.forEach((monthYear) => {
+    menuItems.push({
+      id: getMonthYearString(monthYear),
+      title: getMonthYearString(monthYear)
+    })
   })
 
-  const itemRefs = feedItems.reduce((acc: { [id: string]: any }, item) => {
-    if (item.linkedBy) acc[item.content.id] = React.createRef();
-      return acc;
-  }, {});
+  let usedMonth = (recentMonths[0].getMonth() + 1) % 12;
 
-  console.log("itemRefs", itemRefs);
+  newsArticles.forEach(article => {
+    if (article.published.getMonth() < usedMonth || (article.published.getMonth() === 11 && usedMonth === 0)) {
+      usedMonth = article.published.getMonth();
+      menuItems.forEach(item => {
+        if (item.title === getMonthYearString(article.published)) {
+          item.refsTo = article.id;
+        }
+      })
+    }
+  })
+
+  menuItems.unshift({
+    id: "mostRecentNews",
+    title: "Senaste nytt",
+    refsTo: "news-header"
+  })
+
+  // const itemRefs = feedItems.reduce((acc: { [id: string]: any }, item) => {
+  //   if (item.linkedBy) acc[item.content.id] = React.createRef();
+  //     return acc;
+  // }, {});
 
   return (
-    <SidebarMenu feedItems={feedItems} menuItems={menuItems}>
-      <h1 className="py-2 mt-2">
+    <SidebarMenu menuItems={menuItems}>
+      <h1
+        id="news-header"
+        className="py-2 mt-2"
+        style={{scrollMarginTop: HEADER_HEIGHT}}
+      >
         Nyheter
       </h1>
       <List>
@@ -105,7 +133,7 @@ export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
             id={article.id}
             key={article.id}
             className="py-2"
-            style={{scrollMarginTop: "150px"}} // 150px == height of page header
+            style={{scrollMarginTop: HEADER_HEIGHT}} // 150px == height of page header
           >
             <NewsArticle {...article}/>
           </ListItem>

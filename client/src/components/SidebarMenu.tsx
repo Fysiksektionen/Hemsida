@@ -1,40 +1,23 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
-import { IFeedItem, IMonthYear } from "../pages/NewsFeedPage";
 import { Row, Container, Col } from "react-bootstrap";
 import { Grid, Link, List, ListItem } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
-import Sticky from "react-stickynode";
 
 
-interface ISidebarMenuProps {
-  feedItems: IFeedItem[];
-  menuItems: IMonthYear[];
+export interface IMenuItem {
+  id: string;
+  title: string;
+  refsTo?: string;
 }
 
-const months: string[] = [
-  "Januari",
-  "Februari",
-  "Mars",
-  "April",
-  "Maj",
-  "Juni",
-  "Juli",
-  "Augusti",
-  "September",
-  "Oktober",
-  "November",
-  "December"
-];
-
-const getMonthYearString = (item: IMonthYear) => (
-  months[item.month] + " " + item.year
-);
+interface ISidebarMenuProps {
+  menuItems: IMenuItem[];
+}
 
 
-export function SidebarMenu({ feedItems, menuItems, children } : PropsWithChildren<ISidebarMenuProps>) {  
+export function SidebarMenu({ menuItems, children } : PropsWithChildren<ISidebarMenuProps>) {  
   // TODO: Update active month-item based on scroll position
-
-  const [active, setActive] = useState("latest");
+  const [active, setActive] = useState(menuItems[0].refsTo || "");
   let location = useLocation();
 
   let currPath: string | undefined;
@@ -44,12 +27,12 @@ export function SidebarMenu({ feedItems, menuItems, children } : PropsWithChildr
     if (currPath !== undefined) setActive(window.location.href.split("#")[1]);
   }, [location])
 
-  let refDict: { [key: string]: string } = {};
-  feedItems.forEach((feedItem: IFeedItem) => {
-    if (feedItem.linkedBy) {
-      refDict[feedItem.linkedBy.month + "_" + feedItem.linkedBy.year] = feedItem.content.id;
-    }
-  });
+  // let refDict: { [key: string]: string } = {};
+  // feedItems.forEach((feedItem: IFeedItem) => {
+  //   if (feedItem.linkedBy) {
+  //     refDict[feedItem.linkedBy.month + "_" + feedItem.linkedBy.year] = feedItem.content.id;
+  //   }
+  // });
 
   return (
     <Container style={{ width: "100%" }}>
@@ -66,29 +49,29 @@ export function SidebarMenu({ feedItems, menuItems, children } : PropsWithChildr
                 {menuItems.map(item =>
                 <ListItem
                   dense
-                  key={item.year +"_"+ item.month}
+                  key={item.id}
                   style={{ width: "100%" }}
                 >
-                  {refDict[item.month+"_"+item.year] ?
+                  {item.refsTo ?
                   <Link
-                    href={"#" + refDict[item.month+"_"+item.year]}
+                    href={"#" + item.refsTo}
                     underline="none"
                   >
-                    {active === refDict[item.month+"_"+item.year] ?
+                    {active === item.refsTo ?
                     <div style={{ color: "black" }}>
                       <b>
-                        {'•\u00A0' + getMonthYearString(item)}
+                        {'•\u00A0' + item.title}
                       </b>
                     </div>
                     : 
                     <div className="px-1" style={{ color: "black" }}>
-                      {'\u00A0\u00A0' + getMonthYearString(item)}
+                      {'\u00A0\u00A0' + item.title}
                     </div>
                     }
                   </Link> :
                   <Link underline="none">
                     <div className="px-1" style={{ color: "lightgray" }}>
-                      {'\u00A0\u00A0' + getMonthYearString(item)}
+                      {'\u00A0\u00A0' + item.title}
                     </div>
                   </Link>
                   }
