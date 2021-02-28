@@ -1,6 +1,8 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 from website.views.menus import MenuViewSet
 from website.views.pages import PageViewSet
+from website.views.site import SiteView
 
 app_name = 'website'
 
@@ -14,5 +16,6 @@ page_router.register(r'pages', PageViewSet, basename='page')  # page-list
 # Url-patterns for website app.
 urlpatterns = [
     *menu_router.urls,
-    *page_router.urls
+    *page_router.urls,
+    path('site/', SiteView.as_view(), name="site")
 ]
