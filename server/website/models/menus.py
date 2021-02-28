@@ -18,7 +18,7 @@ class MenuItemBase(SortableMixin, models.Model):
         unique_together = [('menu', 'name')]
 
     class ObjectMeta:
-        detail_view_name = 'api:menu-detail'
+        detail_view_name = 'api:website:menu-detail'
 
     name = models.CharField(verbose_name=_('name'), max_length=255)
 

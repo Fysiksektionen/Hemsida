@@ -18,10 +18,8 @@ class PageTest(ValidationTestCase):
 
         self.parent = Page(name='Parent page', page_type='0', url="https://f.kth.se", slug='parent',
                            content_sv=self.content_sv, content_en=self.content_en)
-        self.page_draft = PageDraft(page_type='1', content_en=self.content_en, content_sv=self.content_sv)
 
         self.parent.save()
-        self.page_draft.save()
 
     def test_default_slug(self):
         """Test setting default slug if slug is not specified."""

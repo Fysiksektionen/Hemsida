@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+# TODO: Check all settings and which forces new migration. Add comments as warnings.
+
 from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import gettext_lazy as _
 
@@ -17,7 +19,7 @@ from .local import *
 
 
 def join_paths(*args, leading_slash=False, trailing_slash=True):
-    return ("/" if leading_slash else "") + "/".join([arg.strip('/') for arg in args]) + ("/" if trailing_slash else "")
+    return ("/" if leading_slash else "") + "/".join([str(arg).strip('/') for arg in args]) + ("/" if trailing_slash else "")
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -137,7 +139,7 @@ STATICFILES_DIRS = [
     "static"
 ]
 
-MEDIA_URL = join_paths(ROOT_URL, 'public' 'mediafiles')
+MEDIA_URL = join_paths(ROOT_URL, 'public', 'mediafiles')
 MEDIA_ROOT = PUBLIC_ROOT / 'mediafiles'
 
 
@@ -164,3 +166,12 @@ REST_FRAMEWORK = {
     ],
     'URL_FIELD_NAME': 'detail_url'
 }
+
+AUTH_USER_MODEL = 'authentication.user'
+
+# Årskursnamn
+# (Attention! adding to, removing from or changing any of the objects of the list requires a migration)
+CHAPTER_YEARS = [
+    ("F-20", "F-20 Fotnot"), ("F-19", "F-19 Fasett"), ("F-18", "F-18 Flingsalt"), ("F-17", "F-17 Förarlös"),
+    ("F-16", "F-16 Fuskbygge"), ("F-15", "F-15 Fanclub"), ("F-14", "F-14 Folkvett"), ("F-13", "F-13 Frågvis?")
+]
