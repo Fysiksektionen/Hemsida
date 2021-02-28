@@ -169,6 +169,7 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'authentication.user'
+ANONYMOUS_USER_NAME = None
 
 # Årskursnamn
 # (Attention! adding to, removing from or changing any of the objects of the list requires a migration)

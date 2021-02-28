@@ -1,3 +1,6 @@
+import uuid
+
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.test import TestCase
 
@@ -123,3 +126,46 @@ class ValidationTestCase(TestCase):
                         raise self.failureException(
                             "Wrong message: field '%s' not exclusive in error '%s'." % (field, error.message_dict)
                         )
+
+
+def create_test_user(**kwargs):
+    """Helper method to create users for testing.
+
+    Any user attribute can be given in kwargs to override default values.
+
+    :raises `ValidationError` if any of the kwargs are invalid as parameters to the User
+    :raises `TypeError` if any of the kwargs are not valid in `__init__` of the User model.
+
+    :return User object already saved in the database.
+    """
+    User = get_user_model()
+
+    # If username is not specified, generate a random on the form "test_[random string]".
+    username = kwargs.pop('username', None)
+    if username is None:
+        usernames = User.objects.all().values_list('username', flat=True)
+        while username is None or username in usernames:
+            username = "test_" + str(uuid.uuid4())
+
+    # If email is not specified generate one on the form "[username]@test.se".
+    email = kwargs.pop('email', username + "@test.se")
+
+    # Pop password for later use.
+    password = kwargs.pop('password', None)
+
+    # Create user instance
+    user = User(username=username, email=email, **kwargs)
+
+    # Set password if any, else set unusable.
+    if password is not None:
+        user.set_password(password)
+    else:
+        user.set_unusable_password()
+
+    # Clean so that validation error occur if kwargs are invalid.
+    user.full_clean()
+
+    # Save user (only reached if no validation errors).
+    user.save()
+
+    return user
