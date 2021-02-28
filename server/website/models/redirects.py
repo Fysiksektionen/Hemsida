@@ -27,10 +27,11 @@ class Redirect(models.Model):
         detail_view_name = 'api:website:redirect-detail'
 
     from_path = models.CharField(
-        max_length=256,  # Must have something
+        max_length=255,  # Max on CharField
         verbose_name=_('from path'),
         blank=False, null=False,
-        validators=[from_path_validator]
+        validators=[from_path_validator],
+        unique=True
     )
 
     # Url and page are validated in clean method to ensure non-ambiguity.
@@ -41,11 +42,14 @@ class Redirect(models.Model):
     def link(self):
         """Url value of redirect.
         :raises RuntimeError: if link is ambiguous.
-        :return: Url of redirect based of url of page or url specified. Empty string if both Page and Url is None.
+        :raises RuntimeError: if link is missing.
+        :return: Url of redirect based of url of page or url specified.
         """
         if self.page is not None and self.url is not None:
             raise RuntimeError("Link is ambiguous, both 'page' and 'url' is set.")
-        return self.page.url if self.page is not None else (self.url if self.url is not None else "")
+        if self.page is None and self.url is None:
+            raise RuntimeError("Link is missing. Set either 'page' or 'url'.")
+        return self.page.url if self.page is not None else self.url
 
     def clean(self):
         """Validation of state of values in item.
@@ -60,6 +64,19 @@ class Redirect(models.Model):
                 NON_FIELD_ERRORS: ValidationError(
                     _("Link is ambiguous. Set either %(page_field_name)s "
                       "or %(url_field_name)s, not both."),
+                    params={
+                        'page_field_name': _('page'),
+                        'url_field_name': _('url')
+                    }
+                )
+            })
+
+        # Link empty
+        if self.page is None and self.url is None:
+            errors.update({
+                NON_FIELD_ERRORS: ValidationError(
+                    _("Link is empty. Set either %(page_field_name)s "
+                      "or %(url_field_name)s."),
                     params={
                         'page_field_name': _('page'),
                         'url_field_name': _('url')
