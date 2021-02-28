@@ -7,6 +7,7 @@ import Footer from './components/footer'
 import { Switch, Route } from "react-router-dom";
 import './App.css'
 import {DummyData2} from './components/news/frontpage_news_widget'
+import StyretPage from './pages/styret_page'
 
 
 function App() {
@@ -21,6 +22,10 @@ function App() {
 
             <div className="content container">
                 <Switch>
+                  
+                    <Route path="/styret">
+                        <StyretPage/>
+                    </Route>
 
                     <Route path="/newsarticle">
                         <NewsArticlePage {...DummyData2} />
