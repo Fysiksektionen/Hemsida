@@ -1,5 +1,5 @@
 import React from 'react';
-import './fadeout.css'
+import './Fadeout.css'
 
 
 export interface IFadeOut {

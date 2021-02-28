@@ -1,7 +1,7 @@
 import React from 'react';
-import NewsItemCompact from './news_item_compact'
+import NewsItemCompact from './NewsItemCompact'
 import {INewsItem} from './NewsArticle'
-import NewsFeedTiny, {INewsFeedTiny} from './news_feed_tiny'
+import NewsFeedTiny, {INewsFeedTiny} from './NewsFeedTiny'
 import news_placeholder from '../../placeholder_images/news_placeholder.jpg';
 import news_placeholder_image1 from '../../placeholder_images/news_placeholder1.jpg';
 import news_placeholder_image2 from '../../placeholder_images/news_placeholder2.jpg';
