@@ -2,6 +2,7 @@ import React from 'react';
 
 
 export interface INewsItem {
+  id: string
   image: string,
   title: string,
   published: Date,
@@ -19,7 +20,10 @@ function NewsArticle(props : INewsItem) {
 
 export function NewsArticleBase(props : INewsItem & {children?: React.ReactNode}) {
   return (
-    <div className="news-article-base" style={{backgroundColor: "#f0f0f0"}}>
+    <div
+      className="news-article-base"
+      style={{backgroundColor: "#f0f0f0"}}
+    >
       <div style={{width: "100%"}}>
         <img src={props.image} style={{width: "100%"}} alt='' />
       </div>

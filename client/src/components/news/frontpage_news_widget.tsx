@@ -1,6 +1,6 @@
 import React from 'react';
 import NewsItemCompact from './news_item_compact'
-import {INewsItem} from './news_item'
+import {INewsItem} from './NewsArticle'
 import NewsFeedTiny, {INewsFeedTiny} from './news_feed_tiny'
 import news_placeholder from '../../placeholder_images/news_placeholder.jpg';
 import news_placeholder_image1 from '../../placeholder_images/news_placeholder1.jpg';
@@ -32,6 +32,7 @@ const DummyData : INewsFeedTiny = {items: [
 ]}
 // TODO: remove
 export const DummyData2 : INewsItem = {
+  id: "dummy_id_2",
   image: news_placeholder,
   title: "Det blir en mottagning",
   published: new Date("2021-01-04"),

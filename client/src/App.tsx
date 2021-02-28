@@ -6,6 +6,7 @@ import Footer from './components/footer'
 import { Switch, Route } from "react-router-dom";
 import './App.css'
 import {DummyData2} from './components/news/frontpage_news_widget'
+import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 
 
 function App() {
@@ -19,6 +20,10 @@ function App() {
 
                 <Route path="/newsarticle">
                     <NewsArticlePage {...DummyData2} />
+                </Route>
+
+                <Route path="/nyheter">
+                    <NewsFeedPage newsArticles={dummyArticles}/>
                 </Route>
 
                 <Route path="/">

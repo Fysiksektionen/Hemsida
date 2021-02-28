@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {INewsItem, NewsArticleBase} from './news_item'
+import {INewsItem, NewsArticleBase} from './NewsArticle'
 import Collapse from 'react-bootstrap/Collapse'
 import FadeOut, {IFadeOut} from '../fadeout'
 import './news_item_compact.css'
