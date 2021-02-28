@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { LocaleContext, locales } from './contexts'
-import Frontpage from './pages/frontpage'
-import NewsArticlePage from './pages/news_article_page'
-import Header from './components/header'
-import Footer from './components/footer'
+import Frontpage from './pages/Frontpage'
+import NewsArticlePage from './pages/NewsArticlePage'
+import Header from './components/Header'
+import Footer from './components/Footer'
 import { Switch, Route } from "react-router-dom";
 import './App.css'
-import {DummyData2} from './components/news/frontpage_news_widget'
-import StyretPage from './pages/styret_page'
+import {DummyData2} from './components/news/FrontpageNewsWidget'
+import StyretPage from './pages/StyretPage'
 
 
 function App() {
