@@ -1,7 +1,6 @@
 from rest_framework import viewsets, mixins
-
+from utils.serializers import DBObjectSerializer, OptionalHyperlinkedIdentityField
 from website.models.menus import Menu
-from website.serializers import DBObjectSerializer, OptionalHyperlinkedIdentityField
 
 
 class MenuItemSerializer(DBObjectSerializer):

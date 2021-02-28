@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { LocaleContext, locales } from './contexts'
 import Frontpage from './pages/frontpage'
 import NewsArticlePage from './pages/news_article_page'
 import Header from './components/header'
@@ -7,36 +8,44 @@ import { Switch, Route } from "react-router-dom";
 import './App.css'
 import {DummyData2} from './components/news/frontpage_news_widget'
 import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
+import StyretPage from './pages/styret_page'
 
 
 function App() {
-  return (
-    <div className="App">
 
-        <Header />
+    const [locale, setLocale] = useState(locales.sv)
 
-        <div className="content container">
-            <Switch>
+    return (
+        <div className="App">
+        <LocaleContext.Provider value={locale}>
 
-                <Route path="/newsarticle">
-                    <NewsArticlePage {...DummyData2} />
-                </Route>
+            <Header setLocale={setLocale}/>
+            <div className="content container">
+                <Switch>
+                    <Route path="/nyheter">
+                        <NewsFeedPage newsArticles={dummyArticles}/>
+                    </Route>
 
-                <Route path="/nyheter">
-                    <NewsFeedPage newsArticles={dummyArticles}/>
-                </Route>
+                    <Route path="/styret">
+                        <StyretPage/>
+                    </Route>
 
-                <Route path="/">
-                    <Frontpage />
-                </Route>
+                    <Route path="/newsarticle">
+                        <NewsArticlePage {...DummyData2} />
+                    </Route>
 
-            </Switch>
+                    <Route path="/">
+                        <Frontpage />
+                    </Route>
+
+                </Switch>
+            </div>
+
+            <Footer />
+
+        </LocaleContext.Provider>
         </div>
-
-        <Footer />
-
-    </div>
-  );
+    );
 }
 
 export default App;

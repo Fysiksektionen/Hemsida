@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-15 15:01+0100\n"
+"POT-Creation-Date: 2021-02-22 16:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -56,7 +56,7 @@ msgstr "basinnehållsobjekt"
 msgid "base content objects"
 msgstr "basinnehållsobjekt"
 
-#: website/models/content_objects.py:30 website/models/menus.py:20
+#: website/models/content_objects.py:30 website/models/menus.py:23
 #: website/models/pages.py:37
 msgid "name"
 msgstr "namn"
@@ -77,7 +77,7 @@ msgstr "attribut"
 msgid "collection"
 msgstr "grupp"
 
-#: website/models/content_objects.py:54 website/models/menus.py:26
+#: website/models/content_objects.py:54 website/models/menus.py:29
 msgid "order"
 msgstr "ordning"
 
@@ -134,9 +134,9 @@ msgstr "menyobjekt"
 msgid "menu content objects"
 msgstr "menyobjekt"
 
-#: website/models/content_objects.py:194 website/models/menus.py:29
-#: website/models/menus.py:74 website/models/menus.py:75
-#: website/models/menus.py:86 website/models/menus.py:198
+#: website/models/content_objects.py:194 website/models/menus.py:32
+#: website/models/menus.py:77 website/models/menus.py:78
+#: website/models/menus.py:89 website/models/menus.py:201
 #: website/tests/models/test_menus.py:79 website/tests/models/test_menus.py:141
 #: website/tests/models/test_menus.py:158
 msgid "menu"
@@ -150,8 +150,8 @@ msgstr "sidobjekt"
 msgid "page content objects"
 msgstr "sidobjekt"
 
-#: website/models/content_objects.py:220 website/models/menus.py:24
-#: website/models/menus.py:61 website/models/pages.py:33
+#: website/models/content_objects.py:220 website/models/menus.py:27
+#: website/models/menus.py:64 website/models/pages.py:33
 #: website/tests/models/test_menus.py:49
 msgid "page"
 msgstr "sida"
@@ -164,40 +164,40 @@ msgstr "basmenyobjekt"
 msgid "base menu items"
 msgstr "basmenyobjekt"
 
-#: website/models/menus.py:23 website/models/menus.py:62
+#: website/models/menus.py:26 website/models/menus.py:65
 #: website/tests/models/test_menus.py:49
 msgid "url"
 msgstr "url"
 
-#: website/models/menus.py:32
+#: website/models/menus.py:35
 msgid "is menu"
 msgstr "är meny"
 
-#: website/models/menus.py:58 website/tests/models/test_menus.py:48
+#: website/models/menus.py:61 website/tests/models/test_menus.py:48
 #, python-format
 msgid "Link is ambiguous. Set either %(page_field_name)s or %(url_field_name)s, not both."
 msgstr "Länken är tvetydig. Sätt antingen %(page_field_name)s eller %(url_field_name)s, inte båda."
 
-#: website/models/menus.py:72 website/tests/models/test_menus.py:78
+#: website/models/menus.py:75 website/tests/models/test_menus.py:78
 #, python-format
 msgid "%(menu_field_name)s field must relate to a %(menu_model_name)s object."
 msgstr "%(menu_field_name)s fältet måste länka till ett %(menu_model_name)s object."
 
-#: website/models/menus.py:84 website/tests/models/test_menus.py:140
+#: website/models/menus.py:87 website/tests/models/test_menus.py:140
 #: website/tests/models/test_menus.py:157
 #, python-format
 msgid "%(menu_model_name)s relates to itself."
 msgstr "%(menu_model_name)s länkar till sig själv."
 
-#: website/models/menus.py:143
+#: website/models/menus.py:146
 msgid "menu item"
 msgstr "menyobjekt"
 
-#: website/models/menus.py:144
+#: website/models/menus.py:147
 msgid "menu items"
 msgstr "menyobjekt"
 
-#: website/models/menus.py:199
+#: website/models/menus.py:202
 msgid "menus"
 msgstr "menyer"
 
@@ -245,7 +245,7 @@ msgstr "är publicerad"
 msgid "published at"
 msgstr "publicerad"
 
-#: website/models/pages.py:73 website/tests/test_pages.py:56
+#: website/models/pages.py:73 website/tests/models/test_pages.py:55
 #, python-format
 msgid "%(slug_field)s cannot be '' if %(parent_field)s is not None."
 msgstr "%(slug_field)s kan inte vara '' om %(parent_field)s inte är None."
