@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-22 16:58+0100\n"
+"POT-Creation-Date: 2021-02-28 13:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authentication/admin.py:26
+#: authentication/admin.py:27
 msgid "profile"
 msgstr "profil"
 
-#: authentication/admin.py:37
+#: authentication/admin.py:38 authentication/admin.py:91
 msgid "advanced options"
 msgstr "avancerade alternativ"
 
-#: authentication/admin.py:81
+#: authentication/admin.py:83
 msgid "general"
 msgstr "allmänt"
 
@@ -34,74 +34,74 @@ msgstr "allmänt"
 msgid "authentication app"
 msgstr "autentisering och rättigheter"
 
-#: authentication/models/groups.py:17
+#: authentication/models/groups.py:22
 msgid "group"
 msgstr "grupp"
 
-#: authentication/models/groups.py:18 authentication/models/users.py:30
+#: authentication/models/groups.py:23
 msgid "groups"
 msgstr "grupper"
 
-#: authentication/models/groups.py:28
+#: authentication/models/groups.py:33
 msgid "Chapter group"
 msgstr "Nämnd"
 
-#: authentication/models/groups.py:29 authentication/models/users.py:48
+#: authentication/models/groups.py:34 authentication/models/users.py:39
 msgid "External"
 msgstr "Extern"
 
-#: authentication/models/groups.py:30 authentication/models/users.py:49
+#: authentication/models/groups.py:35 authentication/models/users.py:40
 msgid "Admin"
 msgstr "Admin"
 
-#: authentication/models/groups.py:34
+#: authentication/models/groups.py:39
 msgid "group type"
 msgstr "grupptyp"
 
-#: authentication/models/groups.py:39
+#: authentication/models/groups.py:44
 msgid "description"
 msgstr "beskrivning"
 
-#: authentication/models/groups.py:44
+#: authentication/models/groups.py:49
 msgid "group image"
 msgstr "gruppbild"
 
-#: authentication/models/users.py:20
+#: authentication/models/users.py:21
 msgid "user"
 msgstr "användare"
 
-#: authentication/models/users.py:21
+#: authentication/models/users.py:22
 msgid "users"
 msgstr "användare"
 
-#: authentication/models/users.py:33
-msgid "The groups this user belongs to. A user will get all permissions granted to each of their groups."
-msgstr "De grupper som användaren är medlem i. Användare får tillgång till alla rättigheter som deras grupper har."
+#: authentication/models/users.py:28
+msgid "active"
+msgstr "aktiv"
 
-#: authentication/models/users.py:46
+#: authentication/models/users.py:37
 msgid "Student"
 msgstr "Studerande"
 
-#: authentication/models/users.py:47
+#: authentication/models/users.py:38
 msgid "Senior"
 msgstr "Senior"
 
-#: authentication/models/users.py:53
+#: authentication/models/users.py:43
 msgid "user type"
 msgstr "användartyp"
 
-#: authentication/models/users.py:58
+#: authentication/models/users.py:48
 msgid "KTH-id"
 msgstr "KTH-id"
 
-#: authentication/models/users.py:64
+#: authentication/models/users.py:54
 msgid "chapter year"
 msgstr "årskurs"
 
-#: authentication/models/users.py:71
+#: authentication/models/users.py:61
 msgid "profile image"
 msgstr "profilbild"
 
-#: authentication/models/users.py:77
+#: authentication/models/users.py:67
 msgid "language"
 msgstr "språk"
