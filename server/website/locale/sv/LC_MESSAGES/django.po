@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-22 16:58+0100\n"
+"POT-Creation-Date: 2021-02-28 15:25+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -16,33 +16,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: website/admin.py:10
+#: website/admin.py:11
 msgid "Admin page"
 msgstr "Adminsidan"
 
-#: website/admin.py:11
+#: website/admin.py:12
 msgid "The Physics Chapter - Administration"
 msgstr "Fysiksektionen - Administration"
 
-#: website/admin.py:12
+#: website/admin.py:13
 msgid "Site Management"
-msgstr "Sidhantering"
+msgstr "Hemsidehantering"
 
-#: website/admin.py:36
+#: website/admin.py:32 website/admin.py:90
+msgid "content"
+msgstr "innehåll"
+
+#: website/admin.py:54
 msgid "about"
 msgstr "om"
 
-#: website/admin.py:39
+#: website/admin.py:57
 msgid "link"
 msgstr "länk"
 
-#: website/admin.py:54
+#: website/admin.py:72
 msgid "is sub menu"
 msgstr "är sub-meny"
 
-#: website/admin.py:58
+#: website/admin.py:76
 msgid "number of items"
 msgstr "antal menyobjekt"
+
+#: website/admin.py:84
+msgid "URLs"
+msgstr "URLer"
+
+#: website/admin.py:87
+msgid "page tree"
+msgstr "sidrot"
+
+#: website/admin.py:96
+msgid "Site object"
+msgstr "Hemsideobjekt"
+
+#: website/admin.py:97 website/models/content_objects.py:30
+#: website/models/menus.py:23 website/models/pages.py:46
+msgid "name"
+msgstr "namn"
 
 #: website/apps.py:7
 msgid "website app"
@@ -55,11 +76,6 @@ msgstr "basinnehållsobjekt"
 #: website/models/content_objects.py:27
 msgid "base content objects"
 msgstr "basinnehållsobjekt"
-
-#: website/models/content_objects.py:30 website/models/menus.py:23
-#: website/models/pages.py:37
-msgid "name"
-msgstr "namn"
 
 #: website/models/content_objects.py:31
 msgid "component"
@@ -151,8 +167,8 @@ msgid "page content objects"
 msgstr "sidobjekt"
 
 #: website/models/content_objects.py:220 website/models/menus.py:27
-#: website/models/menus.py:64 website/models/pages.py:33
-#: website/tests/models/test_menus.py:49
+#: website/models/menus.py:64 website/models/pages.py:19
+#: website/models/pages.py:39 website/tests/models/test_menus.py:49
 msgid "page"
 msgstr "sida"
 
@@ -201,7 +217,7 @@ msgstr "menyobjekt"
 msgid "menus"
 msgstr "menyer"
 
-#: website/models/pages.py:12 website/models/pages.py:46
+#: website/models/pages.py:12
 msgid "page draft"
 msgstr "utkast"
 
@@ -209,50 +225,50 @@ msgstr "utkast"
 msgid "page drafts"
 msgstr "utkast"
 
-#: website/models/pages.py:15 website/models/pages.py:38
+#: website/models/pages.py:15 website/models/pages.py:47
 msgid "page type"
 msgstr "sidtyp"
 
-#: website/models/pages.py:17 website/models/pages.py:54
+#: website/models/pages.py:23 website/models/pages.py:59
 msgid "swedish content"
 msgstr "svenskt innehåll"
 
-#: website/models/pages.py:21 website/models/pages.py:56
+#: website/models/pages.py:27 website/models/pages.py:61
 msgid "english content"
 msgstr "engelskt innehåll"
 
-#: website/models/pages.py:24 website/models/pages.py:52
+#: website/models/pages.py:30 website/models/pages.py:57
 msgid "last edited at"
 msgstr "senast redigerad"
 
-#: website/models/pages.py:34
+#: website/models/pages.py:40
 msgid "pages"
 msgstr "sidor"
 
-#: website/models/pages.py:36
+#: website/models/pages.py:45
 msgid "URL"
 msgstr "URL"
 
-#: website/models/pages.py:40
+#: website/models/pages.py:49
 msgid "parent page"
 msgstr "föräldersida"
 
-#: website/models/pages.py:49
+#: website/models/pages.py:54
 msgid "is published"
 msgstr "är publicerad"
 
-#: website/models/pages.py:51
+#: website/models/pages.py:56
 msgid "published at"
 msgstr "publicerad"
 
-#: website/models/pages.py:73 website/tests/models/test_pages.py:55
+#: website/models/pages.py:78 website/tests/models/test_pages.py:53
 #, python-format
 msgid "%(slug_field)s cannot be '' if %(parent_field)s is not None."
 msgstr "%(slug_field)s kan inte vara '' om %(parent_field)s inte är None."
 
 #: website/models/site.py:12
 msgid "site manager"
-msgstr "sidhantering"
+msgstr "hemsidehanterare"
 
 #: website/models/site.py:14
 msgid "root URL"
