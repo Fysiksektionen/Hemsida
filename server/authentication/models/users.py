@@ -1,19 +1,20 @@
 import os
 
+from authentication.models.mixins import ModelPermissionCacheMixin
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .groups import Group
-
 
 def _image_filename(instance, filename):
+    """Method to set image filename on upload of user image. (So that original filename is not saved)"""
+    # TODO: Fix issue of id=None. Maybe just do some uuid-string.
     filename = "%d_profile.%s" % (instance.id, filename.split('.')[-1])  # Filename with correct extension
     return os.path.join('users', filename)  # Return path users/<id>_profile.<ext>
 
 
-class User(AbstractUser):
+class User(AbstractUser, ModelPermissionCacheMixin):
     """Model for User with fields specific to our profiles."""
 
     class Meta:
@@ -24,19 +25,9 @@ class User(AbstractUser):
         detail_view_name = 'api:authentication:user-detail'
 
     # Override of inherited fields
-    is_active = True
-    groups = models.ManyToManyField(  # Changes only the related model from built in Group to our Group model.
-        Group,
-        verbose_name=_('groups'),
-        blank=True,
-        help_text=_(
-            'The groups this user belongs to. A user will get all permissions '
-            'granted to each of their groups.'
-        ),
-        related_name="user_set",
-        related_query_name="user",
-    )
+    is_active = models.BooleanField(verbose_name=_('active'), default=True, editable=False)
 
+    # Fields we want for our users (null needs to be accepted for admin-users).
     class UserType(models.IntegerChoices):
         """Enum type for choices of User.user_type
         Note that numbers do not matter. They should never be exposed.
@@ -48,7 +39,6 @@ class User(AbstractUser):
         EXTERNAL = 3, _("External")
         ADMIN = 4, _("Admin")
 
-    # Fields we want for our users (null needs to be accepted for admin-users).
     user_type = models.PositiveSmallIntegerField(
         verbose_name=_("user type"),
         choices=UserType.choices,
@@ -81,3 +71,12 @@ class User(AbstractUser):
         blank=False,
         default=settings.LANGUAGE_CODE
     )
+
+    def __setattr__(self, key, value):
+        """Overrides setting value of 'is_active' on the user.
+        This value defaults to True and should never be set to anything else."""
+
+        if key == 'is_active' and value is not True:
+            raise ValueError("Can't set attribute 'is_active' to anything else than True. "
+                             "Generally this attribute should never be set.")
+        super().__setattr__(key, value)

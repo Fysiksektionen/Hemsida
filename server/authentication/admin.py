@@ -1,16 +1,17 @@
 """Specifications for the django admin panel"""
-
-from authentication.models import User, Group
+from authentication.models import User
+from authentication.models.groups import Group
 from django.contrib import admin
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import Group as django_Group
 from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from utils.admin import GuardedModelAdmin
 
 
 @admin.register(User)
-class UserModelAdmin(admin.ModelAdmin):
+class UserModelAdmin(GuardedModelAdmin):
     """Admin interface for the User model.
 
     Notable implementations:
@@ -41,6 +42,7 @@ class UserModelAdmin(admin.ModelAdmin):
                 'is_staff',
                 'is_superuser',
                 'groups',
+                'user_permissions',
             ),
         }),
     )
@@ -68,7 +70,7 @@ admin.site.unregister(django_Group)  # Remove Django's default group.
 
 
 @admin.register(Group)
-class GroupModelAdmin(admin.ModelAdmin):
+class GroupModelAdmin(GuardedModelAdmin):
     """Admin interface for the Group model.
 
     Notable implementations:
@@ -85,6 +87,12 @@ class GroupModelAdmin(admin.ModelAdmin):
                 'image',
                 'group_type'
             )
+        }),
+        (_('advanced options'), {
+            'classes': ('collapse',),
+            'fields': (
+                'permissions',
+            ),
         }),
     )
 

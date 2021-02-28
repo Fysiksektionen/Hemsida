@@ -1,5 +1,5 @@
 import React from 'react';
-import NewsItemTiny, {INewsItemTiny} from './news_item_tiny';
+import NewsItemTiny, {INewsItemTiny} from './NewsItemTiny';
 import SomeButton, {IButton} from '../button';
 import Container from 'react-bootstrap/Container';
 

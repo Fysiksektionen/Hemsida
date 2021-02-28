@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {INewsItem, NewsArticleBase} from './news_item'
+import {INewsItem, NewsArticleBase} from './NewsItem'
 import Collapse from 'react-bootstrap/Collapse'
-import FadeOut, {IFadeOut} from '../fadeout'
-import './news_item_compact.css'
+import FadeOut, {IFadeOut} from '../Fadeout'
+import './NewsItemCompact.css'
 
 
 function NewsItemCompact(props : INewsItem) {

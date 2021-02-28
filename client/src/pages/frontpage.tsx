@@ -1,7 +1,7 @@
 import React from 'react';
-import Banner from '../components/banner';
-import OrangeInfoBoxes from '../components/orange_info_boxes';
-import NewsWidget from '../components/news/frontpage_news_widget';
+import Banner from '../components/Banner';
+import OrangeInfoBoxes from '../components/OrangeInfoBoxes';
+import NewsWidget from '../components/news/FrontpageNewsWidget';
 import { AccountBalance } from '@material-ui/icons';
 import FDateButton from '../components/f-styled/buttons/FDateButton';
 import FLargeIconButton from '../components/f-styled/buttons/FLargeIconButton';

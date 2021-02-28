@@ -6,6 +6,9 @@ from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
 from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect
 
+from utils.admin import GuardedModelAdmin
+
+
 admin.site.index_title = _('Admin page')
 admin.site.site_header = _('The Physics Chapter - Administration')
 admin.site.site_title = _('Site Management')
@@ -18,7 +21,7 @@ class PageDraftInline(TabularInline):
 
 
 @admin.register(Page)
-class PageModelAdmin(admin.ModelAdmin):
+class PageModelAdmin(GuardedModelAdmin):
     list_display = ('name', 'slug', 'published', 'published_at', 'last_edited_at')
     search_fields = ('name', 'url',)
     prepopulated_fields = {'slug': ('name',), }
@@ -75,7 +78,7 @@ class MenuModelAdmin(SortableAdmin):
 
 
 @admin.register(Redirect)
-class MenuModelAdmin(admin.ModelAdmin):
+class RedirectModelAdmin(admin.ModelAdmin):
     list_display = ('from_path', 'link', 'is_internal_page_link', 'page_name')
     search_fields = ('from_path', 'link')
     #list_select_related = True

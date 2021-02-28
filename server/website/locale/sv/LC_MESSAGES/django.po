@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-28 14:42+0100\n"
+"POT-Creation-Date: 2021-02-22 16:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -16,53 +16,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: website/admin.py:9
+#: website/admin.py:10
 msgid "Admin page"
 msgstr "Adminsidan"
 
-#: website/admin.py:10
+#: website/admin.py:11
 msgid "The Physics Chapter - Administration"
 msgstr "Fysiksektionen - Administration"
 
-#: website/admin.py:11
+#: website/admin.py:12
 msgid "Site Management"
 msgstr "Sidhantering"
 
-#: website/admin.py:30
-msgid "content"
-msgstr "innehåll"
-
-#: website/admin.py:52
+#: website/admin.py:36
 msgid "about"
 msgstr "om"
 
-#: website/admin.py:55
+#: website/admin.py:39
 msgid "link"
 msgstr "länk"
 
-#: website/admin.py:70
+#: website/admin.py:54
 msgid "is sub menu"
 msgstr "är sub-meny"
 
-#: website/admin.py:74
+#: website/admin.py:58
 msgid "number of items"
 msgstr "antal menyobjekt"
-
-#: website/admin.py:84
-msgid "from"
-msgstr "från"
-
-#: website/admin.py:87
-msgid "to"
-msgstr "till"
-
-#: website/admin.py:95
-msgid "internal link"
-msgstr "intern länk"
-
-#: website/admin.py:99
-msgid "page name"
-msgstr "sidans namn"
 
 #: website/apps.py:7
 msgid "website app"
@@ -77,7 +57,7 @@ msgid "base content objects"
 msgstr "basinnehållsobjekt"
 
 #: website/models/content_objects.py:30 website/models/menus.py:23
-#: website/models/pages.py:43
+#: website/models/pages.py:37
 msgid "name"
 msgstr "namn"
 
@@ -171,12 +151,8 @@ msgid "page content objects"
 msgstr "sidobjekt"
 
 #: website/models/content_objects.py:220 website/models/menus.py:27
-#: website/models/menus.py:64 website/models/pages.py:19
-#: website/models/pages.py:39 website/models/redirects.py:39
-#: website/models/redirects.py:68 website/models/redirects.py:81
+#: website/models/menus.py:64 website/models/pages.py:33
 #: website/tests/models/test_menus.py:49
-#: website/tests/models/test_redirects.py:55
-#: website/tests/models/test_redirects.py:66
 msgid "page"
 msgstr "sida"
 
@@ -189,10 +165,7 @@ msgid "base menu items"
 msgstr "basmenyobjekt"
 
 #: website/models/menus.py:26 website/models/menus.py:65
-#: website/models/redirects.py:38 website/models/redirects.py:69
-#: website/models/redirects.py:82 website/tests/models/test_menus.py:49
-#: website/tests/models/test_redirects.py:55
-#: website/tests/models/test_redirects.py:66
+#: website/tests/models/test_menus.py:49
 msgid "url"
 msgstr "url"
 
@@ -200,9 +173,7 @@ msgstr "url"
 msgid "is menu"
 msgstr "är meny"
 
-#: website/models/menus.py:61 website/models/redirects.py:65
-#: website/tests/models/test_menus.py:48
-#: website/tests/models/test_redirects.py:54
+#: website/models/menus.py:61 website/tests/models/test_menus.py:48
 #, python-format
 msgid "Link is ambiguous. Set either %(page_field_name)s or %(url_field_name)s, not both."
 msgstr "Länken är tvetydig. Sätt antingen %(page_field_name)s eller %(url_field_name)s, inte båda."
@@ -230,7 +201,7 @@ msgstr "menyobjekt"
 msgid "menus"
 msgstr "menyer"
 
-#: website/models/pages.py:12
+#: website/models/pages.py:12 website/models/pages.py:46
 msgid "page draft"
 msgstr "utkast"
 
@@ -238,43 +209,43 @@ msgstr "utkast"
 msgid "page drafts"
 msgstr "utkast"
 
-#: website/models/pages.py:15 website/models/pages.py:44
+#: website/models/pages.py:15 website/models/pages.py:38
 msgid "page type"
 msgstr "sidtyp"
 
-#: website/models/pages.py:23 website/models/pages.py:56
+#: website/models/pages.py:17 website/models/pages.py:54
 msgid "swedish content"
 msgstr "svenskt innehåll"
 
-#: website/models/pages.py:27 website/models/pages.py:58
+#: website/models/pages.py:21 website/models/pages.py:56
 msgid "english content"
 msgstr "engelskt innehåll"
 
-#: website/models/pages.py:30 website/models/pages.py:54
+#: website/models/pages.py:24 website/models/pages.py:52
 msgid "last edited at"
 msgstr "senast redigerad"
 
-#: website/models/pages.py:40
+#: website/models/pages.py:34
 msgid "pages"
 msgstr "sidor"
 
-#: website/models/pages.py:42
+#: website/models/pages.py:36
 msgid "URL"
 msgstr "URL"
 
-#: website/models/pages.py:46
+#: website/models/pages.py:40
 msgid "parent page"
 msgstr "föräldersida"
 
-#: website/models/pages.py:51
+#: website/models/pages.py:49
 msgid "is published"
 msgstr "är publicerad"
 
-#: website/models/pages.py:53
+#: website/models/pages.py:51
 msgid "published at"
 msgstr "publicerad"
 
-#: website/models/pages.py:75 website/tests/models/test_pages.py:53
+#: website/models/pages.py:73 website/tests/models/test_pages.py:55
 #, python-format
 msgid "%(slug_field)s cannot be '' if %(parent_field)s is not None."
 msgstr "%(slug_field)s kan inte vara '' om %(parent_field)s inte är None."
