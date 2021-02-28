@@ -1,5 +1,5 @@
 import React from 'react';
-import NewsArticle, {INewsItem} from '../components/news/news_item';
+import NewsArticle, {INewsItem} from '../components/news/NewsItem';
 import MenuMonths from '../components/menu_months'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
