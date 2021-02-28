@@ -60,11 +60,22 @@ class PermissionsTest(ValidationTestCase):
 
     def test_permission_edge_cases(self):
         """Tests removing non-existent and adding already added."""
-        # Adding permission
+        # Adding permission twice
+        self.user.add_model_perm('add_user', 'authentication', 'user', clear_cache=True)
+        self.user.add_model_perm('add_user', 'authentication', 'user', clear_cache=True)
+        self.assertTrue(self.user.has_perm('authentication.add_user'))
+
+        # Removing permission (also check that removing once is sufficient)
+        self.user.remove_model_perm('add_user', 'authentication', 'user', clear_cache=True)
+        self.assertFalse(self.user.has_perm('authentication.change_user', self.user))
+        self.user.remove_model_perm('add_user', 'authentication', 'user', clear_cache=True)
+
+        # Adding permission twice
+        self.user.add_obj_perm('change_user', self.user)
         self.user.add_obj_perm('change_user', self.user)
         self.assertTrue(self.user.has_perm('authentication.change_user', self.user))
-        self.assertFalse(self.user.has_perm('authentication.change_user', self.superuser))
 
-        # Removing permission
+        # Removing permission (also check that removing once is sufficient)
         self.user.del_obj_perm('change_user', self.user)
         self.assertFalse(self.user.has_perm('authentication.change_user', self.user))
+        self.user.del_obj_perm('change_user', self.user)
