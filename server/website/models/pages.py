@@ -39,6 +39,9 @@ class Page(models.Model):
         verbose_name = _('page')
         verbose_name_plural = _('pages')
 
+    class ObjectMeta:
+        detail_view_name = 'api:website:page-detail'
+
     url = models.URLField(verbose_name=_('URL'), blank=False, null=False, unique=True)
     name = models.CharField(verbose_name=_('name'), max_length=255)
     page_type = models.CharField(verbose_name=_('page type'), max_length=255)
