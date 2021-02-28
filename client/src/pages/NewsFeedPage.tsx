@@ -81,7 +81,7 @@ const getRecentMonths = (): Date[] => {
   return recentMonths;
 }
 
-const HEADER_HEIGHT = "150px";
+export const HEADER_HEIGHT = "150px";
 
 export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
   // assumes newsArticles is sorted by date

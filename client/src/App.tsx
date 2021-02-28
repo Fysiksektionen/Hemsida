@@ -8,7 +8,7 @@ import { Switch, Route } from "react-router-dom";
 import './App.css'
 import {DummyData2} from './components/news/frontpage_news_widget'
 import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
-import StyretPage from './pages/styret_page'
+import StyretPage from './pages/StyretPage'
 
 
 function App() {

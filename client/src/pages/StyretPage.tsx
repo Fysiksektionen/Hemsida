@@ -6,27 +6,51 @@ import profile_img_1 from '../placeholder_images/gustav_profilecard.jpg';
 import profile_img_2 from '../placeholder_images/morris_profilecard.jpg';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { IMenuItem, SidebarMenu } from '../components/SidebarMenu';
+import { HEADER_HEIGHT } from './NewsFeedPage';
 
 
 
 function StyretPage() {
+    let menuItems: IMenuItem[] = [
+        {
+            id: "styret",
+            title: "Styret",
+            refsTo: "styret-header"
+        },
+        {
+            id: "veckobrev",
+            title: "Styrets veckobrev",
+            refsTo: "styret-veckobrev"
+        }
+    ]
+
     return (
-        <Container className="pb-5">
-            <h1 className="pb-4">Styret</h1>
-            <Row>
-            <Col className={"col-9"}>
+        <SidebarMenu menuItems={menuItems}>
+            <Container className="pb-5">
+                <h1
+                    id="styret-header"
+                    className="pb-4"
+                    style={{scrollMarginTop: HEADER_HEIGHT}}
+                >
+                    Styret
+                </h1>
                 <Row className={"pb-4"}>
                     <ProfileCards {...dummyCards}/>
                 </Row>
-            </Col>
-            <Col className={"col-3"}>
-                A side menu might be here some time.
-            </Col>
-
-
-            </Row>
-
-        </Container>
+                <Row
+                    id="styret-veckobrev" 
+                    style={{scrollMarginTop: HEADER_HEIGHT}}
+                >
+                    <h1>
+                        Styrets veckobrev
+                    </h1>
+                    <div>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, deleniti quas dolorem dolores repellat aperiam eum aut. Libero ipsa autem dolorem, atque minus, dolor dolore quis illo omnis aperiam fugit?
+                    </div>
+                </Row>
+            </Container>
+        </SidebarMenu>
     )
 }
 
