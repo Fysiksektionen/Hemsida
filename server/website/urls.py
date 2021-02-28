@@ -1,18 +1,15 @@
 from rest_framework.routers import DefaultRouter
 from website.views.menus import MenuViewSet
 from website.views.redirects import RedirectViewSet
+from website.views.pages import PageViewSet
 
 app_name = 'website'
 
 # Routs/urls for menus and menu-items
-menu_router = DefaultRouter()
-menu_router.register(r'menus', MenuViewSet, basename='menu')
-
-redirect_router = DefaultRouter()
-redirect_router.register(r'redirects', RedirectViewSet, basename='redirect')
+router = DefaultRouter()
+router.register(r'menus', MenuViewSet, basename='menu')
+router.register(r'redirects', RedirectViewSet, basename='redirect')
+router.register(r'pages', PageViewSet, basename='page')
 
 # Url-patterns for website app.
-urlpatterns = [
-    *menu_router.urls,
-    *redirect_router.urls
-]
+urlpatterns = router.urls
