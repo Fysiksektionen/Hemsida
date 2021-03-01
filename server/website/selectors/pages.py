@@ -1,31 +1,12 @@
 from website.models import Page, SiteModel
 
 
-def get_path_page_dict(page=None, current_path="") -> dict:
-    """Recursive function to get dictionary of all paths and respective page.id of the page-tree under a page.
-
-    :parameter Page page: Page at root of tree searched. (default: SiteModel.root_page).
-    :parameter str current_path: Path added before page.slug.
-    """
-    if page is None:
-        page = SiteModel.instance().root_page
-
-    current_path = current_path + (page.slug or "") + "/"
-
-    path_id_dict = {
-        current_path: page.id
-    }
-    for sub_page in page.children.all():
-        path_id_dict.update(get_path_page_dict(sub_page, current_path))
-
-    return path_id_dict
-
-
-def get_path_page_dict_2(root=None, current_path="") -> dict:
+def _get_path_page_dict(root=None, root_path="") -> dict:
     """Get dictionary of all paths and respective page.id of the page-tree under a page.
 
-    :parameter Page root: Page at root of tree searched.
-    :parameter str current_path: Path added before page.slug.
+    :parameter Page root: Page at root of tree searched. (default: SiteModel.root_page)
+    :parameter str root_path: Path added before page.slug. (default: "")
+    :returns dict: Dictionary with full_path: page_id pairs. Only contains pages with path-root in root page.
     """
     if root is None:
         root = SiteModel.instance().root_page
@@ -41,20 +22,29 @@ def get_path_page_dict_2(root=None, current_path="") -> dict:
     }
     path_id_dict = {}
 
-    for page_id, page_data in all_pages.items():
-        full_path = (page_data['slug'] or "") + '/'
-        parent = page_data['parent']
-        while parent is not None:
-            parent_data = all_pages[parent]
-            if parent_data['full_path']:
-                full_path = parent_data['full_path'] + full_path
-                break
+    def get_full_path(page_id):
+        # Already calculated
+        page_data = all_pages[page_id]
+        if page_data['full_path']:
+            return page_data['full_path']
+        # Add parent.full_path to slug and save as full_path.
+        else:
+            if page_data['parent'] is None:
+                if page_id == root.id:
+                    full_path = root_path + (page_data['slug'] or "") + '/'
+                else:
+                    full_path = None
             else:
-                full_path = parent_data['full_path'] + '/' + full_path
-                parent = parent_data['parent']
+                parent_path = get_full_path(page_data['parent'])
+                full_path = parent_path + (page_data['slug'] or "") + '/' if parent_path is not None else None
 
-        all_pages[page_id]['full_path'] = full_path
-        path_id_dict[full_path] = page_id
+            all_pages[page_id]['full_path'] = full_path
+            return full_path
+
+    for id in all_pages.keys():
+        path = get_full_path(id)
+        if path is not None:
+            path_id_dict[path] = id
 
     return path_id_dict
 
@@ -63,14 +53,14 @@ def get_page_from_path(path):
     """Returns the page relating to the given (full) path.
 
     :parameter str path: Full path starting at SiteModel.root_page.
-    :return Page: Page at path. None if no page is found at path.
+    :returns Page: Page at path. None if no page is found at path.
     """
     if not isinstance(path, str):
         raise TypeError("Path must be string")
     if path == "" or path[-1] != '/':
         path += '/'
 
-    path_page_dict = get_path_page_dict()
-    id = path_page_dict.get(path, None)
-    return Page.objects.get(id=id) if id is not None else None
+    path_page_dict = _get_path_page_dict()
+    page_id = path_page_dict.get(path, None)
+    return Page.objects.get(id=page_id) if page_id is not None else None
 
