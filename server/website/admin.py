@@ -4,9 +4,8 @@ from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInl
 from django.contrib import admin
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
+from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect
 
-from website.models.menus import Menu, MenuItemBase
-from website.models.pages import Page, PageDraft
 from utils.admin import GuardedModelAdmin
 
 
@@ -47,7 +46,7 @@ class MenuItemInline(SortableTabularInline):
 
 
 @admin.register(Menu)
-class MenuModelAdmin(GuardedModelAdmin):
+class MenuModelAdmin(SortableAdmin):
     list_display = ('name', 'link', 'is_sub_menu', 'num_of_items')
     search_fields = ('name', 'link')
     list_select_related = True
@@ -76,3 +75,29 @@ class MenuModelAdmin(GuardedModelAdmin):
     def num_of_items(self, obj):
         return obj.items.count()
     num_of_items.short_description = capfirst(_('number of items'))
+
+
+@admin.register(Redirect)
+class RedirectModelAdmin(admin.ModelAdmin):
+    list_display = ('from_path', 'link', 'is_internal_page_link', 'page_name')
+    search_fields = ('from_path', 'link')
+    #list_select_related = True
+
+    fieldsets = (
+        (capfirst(_('from')), {
+            'fields': ('from_path',)
+        }),
+        (capfirst(_('to')), {
+            'fields': ('url', 'page'),
+        })
+    )
+
+    def is_internal_page_link(self, obj):
+        return obj.page is not None
+    is_internal_page_link.boolean = True
+    is_internal_page_link.short_description = capfirst(_('internal link'))
+
+    def page_name(self, obj):
+        return obj.page.name if obj.page is not None else ""
+    page_name.short_description = capfirst(_('page name'))
+
