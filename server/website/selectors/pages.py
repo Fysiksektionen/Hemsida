@@ -1,15 +1,13 @@
+from django.core.cache import cache
 from website.models import Page, SiteModel
 
 
-def _get_path_page_dict(root=None, root_path="") -> dict:
+def _get_path_page_dict() -> dict:
     """Get dictionary of all paths and respective page.id of the page-tree under a page.
 
-    :parameter Page root: Page at root of tree searched. (default: SiteModel.root_page)
-    :parameter str root_path: Path added before page.slug. (default: "")
     :returns dict: Dictionary with full_path: page_id pairs. Only contains pages with path-root in root page.
     """
-    if root is None:
-        root = SiteModel.instance().root_page
+    root = SiteModel.instance().root_page
 
     # Get all pages with info required
     all_pages = {
@@ -31,7 +29,9 @@ def _get_path_page_dict(root=None, root_path="") -> dict:
         else:
             if page_data['parent'] is None:
                 if page_id == root.id:
-                    full_path = root_path + (page_data['slug'] or "") + '/'
+                    full_path = (page_data['slug'] or "") + '/'
+                    if full_path[0] != '/':
+                        full_path = '/' + full_path
                 else:
                     full_path = None
             else:
@@ -41,6 +41,7 @@ def _get_path_page_dict(root=None, root_path="") -> dict:
             all_pages[page_id]['full_path'] = full_path
             return full_path
 
+    # For all pages in tree, resolve full_path
     for id in all_pages.keys():
         path = get_full_path(id)
         if path is not None:
@@ -49,18 +50,23 @@ def _get_path_page_dict(root=None, root_path="") -> dict:
     return path_id_dict
 
 
-def get_page_from_path(path):
+def get_page_from_path(path, clear_cache=False):
     """Returns the page relating to the given (full) path.
 
     :parameter str path: Full path starting at SiteModel.root_page.
-    :returns Page: Page at path. None if no page is found at path.
+    :parameter bool clear_cache: Should the cached be forced to clear.
+    :returns Page: Page at path. None if no page is found at path. Page must be in tree roted at SiteModel.root_page.
     """
     if not isinstance(path, str):
         raise TypeError("Path must be string")
     if path == "" or path[-1] != '/':
         path += '/'
 
-    path_page_dict = _get_path_page_dict()
+    # Get from cache or method if clear_is forced.
+    if clear_cache:
+        cache.delete('path_page_dict')
+    path_page_dict = cache.get_or_set('path_page_dict', _get_path_page_dict)
+
     page_id = path_page_dict.get(path, None)
     return Page.objects.get(id=page_id) if page_id is not None else None
 
