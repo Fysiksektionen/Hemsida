@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {INewsItem, NewsArticleBase} from './NewsItem'
 import Collapse from 'react-bootstrap/Collapse'
-import FadeOut, {IFadeOut} from '../Fadeout'
+import Fadeout from '../Fadeout'
 import './NewsItemCompact.css'
 
 
@@ -10,7 +10,7 @@ function NewsItemCompact(props : INewsItem) {
   return (
     <div onClick={() => setOpen(!open)}>
       <NewsArticleBase {...props}>  
-        <FadeOut fade={!open} color="#f0f0f0" midpoint="50px">
+        <Fadeout fade={!open} color="#f0f0f0" midpoint="50px">
           <Collapse in={open} className="collapse-with-default-height">
             <div>
               Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
@@ -23,7 +23,7 @@ function NewsItemCompact(props : INewsItem) {
               </p>
             </div>
           </Collapse>
-        </FadeOut>
+        </Fadeout>
         <BottomText opened={open} />
       </NewsArticleBase>
     </div>

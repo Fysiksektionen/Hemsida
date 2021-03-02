@@ -11,9 +11,9 @@ function Frontpage() {
     <div>
       <Banner />
       <OrangeInfoBoxes />
-      <div style={{height: "50px"}}></div>
+      <div style={{height: "50px"}}/>
       <NewsWidget />
-      <div style={{height: "100px"}}></div>
+      <div style={{height: "100px"}}/>
       <div
         className="px-4 my-4"
         style={{

@@ -5,11 +5,13 @@ function OrangeInfoBoxes() {
   return (
     <div>
       <table style={{backgroundColor: "orange", color: "white"}}>
-        <tr>
-          <td><OrangeInfoBox color="orange" /></td>
-          <td><OrangeInfoBox color="orangered" /></td>
-          <td><OrangeInfoBox color="orange" /></td>
-        </tr>
+        <tbody>
+          <tr>
+            <td><OrangeInfoBox color="orange" /></td>
+            <td><OrangeInfoBox color="orangered" /></td>
+            <td><OrangeInfoBox color="orange" /></td>
+          </tr>
+        </tbody>
       </table>
     </div>
   )

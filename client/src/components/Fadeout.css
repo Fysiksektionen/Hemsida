@@ -8,7 +8,7 @@
     height: 100%;    
     position: absolute;
     left: 0;
-    top: 0px;
+    top: 0;
     /* in the .tsx file instead */
     /* background: linear-gradient(transparent, 25px, white); */ 
 }
