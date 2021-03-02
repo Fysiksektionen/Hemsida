@@ -1,6 +1,6 @@
 import React from 'react';
-import GoogleMap from './googleMap'
-import './footer.css'
+import GoogleMap from './GoogleMap'
+import './Footer.css'
 import Toe from './Toe';
 
 function Footer() {

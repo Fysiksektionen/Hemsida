@@ -4,9 +4,10 @@ from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInl
 from django.contrib import admin
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
-from website.models import SiteModel
-from website.models.menus import Menu, MenuItemBase
-from website.models.pages import Page, PageDraft
+from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect, SiteModel
+
+from utils.admin import GuardedModelAdmin
+
 
 admin.site.index_title = _('Admin page')
 admin.site.site_header = _('The Physics Chapter - Administration')
@@ -20,7 +21,7 @@ class PageDraftInline(TabularInline):
 
 
 @admin.register(Page)
-class PageModelAdmin(admin.ModelAdmin):
+class PageModelAdmin(GuardedModelAdmin):
     list_display = ('name', 'slug', 'published', 'published_at', 'last_edited_at')
     search_fields = ('name', 'url',)
     prepopulated_fields = {'slug': ('name',), }
@@ -74,6 +75,31 @@ class MenuModelAdmin(SortableAdmin):
     def num_of_items(self, obj):
         return obj.items.count()
     num_of_items.short_description = capfirst(_('number of items'))
+
+
+@admin.register(Redirect)
+class RedirectModelAdmin(admin.ModelAdmin):
+    list_display = ('from_path', 'link', 'is_internal_page_link', 'page_name')
+    search_fields = ('from_path', 'link')
+    #list_select_related = True
+
+    fieldsets = (
+        (capfirst(_('from')), {
+            'fields': ('from_path',)
+        }),
+        (capfirst(_('to')), {
+            'fields': ('url', 'page'),
+        })
+    )
+
+    def is_internal_page_link(self, obj):
+        return obj.page is not None
+    is_internal_page_link.boolean = True
+    is_internal_page_link.short_description = capfirst(_('internal link'))
+
+    def page_name(self, obj):
+        return obj.page.name if obj.page is not None else ""
+    page_name.short_description = capfirst(_('page name'))
 
 
 @admin.register(SiteModel)
