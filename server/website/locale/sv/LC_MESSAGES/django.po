@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-22 16:58+0100\n"
+"POT-Creation-Date: 2021-03-02 13:05+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: website/admin.py:10
+#: website/admin.py:12
 msgid "Admin page"
 msgstr "Adminsidan"
 
-#: website/admin.py:11
+#: website/admin.py:13
 msgid "The Physics Chapter - Administration"
 msgstr "Fysiksektionen - Administration"
 
-#: website/admin.py:12
+#: website/admin.py:14
 msgid "Site Management"
 msgstr "Hemsidehantering"
 
-#: website/admin.py:33
+#: website/admin.py:33 website/admin.py:114
 msgid "content"
 msgstr "innehåll"
 
@@ -36,15 +36,15 @@ msgstr "innehåll"
 msgid "about"
 msgstr "om"
 
-#: website/admin.py:39
+#: website/admin.py:58
 msgid "link"
 msgstr "länk"
 
-#: website/admin.py:54
+#: website/admin.py:73
 msgid "is sub menu"
 msgstr "är sub-meny"
 
-#: website/admin.py:58
+#: website/admin.py:77
 msgid "number of items"
 msgstr "antal menyobjekt"
 
@@ -64,22 +64,13 @@ msgstr "intern länk"
 msgid "page name"
 msgstr "sidnamn"
 
-#: website/admin.py:84
+#: website/admin.py:108
 msgid "URLs"
 msgstr "URLer"
 
-#: website/admin.py:87
+#: website/admin.py:111
 msgid "page tree"
 msgstr "sidrot"
-
-#: website/admin.py:96
-msgid "Site object"
-msgstr "Hemsideobjekt"
-
-#: website/admin.py:97 website/models/content_objects.py:30
-#: website/models/menus.py:23 website/models/pages.py:46
-msgid "name"
-msgstr "namn"
 
 #: website/apps.py:7
 msgid "website app"
@@ -318,26 +309,26 @@ msgstr "från-adress"
 msgid "Link is empty. Set either %(page_field_name)s or %(url_field_name)s."
 msgstr "Länken är tom. Sätt antingen %(page_field_name)s eller %(url_field_name)s."
 
-#: website/models/site.py:12
+#: website/models/site.py:12 website/models/site.py:13
 msgid "site manager"
 msgstr "hemsidehanterare"
 
-#: website/models/site.py:14
+#: website/models/site.py:15
 msgid "root URL"
 msgstr "root-URL"
 
-#: website/models/site.py:15
+#: website/models/site.py:16
 msgid "API root URL"
 msgstr "API root-URL"
 
-#: website/models/site.py:17
+#: website/models/site.py:18
 msgid "root page"
 msgstr "root-sida"
 
-#: website/models/site.py:20
+#: website/models/site.py:21
 msgid "banner content"
 msgstr "bannerinnehåll"
 
-#: website/models/site.py:21
+#: website/models/site.py:22
 msgid "footer content"
 msgstr "footerinnehåll"
