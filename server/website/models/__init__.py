@@ -6,4 +6,5 @@ from .content_objects import *
 from .media import *
 from .menus import *
 from .pages import *
+from .redirects import *
 from .site import *

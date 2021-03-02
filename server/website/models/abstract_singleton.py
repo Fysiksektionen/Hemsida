@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import ClassVar
 
 from django.db import models
+from django.utils.text import capfirst
 
 
 class SingletonModel(models.Model):
@@ -63,9 +64,8 @@ class SingletonModel(models.Model):
 
     def __str__(self) -> str:
         """:return verbose_name if verbose_name exist in Meta class, else the type name"""
-        # probably not translate
         if hasattr(self._meta, 'verbose_name'):
-            return self._meta.verbose_name
+            return str(capfirst(self._meta.verbose_name))
         else:
             return type(self).__name__
 

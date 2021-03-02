@@ -1,10 +1,10 @@
 import { Button, Container, Select } from '@material-ui/core';
 import { LocaleContext, locales } from '../contexts'
-import './header.css'
+import './Header.css'
 import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import logo from '../Fysiksektionen_logo.svg';
-import { GroupedSearch } from './search-box';
+import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
 
 

@@ -1,17 +1,22 @@
 import os
 
-from django.contrib.auth.models import Group as django_Group
+from authentication.models.mixins import ModelPermissionCacheMixin
+from django.contrib.auth.models import Group as DjangoGroup
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
 def _image_filename(instance, filename):
+    """Method to set image filename on upload of group image. (So that original filename is not saved)"""
+    # TODO: Fix issue of id=None. Maybe just do some uuid-string.
     filename = "%d_group_image.%s" % (instance.id, filename.split('.')[-1])  # Filename with correct extension
     return os.path.join('groups', filename)  # Return path groups/<id>_group_image.<ext>
 
 
-class Group(django_Group):
+class Group(DjangoGroup, ModelPermissionCacheMixin):
     """Model for Group with fields specific to our needs."""
+
+    permission_attr_name = 'permissions'
 
     class Meta:
         verbose_name = _("group")
