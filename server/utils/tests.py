@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.db import connection, reset_queries
 from django.test import TestCase
 
 
@@ -126,6 +127,19 @@ class ValidationTestCase(TestCase):
                         raise self.failureException(
                             "Wrong message: field '%s' not exclusive in error '%s'." % (field, error.message_dict)
                         )
+
+
+def num_queries(reset=True):
+    """Returns number of queries since last reset.
+    Note that evaluation order of num_queries() and other is important!
+
+    :parameter bool reset: Should reset on queries be made. (default: True)
+    """
+    num = len(connection.queries)
+    if reset:
+        reset_queries()
+
+    return num
 
 
 def create_test_user(**kwargs):
