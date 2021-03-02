@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-28 22:06+0100\n"
+"POT-Creation-Date: 2021-03-02 13:05+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -26,9 +26,9 @@ msgstr "Fysiksektionen - Administration"
 
 #: website/admin.py:14
 msgid "Site Management"
-msgstr "Sidhantering"
+msgstr "Hemsidehantering"
 
-#: website/admin.py:33
+#: website/admin.py:33 website/admin.py:114
 msgid "content"
 msgstr "innehåll"
 
@@ -63,6 +63,14 @@ msgstr "intern länk"
 #: website/admin.py:102
 msgid "page name"
 msgstr "sidnamn"
+
+#: website/admin.py:108
+msgid "URLs"
+msgstr "URLer"
+
+#: website/admin.py:111
+msgid "page tree"
+msgstr "sidrot"
 
 #: website/apps.py:7
 msgid "website app"
@@ -301,26 +309,26 @@ msgstr "från-adress"
 msgid "Link is empty. Set either %(page_field_name)s or %(url_field_name)s."
 msgstr "Länken är tom. Sätt antingen %(page_field_name)s eller %(url_field_name)s."
 
-#: website/models/site.py:12
+#: website/models/site.py:12 website/models/site.py:13
 msgid "site manager"
-msgstr "sidhantering"
+msgstr "hemsidehanterare"
 
-#: website/models/site.py:14
+#: website/models/site.py:15
 msgid "root URL"
 msgstr "root-URL"
 
-#: website/models/site.py:15
+#: website/models/site.py:16
 msgid "API root URL"
 msgstr "API root-URL"
 
-#: website/models/site.py:17
+#: website/models/site.py:18
 msgid "root page"
 msgstr "root-sida"
 
-#: website/models/site.py:20
+#: website/models/site.py:21
 msgid "banner content"
 msgstr "bannerinnehåll"
 
-#: website/models/site.py:21
+#: website/models/site.py:22
 msgid "footer content"
 msgstr "footerinnehåll"

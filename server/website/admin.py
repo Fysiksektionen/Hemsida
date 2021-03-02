@@ -4,7 +4,7 @@ from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInl
 from django.contrib import admin
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
-from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect
+from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect, SiteModel
 
 from utils.admin import GuardedModelAdmin
 
@@ -101,3 +101,25 @@ class RedirectModelAdmin(admin.ModelAdmin):
         return obj.page.name if obj.page is not None else ""
     page_name.short_description = capfirst(_('page name'))
 
+
+@admin.register(SiteModel)
+class SiteModelAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (capfirst(_('URLs')), {
+            'fields': ('root_url', 'api_root_url')
+        }),
+        (capfirst(_('page tree')), {
+            'fields': ('root_page',),
+        }),
+        (capfirst(_('content')), {
+            'fields': ('banner_content', 'footer_content'),
+        })
+    )
+
+    def has_add_permission(self, request):
+        """No one can add object"""
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        """No one can remove object"""
+        return False
