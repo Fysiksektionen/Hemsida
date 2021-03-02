@@ -14,7 +14,6 @@ function NewsItemTiny(props : INewsItemTiny) {
   // I tried using <Media>, it is great but it doesn't have a proper relative postion anchor.
   // This works just fine as well, just not as pretty code-wise. 
   return (
-    <li className="mb-3" style={{backgroundColor: "#f0f0f0"}}>
     <Container>
       <Row>
         <Col className="col-5 pl-0">
@@ -26,7 +25,6 @@ function NewsItemTiny(props : INewsItemTiny) {
         </Col>
       </Row>
     </Container>
-    </li>
   )
 }
 

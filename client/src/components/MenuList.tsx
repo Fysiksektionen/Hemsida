@@ -2,16 +2,6 @@ import React from "react";
 import { List, ListItem } from "@material-ui/core";
 import { IMenuItem } from "./HeaderMenu";
 
-<div
-  className="bg-dark text-white px-4"
-  style={{
-    height: "100%",
-    minWidth: window.innerWidth * 0.4
-  }}
->
-  Text
-</div>
-
 interface IMenuListProps {
   data: IMenuItem[];
 }

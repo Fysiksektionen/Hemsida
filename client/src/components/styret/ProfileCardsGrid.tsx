@@ -1,7 +1,7 @@
 import React from 'react'
 import Col from "react-bootstrap/Col";
 import Row from 'react-bootstrap/Row'
-import {IProfileCard, ProfileCard} from './profile_card'
+import {IProfileCard, ProfileCard} from './ProfileCard'
 
 export interface IProfileCards {
     cards: IProfileCard[]

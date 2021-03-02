@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
 import { LocaleContext, locales } from './contexts'
 import Frontpage from './pages/Frontpage'
 import NewsArticlePage from './pages/NewsArticlePage'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom"
 import './App.css'
 import {DummyData2} from './components/news/FrontpageNewsWidget'
 import StyretPage from './pages/StyretPage'
