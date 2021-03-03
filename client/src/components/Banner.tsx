@@ -1,13 +1,17 @@
 import placeholder from '../placeholder_images/placeholder.jpg'
 import React from 'react';
+import BackgroundImage from './BackgroundImage'
 
 function Banner() {
-    // TODO: Temporary, should be improved in another branch
-  return (
-    <div className="" style={{}}>
-        <img src={placeholder} style={{width: "100%", marginTop: "50px"}} alt=''/>
-    </div>
-  )
+    return (
+        <BackgroundImage image={placeholder} mode="sizeToFit" containerAspectRatio={8/16} className="container">
+            {/*  Test text  */}
+            <h1>Hello World</h1>
+            <div className="position-absolute" style={{bottom: 0}}>
+              aaaaaaa
+            </div>
+        </BackgroundImage>
+    )
 }
 
 export default Banner;
