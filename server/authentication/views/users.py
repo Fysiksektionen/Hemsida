@@ -11,11 +11,17 @@ class UserSerializer(DBObjectSerializer):
     class Meta:
         model = User
         exclude = ('password', 'user_permissions', 'is_superuser', 'is_staff')
-        depth = 1
+        depth = 2
 
+        # TODO: Fix serialization so that 'groups' are of type authentication.models.Group.
         nested_serialization = {
             'groups': {
-                'fields': ('name', 'description', 'group_type', 'image')
+                'fields': ('group',),
+                'nested_serialization': {
+                    'group': {
+                        'fields': ('name', 'description', 'group_type', 'image')
+                    }
+                }
             }
         }
 
