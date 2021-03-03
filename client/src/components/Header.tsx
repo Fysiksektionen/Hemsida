@@ -27,13 +27,13 @@ function Header(props: Props) {
               props.setLocale(locales[event.target.value as string])
             }}>
               {Object.keys(locales).map(key =>
-                  <option value={key} key={key}>{locales[key].name}</option>
+                <option value={key} key={key}>{locales[key].name}</option>
               )}
             </Select>
           </div>
         </Navbar>}
-      </LocaleContext.Consumer>
-    );
+    </LocaleContext.Consumer>
+  );
 }
 
 export default Header;
