@@ -11,7 +11,7 @@ type Props = {
     setLocale: Function
 }
 
-function Header(props: Props) { // <GroupedSearch/>
+function Header(props: Props) {
   return (
     <LocaleContext.Consumer>
       {locale =>
