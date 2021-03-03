@@ -12,8 +12,9 @@
         "description": "List all pages. Use filters in GET-parameters to filter data.\n",
         "parameters": [
           {
-            "in": "query",
             "name": "page_type",
+            "in": "query",
+            "description": "Hej",
             "schema": {
               "$ref": "#/components/schemas/Page/properties/page_type"
             }
@@ -88,12 +89,18 @@
             "description": "The requested {id} does not exist."
           }
         }
+      },
+      "post": {
+        "summary": "get multiple pages",
+        "description": "Post a page.\n",
+        "parameters": null
       }
     }
   },
   "components": {
     "schemas": {
       "Page": {
+        "info": "some info",
         "type": "object",
         "required": [
           "id",
