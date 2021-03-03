@@ -1,0 +1,196 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Website API",
+    "version": "1.0.0",
+    "description": "The API definition of the website-related API-calls.\n"
+  },
+  "paths": {
+    "/pages": {
+      "get": {
+        "summary": "get multiple pages",
+        "description": "List all pages. Use filters in GET-parameters to filter data.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page_type",
+            "schema": {
+              "$ref": "#/components/schemas/Page/properties/page_type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of pages filtered on the GET-parameters of the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Page"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Faulty query due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Error"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Requesting user does not have permissions to view some of the queried pages."
+          }
+        }
+      }
+    },
+    "/pages/{id}": {
+      "get": {
+        "summary": "get single page",
+        "description": "List all pages. Use filters in GET-parameters to filter data.\n",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Unique id of page",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Page/properties/id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of pages filtered on the GET-parameters of the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Page"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Requesting user does not have permissions to view the page."
+          },
+          "404": {
+            "description": "The requested {id} does not exist."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Page": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1,
+            "readOnly": true,
+            "example": 42
+          },
+          "detail_url": {
+            "type": "string",
+            "readOnly": true,
+            "example": "https://f.kth.se/api/pages/42/"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "Nämnder"
+          },
+          "url": {
+            "type": "string",
+            "readOnly": true,
+            "example": "https://f.kth.se/namnder/"
+          },
+          "slug": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "namnder"
+          },
+          "page_type": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "list_namnder_page"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/MinimalPage"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MinimalPage"
+            }
+          },
+          "published": {
+            "type": "boolean",
+            "example": true
+          },
+          "published_at": {
+            "type": "string",
+            "format": "ISO8601 with time zone Z",
+            "example": "2021-03-01T10:59:21.522778+01:00"
+          },
+          "last_edited_at": {
+            "type": "string",
+            "format": "ISO8601 with time zone Z",
+            "example": "2021-03-01T10:59:21.522778+01:00"
+          },
+          "content_sv": {
+            "type": "integer",
+            "example": 1
+          },
+          "content_en": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "MinimalPage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Page/properties/id"
+          },
+          "detail_url": {
+            "$ref": "#/components/schemas/Page/properties/detail_url"
+          },
+          "name": {
+            "$ref": "#/components/schemas/Page/properties/name"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 1253123
+          },
+          "message": {
+            "type": "string",
+            "example": "An explanation of the error that occured (in correct language)."
+          }
+        }
+      }
+    }
+  }
+}
