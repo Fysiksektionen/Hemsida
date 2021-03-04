@@ -7,9 +7,10 @@ export interface IFButtonProps {
   Icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
   version?: "light" | "dark";
   style?: React.CSSProperties | undefined;
+  onClick?: () => void
 }
 
-export default function FButton({ text, Icon, version="light", style } : IFButtonProps ) {
+export default function FButton({ text, Icon, version="light", style, onClick } : IFButtonProps ) {
   var clr_string: String;
   switch(version) {
     case "light":
@@ -28,7 +29,8 @@ export default function FButton({ text, Icon, version="light", style } : IFButto
         textTransform: 'none',
         fontWeight: 'bold',
         ...style
-      }}  
+      }}
+      onClick={onClick}
     >
       <div>{text}</div>
     </Button>

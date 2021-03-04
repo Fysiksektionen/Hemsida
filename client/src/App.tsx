@@ -8,11 +8,7 @@ import { Switch, Route } from "react-router-dom"
 import './App.css'
 import {DummyData2} from './components/news/FrontpageNewsWidget'
 import StyretPage from './pages/StyretPage'
-
-import SwaggerUI from "swagger-ui-react"
-import "swagger-ui-react/swagger-ui.css"
-import website_api_data from "./api-docs/website.json"
-import authentication_api_data from "./api-docs/authentication.json"
+import APIServe from "./components/APIServe";
 
 function App() {
 
@@ -23,10 +19,10 @@ function App() {
             <LocaleContext.Provider value={locale}>
                 <Switch>
                     <Route path="/api-docs/authentication">
-                        <SwaggerUI spec={authentication_api_data} />
+                        <APIServe url="http://localhost:3001/authentication.json" />
                     </Route>
                     <Route path="/api-docs/website">
-                        <SwaggerUI spec={website_api_data} />
+                        <APIServe url="http://localhost:3001/website.json" />
                     </Route>
                     <Route path="*">
                         <Header setLocale={setLocale}/>

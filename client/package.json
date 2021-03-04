@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router-dom": "^5.1.7",
     "bootstrap": "4.6.0",
+    "http-server": "^0.12.3",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
@@ -32,7 +33,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "css": "sass sass/main.scss > src/index.css"
+    "css": "sass sass/main.scss > src/index.css",
+    "docs-serve": "http-server ../api-docs/ --port=3001 --cors"
   },
   "eslintConfig": {
     "extends": [
