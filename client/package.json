@@ -34,7 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "css": "sass sass/main.scss > src/index.css",
-    "docs-serve": "http-server ../api-docs/ --port=3001 --cors"
+    "docs-serve": "http-server ../api-docs/ --port=3001 --cors=Authorization -c 1"
   },
   "eslintConfig": {
     "extends": [
