@@ -32,6 +32,7 @@ type APIDocsState = {
 function APIDocs({
                      serverUrl="http://localhost:3001/",
                      docs=[
+                         {fileName: 'general.json', displayName: 'General'},
                          {fileName: 'website.json', displayName: 'Website'},
                          {fileName: 'authentication.json', displayName: 'Authentication'}
                      ],
@@ -120,7 +121,9 @@ function APIDocs({
                     </Col>
                 </Row>
                 <Row>
-                    <SwaggerUI spec={state.jsonData} />
+                    <div className={JSON.stringify(state.jsonData) === JSON.stringify({}) ? "d-none" : ""}>
+                        <SwaggerUI spec={state.jsonData} url={serverUrl}/>
+                    </div>
                 </Row>
             </Container>
         </div>
