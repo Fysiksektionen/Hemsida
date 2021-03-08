@@ -1,7 +1,8 @@
 import React from "react";
-import { IconButton, Button, Drawer } from '@material-ui/core';
+import { IconButton, Drawer, Button } from '@material-ui/core';
 import MenuList from "./MenuList";
-import { CloseRounded } from "@material-ui/icons";
+import { CloseRounded, Menu } from "@material-ui/icons";
+import FButton from "./f-styled/buttons/FButton";
 
 export interface IMenuItem {
   category: String,
@@ -43,8 +44,16 @@ export default function HeaderMenu() {
 
   return (
     <React.Fragment key={'right'}>
-      <Button className="mx-3" onClick={toggleDrawer(true)}>
-        {"Meny"}
+      {/* <FButton {...{
+        text: "Meny",
+        Icon: Menu,
+        onClick: () => toggleDrawer(true)
+        }}
+      /> */}
+      <Button
+        onClick={() => toggleDrawer(true)}
+      >
+        Meny
       </Button>
       <Drawer
         anchor={'right'}

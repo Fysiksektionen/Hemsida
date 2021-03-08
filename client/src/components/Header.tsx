@@ -16,20 +16,22 @@ function Header(props: Props) {
     <LocaleContext.Consumer>
       {locale =>
         <Navbar bg="light" expand="lg" className="justify-content-between">
-          <Navbar.Brand href="#" style={{fontSize: "2.35rem"}}> {/* fontSize is an ugly hack to make the text centered */}
+          <Navbar.Brand className="mx-5 px-4 my-2" href="#" style={{fontSize: "2.35rem"}}> {/* fontSize is an ugly hack to make the text centered */}
             <img src={logo} width="80" height="80" alt="" />
-            <h2 className="d-inline pl-3 mt-3">Fysiksektionen</h2>
+            <h2 className="d-inline pl-3 mt-3 mx-3">Fysiksektionen</h2>
           </Navbar.Brand>
-          <div>
-            <GroupedSearch />
-            <HeaderMenu />
-            <Select value={locale.id} onChange={event => {
+          <div className="row">
+            {/* <Select className="mx-4" value={locale.id} onChange={event => {
               props.setLocale(locales[event.target.value as string])
             }}>
               {Object.keys(locales).map(key =>
-                <option value={key} key={key}>{locales[key].name}</option>
-              )}
-            </Select>
+                <option value={key} key={key}>
+                  {locales[key].name}
+                </option>
+                )}
+            </Select> */}
+            <HeaderMenu />
+            <GroupedSearch/>
           </div>
         </Navbar>}
     </LocaleContext.Consumer>
