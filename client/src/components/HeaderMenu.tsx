@@ -44,17 +44,13 @@ export default function HeaderMenu() {
 
   return (
     <React.Fragment key={'right'}>
-      {/* <FButton {...{
+      <FButton {...{
         text: "Meny",
         Icon: Menu,
-        onClick: () => toggleDrawer(true)
+        onClick: toggleDrawer(true),
+        style: { width: "8rem" }
         }}
-      /> */}
-      <Button
-        onClick={() => toggleDrawer(true)}
-      >
-        Meny
-      </Button>
+      />
       <Drawer
         anchor={'right'}
         open={isOpen}

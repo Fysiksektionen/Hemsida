@@ -11,20 +11,25 @@ export type FButtonProps = {
 }
 
 export default function FButton({ text, Icon, version="light", style, ...props } : FButtonProps ) {
-  var clr_string: String;
+  var bg_clr: string = "white";
+  var text_clr: string = "black";
   switch(version) {
     case "light":
-      clr_string = "bg-white text-dark";
+      bg_clr = "var(--F-light-gray)";
+      text_clr = "black";
       break;
     case "dark":
-      clr_string = "bg-dark text-white";
+      bg_clr = "var(--F-dark-gray)";
+      text_clr = "white";
       break;
   }
   return (
     <Button
-      className={clr_string + " text-center px-3 py-2 m-1"}
+      className={"text-center px-3 py-2 m-1"}
       endIcon={Icon ? <Icon/> : undefined}
       style={{
+        backgroundColor: bg_clr,
+        color: text_clr,
         minWidth: '8rem',
         textTransform: 'none',
         fontWeight: 'bold',

@@ -15,18 +15,18 @@ export function SearchField({InputProps, ...params}: ISearchField) {
   // TODO applicera locale sv/en på denna label.
   return (
     <FTextField
-    variant="standard"
-    placeholder="Sök..."
-    // Note ordering of InputProps *after* params
-    // since it will be overwritten otherwise.
-    {...params} 
-    InputProps={{...InputProps,
-      startAdornment: (
-        <InputAdornment position="start">
-          <SearchIcon/>
-        </InputAdornment>
-      ),
-    }}
+      variant="standard"
+      placeholder="Sök..."
+      // Note ordering of InputProps *after* params
+      // since it will be overwritten otherwise.
+      {...params} 
+      InputProps={{...InputProps,
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon/>
+          </InputAdornment>
+        ),
+      }}
     />
   )
 }
