@@ -25,7 +25,7 @@ function Header(props: Props) {
       {locale =>
         <Navbar style={{ backgroundColor: "var(--F-light-gray)", width: "100%" }} expand="lg" className="row justify-content-between">
           <Navbar.Brand className="col mx-5 my-2" href="#" style={{fontSize: "2.35rem"}}> {/* fontSize is an ugly hack to make the text centered */}
-            <img src={logo} width="80z" height="80" alt="" />
+            <img src={logo} height="80" alt="" />
             {/* <h2 className="d-inline pl-3 mt-3 mx-3">Fysiksektionen</h2> */}
           </Navbar.Brand>
           <div className="col">
