@@ -9,26 +9,31 @@
         "/pages": {
             "get": {
                 "summary": "get multiple pages",
-                "description": "List all pages. Use filters in GET-parameters to filter data.\n",
-                "parameters": [
-                    {
-                        "name": "page_type",
-                        "in": "query",
-                        "description": "Filter all pages with given page_type",
-                        "schema": {
-                            "$ref": "#/components/schemas/Page/properties/page_type"
-                        }
-                    }
-                ],
+                "description": "Lists all pages. Response is authentication restricted and only pages that requesting user can view is returned.",
                 "responses": {
-                    
+                    "200": {
+                        "description": "List of pages user have view permission to.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Page"
+                                    }
+                                }
+                            }
+                        },
+                        "links": [
+                            "jej"
+                        ]
+                    }
                 }
             }
         },
         "/pages/{id}": {
             "get": {
                 "summary": "get single page",
-                "description": "List all pages. Use filters in GET-parameters to filter data.\n",
+                "description": "Returns a single page based on {id}. Response is authentication restricted.",
                 "parameters": [
                     {
                         "in": "path",
@@ -189,11 +194,6 @@
                         "maxLength": 255,
                         "example": "Nämnder"
                     },
-                    "url": {
-                        "type": "string",
-                        "readOnly": true,
-                        "example": "https://f.kth.se/namnder/"
-                    },
                     "slug": {
                         "type": "string",
                         "maxLength": 50,
@@ -246,9 +246,6 @@
                     },
                     "name": {
                         "$ref": "#/components/schemas/Page/properties/name"
-                    },
-                    "url": {
-                        "$ref": "#/components/schemas/Page/properties/url"
                     }
                 }
             },

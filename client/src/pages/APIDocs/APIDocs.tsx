@@ -1,4 +1,4 @@
-import '../../index.css'
+import '../../index.css';
 import {Container, Navbar, Nav} from "react-bootstrap";
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -9,6 +9,8 @@ import {useEffect, useState} from "react";
 import FButton from "../../components/f-styled/buttons/FButton";
 import {timeoutPromise} from "../../utils/timeoutPromise";
 import {FormControlLabel, Switch} from "@material-ui/core";
+
+import './APIDocs.css'; // Removes some elements of the swagger-ui which could not be removed programmatically
 
 type DocsInfo = {
     fileName: string  // Relative server root (without leading slash)
@@ -42,7 +44,7 @@ function APIDocs({
                  }: APIDocsProps) {
 
     const [state, setState] = useState({
-        jsonUrl: "",
+        jsonUrl: serverUrl,
         jsonData: {},
         autoUpdateEnabled: autoUpdateEnabled
     } as APIDocsState);
@@ -121,9 +123,12 @@ function APIDocs({
                     </Col>
                 </Row>
                 <Row>
-                    <div className={JSON.stringify(state.jsonData) === JSON.stringify({}) ? "d-none" : ""}>
-                        <SwaggerUI spec={state.jsonData} url={serverUrl}/>
-                    </div>
+                    <Col xs={12} className={JSON.stringify(state.jsonData) === JSON.stringify({}) ? "d-none" : ""}>
+                        <SwaggerUI
+                            url={state.jsonUrl}
+                            spec={state.jsonData}
+                        />
+                    </Col>
                 </Row>
             </Container>
         </div>
