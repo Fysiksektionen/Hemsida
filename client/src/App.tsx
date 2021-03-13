@@ -20,7 +20,7 @@ function App() {
 
             <Header setLocale={setLocale}/>
 
-            <div className="content container" style={{maxWidth:"95%"}}>
+            <div className="content container">
                 <Switch>
                   
                     <Route path="/styret">

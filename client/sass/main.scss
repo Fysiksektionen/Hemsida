@@ -9,3 +9,19 @@ $F-red: #DC3545;
     padding-top: ($spacer * 2.25) !important;
     padding-bottom: ($spacer * 2.25) !important;
 }
+.pt-4-5 { /* top and bottom 4.5 (between py-4 and py-5)*/
+    padding-top: ($spacer * 2.25) !important;
+}
+.pb-4-5 { /* top and bottom 4.5 (between py-4 and py-5)*/
+    padding-bottom: ($spacer * 2.25) !important;
+}
+
+.p-0-5 {
+    padding: ($spacer * 0.125) !important;
+}
+
+@media (min-width: 1550px) {
+    .container {
+        max-width: 1400px;
+    }
+}
