@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import { Switch, Route } from "react-router-dom"
 import './App.css'
 import PageTypeLoader from "./components/PageTypeLoader";
+import Frontpage from "./pages/Frontpage";
 
 
 function App() {
@@ -19,6 +20,12 @@ function App() {
 
             <div className="content container">
                 <Switch>
+                    {/* Frontpage should maybe be included in the dynamic page loader,
+                    but left here for illustrative purposes of non-dynamic loading of
+                    components (i.e. login, admin, etc.). */}
+                    <Route exact={true} path={["/", "/start", "/index", "/hem", "/home"]}>
+                        <Frontpage page_type="start" />
+                    </Route>
                     <Route component={PageTypeLoader}/>
                 </Switch>
             </div>

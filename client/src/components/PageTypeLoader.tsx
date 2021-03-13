@@ -52,13 +52,6 @@ const styretPageResp: RespType = {
     }
 };
 
-const fronpageResp: RespType = {
-    code: 200,
-    data: {
-        page_type: "start",
-    }
-};
-
 const newspageResp: RespType = {
     code: 200,
     data: {
@@ -76,7 +69,5 @@ const emptyResp: RespType = {
 
 const pathToResp: { [key: string]: RespType } = {
     "/styret": styretPageResp,
-    "/": fronpageResp,
-    "/start": fronpageResp,
     "/newsarticle": newspageResp
 };
