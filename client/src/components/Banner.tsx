@@ -1,17 +1,36 @@
-import placeholder from '../placeholder_images/placeholder.jpg'
 import React from 'react';
 import BackgroundImage from './BackgroundImage'
+import {CenteredText, CenteredAbsolute} from './Centered'
 
-function Banner() {
+
+type BannerProps = {
+    image: string,
+    mainText: string,
+    bottomText: string
+}
+
+
+export default function Banner(props: BannerProps) {
     return (
-        <BackgroundImage image={placeholder} mode="sizeToFit" containerAspectRatio={8/16} className="container">
-            {/*  Test text  */}
-            <h1>Hello World</h1>
-            <div className="position-absolute" style={{bottom: 0}}>
-              aaaaaaa
-            </div>
+        <BackgroundImage image={props.image} mode="sizeToFit" containerAspectRatio={7.5/16} className="text-white">
+            <CenteredText>
+                <MainText mainText={props.mainText}/>
+                <BottomText bottomText={props.bottomText}/>
+            </CenteredText>
         </BackgroundImage>
     )
 }
 
-export default Banner;
+function MainText({mainText}: {mainText: string}) {
+    return (
+        <CenteredAbsolute><h1>{mainText}</h1></CenteredAbsolute>
+    )
+}
+
+function BottomText({bottomText}: {bottomText: string}) {
+    return (
+        <div className="position-absolute w-100 p-0-5" style={{bottom: 0, backgroundColor: "rgba(40, 40, 40, 0.5)"}}>
+            {bottomText}
+        </div>
+    )
+}

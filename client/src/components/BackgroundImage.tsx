@@ -29,9 +29,9 @@ function BackgroundImage(props: BackgroundImageProps & React.HTMLAttributes<HTML
 
 
     return (
-        <div className="position-relative">
+        <div className={"position-relative " + props.className}>
             <div style={divStyle}>
-                <div className="position-absolute h-100" style={{top: 0}}>
+                <div className="position-absolute w-100 h-100" style={{top: 0}}>
                     <div className="position-relative h-100">
                         {props.children}
                     </div>
