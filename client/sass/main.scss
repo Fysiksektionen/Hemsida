@@ -1,4 +1,11 @@
 $primary: #ff642b; /* Fysiksektionen orange color */
 $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
 
+$F-red: #DC3545;
+
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+.py-4-5 { /* top and bottom 4.5 (between py-4 and py-5)*/
+    padding-top: ($spacer * 2.25) !important;
+    padding-bottom: ($spacer * 2.25) !important;
+}
