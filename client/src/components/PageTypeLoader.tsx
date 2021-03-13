@@ -20,7 +20,7 @@ export default function PageTypeLoader() {
     }
     // End of fake
 
-    // If defined in page_type <-> Component map, render page. Else give page-not found.
+    // If defined in pageTypeMap, render page. Else give PageNotFound.
     if(res.data.page_type in pageTypeMap) {
         return (
             <div id="dynamic_page_content">
@@ -37,9 +37,10 @@ export default function PageTypeLoader() {
 export type PageData = {
     page_type: string,
     content?: object
+    // And a lot more information about the page
 }
 
-export type RespType = {
+type RespType = {
     code: number,
     data: PageData
 };
@@ -48,7 +49,6 @@ const styretPageResp: RespType = {
     code: 200,
     data: {
         page_type: "styret",
-        // And a lot more information about the page
     }
 };
 
@@ -56,7 +56,6 @@ const fronpageResp: RespType = {
     code: 200,
     data: {
         page_type: "start",
-        // And a lot more information about the page
     }
 };
 
@@ -65,7 +64,6 @@ const newspageResp: RespType = {
     data: {
         page_type: "news_article",
         content: DummyData2
-        // And a lot more information about the page
     }
 };
 
@@ -73,7 +71,6 @@ const emptyResp: RespType = {
     code: 200,
     data: {
         page_type: ""
-        // And a lot more information about the page
     }
 };
 
