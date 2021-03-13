@@ -19,10 +19,10 @@ function BackgroundImage(props: BackgroundImageProps & React.HTMLAttributes<HTML
         backgroundPosition: "center center",
         backgroundSize: "cover",
     }
-    if(props.mode == "sizeKeepAspect") {
+    if(props.mode === "sizeKeepAspect") {
         divStyle.backgroundSize = "contain";
     }
-    else if(props.mode == "sizeToFit") {
+    else if(props.mode === "sizeToFit") {
         divStyle.backgroundPosition = "0% 0%";
         divStyle.backgroundSize = "100% 100%";
     }
