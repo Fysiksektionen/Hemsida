@@ -1,8 +1,8 @@
+import {FunctionComponent} from "react";
+import {PageData} from "../components/PageTypeLoader";
 import Frontpage from "./Frontpage";
 import NewsArticlePage from "./NewsArticlePage";
 import StyretPage from "./StyretPage";
-import {PageData} from "../components/PageTypeLoader";
-import {FunctionComponent} from "react";
 
 
 const pageTypeMap: { [key: string]: FunctionComponent<PageData> } = {
