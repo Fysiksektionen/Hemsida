@@ -2,6 +2,10 @@ import {Container} from "react-bootstrap";
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
 export default function PageNotFound() {
+    /**
+     * Displays a "404 not found" message. Currently only in swedish.
+     * **/
+
     return (
         <Container className="text-center my-5">
             <SentimentVeryDissatisfiedIcon className="my-3" style={{fontSize: "8rem"}}/>

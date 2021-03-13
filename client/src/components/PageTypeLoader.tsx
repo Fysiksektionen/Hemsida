@@ -7,6 +7,13 @@ import {DummyData2} from './news/FrontpageNewsWidget';
 
 
 export default function PageTypeLoader() {
+    /**
+     * Component loading correct component depending on current URL.
+     *
+     * @returns {JSX} Div containing correct component for URL or PageNotFound
+     *  component if no matching component was found.
+     */
+
     let location = useLocation();
 
     // Call /api/resolve-url?path=<path>
