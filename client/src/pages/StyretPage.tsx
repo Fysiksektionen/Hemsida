@@ -6,31 +6,26 @@ import profile_img_1 from '../placeholder_images/gustav_profilecard.jpg';
 import profile_img_2 from '../placeholder_images/morris_profilecard.jpg';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {PageData} from '../components/PageTypeLoader'
 
 
-
-function StyretPage() {
+export default function StyretPage(pageData: PageData) {
     return (
         <Container className="pb-5">
             <h1 className="pb-4">Styret</h1>
             <Row>
-            <Col className={"col-9"}>
-                <Row className={"pb-4"}>
-                    <ProfileCards {...dummyCards}/>
-                </Row>
-            </Col>
-            <Col className={"col-3"}>
-                A side menu might be here some time.
-            </Col>
-
-
+                <Col className={"col-9"}>
+                    <Row className={"pb-4"}>
+                        <ProfileCards {...dummyCards}/>
+                    </Row>
+                </Col>
+                <Col className={"col-3"}>
+                    A side menu might be here some time.
+                </Col>
             </Row>
-
         </Container>
     )
 }
-
-export default StyretPage;
 
 
 const gustavCard : IProfileCard = {
