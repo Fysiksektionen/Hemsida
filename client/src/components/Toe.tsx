@@ -1,8 +1,8 @@
 import React from "react";
 
 interface IToeProps {
-    webmaster: String;
-    currYear: Number;
+    webmaster: string;
+    currYear: string;
 }
 
 export default function Toe({ webmaster, currYear } : IToeProps) {
@@ -11,7 +11,7 @@ export default function Toe({ webmaster, currYear } : IToeProps) {
             style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
         >
             <div style={{ paddingRight: "2rem" }}>
-                {"© " + currYear + " Fysiksektionen, organisationsnummer 802411-8948"}
+                {"© " + currYear + " Fysiksektionen, Org. 802411-8948"}
             </div>
             <div style={{ fontWeight: "bold", paddingLeft: "2rem" }}>
                 {"Webmaster: " + webmaster + " – webmaster@f.kth.se"}

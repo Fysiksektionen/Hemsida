@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Locale = {
+export type Locale = {
     id: string,
     name: string
 }

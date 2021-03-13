@@ -4,13 +4,19 @@ import './Header.css'
 import logo from '../Fysiksektionen_logo.svg';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
+import {useContext} from "react";
 
 
 type Props = {
-    setLocale: Function
+    setLocale: Function,
+    content_sv: NodeJS.Dict<string>,
+    content_en: NodeJS.Dict<string>
 }
 
 function Header(props: Props) {
+    const locale = useContext(LocaleContext);
+    const content = locale === locales.sv ? props.content_sv : props.content_en;
+
     return (
         <LocaleContext.Consumer>
             {locale =>
@@ -23,7 +29,7 @@ function Header(props: Props) {
                 >
                 <a className="navbar-brand mx-5 text-center" href="/">
                     <img src={logo} width="80" height="80" alt="" />
-                    <h2>Fysiksektionen</h2>
+                    <h2>{content["name"]}</h2>
                 </a>
                 <div>
                 <div className="mx-4">
