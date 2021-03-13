@@ -10,7 +10,7 @@ export type BackgroundImageProps = {
     containerAspectRatio: number //  9.0/16.0
 }
 
-function BackgroundImage(props: BackgroundImageProps & React.HTMLAttributes<HTMLDivElement>) {
+export default function BackgroundImage(props: BackgroundImageProps & React.HTMLAttributes<HTMLDivElement>) {
     // define the style based on the props
     const divStyle = {
         paddingTop: `${props.containerAspectRatio * 100}%`,
@@ -38,9 +38,5 @@ function BackgroundImage(props: BackgroundImageProps & React.HTMLAttributes<HTML
                 </div>
             </div>
         </div>
-    )
-  
+    ) 
 }
-
-
-export default BackgroundImage;

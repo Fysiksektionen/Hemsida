@@ -9,14 +9,14 @@ $F-red: #DC3545;
     padding-top: ($spacer * 2.25) !important;
     padding-bottom: ($spacer * 2.25) !important;
 }
-.pt-4-5 { /* top and bottom 4.5 (between py-4 and py-5)*/
+.pt-4-5 { /* top 4.5 (between pt-4 and pt-5)*/
     padding-top: ($spacer * 2.25) !important;
 }
-.pb-4-5 { /* top and bottom 4.5 (between py-4 and py-5)*/
+.pb-4-5 { /* bottom 4.5 (between pb-4 and pb-5)*/
     padding-bottom: ($spacer * 2.25) !important;
 }
 
-.p-0-5 {
+.p-0-5 { /* small padding 0.5 */
     padding: ($spacer * 0.125) !important;
 }
 
