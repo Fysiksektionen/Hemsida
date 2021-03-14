@@ -9,7 +9,161 @@
         "/users": {
             "get": {
                 "summary": "get multiple users",
-                "description": "List all users. Use filters in GET-parameters to filter data.\n"
+                "description": "List all users. Response is authentication restricted and only users that requesting user can view is returned.",
+                "responses": {
+                    "200": {
+                        "description": "OK: List of users the user have view permission to.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "summary": "get single user",
+                "description": "Returns a single user based on {id}. Response is authentication restricted.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Id of user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/User/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK: User data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BAD REQUEST: Something is wrong with the way you specified the request. See error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED: You do not have access to this recourse (credentials are missing or you do not have permission).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NO CONTENT: No user found with id={id}.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/groups": {
+            "get": {
+                "summary": "get multiple groups",
+                "description": "List all groups. Response is authentication restricted and only groups that requesting user can view is returned.",
+                "responses": {
+                    "200": {
+                        "description": "OK: List of groups the user have view permission to.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Group"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/{id}": {
+            "get": {
+                "summary": "get single group",
+                "description": "Returns a single group based on {id}. Response is authentication restricted.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Id of group",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Group/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK: Group data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Group"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BAD REQUEST: Something is wrong with the way you specified the request. See error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED: You do not have access to this recourse (credentials are missing or you do not have permission).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NO CONTENT: No group found with id={id}.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
