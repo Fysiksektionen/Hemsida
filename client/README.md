@@ -30,3 +30,7 @@ Compiles the .css and .scss files to one index.css located in src/index.css.
 This compiles the entire bootstrap-library together with our own styling.
 
 (If this throws an error. Make sure you have sass installed using `npm install -g sass`.)
+
+### `npm run docs-serve`
+
+Serves the API-files needed by the API-viewer located at `/api-docs`. 
