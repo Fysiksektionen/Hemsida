@@ -3,34 +3,34 @@ import { List, ListItem } from "@material-ui/core";
 import { IMenuItem } from "./HeaderMenu";
 
 interface IMenuListProps {
-  data: IMenuItem[];
+    data: IMenuItem[];
 }
 
 export default function MenuList({ data }: IMenuListProps ) {
-  return (
-    <div
-      className="bg-dark text-white"
-      style={{
-        height: "100%",
-        minWidth: window.innerWidth * 0.4
-      }}
-    >
-      <List>
-        {data.map(val => (
-            <ListItem>
-              <div 
-                style={{
-                  fontWeight: "bold",
-                  fontSize: val.isHeader ? "170%" : "100%",
-                  marginLeft: val.isHeader ? "3rem" : "4rem",
-                  marginTop: val.isHeader ? "1rem" : 0 
-                }}
-              >
-                {val.itemText}
-              </div>
-            </ListItem>
-        ))}
-      </List>
-    </div>
-  );
+    return (
+        <div
+            className="bg-dark text-white"
+            style={{
+                height: "100%",
+                minWidth: window.innerWidth * 0.4
+            }}
+        >
+            <List>
+                {data.map(val => (
+                        <ListItem>
+                            <div 
+                                style={{
+                                    fontWeight: "bold",
+                                    fontSize: val.isHeader ? "170%" : "100%",
+                                    marginLeft: val.isHeader ? "3rem" : "4rem",
+                                    marginTop: val.isHeader ? "1rem" : 0 
+                                }}
+                            >
+                                {val.itemText}
+                            </div>
+                        </ListItem>
+                ))}
+            </List>
+        </div>
+    );
 }

@@ -8,24 +8,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
-
 function StyretPage() {
     return (
         <Container className="pb-5">
             <h1 className="pb-4">Styret</h1>
+
             <Row>
-            <Col className={"col-9"}>
-                <Row className={"pb-4"}>
-                    <ProfileCards {...dummyCards}/>
-                </Row>
-            </Col>
-            <Col className={"col-3"}>
-                A side menu might be here some time.
-            </Col>
+                <Col className={"col-9"}>
+                    <Row className={"pb-4"}>
+                        <ProfileCards {...dummyCards}/>
+                    </Row>
+                </Col>
 
-
+                <Col className={"col-3"}>
+                    A side menu might be here some time.
+                </Col>
             </Row>
-
         </Container>
     )
 }
