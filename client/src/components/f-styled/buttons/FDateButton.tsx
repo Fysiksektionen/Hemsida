@@ -1,12 +1,12 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { IFButtonProps } from "./FButton";
+import { FButtonProps } from "./FButton";
 
-interface IFDateButtonProps extends IFButtonProps {
+interface IFDateButtonProps extends FButtonProps {
   date: String; // TODO: change to some sort of Date-object
 }
 
-export default function FDateButton({ text, date, version="light", style } : IFDateButtonProps ) {
+export default function FDateButton({ text, date, version="light", style, props } : IFDateButtonProps ) {
   let clr_string: String = "";
   let bg_clr: "lightgray" | undefined;
   switch(version) {
@@ -27,7 +27,8 @@ export default function FDateButton({ text, date, version="light", style } : IFD
         textTransform: 'none',
         backgroundColor: bg_clr,
         ...style
-      }}  
+      }}
+      {...props}
     >
       <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
         <div style={{fontWeight: 'bold'}}>

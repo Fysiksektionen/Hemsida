@@ -1,14 +1,14 @@
 import React from "react";
 import { Button, SvgIconTypeMap } from "@material-ui/core";
-import { IFButtonProps } from "./FButton";
+import { FButtonProps } from "./FButton";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 
 
-interface IFLargeIconButtonProps extends IFButtonProps {
+interface IFLargeIconButtonProps extends FButtonProps {
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
 }
 
-export default function FLargeIconButton({ text, Icon, version="light", style } : IFLargeIconButtonProps ) {
+export default function FLargeIconButton({ text, Icon, version="light", style, props } : IFLargeIconButtonProps ) {
   var clr_string: String;
   switch(version) {
     case "light":
@@ -28,7 +28,8 @@ export default function FLargeIconButton({ text, Icon, version="light", style } 
         textTransform: 'none',
         fontWeight: 'bold',
         ...style
-      }}  
+      }}
+      {...props}
     >
       <div
         style={{
