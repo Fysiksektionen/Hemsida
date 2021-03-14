@@ -8,3 +8,4 @@ from .menus import *
 from .pages import *
 from .redirects import *
 from .site import *
+from .news import *
