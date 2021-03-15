@@ -10,6 +10,7 @@ class SiteModel(SingletonModel):
 
     class Meta:
         verbose_name = _("site manager")
+        verbose_name_plural = _("site manager")  # Ska bara skrivas i singular
 
     root_url = models.URLField(verbose_name=_('root URL'), blank=False, null=False)
     api_root_url = models.URLField(verbose_name=_('API root URL'), blank=False, null=False)

@@ -1,6 +1,6 @@
 import React from 'react';
-import NewsArticle, {INewsItem} from '../components/news/NewsArticle';
-import MenuMonths from '../components/menu_months'
+import NewsArticle, {INewsItem} from '../components/news/NewsItem';
+import MenuMonths from '../components/MenuMonths';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

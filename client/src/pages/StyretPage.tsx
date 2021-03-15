@@ -1,6 +1,6 @@
 import React from 'react'
-import {IProfileCard} from "../components/styret/profile_card";
-import {IProfileCards, ProfileCards} from '../components/styret/styret_pofile_cards_widget'
+import {IProfileCard} from "../components/styret/ProfileCard";
+import {IProfileCards, ProfileCards} from '../components/styret/ProfileCardsGrid'
 import Container from 'react-bootstrap/Container';
 import profile_img_1 from '../placeholder_images/gustav_profilecard.jpg';
 import profile_img_2 from '../placeholder_images/morris_profilecard.jpg';

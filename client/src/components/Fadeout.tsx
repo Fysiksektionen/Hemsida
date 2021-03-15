@@ -8,7 +8,7 @@ export interface IFadeOut {
   midpoint: string,
 }
 
-function FadeOut(props : IFadeOut & {children?: React.ReactNode}) {
+function Fadeout(props : IFadeOut & {children?: React.ReactNode}) {
   return (
     <div className="our-fade-anchor">
       {props.children}
@@ -17,4 +17,4 @@ function FadeOut(props : IFadeOut & {children?: React.ReactNode}) {
     )
 }
 
-export default FadeOut
+export default Fadeout

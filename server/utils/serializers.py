@@ -18,14 +18,15 @@ class ExtendedModelSerializer(ModelSerializer):
     Meta-class:
         - inf_depth [Bool]: If true no limit to depth (indep. of depth value). (Default = False).
         - nested_serialization [Dict]: Dictionary specifying meta-class attributes for related (nested) objects.
-                                             May specify any of the attributes of the Meta-class ('depth', 'inf_depth'
-                                             and 'model' are ignored if specified).
+                                         May specify any of the attributes of the Meta-class (including
+                                         'nested_serialization') ('depth', 'inf_depth' and 'model' are ignored if
+                                         specified).
 
-                                             If 'reuse_nested_serialization = True' for field the nested objects inherit
-                                             'nested_serialization'.
+                                         If 'reuse_nested_serialization = True' for field the nested objects inherit
+                                         parents 'nested_serialization'.
 
-                                             If 'use_base_meta = True' the meta-class will copy the metaclass of its
-                                             parent.
+                                         If 'use_base_meta = True' the meta-class will copy the metaclass of its
+                                         parent.
     """
 
     NestedSerializerParentClass = None
@@ -132,9 +133,11 @@ class ExtendedModelSerializer(ModelSerializer):
 
                     def __init__(self):
                         # If reuse_nested_serialization is True, use the same nested_serialization for serialization of
-                        # nested field.
+                        # nested field. Elif specified, use that.
                         if nested_ser.get('reuse_nested_serialization', False):
                             self.nested_serialization = full_nested_ser
+                        elif 'nested_serialization' in nested_ser:
+                            self.nested_serialization = nested_ser['nested_serialization']
 
                         # If use_base_meta is True, add all meta-attributes of the parent object, else use the
                         # attributes specified in dictionary for field.

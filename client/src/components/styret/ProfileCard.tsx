@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
-import './profile_card.css'
+import './ProfileCard.css'
 
 export interface IProfileCard {
     image_url: string,  // image url

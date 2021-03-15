@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'guardian',
     'adminsortable',
     'authentication',
     'website'
@@ -168,6 +169,7 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'authentication.user'
+ANONYMOUS_USER_NAME = None
 
 # Årskursnamn
 # (Attention! adding to, removing from or changing any of the objects of the list requires a migration)
@@ -175,3 +177,8 @@ CHAPTER_YEARS = [
     ("F-20", "F-20 Fotnot"), ("F-19", "F-19 Fasett"), ("F-18", "F-18 Flingsalt"), ("F-17", "F-17 Förarlös"),
     ("F-16", "F-16 Fuskbygge"), ("F-15", "F-15 Fanclub"), ("F-14", "F-14 Folkvett"), ("F-13", "F-13 Frågvis?")
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
