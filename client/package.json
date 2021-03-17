@@ -32,7 +32,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "css": "sass sass/main.scss > src/index.css"
+    "css": "sass sass/main.scss > src/index.css",
+    "lint-check": "eslint --ext .tsx --ext .ts src/",
+    "lint-fix": "eslint --ext .tsx --ext .ts --fix src/"
   },
   "eslintConfig": {
     "extends": [
