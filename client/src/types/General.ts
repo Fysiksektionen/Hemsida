@@ -2,9 +2,9 @@ import React from "react";
 import {Page} from "./APIResponses";
 
 
-export type PageComponentProp = {
+export type PageComponentProps = {
     data: Page
 }
 
-export type PageComponent = React.FunctionComponent<PageComponentProp>;
+export type PageComponent = React.FunctionComponent<PageComponentProps>;
 
