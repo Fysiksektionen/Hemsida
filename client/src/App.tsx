@@ -9,52 +9,13 @@ import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 import PageTypeLoader from './components/PageTypeLoader';
 
 // Fake data for header and footer
-type SiteData = {
-    headerContentSv: { [key: string]: string },
-    headerContentEn: { [key: string]: string },
-    footerContentSv: { [key: string]: string },
-    footerContentEn: { [key: string]: string }
-};
-
-type SiteResp = {
-    code: number,
-    data: SiteData
-}
-
-const mockSiteResp: SiteResp = {
-    code: 200,
-    data: {
-        headerContentSv: {
-            name: 'Fysiksektionen'
-        },
-        headerContentEn: {
-            name: 'The Physics Chapter'
-        },
-        footerContentSv: {
-            webmaster: 'Christoffer Ejemyr',
-            currYear: '2021',
-            address: 'Brinellvägen 89, 114 28 Stockholm'
-        },
-        footerContentEn: {
-            webmaster: 'Christoffer Ejemyr',
-            currYear: '2021',
-            address: 'Brinellvägen 89, 114 28 Stockholm'
-        }
-    }
-};
-// End of fake data
+import { mockSiteResp } from './mock_data/mock_App';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
-    const [siteData, setSiteData] = useState<SiteData>();
 
-    useEffect(() => {
-        // Fake start (replace by server call)
-        const siteResp = mockSiteResp;
-        // Fake end
-
-        setSiteData(siteResp.data);
-    }, [setSiteData]);
+    // Do server call for Site-data. Faked for now.
+    const siteData = mockSiteResp.data;
 
     return (
         <div className="App">
@@ -62,15 +23,15 @@ function App() {
 
                 <Header
                     setLocale={setLocale}
-                    contentSv={siteData ? siteData.headerContentSv : {}}
-                    contentEn={siteData ? siteData.headerContentEn : {}}
+                    contentSv={siteData.headerContentSv}
+                    contentEn={siteData.headerContentEn}
                 />
 
                 <div className="content container">
                     <Switch>
                         {/* Frontpage should maybe be included in the dynamic page loader,
-                    but left here for illustrative purposes of non-dynamic loading of
-                    components (i.e. login, admin, etc.). */}
+                            but left here for illustrative purposes of non-dynamic loading of
+                            components (i.e. login, admin, etc.). */}
                         <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
                             <Frontpage pageType="start" />
                         </Route>
@@ -82,8 +43,8 @@ function App() {
                 </div>
 
                 <Footer
-                    contentSv={siteData ? siteData.footerContentSv : {}}
-                    contentEn={siteData ? siteData.footerContentEn : {}}
+                    contentSv={siteData.footerContentSv}
+                    contentEn={siteData.footerContentEn}
                 />
 
             </LocaleContext.Provider>
