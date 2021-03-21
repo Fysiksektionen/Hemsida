@@ -1,5 +1,5 @@
 import React from "react";
-import {Page} from "./APIResponses";
+import {Page} from "./api_responses";
 
 
 export type PageComponentProps = {

@@ -105,7 +105,7 @@ export type ContentList = ContentObjectBase & {
 
 
 export type User = IDDetail & {
-    "user_type": string,  //TODO: Replace with enum type
+    "user_type": "" | "student" | "senior" | "external" | "admin",
     "last_login": string,
     "username": string,
     "first_name": string,
@@ -120,7 +120,7 @@ export type User = IDDetail & {
 }
 
 export type Group = IDDetail & {
-    "group_type": string,  //TODO: Replace with enum type
+    "group_type": "" | "chapter_group" | "external" | "admin",
     "name": string,
     "description": string,
     "image": Image
