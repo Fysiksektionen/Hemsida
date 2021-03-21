@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router-dom": "^5.1.7",
     "bootstrap": "4.6.0",
+    "eslint-config-airbnb": "^18.2.1",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
@@ -31,7 +32,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "css": "sass sass/main.scss > src/index.css"
+    "css": "sass sass/main.scss > src/index.css",
+    "lint-check": "eslint --ext .tsx --ext .ts src/",
+    "lint-fix": "eslint --ext .tsx --ext .ts --fix src/"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +55,14 @@
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "eslint": "^7.22.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-react": "^7.22.0",
     "google-maps-react": "^2.0.6"
   }
 }
