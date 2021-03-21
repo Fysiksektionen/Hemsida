@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
-import GoogleMap from './GoogleMap'
-import './Footer.css'
+import React from 'react';
+import GoogleMap from './GoogleMap';
+import './Footer.css';
 import Toe from './Toe';
 import {LocaleContext, locales} from "../contexts";
 

@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import {Locale, LocaleContext, locales} from './contexts'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import { Switch, Route } from "react-router-dom"
-import './App.css'
-import PageTypeLoader from "./components/PageTypeLoader"
-import Frontpage from "./pages/Frontpage"
-
+import React, { useState } from 'react';
+import { LocaleContext, locales } from './contexts';
+import Frontpage from './pages/Frontpage';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import { Switch, Route } from 'react-router-dom';
+import './App.css';
+import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 
 function App() {
 
@@ -40,6 +39,9 @@ function App() {
                     components (i.e. login, admin, etc.). */}
                     <Route exact={true} path={["/", "/start", "/index", "/hem", "/home"]}>
                         <Frontpage page_type="start" />
+                    </Route>
+                    <Route path="/nyheter">
+                        <NewsFeedPage newsArticles={dummyArticles}/>
                     </Route>
                     <Route component={PageTypeLoader}/>
                 </Switch>
