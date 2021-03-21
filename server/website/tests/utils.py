@@ -26,13 +26,13 @@ def create_test_page(**kwargs):
     kwargs.setdefault('name', 'test_' + str(uuid.uuid4())[:5])
     kwargs.setdefault('page_type', 'test_page')
 
-    # Create user instance
+    # Create page instance
     page = Page(**kwargs)
 
     # Clean so that validation error occur if kwargs are invalid.
     page.full_clean()
 
-    # Save user (only reached if no validation errors).
+    # Save page (only reached if no validation errors).
     page.save()
 
     return page
