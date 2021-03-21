@@ -34,7 +34,10 @@ def _get_path_page_dict() -> dict:
                     full_path = None
             else:
                 parent_path = get_full_path(page_data['parent'])
-                full_path = parent_path + ('/' if parent_path[-1] != '/' else "") + (page_data['slug'] or "") if parent_path is not None else None
+                if parent_path is not None:
+                    full_path = parent_path + ('/' if parent_path[-1] != '/' else "") + (page_data['slug'] or "")
+                else:
+                    full_path = None
 
             all_pages[page_id]['full_path'] = full_path
             return full_path
