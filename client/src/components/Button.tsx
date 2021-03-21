@@ -11,8 +11,8 @@ export interface IButton {
 function OurButton(props: IButton) {
     // TODO: Temporary, should be improved in another branch
     return (
-        <Button className={props.class} variant={props.type} onClick={() => {if(props.onClick) props.onClick()}}>{props.text}</Button>
-    )
+        <Button className={props.class} variant={props.type} onClick={() => { if (props.onClick) props.onClick(); }}>{props.text}</Button>
+    );
 }
 
 export default OurButton;

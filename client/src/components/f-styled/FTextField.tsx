@@ -6,9 +6,9 @@ const FTextField = withStyles({
         '& .MuiInput-underline:after': {
             // Solid orange underline on focus instead of purple.
             // TODO Can unfortunately not refer to $primary here, need to fix this.
-            borderBottomColor: '#ff642b', 
-        },
+            borderBottomColor: '#ff642b'
+        }
     }
-})(TextField)
+})(TextField);
 
 export default FTextField;

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
@@ -5,12 +6,12 @@ import { InputAdornment } from '@material-ui/core';
 import FTextField from './f-styled/FTextField';
 
 interface ISearchField {
-    // Need this to access InputProps since it is passed by Autocomplete-component.
-    // We use it to not override the entire InputProps when simply editing startAdornment.
-    InputProps?: any;
+  // Need this to access InputProps since it is passed by Autocomplete-component.
+  // We use it to not override the entire InputProps when simply editing startAdornment.
+  InputProps?: any;
 }
 
-export function SearchField({InputProps, ...params}: ISearchField) {
+export function SearchField({ InputProps, ...params }: ISearchField) {
     // TODO applicera locale sv/en på denna label.
     return (
         <FTextField
@@ -18,27 +19,28 @@ export function SearchField({InputProps, ...params}: ISearchField) {
             placeholder="Sök..."
             // Note ordering of InputProps *after* params
             // since it will be overwritten otherwise.
-            {...params} 
-            InputProps={{...InputProps,
+            {...params}
+            InputProps={{
+                ...InputProps,
                 startAdornment: (
                     <InputAdornment position="start">
                         <SearchIcon/>
                     </InputAdornment>
-                ),
+                )
             }}
         />
-    )
+    );
 }
 
 const pageResults : IResult[] = [
-    {type: "news", title: "Terminal-torsdag med F.dev"},
-    {type: "news", title: "Det blir en mottagning!"},
-    {type: "news", title: "Snart är det dags för häv!"},
-    {type: "news", title: "En fest utan dess like"},
-    {type: "event", title: "Häv"},
-    {type: "event", title: "Mottagningen 2020"},
-    {type: "event", title: "Terminal-Torsdag"},
-]
+    { type: 'news', title: 'Terminal-torsdag med F.dev' },
+    { type: 'news', title: 'Det blir en mottagning!' },
+    { type: 'news', title: 'Snart är det dags för häv!' },
+    { type: 'news', title: 'En fest utan dess like' },
+    { type: 'event', title: 'Häv' },
+    { type: 'event', title: 'Mottagningen 2020' },
+    { type: 'event', title: 'Terminal-Torsdag' }
+];
 
 export function GroupedSearch() {
     return (
@@ -57,7 +59,6 @@ export function GroupedSearch() {
 }
 
 interface IResult {
-    type: string;
-    title: string;
+  type: string;
+  title: string;
 }
-
