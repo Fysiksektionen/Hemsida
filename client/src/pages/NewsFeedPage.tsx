@@ -1,7 +1,7 @@
 import { List, ListItem } from '@material-ui/core';
 import React from 'react';
 import NewsArticle, { INewsItem } from '../components/news/NewsArticle';
-import { IMenuItem, SidebarMenu } from '../components/SidebarMenu';
+import { MenuItem, SidebarMenu } from '../components/SidebarMenu';
 import newsPlaceholder from '../placeholder_images/news_placeholder.jpg';
 import newsPlaceholderImage1 from '../placeholder_images/news_placeholder1.jpg';
 import newsPlaceholderImage2 from '../placeholder_images/news_placeholder2.jpg';
@@ -85,7 +85,7 @@ export const HEADER_HEIGHT = '150px';
 export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
     // assumes newsArticles is sorted by date
     const recentMonths = getRecentMonths();
-    const menuItems: IMenuItem[] = [];
+    const menuItems: MenuItem[] = [];
     recentMonths.forEach((monthYear) => {
         menuItems.push({
             id: getMonthYearString(monthYear),

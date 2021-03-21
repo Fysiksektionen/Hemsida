@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import profileImg1 from '../placeholder_images/gustav_profilecard.jpg';
 import profileImg2 from '../placeholder_images/morris_profilecard.jpg';
 import Row from 'react-bootstrap/Row';
-import { IMenuItem, SidebarMenu } from '../components/SidebarMenu';
+import { MenuItem, SidebarMenu } from '../components/SidebarMenu';
 import { HEADER_HEIGHT } from './NewsFeedPage';
 
 const gustavCard : IProfileCard = {
@@ -39,7 +39,7 @@ const dummyCards : IProfileCards = {
 };
 
 function StyretPage() {
-    const menuItems: IMenuItem[] = [
+    const menuItems: MenuItem[] = [
         {
             id: 'styret',
             title: 'Styret',

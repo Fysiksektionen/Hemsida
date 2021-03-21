@@ -3,17 +3,17 @@ import { Row, Container, Col } from 'react-bootstrap';
 import { Grid, Link, List, ListItem } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 
-export interface IMenuItem {
+export type MenuItem = {
   id: string;
   title: string;
   refsTo?: string;
 }
 
-interface ISidebarMenuProps {
-  menuItems: IMenuItem[];
+type SidebarMenuProps = {
+  menuItems: MenuItem[];
 }
 
-export function SidebarMenu({ menuItems, children } : PropsWithChildren<ISidebarMenuProps>) {
+export function SidebarMenu({ menuItems, children } : PropsWithChildren<SidebarMenuProps>) {
     // TODO: Update active month-item based on scroll position
     const [active, setActive] = useState(menuItems[0].refsTo || '');
     const location = useLocation();
@@ -24,13 +24,6 @@ export function SidebarMenu({ menuItems, children } : PropsWithChildren<ISidebar
         currPath = window.location.href.split('#')[1];
         if (currPath !== undefined) setActive(window.location.href.split('#')[1]);
     }, [location]);
-
-    // let refDict: { [key: string]: string } = {};
-    // feedItems.forEach((feedItem: IFeedItem) => {
-    //   if (feedItem.linkedBy) {
-    //     refDict[feedItem.linkedBy.month + "_" + feedItem.linkedBy.year] = feedItem.content.id;
-    //   }
-    // });
 
     return (
         <Container style={{ width: '100%' }}>
