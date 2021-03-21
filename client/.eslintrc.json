@@ -19,6 +19,9 @@
         "react",
         "@typescript-eslint"
     ],
+    "globals": {
+        "NodeJS": true
+    },
     "rules": {
         "space-before-function-paren": "off",
         "indent": ["warn", 4],
@@ -36,7 +39,8 @@
                 "**/*.test.tsx"
             ],
             "env": {
-                "jest": true
+                "jest": true,
+                "node": true
             }
         }
     ]
