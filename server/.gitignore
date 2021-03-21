@@ -2,6 +2,7 @@
 /venv/
 public/mediafiles/*
 public/staticfiles/*
+cache/*
 !*/.gitkeep
 project_settings/settings/local.py
 __pycache__/
