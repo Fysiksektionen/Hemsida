@@ -1,7 +1,8 @@
 import React from "react";
-import { IconButton, Button, Drawer } from '@material-ui/core';
+import { IconButton, Drawer, Button } from '@material-ui/core';
 import MenuList from "./MenuList";
-import { CloseRounded } from "@material-ui/icons";
+import { CloseRounded, Menu } from "@material-ui/icons";
+import FButton from "./f-styled/buttons/FButton";
 
 export interface IMenuItem {
     category: String,
@@ -40,27 +41,31 @@ export default function HeaderMenu() {
 
         setIsOpen(open);
     };
-
+  
     return (
         <React.Fragment key={'right'}>
-            <Button className="mx-3" onClick={toggleDrawer(true)}>
-                {"Meny"}
-            </Button>
+            <FButton {...{
+                text: "Meny",
+                Icon: Menu,
+                onClick: toggleDrawer(true),
+                style: { width: "8rem" }
+                }}
+            />
             <Drawer
-                anchor={'right'}
-                open={isOpen}
-                onClose={toggleDrawer(false)}
+              anchor={'right'}
+              open={isOpen}
+              onClose={toggleDrawer(false)}
             >
                 <div
-                    className="bg-dark text-white"
-                    style={{ textAlign: "right" }}
+                  className="bg-dark text-white"
+                  style={{ textAlign: "right" }}
                 >
                     <IconButton
-                        onClick={toggleDrawer(false)}
-                        color="secondary"
-                        style={{ color: "white" }}
+                      onClick={toggleDrawer(false)}
+                      color="secondary"
+                      style={{ color: "white" }}
                     >
-                        <CloseRounded/>
+                      <CloseRounded/>
                     </IconButton>
                 </div>
                 <MenuList data={mock_data}/>

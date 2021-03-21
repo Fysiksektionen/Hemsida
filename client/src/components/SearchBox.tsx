@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,18 +14,18 @@ export function SearchField({InputProps, ...params}: ISearchField) {
     // TODO applicera locale sv/en på denna label.
     return (
         <FTextField
-        variant="standard"
-        placeholder="Sök..."
-        // Note ordering of InputProps *after* params
-        // since it will be overwritten otherwise.
-        {...params} 
-        InputProps={{...InputProps,
-            startAdornment: (
-                <InputAdornment position="start">
-                    <SearchIcon/>
-                </InputAdornment>
-            ),
-        }}
+            variant="standard"
+            placeholder="Sök..."
+            // Note ordering of InputProps *after* params
+            // since it will be overwritten otherwise.
+            {...params} 
+            InputProps={{...InputProps,
+                startAdornment: (
+                    <InputAdornment position="start">
+                        <SearchIcon/>
+                    </InputAdornment>
+                ),
+            }}
         />
     )
 }
@@ -50,6 +49,7 @@ export function GroupedSearch() {
             options={pageResults}
             groupBy={(option: IResult) => option.type.toUpperCase()}
             getOptionLabel={(option: IResult) => option.title}
+            className="d-inline-flex"
             style={{ width: 300 }}
             renderInput={(params) => <SearchField {...params}/>}
         />
