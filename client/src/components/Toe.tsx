@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface IToeProps {
-    webmaster: String;
-    currYear: Number;
+    webmaster: string;
+    currYear: string;
 }
 
 export default function Toe({ webmaster, currYear } : IToeProps) {

@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import GoogleMap from './GoogleMap';
 import './Footer.css';
 import Toe from './Toe';
+import { LocaleContext, locales } from '../contexts';
 
-function Footer() {
+type StringDict = {
+    [key: string]: string
+};
+
+type Props = {
+    contentSv: StringDict,
+    contentEn: StringDict
+}
+
+function Footer(props: Props) {
+    const locale = useContext(LocaleContext);
+    const content = locale === locales.sv ? props.contentSv : props.contentEn;
+
     return (
-        <>
+        <div>
             <div className="container-fluid py-4 bg-dark text-white text-center">
 
-                <h3>Hitta hit</h3>
+                <h3>{locale === locales.sv ? 'Hitta hit!' : 'Find us!'}</h3>
 
-            Brinellvägen 89, 114 28 Stockholm
+                {content.address}
 
                 <GoogleMap />
 
             </div>
             <Toe
-                webmaster="Christoffer Ejemyr"
-                currYear={2021}
+                webmaster={content.webmaster!}
+                currYear={content.currYear!}
             />
-        </>
+        </div>
     );
 }
 

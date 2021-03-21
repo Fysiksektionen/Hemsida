@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MenuItem, Select } from '@material-ui/core';
 import Navbar from 'react-bootstrap/Navbar';
 import { LocaleContext, locales } from '../contexts';
@@ -11,7 +11,9 @@ import HeaderMenu from './HeaderMenu';
 import { ArrowDropDown } from '@material-ui/icons';
 
 type Props = {
-    setLocale: Function
+    setLocale: Function,
+    contentSv: { [key: string]: string },
+    contentEn: { [key: string]: string }
 }
 
 export default function Header(props: Props) {
@@ -19,6 +21,8 @@ export default function Header(props: Props) {
         sv: <img src={seFlag} alt={'Svenska flaggan'} style={{ height: '1rem', width: '1.6rem' }}/>,
         en: <img src={gbFlag} alt={'English flag'} style={{ height: '1rem', width: '2rem' }}/>
     };
+    const locale = useContext(LocaleContext);
+    const content = locale === locales.sv ? props.contentSv : props.contentEn;
 
     return (
         <LocaleContext.Consumer>
@@ -26,7 +30,7 @@ export default function Header(props: Props) {
                 <Navbar style={{ backgroundColor: 'var(--F-light-gray)', width: '100%' }} expand="lg" className="row justify-content-between">
                     <Navbar.Brand className="col mx-5 my-2" href="#" style={{ fontSize: '2.35rem' }}> {/* fontSize is an ugly hack to make the text centered */}
                         <img src={logo} height="80" alt="" />
-                        {/* <h2 className="d-inline pl-3 mt-3 mx-3">Fysiksektionen</h2> */}
+                        <h2 className="d-inline pl-3 mt-3 mx-3 hidden">{content.name}</h2>
                     </Navbar.Brand>
                     <div className="col">
                         <div className="row d-flex flex-row-reverse">
