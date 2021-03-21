@@ -1,3 +1,4 @@
+import React, { useContext } from 'react';
 import { MenuItem, Select } from '@material-ui/core';
 import Navbar from 'react-bootstrap/Navbar';
 import { LocaleContext, locales } from '../contexts';
@@ -7,13 +8,12 @@ import seFlag from '../country_flags/se.svg';
 import gbFlag from '../country_flags/gb.svg';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
-import {useContext} from "react";
 import { ArrowDropDown } from '@material-ui/icons';
 
 type Props = {
     setLocale: Function,
-    content_sv: NodeJS.Dict<string>,
-    content_en: NodeJS.Dict<string>
+    contentSv: { [key: string]: string },
+    contentEn: { [key: string]: string }
 }
 
 export default function Header(props: Props) {
@@ -22,7 +22,7 @@ export default function Header(props: Props) {
         en: <img src={gbFlag} alt={'English flag'} style={{ height: '1rem', width: '2rem' }}/>
     };
     const locale = useContext(LocaleContext);
-    const content = locale === locales.sv ? props.content_sv : props.content_en;
+    const content = locale === locales.sv ? props.contentSv : props.contentEn;
 
     return (
         <LocaleContext.Consumer>
@@ -30,7 +30,7 @@ export default function Header(props: Props) {
                 <Navbar style={{ backgroundColor: 'var(--F-light-gray)', width: '100%' }} expand="lg" className="row justify-content-between">
                     <Navbar.Brand className="col mx-5 my-2" href="#" style={{ fontSize: '2.35rem' }}> {/* fontSize is an ugly hack to make the text centered */}
                         <img src={logo} height="80" alt="" />
-                        {/* <h2 className="d-inline pl-3 mt-3 mx-3">{content['name']}</h2> */}
+                        <h2 className="d-inline pl-3 mt-3 mx-3 hidden">{content.name}</h2>
                     </Navbar.Brand>
                     <div className="col">
                         <div className="row d-flex flex-row-reverse">

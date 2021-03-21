@@ -4,7 +4,7 @@ import MenuMonths from '../components/MenuMonths';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {PageData} from '../components/PageTypeLoader';
+import { PageData } from '../components/PageTypeLoader';
 
 function NewsArticlePage(pageData: PageData) {
     return (
