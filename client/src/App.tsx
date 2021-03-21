@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
+import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 import { DummyData2 } from './components/news/FrontpageNewsWidget';
 import StyretPage from './pages/StyretPage';
 
@@ -18,6 +19,10 @@ function App() {
                 <Header setLocale={setLocale}/>
                 <div className="content container">
                     <Switch>
+                        <Route path="/nyheter">
+                            <NewsFeedPage newsArticles={dummyArticles}/>
+                        </Route>
+
                         <Route path="/styret">
                             <StyretPage/>
                         </Route>
