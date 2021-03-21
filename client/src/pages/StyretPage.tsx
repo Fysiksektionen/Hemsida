@@ -5,7 +5,6 @@ import Container from 'react-bootstrap/Container';
 import profileImg1 from '../placeholder_images/gustav_profilecard.jpg';
 import profileImg2 from '../placeholder_images/morris_profilecard.jpg';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { IMenuItem, SidebarMenu } from '../components/SidebarMenu';
 import { HEADER_HEIGHT } from './NewsFeedPage';
 
@@ -40,36 +39,35 @@ const dummyCards : IProfileCards = {
 };
 
 function StyretPage() {
-    let menuItems: IMenuItem[] = [
+    const menuItems: IMenuItem[] = [
         {
-            id: "styret",
-            title: "Styret",
-            refsTo: "styret-header"
+            id: 'styret',
+            title: 'Styret',
+            refsTo: 'styret-header'
         },
         {
-            id: "veckobrev",
-            title: "Styrets veckobrev",
-            refsTo: "styret-veckobrev"
+            id: 'veckobrev',
+            title: 'Styrets veckobrev',
+            refsTo: 'styret-veckobrev'
         }
-    ]
+    ];
 
     return (
         <SidebarMenu menuItems={menuItems}>
-
             <Container className="pb-5">
                 <h1
                     id="styret-header"
                     className="pb-4"
-                    style={{scrollMarginTop: HEADER_HEIGHT}}
+                    style={{ scrollMarginTop: HEADER_HEIGHT }}
                 >
                     Styret
                 </h1>
-                <Row className={"pb-4"}>
+                <Row className={'pb-4'}>
                     <ProfileCards {...dummyCards}/>
                 </Row>
                 <Row
                     id="styret-veckobrev"
-                    style={{scrollMarginTop: HEADER_HEIGHT}}
+                    style={{ scrollMarginTop: HEADER_HEIGHT }}
                 >
                     <h1>
                         Styrets veckobrev
