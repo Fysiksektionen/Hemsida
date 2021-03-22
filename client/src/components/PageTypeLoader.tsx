@@ -2,49 +2,11 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import pageTypeMap from '../pages/PageTypeMap';
 import PageNotFound from '../pages/PageNotFound';
+import { APIResponse } from '../types/api_responses';
+import { Page } from '../types/api_object_types';
 
-// Fake data import, to be removed.
-import { DummyData2 } from './news/FrontpageNewsWidget';
-
-// Fake-data
-export type PageData = {
-    pageType: string,
-    content?: object
-    // And a lot more information about the page
-}
-
-type RespType = {
-    code: number,
-    data: PageData
-};
-
-const styretPageResp: RespType = {
-    code: 200,
-    data: {
-        pageType: 'styret'
-    }
-};
-
-const newspageResp: RespType = {
-    code: 200,
-    data: {
-        pageType: 'news_article',
-        content: DummyData2
-    }
-};
-
-const emptyResp: RespType = {
-    code: 200,
-    data: {
-        pageType: ''
-    }
-};
-
-const pathToResp: { [key: string]: RespType } = {
-    '/styret': styretPageResp,
-    '/newsarticle': newspageResp
-};
-// End of fake data
+// Import fake data
+import { emptyResp, pathToResp } from '../mock_data/mock_PageTypeLoader';
 
 export default function PageTypeLoader() {
     /**
@@ -59,7 +21,7 @@ export default function PageTypeLoader() {
     // Call /api/resolve-url?path=<path>
     // const res = callAPI("/resolve-url", GET={path: params.path})
     // Fake for now...
-    let res: RespType;
+    let res: APIResponse<Page>;
     if (location.pathname in pathToResp) {
         res = pathToResp[location.pathname];
     } else {
