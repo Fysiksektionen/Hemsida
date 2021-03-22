@@ -1,16 +1,14 @@
 import React from 'react';
-import NewsItemTiny, { INewsItemTiny } from './NewsItemTiny';
-import SomeButton, { IButton } from '../Button';
+import NewsItemTiny from './NewsItemTiny';
 import Container from 'react-bootstrap/Container';
+import { NewsPageMinimal } from '../../types/news';
+import Button from 'react-bootstrap/Button';
 
-export interface INewsFeedTiny {
-  items : INewsItemTiny[]
+type NewsFeedTinyProps = {
+    items : NewsPageMinimal[]
 }
 
-// TODO: remove
-const DummyData : IButton = { type: 'secondary', text: 'Fler nyheter' };
-
-function NewsFeedTiny(props : INewsFeedTiny) {
+function NewsFeedTiny(props : NewsFeedTinyProps) {
     const tinyFeed = props.items.map((item, index) =>
         <li key={index} className="mb-3" style={{ backgroundColor: '#f0f0f0' }}>
             <NewsItemTiny {...item}/>
@@ -23,7 +21,7 @@ function NewsFeedTiny(props : INewsFeedTiny) {
                 {tinyFeed}
             </ul>
             <div className="text-center">
-                <SomeButton {...DummyData}/>
+                <Button variant={'secondary'}>Fler nyheter</Button>
             </div>
         </Container>
     );

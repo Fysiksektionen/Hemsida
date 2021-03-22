@@ -1,13 +1,13 @@
 import React from 'react';
 import './Fadeout.css';
 
-export interface IFadeOut {
-  fade: boolean,
-  color: string,
-  midpoint: string,
+export type FadeOut = {
+    fade: boolean,
+    color: string,
+    midpoint: string,
 }
 
-function Fadeout(props : IFadeOut & {children?: React.ReactNode}) {
+function Fadeout(props : FadeOut & {children?: React.ReactNode}) {
     return (
         <div className="our-fade-anchor">
             {props.children}

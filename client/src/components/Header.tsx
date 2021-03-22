@@ -9,11 +9,12 @@ import gbFlag from '../country_flags/gb.svg';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
 import { ArrowDropDown } from '@material-ui/icons';
+import { ContentObject, ContentText } from '../types/api_object_types';
 
 type Props = {
     setLocale: Function,
-    contentSv: { [key: string]: string },
-    contentEn: { [key: string]: string }
+    contentSv: ContentObject,
+    contentEn: ContentObject
 }
 
 export default function Header(props: Props) {
@@ -22,15 +23,15 @@ export default function Header(props: Props) {
         en: <img src={gbFlag} alt={'English flag'} style={{ height: '1rem', width: '2rem' }}/>
     };
     const locale = useContext(LocaleContext);
-    const content = locale === locales.sv ? props.contentSv : props.contentEn;
+    const content = (locale === locales.sv ? props.contentSv : props.contentEn) as ContentText;
 
     return (
         <LocaleContext.Consumer>
             {locale =>
                 <Navbar style={{ backgroundColor: 'var(--F-light-gray)', width: '100%' }} expand="lg" className="row justify-content-between">
                     <Navbar.Brand className="col mx-5 my-2" href="#" style={{ fontSize: '2.35rem' }}> {/* fontSize is an ugly hack to make the text centered */}
-                        <img src={logo} height="80" alt="" />
-                        <h2 className="d-inline pl-3 mt-3 mx-3 hidden">{content.name}</h2>
+                        <a href="/"><img src={logo} height="80" alt="" /></a>
+                        <h2 className="d-inline pl-3 mt-3 mx-3 hidden">{content.text}</h2>
                     </Navbar.Brand>
                     <div className="col">
                         <div className="row d-flex flex-row-reverse">
