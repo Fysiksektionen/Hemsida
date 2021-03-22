@@ -5,9 +5,9 @@ import { CloseRounded, Menu } from '@material-ui/icons';
 import FButton from './f-styled/buttons/FButton';
 
 export type MenuItem = {
-  category: string,
-  itemText: string,
-  isHeader: boolean
+    category: string,
+    itemText: string,
+    isHeader: boolean
 }
 
 const mockData: MenuItem[] = [

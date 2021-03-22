@@ -9,7 +9,7 @@ function ProfileCards(props: ProfileCardInfo[]) {
     return (
         <Row>
             {props.map((cardData, index) =>
-                <Col className={'col-lg-4 col-md-6 col-sm-12'} key={index}>
+                <Col lg={4} md={6} sm={12} key={index}>
                     <ProfileCard {...cardData}/>
                 </Col>
             )}

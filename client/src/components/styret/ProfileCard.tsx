@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import './ProfileCard.css';
+import { Image } from 'react-bootstrap';
 
 export type ProfileCardInfo = {
     imageUrl: string, // image url
@@ -19,7 +20,7 @@ function ProfileCard(personInfo: ProfileCardInfo) {
     return (
         <Container>
             <Col>
-                <img src={personInfo.imageUrl} alt={imageAltText} className={'rounded'} style={{ width: '100%' }}/>
+                <Image fluid={true} src={personInfo.imageUrl} alt={imageAltText} className={'rounded'} />
 
                 <div className={'pt-3'}>
                     <h5 className={'m-0 profile-card-role'}>{personInfo.role}</h5>

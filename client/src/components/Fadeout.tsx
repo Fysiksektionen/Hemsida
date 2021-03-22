@@ -2,9 +2,9 @@ import React from 'react';
 import './Fadeout.css';
 
 export type FadeOut = {
-  fade: boolean,
-  color: string,
-  midpoint: string,
+    fade: boolean,
+    color: string,
+    midpoint: string,
 }
 
 function Fadeout(props : FadeOut & {children?: React.ReactNode}) {
