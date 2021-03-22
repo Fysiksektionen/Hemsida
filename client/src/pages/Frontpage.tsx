@@ -23,8 +23,8 @@ function Frontpage(props: PageComponentProps) {
                     justifyContent: 'center'
                 }}
             >
-                <FDateButton text="Namn på möte" date="1997-10-10"/>
-                <FDateButton text="Namn på möte" date="1997-10-10" version="dark"/>
+                <FDateButton text="Namn på möte" date={new Date(1997, 10, 10)}/>
+                <FDateButton text="Namn på möte" date={new Date(1997, 10, 10)} version="dark"/>
             </div>
             <div
                 className="px-4 my-4"

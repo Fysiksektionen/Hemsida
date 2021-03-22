@@ -17,3 +17,5 @@ export type SiteResponseData = {
 }
 
 export type SiteResponse = APIResponse<SiteResponseData>
+
+// TODO: Define more responses.

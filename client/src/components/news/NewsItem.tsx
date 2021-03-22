@@ -1,21 +1,16 @@
 import React from 'react';
+import { NewsPageMinimal } from '../../types/news';
+import Image from 'react-bootstrap/Image';
 
-export interface INewsItem {
-  image: string,
-  title: string,
-  published: Date,
-  text: string
-}
-
-export function NewsArticleBase(props : INewsItem & {children?: React.ReactNode}) {
+export function NewsArticleBase(props : NewsPageMinimal & {children?: React.ReactNode}) {
     return (
         <div className="news-article-base" style={{ backgroundColor: '#f0f0f0' }}>
             <div style={{ width: '100%' }}>
-                <img src={props.image} style={{ width: '100%' }} alt='' />
+                <Image fluid={true} src={props.image.href} alt='' />
             </div>
             <div className="p-4 news-article-base-text">
                 <h4 className="mb-0">{props.title}</h4>
-                <small>{props.published.toLocaleDateString()}</small>
+                <small>{props.publishedAt}</small>
                 {props.children}
             </div>
         </div>
@@ -30,10 +25,10 @@ export function NewsArticleText(props : {text: string}) {
     );
 }
 
-function NewsArticle(props : INewsItem) {
+function NewsArticle(props : NewsPageMinimal) {
     return (
         <NewsArticleBase {...props}>
-            <NewsArticleText text={props.text} />
+            <NewsArticleText text={props.preamble} />
         </NewsArticleBase>
     );
 }

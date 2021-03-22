@@ -63,11 +63,12 @@ export default function NewsFeedPage(props: PageComponentProps) {
     let usedMonth = (recentMonths[0].getMonth() + 1) % 12;
 
     newsArticles.forEach(article => {
-        if (article.published.getMonth() < usedMonth || (article.published.getMonth() === 11 && usedMonth === 0)) {
-            usedMonth = article.published.getMonth();
+        const articleDate = new Date(article.publishedAt);
+        if (articleDate.getMonth() < usedMonth || (articleDate.getMonth() === 11 && usedMonth === 0)) {
+            usedMonth = articleDate.getMonth();
             menuItems.forEach(item => {
-                if (item.title === getMonthYearString(article.published)) {
-                    item.refsTo = article.id;
+                if (item.title === getMonthYearString(articleDate)) {
+                    item.refsTo = article.id.toString();
                 }
             });
         }
@@ -91,7 +92,7 @@ export default function NewsFeedPage(props: PageComponentProps) {
             <List>
                 {newsArticles.map(article =>
                     <ListItem
-                        id={article.id}
+                        id={article.id.toString()}
                         key={article.id}
                         className="py-2"
                         style={{ scrollMarginTop: HEADER_HEIGHT }} // 150px == height of page header

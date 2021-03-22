@@ -60,7 +60,9 @@ export type Redirect = IDDetail & {
     page: MinimalPage
 }
 
-export type Image = IDDetail & {} // More to be defined later
+export type Image = IDDetail & {
+    href: string
+} // More to be defined later
 
 type ContentObjectDBType = 'text' | 'image' | 'menu' | 'page' | 'dict' | 'list'
 

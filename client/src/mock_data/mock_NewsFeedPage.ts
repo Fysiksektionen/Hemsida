@@ -2,39 +2,47 @@
  * Mock data for pages/NewsFeedPage.tsx
  */
 
-import { INewsItem } from '../components/news/NewsArticle';
 import newsPlaceholder from '../placeholder_images/news_placeholder.jpg';
 import newsPlaceholderImage1 from '../placeholder_images/news_placeholder1.jpg';
 import newsPlaceholderImage2 from '../placeholder_images/news_placeholder2.jpg';
 import newsPlaceholderImage3 from '../placeholder_images/news_placeholder3.jpg';
+import { NewsPageMinimal } from '../types/news';
 
-export const dummyArticles: INewsItem[] = [
+export const dummyArticles: NewsPageMinimal[] = [
     {
-        id: 'dummy_1',
-        image: newsPlaceholder,
+        id: 1,
+        name: '',
+        detailUrl: '',
+        image: { id: 1, detailUrl: '', href: newsPlaceholder },
         title: 'Dummy news 1',
-        published: new Date('2021-01-21'),
-        text: 'Some news text here'
+        preamble: 'Some news text here',
+        publishedAt: '2020-12-24'
     },
     {
-        id: 'dummy_2',
-        image: newsPlaceholderImage1,
-        title: 'Dummy news 2',
-        published: new Date('2020-12-24'),
-        text: 'Some news text here'
+        id: 2,
+        name: '',
+        detailUrl: '',
+        image: { id: 1, detailUrl: '', href: newsPlaceholderImage1 },
+        title: 'Dummy news 1',
+        preamble: 'Some news text here',
+        publishedAt: '2020-12-24'
     },
     {
-        id: 'dummy_3',
-        image: newsPlaceholderImage2,
-        title: 'Dummy news 3',
-        published: new Date('2020-12-23'),
-        text: 'Some news text here'
+        id: 3,
+        name: '',
+        detailUrl: '',
+        image: { id: 1, detailUrl: '', href: newsPlaceholderImage2 },
+        title: 'Dummy news 1',
+        preamble: 'Some news text here',
+        publishedAt: '2020-12-24'
     },
     {
-        id: 'dummy_4',
-        image: newsPlaceholderImage3,
-        title: 'Dummy news 4',
-        published: new Date('2020-11-20'),
-        text: 'Some news text here'
+        id: 4,
+        name: '',
+        detailUrl: '',
+        image: { id: 1, detailUrl: '', href: newsPlaceholderImage3 },
+        title: 'Dummy news 1',
+        preamble: 'Some news text here',
+        publishedAt: '2020-12-24'
     }
 ];

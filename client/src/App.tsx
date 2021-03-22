@@ -33,7 +33,7 @@ function App() {
                             but left here for illustrative purposes of non-dynamic loading of
                             components (i.e. login, admin, etc.). */}
                         <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                            <Frontpage pageType="start" />
+                            <Frontpage {...emptyPage} />
                         </Route>
                         <Route component={PageTypeLoader}/>
                     </Switch>
