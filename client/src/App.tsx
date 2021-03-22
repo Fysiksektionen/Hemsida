@@ -7,6 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 import PageTypeLoader from './components/PageTypeLoader';
+import Admin from './admin/Admin';
 
 // Fake data for header and footer
 type SiteData = {
@@ -59,33 +60,38 @@ function App() {
     return (
         <div className="App">
             <LocaleContext.Provider value={locale}>
+                <Switch>
+                    <Route path="/admin">
+                        <Admin />
+                    </Route>
+                    <Route>
+                        <Header
+                            setLocale={setLocale}
+                            contentSv={siteData ? siteData.headerContentSv : {}}
+                            contentEn={siteData ? siteData.headerContentEn : {}}
+                        />
 
-                <Header
-                    setLocale={setLocale}
-                    contentSv={siteData ? siteData.headerContentSv : {}}
-                    contentEn={siteData ? siteData.headerContentEn : {}}
-                />
+                        <div className="content container">
+                            <Switch>
+                                {/* Frontpage should maybe be included in the dynamic page loader,
+                                    but left here for illustrative purposes of non-dynamic loading of
+                                    components (i.e. login, admin, etc.). */}
+                                <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
+                                    <Frontpage pageType="start" />
+                                </Route>
+                                <Route path="/nyheter">
+                                    <NewsFeedPage newsArticles={dummyArticles}/>
+                                </Route>
+                                <Route component={PageTypeLoader}/>
+                            </Switch>
+                        </div>
 
-                <div className="content container">
-                    <Switch>
-                        {/* Frontpage should maybe be included in the dynamic page loader,
-                    but left here for illustrative purposes of non-dynamic loading of
-                    components (i.e. login, admin, etc.). */}
-                        <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                            <Frontpage pageType="start" />
-                        </Route>
-                        <Route path="/nyheter">
-                            <NewsFeedPage newsArticles={dummyArticles}/>
-                        </Route>
-                        <Route component={PageTypeLoader}/>
-                    </Switch>
-                </div>
-
-                <Footer
-                    contentSv={siteData ? siteData.footerContentSv : {}}
-                    contentEn={siteData ? siteData.footerContentEn : {}}
-                />
-
+                        <Footer
+                            contentSv={siteData ? siteData.footerContentSv : {}}
+                            contentEn={siteData ? siteData.footerContentEn : {}}
+                        />
+                    </Route>
+                </Switch>
             </LocaleContext.Provider>
         </div>
     );

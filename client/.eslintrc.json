@@ -20,7 +20,8 @@
         "@typescript-eslint"
     ],
     "globals": {
-        "NodeJS": true
+        "NodeJS": true,
+        "JSX": true
     },
     "rules": {
         "space-before-function-paren": "off",
