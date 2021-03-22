@@ -24,6 +24,10 @@ export default function PageTypeLoader() {
     let res: APIResponse<Page>;
     if (location.pathname in pathToResp) {
         res = pathToResp[location.pathname];
+        console.log(location.pathname);
+        console.log(res);
+        console.log(res.data.pageType);
+        console.log(pageTypeMap[res.data.pageType]);
     } else {
         res = emptyResp;
     }

@@ -1,4 +1,3 @@
-import NewsArticlePage from './NewsArticlePage';
 import StyretPage from './StyretPage';
 import NewsFeedPage from './NewsFeedPage';
 import { PageComponent } from '../types/general';
@@ -9,7 +8,6 @@ import { PageComponent } from '../types/general';
  * Instead make multiple page components or incorporate the different behaviours in ContentCollection of page.
  */
 const pageTypeMap: { [key: string]: PageComponent } = {
-    news_article: NewsArticlePage,
     styret: StyretPage,
     news_feed: NewsFeedPage
 };

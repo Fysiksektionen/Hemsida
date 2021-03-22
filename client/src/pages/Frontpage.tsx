@@ -5,10 +5,10 @@ import NewsWidget from '../components/news/FrontpageNewsWidget';
 import { AccountBalance } from '@material-ui/icons';
 import FDateButton from '../components/f-styled/buttons/FDateButton';
 import FLargeIconButton from '../components/f-styled/buttons/FLargeIconButton';
-import { PageData } from '../components/PageTypeLoader';
+import { PageComponentProps } from '../types/general';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Frontpage(pageData: PageData) {
+function Frontpage(props: PageComponentProps) {
     return (
         <div>
             <Banner />

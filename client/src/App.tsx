@@ -9,6 +9,7 @@ import PageTypeLoader from './components/PageTypeLoader';
 
 // Fake data for header and footer
 import { mockSiteResp } from './mock_data/mock_App';
+import { emptyPage } from './mock_data/mock_PageTypeLoader';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
