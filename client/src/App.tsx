@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Locale, LocaleContext, locales } from './contexts';
 import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 import PageTypeLoader from './components/PageTypeLoader';
 
 // Fake data for header and footer
@@ -34,9 +33,6 @@ function App() {
                             components (i.e. login, admin, etc.). */}
                         <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
                             <Frontpage pageType="start" />
-                        </Route>
-                        <Route path="/nyheter">
-                            <NewsFeedPage newsArticles={dummyArticles}/>
                         </Route>
                         <Route component={PageTypeLoader}/>
                     </Switch>
