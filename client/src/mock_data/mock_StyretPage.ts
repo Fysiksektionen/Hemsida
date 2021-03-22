@@ -1,9 +1,8 @@
-import { IProfileCard } from '../components/styret/ProfileCard';
+import { ProfileCardInfo } from '../components/styret/ProfileCard';
 import profileImg1 from '../placeholder_images/gustav_profilecard.jpg';
 import profileImg2 from '../placeholder_images/morris_profilecard.jpg';
-import { IProfileCards } from '../components/styret/ProfileCardsGrid';
 
-const gustavCard : IProfileCard = {
+const gustavCard : ProfileCardInfo = {
     description: 'Har huvudansvar för sektionens ekonomi. Bokför även en hel del.',
     email: 'kassor@f.kth.se',
     imageUrl: profileImg1,
@@ -12,7 +11,7 @@ const gustavCard : IProfileCard = {
     yearCode: 'F-18'
 };
 
-const morrisCard : IProfileCard = {
+const morrisCard : ProfileCardInfo = {
     description: 'Jag leder Styrelsens arbete och är ytterst ansvarig för sektionens verksamhet och att representera den utåt. Mig kan du alltid kontakta om du har frågor!',
     email: 'ordf@f.kth.se',
     imageUrl: profileImg2,
@@ -21,14 +20,12 @@ const morrisCard : IProfileCard = {
     yearCode: 'F-18'
 };
 
-export const dummyCards : IProfileCards = {
-    cards: [
-        gustavCard,
-        morrisCard,
-        gustavCard,
-        morrisCard,
-        gustavCard,
-        morrisCard,
-        gustavCard
-    ]
-};
+export const dummyCards : ProfileCardInfo[] = [
+    gustavCard,
+    morrisCard,
+    gustavCard,
+    morrisCard,
+    gustavCard,
+    morrisCard,
+    gustavCard
+];

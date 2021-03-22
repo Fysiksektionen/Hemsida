@@ -4,13 +4,13 @@ import MenuList from './MenuList';
 import { CloseRounded, Menu } from '@material-ui/icons';
 import FButton from './f-styled/buttons/FButton';
 
-export interface IMenuItem {
-  category: String,
-  itemText: String,
+export type MenuItem = {
+  category: string,
+  itemText: string,
   isHeader: boolean
 }
 
-const mockData: IMenuItem[] = [
+const mockData: MenuItem[] = [
     { category: 'Engagera dig', itemText: 'Engagera dig', isHeader: true },
     { category: 'Engagera dig', itemText: 'Vad kan du göra?', isHeader: false },
     { category: 'Engagera dig', itemText: 'Klubbmästeriet fkm*', isHeader: false },

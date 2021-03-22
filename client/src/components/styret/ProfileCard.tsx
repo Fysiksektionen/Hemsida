@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import './ProfileCard.css';
 
-export interface IProfileCard {
+export type ProfileCardInfo = {
     imageUrl: string, // image url
     role: string, // Ordförande, Kassör ...
     yearCode: string, // F-17, F-18 or similar
@@ -14,7 +14,7 @@ export interface IProfileCard {
 
 // TODO The styling of the <a> might be able to done without an inner <p> tag. I had difficulties making it having the
 // same width as the other <p> tags without it however.
-function ProfileCard(personInfo: IProfileCard) {
+function ProfileCard(personInfo: ProfileCardInfo) {
     const imageAltText = personInfo.role + ' ' + personInfo.name;
     return (
         <Container>
