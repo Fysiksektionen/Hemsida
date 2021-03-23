@@ -2,9 +2,10 @@
 
 from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInline
 from django.contrib import admin
+from django.contrib.admin.utils import flatten_fieldsets
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
-from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect, SiteModel
+from website.models import *
 
 from utils.admin import GuardedModelAdmin
 
@@ -123,3 +124,55 @@ class SiteModelAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         """No one can remove object"""
         return False
+
+
+class ContentImageInline(SortableTabularInline):
+    model = ContentImage
+    fields = ('name', 'component', 'db_type', 'image', 'attributes')
+
+
+class ContentTextInline(SortableTabularInline):
+    model = ContentText
+    fields = ('name', 'component', 'db_type', 'text', 'attributes')
+
+
+class ContentPageInline(SortableTabularInline):
+    model = ContentPage
+    fields = ('name', 'component', 'db_type', 'page', 'attributes')
+
+
+class ContentMenuInline(SortableTabularInline):
+    model = ContentMenu
+    fields = ('name', 'component', 'db_type', 'menu', 'attributes')
+
+
+@admin.register(ContentObjectBase)
+class ContentObjectsAdmin(admin.ModelAdmin):
+    model = ContentObjectBase
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'component', 'db_type', 'order')
+        })
+    )
+
+    inlines = [ContentImageInline, ContentTextInline, ContentPageInline, ContentMenuInline]
+
+    def get_form(self, request, obj=None, **kwargs):
+        kwargs['fields'] = flatten_fieldsets(self.fieldsets)
+        return super().get_form(request, obj, **kwargs)
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super().get_fieldsets(request, obj)
+        new_fieldsets = list(fieldsets)
+        for db_type in content_objects.CONTENT_DB_TYPES.keys():
+            if db_type == obj.db_type:
+                new_fieldsets.append([capfirst(_('content')), {'fields': (db_type,)}])
+                return new_fieldsets
+
+    def get_inline_instances(self, request, obj=None):
+        """Add inlines if object is a ContentCollection"""
+        if obj.db_type == 'dict' or 'list':
+            inline_instances = self.inlines
+        else:
+            inline_instances = None
+        return inline_instances
