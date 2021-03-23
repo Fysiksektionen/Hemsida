@@ -1,5 +1,4 @@
 from adminsortable.models import SortableMixin
-# from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from jsonfield import JSONField
@@ -27,6 +26,12 @@ class ContentObjectBase(SortableMixin, models.Model):
         verbose_name_plural = _("base content objects")
         ordering = ['order']
 
+    parent_page = models.ForeignKey(
+        'Page',
+        verbose_name=_('containing page'),
+        null=False, blank=False,
+        on_delete=models.CASCADE
+    )
     name = models.CharField(verbose_name=_('name'), max_length=255, null=False, blank=True, default="")
     component = models.CharField(verbose_name=_('component'), max_length=255, null=False, blank=True, default="")
 
