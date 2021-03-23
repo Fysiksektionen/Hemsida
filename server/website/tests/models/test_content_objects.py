@@ -1,4 +1,6 @@
 from utils.tests import ValidationTestCase
+from django.utils.translation import gettext as _
+
 from website.models.content_objects import *
 from website.models.media import Image
 from website.models.menus import Menu
@@ -29,7 +31,7 @@ class ContentObjectModelTest(ValidationTestCase):
         self.content_list.save()
 
     def test_get_value_property(self):
-        """Tests that the url property gives correct url."""
+        """Tests that the get_value() property gives correct value."""
         # Text
         self.content_text = ContentText(text="Some text", parent_page=self.parent_page)
         self.assertEqual(self.content_text.get_value(), "Some text")
@@ -66,7 +68,8 @@ class ContentObjectModelTest(ValidationTestCase):
         self.text1.save()
 
         # collection <-> name if type(collection) == ContentCollection
-        self.text2 = ContentText(name="text", collection=self.content_collection, order=self.text1.order, parent_page=self.parent_page)
+        self.text2 = ContentText(name="text", collection=self.content_collection, order=self.text1.order,
+                                 parent_page=self.parent_page)
         self.assertRaisesValidationError(
             err=self.text2.unique_error_message(ContentObjectBase, ('collection', 'name')),
             field=None,
@@ -77,10 +80,33 @@ class ContentObjectModelTest(ValidationTestCase):
         # collection <-> order if type(collection) == ContentCollectionList
         self.text1.collection = self.content_list
         self.text1.save()
-        self.text2 = ContentText(name="text", collection=self.content_list, order=self.text1.order, parent_page=self.parent_page)
+        self.text2 = ContentText(name="text", collection=self.content_list, order=self.text1.order,
+                                 parent_page=self.parent_page)
         self.assertRaisesValidationError(
             err=self.text2.unique_error_message(ContentObjectBase, ('collection', 'order')),
             field=None,
             exclusive=True,
             func=self.text2.full_clean
+        )
+
+    def test_validation(self):
+        """Asserts that adding item to collection that is not of the same page is not allowed."""
+        some_page = create_test_page()
+        text = ContentText(parent_page=some_page)
+
+        # Assert that save is OK
+        self.assertIs(text.save(), None)
+
+        text.collection = self.content_collection
+        self.assertRaisesValidationError(
+            err=ValidationError(
+                _('%(parent_page_field)s and %(parent_page_field)s of %(collection_field)s must match.'),
+                params={
+                    'parent_page_field': text._meta.get_field('parent_page').verbose_name,
+                    'collection_field': text._meta.get_field('collection').verbose_name
+                }
+            ),
+            field=None,
+            exclusive=True,
+            func=text.full_clean
         )

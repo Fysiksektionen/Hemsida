@@ -1,4 +1,5 @@
 from adminsortable.models import SortableMixin
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from jsonfield import JSONField
@@ -68,11 +69,19 @@ class ContentObjectBase(SortableMixin, models.Model):
         )
 
     def clean(self):
-        """Validation of state of values in item.
+        """Raises ValidationError if:
 
-        :raises ValidationError if
-            - uniqness of
+        - Parent page and collections parent page are not the same. (parent_page != collection.parent_page)
         """
+
+        if self.collection is not None and self.parent_page != self.collection.parent_page:
+            raise ValidationError(
+                _('%(parent_page_field)s and %(parent_page_field)s of %(collection_field)s must match.'),
+                params={
+                    'parent_page_field': self._meta.get_field('parent_page').verbose_name,
+                    'collection_field': self._meta.get_field('collection').verbose_name
+                }
+            )
 
     def _get_unique_checks(self, exclude=None):
         """Add unique-checks depending on which collection type the item belongs to."""

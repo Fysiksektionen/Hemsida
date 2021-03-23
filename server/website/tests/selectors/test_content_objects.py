@@ -10,6 +10,7 @@ class ContentObjectSelectorTest(ValidationTestCase):
 
     def setUp(self):
         """Creation of objects"""
+        self.parent_page = create_test_page()
         pass
 
     def test_get_collection_items(self):
@@ -17,14 +18,13 @@ class ContentObjectSelectorTest(ValidationTestCase):
         Checks correct classes and conservation of ordering.
         """
         # Create a collection
-        page = create_test_page()
-        self.collection = ContentCollection(parent_page=page)
+        self.collection = ContentCollection(parent_page=self.parent_page)
         self.collection.save()
 
         # Create items of all ContentObject types
         list_of_items = []
         for db_type, class_name in CONTENT_DB_TYPES.items():
-            obj = apps.get_model(class_name)(parent_page=page, collection=self.collection)
+            obj = apps.get_model(class_name)(parent_page=self.parent_page, collection=self.collection)
             obj.save()
             list_of_items.append(obj)
 
@@ -34,12 +34,8 @@ class ContentObjectSelectorTest(ValidationTestCase):
 
     def test_get_content_object_trees(self):
         """Tests the method get_content_object_trees."""
-
-
-
-
-
-
+        # Create small tree and verify correctness
+        ContentCollection(parent_page=self.)
 
 
         pass

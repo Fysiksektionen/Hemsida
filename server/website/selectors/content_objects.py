@@ -33,20 +33,19 @@ def get_collection_items(content_collection):
     return items_true_sorted
 
 
-def get_content_object_trees(page_id: int, root_content_objects: List[ContentObjectBase]) -> List[dict]:
+def get_content_object_trees(root_content_objects: List[ContentObjectBase]) -> List[dict]:
     """Queries the page content objects and builds a tree of objects and their items nested. Converts all
     ContentObjects to their true type. If item is list the 'items̈́' are ordered.
 
     This method takes at most 9 queries, independent of content-tree structure and size.
 
-    :param int page_id: The id of the page to query objects of.
     :param list root_content_objects: List of content objects that are root of trees.
     :return: List of trees originating from root_content_objects. Each item in the tree is a dictionary with
         {'object': ContentObject, 'db_type': ContentObject.db_type, 'items': [list of sub-items]}
     """
-
-    # Get all CO's of the page.
-    ids_and_db_types = ContentObjectBase.objects.filter(parent_page=page_id).values('id', 'db_type')
+    # Get all CO's of the relevant pages.
+    page_ids = [obj.parent_page.id for obj in root_content_objects]
+    ids_and_db_types = ContentObjectBase.objects.filter(parent_page_id__in=page_ids).values('id', 'db_type')
 
     # Convert all CO'to their true type.
     # Sort on db_type
