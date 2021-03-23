@@ -1,6 +1,7 @@
 """Specifications for the django admin panel"""
 
 from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInline
+from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin.utils import flatten_fieldsets
 from django.utils.text import capfirst
@@ -128,51 +129,75 @@ class SiteModelAdmin(admin.ModelAdmin):
 
 class ContentImageInline(SortableTabularInline):
     model = ContentImage
+    fk_name = 'collection'
+    extra = 0
     fields = ('name', 'component', 'db_type', 'image', 'attributes')
 
 
 class ContentTextInline(SortableTabularInline):
     model = ContentText
+    fk_name = 'collection'
+    extra = 0
     fields = ('name', 'component', 'db_type', 'text', 'attributes')
 
 
 class ContentPageInline(SortableTabularInline):
     model = ContentPage
+    fk_name = 'collection'
+    extra = 0
     fields = ('name', 'component', 'db_type', 'page', 'attributes')
 
 
 class ContentMenuInline(SortableTabularInline):
     model = ContentMenu
+    fk_name = 'collection'
+    extra = 0
     fields = ('name', 'component', 'db_type', 'menu', 'attributes')
 
 
 @admin.register(ContentObjectBase)
 class ContentObjectsAdmin(admin.ModelAdmin):
     model = ContentObjectBase
-    fieldsets = (
-        (None, {
-            'fields': ('name', 'component', 'db_type', 'order')
-        })
-    )
+    list_display = ('id',)
+    fields = ('name', 'component', 'db_type', 'order', 'attributes')
 
-    inlines = [ContentImageInline, ContentTextInline, ContentPageInline, ContentMenuInline]
+
+
+    def get_object(self, request, object_id, from_field=None):
+        obj = super(ContentObjectsAdmin, self).get_object(request, object_id, from_field)
+        model = apps.get_model(CONTENT_DB_TYPES[obj.db_type])
+        return model.objects.get(id=object_id)
 
     def get_form(self, request, obj=None, **kwargs):
-        kwargs['fields'] = flatten_fieldsets(self.fieldsets)
-        return super().get_form(request, obj, **kwargs)
+        print(kwargs['fields'])
+        if obj is not None:
+            self.model = type(obj)
+        form = super().get_form(request, obj, **kwargs)
+        if obj is not None:
+            self.model = ContentObjectBase
+        return form
+    
+    def save_form(self, request, form, change):
+        return super(ContentObjectsAdmin, self).save_form(request, form, change)
+    
+    def save_model(self, request, obj, form, change):
+        super(ContentObjectsAdmin, self).save_model(request, obj, form, change)
+        if not change:
+            model = apps.get_model(CONTENT_DB_TYPES[obj.db_type])
+            sub_obj = model(contentobjectbase_ptr=obj)
+            sub_obj.__dict__.update(obj.__dict__)
+            sub_obj.save()
 
-    def get_fieldsets(self, request, obj=None):
-        fieldsets = super().get_fieldsets(request, obj)
-        new_fieldsets = list(fieldsets)
-        for db_type in content_objects.CONTENT_DB_TYPES.keys():
-            if db_type == obj.db_type:
-                new_fieldsets.append((capfirst(_('content')), {'fields': (db_type,)}))
-        return new_fieldsets
+    def get_fields(self, request, obj=None):
+        fields = list(super().get_fields(request, obj))
+        if obj is not None and obj.db_type not in ['dict', 'list']:
+            fields.append(obj.db_type)
+        return fields
 
-    def get_inline_instances(self, request, obj=None):
+    def get_inlines(self, request, obj):
         """Add inlines if object is a ContentCollection"""
-        if obj.db_type == 'dict' or 'list':
-            inline_instances = self.inlines
+        if obj is not None and obj.db_type in ['dict', 'list']:
+            inline_instances = [ContentImageInline, ContentTextInline, ContentPageInline, ContentMenuInline]
         else:
-            inline_instances = None
+            inline_instances = []
         return inline_instances

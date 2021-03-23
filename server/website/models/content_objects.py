@@ -43,7 +43,7 @@ class ContentObjectBase(SortableMixin, models.Model):
     )
 
     collection = models.ForeignKey(
-        'website.ContentCollection',
+        'website.ContentObjectBase',
         verbose_name=_('collection'),
         related_name='items',
         on_delete=models.CASCADE,
@@ -76,10 +76,11 @@ class ContentObjectBase(SortableMixin, models.Model):
             exclude = []
 
         extra_unique_togethers = []
-        if self.collection.is_ordered:
-            extra_unique_togethers.append((ContentObjectBase, [('collection', 'order')]))
-        else:
-            extra_unique_togethers.append((ContentObjectBase, [('collection', 'name')]))
+        if self.collection is not None:
+            if self.collection.db_type == 'list':
+                extra_unique_togethers.append((ContentObjectBase, [('collection', 'order')]))
+            else:
+                extra_unique_togethers.append((ContentObjectBase, [('collection', 'name')]))
 
         for model_class, unique_together in extra_unique_togethers:
             for check in unique_together:
@@ -102,12 +103,8 @@ class ContentCollection(ContentObjectBase):
         verbose_name = _("content collection")
         verbose_name_plural = _("content collections")
 
-    # Should never be changed.
-    is_ordered = models.BooleanField(verbose_name=_('is ordered'), null=False, blank=False, default=False)
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.is_ordered = False
         if 'db_type' not in kwargs:
             self.db_type = 'dict'
 
@@ -115,7 +112,7 @@ class ContentCollection(ContentObjectBase):
         return self.items.all()
 
 
-class ContentCollectionList(ContentCollection):
+class ContentCollectionList(ContentObjectBase):
     """Model for ContentObject holding an ordered set of content objects.
     Value is an ordered QuerySet of all children.
     """
@@ -126,7 +123,6 @@ class ContentCollectionList(ContentCollection):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.is_ordered = True
         if 'db_type' not in kwargs:
             self.db_type = 'list'
 
