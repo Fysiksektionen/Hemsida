@@ -166,7 +166,7 @@ class ContentObjectsAdmin(admin.ModelAdmin):
         new_fieldsets = list(fieldsets)
         for db_type in content_objects.CONTENT_DB_TYPES.keys():
             if db_type == obj.db_type:
-                new_fieldsets.append([capfirst(_('content')), {'fields': (db_type,)}])
+                new_fieldsets.append((capfirst(_('content')), {'fields': (db_type,)}))
         return new_fieldsets
 
     def get_inline_instances(self, request, obj=None):
