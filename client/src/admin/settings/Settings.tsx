@@ -24,7 +24,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
     );
 
     async function onSiteFormSubmit() {
-        const resp = callApi({path: 'site/', getParams: {}});
+        const resp = callApi({ path: 'site/', getParams: {} });
     }
 
     return (
@@ -36,7 +36,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
                     <form onSubmit={handleSubmit}>
                         <h2 className="d-flex flex-row justify-content-between">
                             <span>Site settings</span>
-                            {state.site.hasChanged && <Button type="primary" > Spara site settings</>}
+                            {state.site.hasChanged && <Button type="primary" > Spara site settings</Button>}
                         </h2>
                         <div>
                             Field
