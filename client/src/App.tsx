@@ -62,7 +62,7 @@ function App() {
             <LocaleContext.Provider value={locale}>
                 <Switch>
                     <Route path="/admin">
-                        <Admin />
+                        <Admin adminRootPath={'/admin/'}/>
                     </Route>
                     <Route>
                         <Header

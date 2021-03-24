@@ -5,7 +5,7 @@ import React from 'react';
 
 export type AdminPageProps = {
     path: string,
-    getParams: object
+    getParams?: NodeJS.Dict<string|number|undefined>
 }
 
 export type AdminPage = React.FunctionComponent<AdminPageProps>;
