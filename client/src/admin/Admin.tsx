@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Col, Navbar, NavbarBrand, NavLink, Row } from 'react-bootstrap';
-import PagesAdminPage from './Pages';
-import { menuItems, pathToAdminComponent } from './admin_menu_maps';
+import { Col, Nav, Navbar, NavbarBrand, NavLink, Row } from 'react-bootstrap';
+import { menuItems } from './admin_menu_maps';
 import { AdminPageProps } from '../types/admin_components';
-import { useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import PageNotFound from '../pages/PageNotFound';
+import { forEach } from 'react-bootstrap/ElementChildren';
+
+const adminRootPath = '/admin/';
 
 type AdminState = {
     loadedComponentProps: AdminPageProps
@@ -53,14 +55,10 @@ export default function Admin() {
     const BANNER_HEIGHT = '56px'; // Banner height in pixels
 
     const location = useLocation();
-    const componentProps = getAdminPagePropsFromPath(location.pathname, location.search);
 
-    const [adminState, setAdminState] = useState({ loadedComponentProps: componentProps });
-
-    let adminPage = pathToAdminComponent[adminState.loadedComponentProps.path];
-    if (adminPage === undefined) {
-        adminPage = PageNotFound;
-    }
+    const [state, setState] = useState(
+        getAdminPagePropsFromPath(location.pathname, location.search)
+    );
 
     return (
         <div className={'m-0 p-0 d-flex flex-column vh-100'}>
@@ -71,40 +69,50 @@ export default function Admin() {
             </Navbar>
             <Row className="flex-grow-1 m-0" style={{ paddingTop: BANNER_HEIGHT }}>
                 <div className="d-lg-none d-flex flex-column bg-secondary py-2" style={{ width: '60px' }}>
-                    {menuItems.map((item, index) =>
-                        <Row key={index} className=" py-1 justify-content-center">
-                            <NavLink onSelect={() => {
-                                setAdminState({
-                                    loadedComponentProps: {
-                                        path: item.path, getParams: (item.getParams ? item.getParams : {})
-                                    }
-                                });
-                            }}>
-                                <h4><i className={item.icon}/></h4>
-                            </NavLink>
-                        </Row>
-                    )}
+                    {/* {menuItems.map((item, index) => */}
+                    {/*    <Nav key={index} className="row py-1 justify-content-center" */}
+                    {/*        onSelect={(key) => { */}
+                    {/*            if (key !== null) { */}
+                    {/*                setState({ path: key, getParams: {} }); */}
+                    {/*            } */}
+                    {/*        }} */}
+                    {/*    > */}
+                    {/*        <NavLink href={adminRootPath + item.path} eventKey={item.path}> */}
+                    {/*            <h4><i className={item.icon}/></h4> */}
+                    {/*        </NavLink> */}
+                    {/*    </Nav> */}
+                    {/* )} */}
                 </div>
                 <Col xl={2} lg={3} className="d-none d-lg-flex flex-column bg-secondary py-2">
-                    {menuItems.map((item, index) =>
-                        <Row key={index} className="px-3 py-1">
-                            <NavLink onSelect={() => {
-                                setAdminState({
-                                    loadedComponentProps: {
-                                        path: item.path, getParams: (item.getParams ? item.getParams : {})
-                                    }
-                                });
-                            }}>
-                                <h4><i className={item.icon + ' mr-4'}/>{item.name}</h4>
-                            </NavLink>
-                        </Row>
-                    )}
+                    {/* {menuItems.map((item, index) => */}
+                    {/*    <Nav key={index} className="row px-3 py-1" */}
+                    {/*        onSelect={(key) => { */}
+                    {/*            if (key !== null) { */}
+                    {/*                setState({ path: key, getParams: {} }); */}
+                    {/*            } */}
+                    {/*        }} */}
+                    {/*    > */}
+                    {/*        <NavLink eventKey={item.path}> */}
+                    {/*            <h4><i className={item.icon + ' mr-4'}/>{item.name}</h4> */}
+                    {/*        </NavLink> */}
+                    {/*    </Nav> */}
+                    {/* )} */}
                 </Col>
                 <Col>
-                    {adminPage({
-                        path: adminState.loadedComponentProps.path,
-                        getParams: adminState.loadedComponentProps.getParams
-                    })}
+                    <Switch>
+                        {Object.entries(menuItems).map(([path, item], index) => {
+                            if (item !== undefined) {
+                                return (
+                                    <Route path={adminRootPath + path} exact={true} key={index}>
+                                        {item.component(state)}
+                                    </Route>
+                                );
+                            } else { return <></>; }
+                        })}
+                        <Route>
+                            <PageNotFound />
+                        </Route>
+                    </Switch>
                 </Col>
             </Row>
         </div>

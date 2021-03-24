@@ -1,28 +1,24 @@
-import { AdminPage } from '../types/admin_components';
+import React from 'react';
 import PagesAdminPage from './Pages';
 import UsersAdminPage from './Users';
+import { AdminPageProps } from '../types/admin_components';
 
 type AdminMenuItem = {
     name: string,
     icon: string,
-    path: string,
-    getParams?: object
+    getParams?: object,
+    component: React.FunctionComponent<AdminPageProps>
 }
 
-export const menuItems: AdminMenuItem[] = [
-    {
+export const menuItems: NodeJS.Dict<AdminMenuItem> = {
+    'pages/': {
         name: 'Pages',
         icon: 'fas fa-user',
-        path: 'pages/'
+        component: PagesAdminPage
     },
-    {
+    'users/': {
         name: 'Users',
         icon: 'far fa-copy',
-        path: 'users/'
+        component: UsersAdminPage
     }
-];
-
-export const pathToAdminComponent: NodeJS.Dict<AdminPage> = {
-    'pages/': PagesAdminPage,
-    'users/': UsersAdminPage
 };
