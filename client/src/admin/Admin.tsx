@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { createElement, useState } from 'react';
 import { Col, Nav, Navbar, NavbarBrand, NavLink, Row } from 'react-bootstrap';
 import { AdminPageProps } from '../types/admin_components';
-import PagesAdminPage from './Pages';
-import UsersAdminPage from './Users';
+import PagesAdminPage from './pages/Pages';
+import UsersAdminPage from './users/Users';
+import NewsAdminPage from './NewsEvents/NewsEvents';
+import ImagesAdminPage from './images/Images';
+import AdsAdminPage from './ads/Ads';
+import SettingsAdminPage from './settings/Settings';
+import ToolsAdminPage from './tools/Tools';
+import GroupsAdminPage from './groups/Groups';
+import { getGETParamsStringFromObject } from './utils';
+import PageNotFound from '../pages/PageNotFound';
 
 type AdminProps = {
     adminRootPath: string
@@ -23,10 +31,40 @@ export const adminMenuItems: NodeJS.Dict<AdminMenuItem> = {
         getParams: { hej: 'val', es: 1 },
         component: PagesAdminPage
     },
+    'news/': {
+        name: 'News/Events',
+        icon: 'fas fa-newspaper',
+        component: NewsAdminPage
+    },
+    'ads/': {
+        name: 'Ads',
+        icon: 'fas fa-ad',
+        component: AdsAdminPage
+    },
+    'images/': {
+        name: 'Images',
+        icon: 'fas fa-image',
+        component: ImagesAdminPage
+    },
     'users/': {
         name: 'Users',
-        icon: 'far fa-user',
+        icon: 'fas fa-user',
         component: UsersAdminPage
+    },
+    'groups/': {
+        name: 'Groups',
+        icon: 'fas fa-users',
+        component: GroupsAdminPage
+    },
+    'tools/': {
+        name: 'Tools',
+        icon: 'fas fa-tools',
+        component: ToolsAdminPage
+    },
+    'settings/': {
+        name: 'Settings',
+        icon: 'fas fa-cog',
+        component: SettingsAdminPage
     }
 };
 
@@ -78,31 +116,6 @@ export default function Admin({ adminRootPath }: AdminProps) {
     const [state, setState] = useState(adminPageProps.path);
 
     /**
-     * Function creating search string from 1-lvl (not nested) object.
-     * @param getParamsObj: Non-nested object with GET-params.
-     * @returns: The string in the same format as in location.search.
-     */
-    function getGETParamsStringFromObject(getParamsObj?: NodeJS.Dict<string|number|undefined>): string {
-        const getParamsList = [];
-        if (getParamsObj === undefined) {
-            getParamsObj = {};
-        }
-
-        for (const [key, value] of Object.entries(getParamsObj)) {
-            if (value === undefined) {
-                getParamsList.push(key);
-            } else {
-                getParamsList.push(key + '=' + value?.toString());
-            }
-        }
-        if (getParamsList.length > 0) {
-            return '?' + getParamsList.join('&');
-        } else {
-            return '';
-        }
-    }
-
-    /**
      * Hook to set the state of the component, and also update the address field in the browser accordingly.
      * @param path: Path relative to adminRootPath to display and set.
      * @param getParams: Object to translate into GET-parameters in the URL-field.
@@ -125,6 +138,9 @@ export default function Admin({ adminRootPath }: AdminProps) {
         }
     }
 
+    const adminMenuItem = adminMenuItems[state];
+    const adminComponent = (adminMenuItem !== undefined) ? adminMenuItem.component : null;
+
     return (
         <div className={'m-0 p-0 d-flex flex-column vh-100'}>
             {/* Top bar */}
@@ -137,30 +153,31 @@ export default function Admin({ adminRootPath }: AdminProps) {
             {/* Below top bar full area */}
             <Row className="flex-grow-1 m-0" style={{ paddingTop: BANNER_HEIGHT }}>
                 {/* Menu collapsed to only icons */}
-                <div className="d-lg-none d-flex flex-column bg-secondary py-2" style={{ width: '60px' }}>
-                    <Nav className="py-1 justify-content-center" onSelect={navOnSelect}>
+                <div className="d-lg-none d-flex flex-column bg-secondary py-2 flex-shrink-1">
+                    <Nav className="d-flex flex-column py-1 align-content-center" onSelect={navOnSelect}>
                         {Object.keys(adminMenuItems).map((path, index) =>
                             <NavLink key={index} eventKey={path}>
-                                <h4><i className={adminMenuItems[path]?.icon} /></h4>
+                                <h4 className="text-center"><i className={adminMenuItems[path]?.icon + ' mx-2'} /></h4>
                             </NavLink>
                         )}
                     </Nav>
                 </div>
 
                 {/* Menu expanded */}
-                <Col xl={2} lg={3} className="d-none d-lg-flex flex-column bg-secondary py-2">
-                    <Nav className="py-1" onSelect={navOnSelect}>
+                <div className="d-none d-lg-flex flex-column bg-secondary py-2 flex-shrink-1">
+                    <Nav className="d-flex flex-column py-1 mr-4" onSelect={navOnSelect}>
                         {Object.keys(adminMenuItems).map((path, index) =>
                             <NavLink key={index} eventKey={path}>
+                                {/* TODO: Fix icon alignment */}
                                 <h4><i className={adminMenuItems[path]?.icon + ' mr-4 ml-2'}/>{adminMenuItems[path]?.name}</h4>
                             </NavLink>
                         )}
                     </Nav>
-                </Col>
+                </div>
 
                 {/* The AdminPage */}
                 <Col>
-                    {adminMenuItems[state]?.component(adminPageProps)}
+                    {adminComponent !== null ? createElement(adminComponent, adminPageProps) : <PageNotFound />}
                 </Col>
             </Row>
         </div>
