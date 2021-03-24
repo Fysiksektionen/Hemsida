@@ -35,7 +35,8 @@ def get_collection_items(content_collection):
 
 def get_content_object_trees(root_content_objects: List[ContentObjectBase]) -> List[dict]:
     """Queries the page content objects and builds a tree of objects and their items nested. Converts all
-    ContentObjects to their true type. If item is list the 'items̈́' are ordered.
+    ContentObjects to their true type. If item is list the 'items' are ordered according to obj.order, if dict they
+    are ordered according to obj.id.
 
     This method takes at most 9 queries, independent of content-tree structure and size.
 
@@ -73,17 +74,19 @@ def get_content_object_trees(root_content_objects: List[ContentObjectBase]) -> L
                 if item_id is not None:
                     all_content_objects_as_item[id]['items'].append(item_id)
 
-    # Recursive method to build tree.
+    # Recursive method to build tree. OBS: Be careful not to alter all_content_objects_as_item
     def resolve_tree_of_id(root_id):
-        tree = all_content_objects_as_item[root_id]
-        if tree['db_type'] in ['dict', 'list']:
-            tree['items'] = [resolve_tree_of_id(item_id) for item_id in tree['items']]
+        resp_tree = {}
+        resp_tree.update(all_content_objects_as_item[root_id])
+
+        if resp_tree['db_type'] in ['dict', 'list']:
+            resp_tree['items'] = [resolve_tree_of_id(item_id) for item_id in sorted(resp_tree['items'])]
 
             # Enforce order if list
-            if tree['db_type'] == 'list':
-                tree['items'].sort(key=lambda item: item['object'].order)
+            if resp_tree['db_type'] == 'list':
+                resp_tree['items'].sort(key=lambda item: item['object'].order)
 
-        return tree
+        return resp_tree
 
     # Return list with tree for each object
     return [resolve_tree_of_id(root.id) for root in root_content_objects]

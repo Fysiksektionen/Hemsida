@@ -14,13 +14,11 @@ CONTENT_DB_TYPES = {
 }
 
 
-class ContentObjectBase(SortableMixin, models.Model):
+class ContentObjectBase(models.Model):
     """
     Model for ContentObjects. Non-abstract since we want to query all objects on
     The objects can be related to each other in a tree structure.
     """
-    # TODO: Should we really use SortableMixin? Maybe implement our own mixin for this. Would be nice.
-    #       Issue is that stuff happen on save, which is generally not so nice.
 
     class Meta:
         verbose_name = _("base content object")
