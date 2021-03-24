@@ -38,7 +38,7 @@ export type Page = MinimalPage & {
 
 export type Site = {
     rootUrl: string,
-    rootPage: Page,
+    rootPage: MinimalPage,
     bannerContentSv: object,
     bannerContentEn: object,
     footerContentSv: object,

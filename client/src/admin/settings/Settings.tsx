@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { AdminPageProps } from '../../types/admin_components';
-import { Site } from '../../types/api_responses';
+import { APIResponse, Site } from '../../types/api_responses';
 import { Button } from 'react-bootstrap';
+import callApi from '../call_api_temp';
 
 type FormState<T> = {
     hasChanged: boolean,
@@ -10,16 +11,15 @@ type FormState<T> = {
 }
 
 type SettingsAdminPageState = {
-    site: FormState<any>
+    site: FormState<Site>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function SettingsAdminPage(props: AdminPageProps) {
-    const [state, setState] = useState<SettingsAdminPageState>(
-        {
-            site: { hasChanged: false, initialData: '', currentData: '' }
-        }
-    );
+    const [state, setState] = useState<SettingsAdminPageState>(() => {
+        const data = (callApi({ path: 'site/', getParams: {} }) as APIResponse<Site>).data;
+        return ({ site: { hasChanged: false, initialData: data, currentData: data } });
+    });
 
     const siteUpdated = state.site.initialData;
 
@@ -29,7 +29,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
             <hr />
             <h2 className="d-flex flex-row justify-content-between">
                 <span>Site settings</span>
-                {state.site.initialData && <Button type="primary">Spara site settings</Button>}
+                {state.site.initialData && <Button type="submit">Spara site settings</Button>}
             </h2>
 
             <hr />
