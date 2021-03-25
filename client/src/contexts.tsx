@@ -16,6 +16,10 @@ export const locales: {[key: string]: Locale} = {
     }
 };
 
-export const LocaleContext = React.createContext(
+export const LocaleContext = React.createContext<Locale>(
     locales.sv // Default
+);
+
+export const EditorialModeContext = React.createContext<boolean>(
+    false // Default
 );

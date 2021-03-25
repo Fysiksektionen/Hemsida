@@ -3,8 +3,8 @@ import { AdminPageProps } from '../../types/admin_components';
 import { APIResponse, Site, SiteContents, SiteSettings } from '../../types/api_responses';
 import { Button, Col, Form } from 'react-bootstrap';
 import callApi from '../call_api_temp';
-import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import HeaderEditor, { HeaderEditorProps } from './HeaderEditor';
 
 // TODO: Add current state updated onChange
 type FormState<T> = {
@@ -69,6 +69,20 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         event.stopPropagation();
     };
 
+    function updateHeaderContentStateHook(args: { sv: object, en: object }) {
+        setState({
+            ...state,
+            contents: {
+                ...state.contents,
+                initialData: {
+                    ...state.contents.initialData,
+                    bannerContentSv: args.sv,
+                    bannerContentEn: args.en
+                }
+            }
+        });
+    }
+
     return (
         <div className="px-4 pt-4">
             <h1>Settings</h1>
@@ -101,9 +115,13 @@ export default function SettingsAdminPage(props: AdminPageProps) {
                 </Button>
             </h2>
             <h3>Header</h3>
-            <div className="border border-dark">
-                <Header setLocale={(locale: any) => {}} contentSv={{}} contentEn={{}}/>
-            </div>
+            <HeaderEditor
+                headerContent={{
+                    sv: state.contents.initialData.bannerContentSv,
+                    en: state.contents.initialData.bannerContentEn
+                }}
+                updateHeaderContentStateHook={updateHeaderContentStateHook}
+            />
             <hr />
             <h3>Footer</h3>
             <div className="border border-dark">

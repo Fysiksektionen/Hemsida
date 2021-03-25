@@ -10,3 +10,6 @@ export type PageComponentProps = {
 }
 
 export type PageComponent = React.FunctionComponent<PageComponentProps>;
+
+// TODO: Change object to content object
+export type COStateUpdateHook = (arg: object) => void
