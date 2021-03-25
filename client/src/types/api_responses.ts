@@ -42,8 +42,8 @@ export type SiteSettings = {
 }
 
 export type SiteContents = {
-    bannerContentSv: object,
-    bannerContentEn: object,
+    headerContentSv: object,
+    headerContentEn: object,
     footerContentSv: object,
     footerContentEn: object
 }

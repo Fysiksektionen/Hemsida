@@ -76,19 +76,19 @@ export default function SettingsAdminPage(props: AdminPageProps) {
                 ...state.contents,
                 initialData: {
                     ...state.contents.initialData,
-                    bannerContentSv: args.sv,
-                    bannerContentEn: args.en
+                    headerContentSv: args.sv,
+                    headerContentEn: args.en
                 }
             }
         });
     }
 
     return (
-        <div className="px-4 pt-4">
+        <div>
             <h1>Settings</h1>
             <hr />
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <h2 className="row justify-content-between">
+                <h2 className="d-flex flex-row justify-content-between">
                     <span>Site settings</span>
                     <Button variant="primary" type="submit" disabled={!state.settings.hasChanged}>
                         <i className="fas fa-save" /> Save
@@ -108,7 +108,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
                 </Form.Group>
             </Form>
             <hr />
-            <h2 className="row justify-content-between">
+            <h2 className="d-flex flex-row justify-content-between">
                 <span>Site content</span>
                 <Button variant="primary" type="submit" disabled={!state.contents.hasChanged}>
                     <i className="fas fa-save" /> Save
@@ -117,8 +117,8 @@ export default function SettingsAdminPage(props: AdminPageProps) {
             <h3>Header</h3>
             <HeaderEditor
                 headerContent={{
-                    sv: state.contents.initialData.bannerContentSv,
-                    en: state.contents.initialData.bannerContentEn
+                    sv: state.contents.initialData.headerContentSv,
+                    en: state.contents.initialData.headerContentEn
                 }}
                 updateHeaderContentStateHook={updateHeaderContentStateHook}
             />

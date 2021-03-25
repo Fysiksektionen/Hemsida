@@ -176,7 +176,7 @@ export default function Admin({ adminRootPath }: AdminProps) {
                 </div>
 
                 {/* The AdminPage */}
-                <Col>
+                <Col className={'px-5 pt-4'}>
                     {adminComponent !== null ? createElement(adminComponent, adminPageProps) : <PageNotFound />}
                 </Col>
             </Row>

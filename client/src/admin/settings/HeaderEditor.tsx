@@ -12,8 +12,8 @@ export type HeaderEditorProps = {
 export default function HeaderEditor({ headerContent, updateHeaderContentStateHook }: HeaderEditorProps) {
     return (
         <EditorialModeContext.Provider value={true}>
-            <div className="border border-dark">
-                <Header setLocale={(locale: any) => {}} contentSv={{}} contentEn={{}}/>
+            <div className="border border-dark col">
+                <Header setLocale={(locale: any) => {}} contentSv={headerContent.sv} contentEn={headerContent.en}/>
             </div>
         </EditorialModeContext.Provider>
     );

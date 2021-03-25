@@ -18,10 +18,22 @@ const mockSiteResponse: APIResponse<Site> = {
             detailUrl: 'https://f.kth.se/api/pages/1/',
             name: 'Hem'
         },
-        bannerContentSv: {},
-        bannerContentEn: {},
-        footerContentSv: {},
-        footerContentEn: {}
+        headerContentSv: {
+            name: 'Fysiksektionen'
+        },
+        headerContentEn: {
+            name: 'The Physics Chapter'
+        },
+        footerContentSv: {
+            webmaster: 'Christoffer Ejemyr',
+            currYear: '2021',
+            address: 'Brinellvägen 89, 114 28 Stockholm'
+        },
+        footerContentEn: {
+            webmaster: 'Christoffer Ejemyr',
+            currYear: '2021',
+            address: 'Brinellvägen 89, 114 28 Stockholm'
+        }
     }
 };
 
