@@ -1,8 +1,10 @@
-import React, { ChangeEvent, ChangeEventHandler, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { AdminPageProps } from '../../types/admin_components';
-import { APIResponse, Site } from '../../types/api_responses';
+import { APIResponse, Site, SiteContents, SiteSettings } from '../../types/api_responses';
 import { Button, Col, Form } from 'react-bootstrap';
 import callApi from '../call_api_temp';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 // TODO: Add current state updated onChange
 type FormState<T> = {
@@ -11,19 +13,19 @@ type FormState<T> = {
 }
 
 type SettingsAdminPageState = {
-    site: FormState<Site>
+    settings: FormState<SiteSettings>,
+    contents: FormState<SiteContents>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function SettingsAdminPage(props: AdminPageProps) {
     const [state, setState] = useState<SettingsAdminPageState>(() => {
         const data = (callApi({ path: 'site/', getParams: {} }) as APIResponse<Site>).data;
-        return ({ site: { hasChanged: false, initialData: data } });
+        return ({
+            settings: { hasChanged: false, initialData: data as SiteSettings },
+            contents: { hasChanged: false, initialData: data as SiteContents }
+        });
     });
-
-    async function onSiteFormSubmit() {
-        const resp = callApi({ path: 'site/', getParams: {} });
-    }
 
     const [validated, setValidated] = useState(false);
 
@@ -31,11 +33,12 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         const formControl = event.target;
 
         formControl.parentNode.classList.add('was-validated');
-        if (!state.site.hasChanged) {
+        if (!state.settings.hasChanged) {
             console.log('setting new state');
             setState({
-                site: {
-                    ...state.site,
+                ...state,
+                settings: {
+                    ...state.settings,
                     hasChanged: true
                 }
             });
@@ -53,11 +56,14 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         }
         setValidated(true);
         setState({
-            site: {
-                ...state.site,
+            ...state,
+            settings: {
+                ...state.settings,
                 hasChanged: false
             }
         });
+
+        // TODO: Call API here
 
         event.preventDefault();
         event.stopPropagation();
@@ -70,25 +76,39 @@ export default function SettingsAdminPage(props: AdminPageProps) {
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <h2 className="row justify-content-between">
                     <span>Site settings</span>
-                    <Button variant="primary" type="submit" disabled={!state.site.hasChanged}>
+                    <Button variant="primary" type="submit" disabled={!state.settings.hasChanged}>
                         <i className="fas fa-save" /> Save
                     </Button>
                 </h2>
-                <Form.Row>
-                    <Form.Group as={Col} md="6" controlId="validationCustom01">
-                        <Form.Label>Root URL</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            placeholder="Root URL"
-                            defaultValue={state.site.initialData.rootUrl}
-                            onChange={onChange}
-                        />
-                        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
-                        <Form.Control.Feedback type="invalid">Looks bad!</Form.Control.Feedback>
-                    </Form.Group>
-                </Form.Row>
+                <Form.Group controlId="rootUrl" as={Col} md={4}>
+                    <Form.Label>Root URL</Form.Label>
+                    <Form.Control
+                        required
+                        type="text"
+                        placeholder="Root URL"
+                        defaultValue={state.settings.initialData.rootUrl}
+                        onChange={onChange}
+                    />
+                    <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">Looks bad!</Form.Control.Feedback>
+                </Form.Group>
             </Form>
+            <hr />
+            <h2 className="row justify-content-between">
+                <span>Site content</span>
+                <Button variant="primary" type="submit" disabled={!state.contents.hasChanged}>
+                    <i className="fas fa-save" /> Save
+                </Button>
+            </h2>
+            <h3>Header</h3>
+            <div className="border border-dark">
+                <Header setLocale={(locale: any) => {}} contentSv={{}} contentEn={{}}/>
+            </div>
+            <hr />
+            <h3>Footer</h3>
+            <div className="border border-dark">
+                <Footer contentSv={{}} contentEn={{}}/>
+            </div>
             <hr />
         </div>
     );

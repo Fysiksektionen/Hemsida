@@ -36,14 +36,19 @@ export type Page = MinimalPage & {
     contentEn: object
 }
 
-export type Site = {
+export type SiteSettings = {
     rootUrl: string,
-    rootPage: MinimalPage,
+    rootPage: MinimalPage
+}
+
+export type SiteContents = {
     bannerContentSv: object,
     bannerContentEn: object,
     footerContentSv: object,
     footerContentEn: object
 }
+
+export type Site = SiteSettings & SiteContents
 
 export type MenuItem = {
     id: string,
