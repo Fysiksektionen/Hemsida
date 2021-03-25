@@ -11,3 +11,8 @@ export type PageComponent = React.FunctionComponent<PageComponentProps>;
 
 // TODO: Change object to content object
 export type COStateUpdateHook = (arg: object) => void
+
+export type APIResponse<T> = {
+    code: number, // Status code
+    data: T // Data of the response
+}

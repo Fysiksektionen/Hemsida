@@ -8,8 +8,8 @@ import img4 from '../../placeholder_images/news_placeholder3.jpg';
 
 type ImagePickerModalProps = {
     show: boolean,
-    setShow: React.Dispatch<React.SetStateAction<boolean>>,
-    setImage: React.Dispatch<React.SetStateAction<string>>
+    setShow: (image: boolean) => void,
+    setImage: (image: string) => void
 }
 
 export default function ImagePickerModal({ show, setShow, setImage }: ImagePickerModalProps) {

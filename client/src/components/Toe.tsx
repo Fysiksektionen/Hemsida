@@ -1,8 +1,8 @@
 import React from 'react';
 
 type ToeProps = {
-    webmaster: string;
-    currYear: string;
+    webmaster: string | undefined;
+    currYear: string | undefined;
 }
 
 export default function Toe({ webmaster, currYear } : ToeProps) {

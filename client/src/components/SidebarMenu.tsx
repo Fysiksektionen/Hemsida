@@ -18,10 +18,8 @@ export function SidebarMenu({ menuItems, children } : PropsWithChildren<SidebarM
     const [active, setActive] = useState(menuItems[0].refsTo || '');
     const location = useLocation();
 
-    let currPath: string | undefined;
-
     useEffect(() => {
-        currPath = window.location.href.split('#')[1];
+        const currPath = window.location.href.split('#')[1];
         if (currPath !== undefined) setActive(window.location.href.split('#')[1]);
     }, [location]);
 

@@ -1,15 +1,29 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { AdminPageProps } from '../../types/admin_components';
-import { APIResponse, Site, SiteContents, SiteSettings } from '../../types/api_responses';
+import { APIResponse } from '../../types/general';
 import { Button, Col, Form } from 'react-bootstrap';
 import callApi from '../call_api_temp';
 import Footer from '../../components/Footer';
-import HeaderEditor, { HeaderEditorProps } from './HeaderEditor';
+import HeaderEditor from './HeaderEditor';
+import { MinimalPage, Site } from '../../types/api_object_types';
+import { SiteFooterContentTree, SiteHeaderContentTree } from '../../types/constent_object_trees';
 
 // TODO: Add current state updated onChange
 type FormState<T> = {
     hasChanged: boolean,
     initialData: T
+}
+
+type SiteSettings = {
+    rootUrl: string,
+    rootPage: MinimalPage
+}
+
+type SiteContents = {
+    headerContentSv: SiteHeaderContentTree,
+    headerContentEn: SiteHeaderContentTree,
+    footerContentSv: SiteFooterContentTree,
+    footerContentEn: SiteFooterContentTree
 }
 
 type SettingsAdminPageState = {
@@ -69,7 +83,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         event.stopPropagation();
     };
 
-    function updateHeaderContentStateHook(args: { sv: object, en: object }) {
+    function updateHeaderContentStateHook(args: { sv: SiteHeaderContentTree, en: SiteHeaderContentTree }) {
         setState({
             ...state,
             contents: {
@@ -125,7 +139,10 @@ export default function SettingsAdminPage(props: AdminPageProps) {
             <hr />
             <h3>Footer</h3>
             <div className="border border-dark">
-                <Footer contentSv={{}} contentEn={{}}/>
+                <Footer
+                    contentSv={state.contents.initialData.footerContentSv}
+                    contentEn={state.contents.initialData.footerContentEn}
+                />
             </div>
             <hr />
         </div>

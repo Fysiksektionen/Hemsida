@@ -7,16 +7,15 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import PageTypeLoader from './components/PageTypeLoader';
 import Admin from './admin/Admin';
-import defaultLogo from 'Fysiksektionen_logo.svg';
 
 // End of fake data
-import { mockSiteResp } from './mock_data/mock_App';
+import { mockSiteResp } from './mock_data/mock_site_response';
 import { emptyPage } from './mock_data/mock_PageTypeLoader';
-
+import { Site } from './types/api_object_types';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
-    const [siteData, setSiteData] = useState<SiteData>();
+    const [siteData, setSiteData] = useState<Site>();
 
     useEffect(() => {
         // Fake start (replace by server call)
@@ -24,7 +23,7 @@ function App() {
         // Fake end
 
         setSiteData(siteResp.data);
-    }, [setSiteData]);
+    }, []);
 
     return (
         <div className="App">
@@ -34,12 +33,13 @@ function App() {
                         <Admin adminRootPath={'/admin/'}/>
                     </Route>
                     <Route>
-                        <Header
-                            setLocale={setLocale}
-                            contentSv={siteData ? siteData.headerContentSv : {}}
-                            contentEn={siteData ? siteData.headerContentEn : {}}
-                        />
-
+                        {siteData
+                            ? <Header
+                                setLocale={setLocale}
+                                contentSv={siteData.headerContentSv}
+                                contentEn={siteData.headerContentEn}
+                            />
+                            : <></>}
                         <div className="content container">
                             <Switch>
                                 {/* Frontpage should maybe be included in the dynamic page loader,
@@ -52,10 +52,12 @@ function App() {
                             </Switch>
                         </div>
 
-                        <Footer
-                            contentSv={siteData ? siteData.footerContentSv : {}}
-                            contentEn={siteData ? siteData.footerContentEn : {}}
-                        />
+                        {siteData
+                            ? <Footer
+                                contentSv={siteData.footerContentSv}
+                                contentEn={siteData.footerContentEn}
+                            />
+                            : <></>}
                     </Route>
                 </Switch>
             </LocaleContext.Provider>

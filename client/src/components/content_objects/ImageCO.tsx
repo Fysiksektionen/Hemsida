@@ -3,7 +3,7 @@ import { EditorialModeContext } from '../../contexts';
 import ImagePickerModal from '../editors/ImagePickerModal';
 
 type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
-    updateHook: React.Dispatch<React.SetStateAction<string>>
+    updateHook: (image: string) => void
 }
 
 export default function ImageCO(props: ImageCOProps) {

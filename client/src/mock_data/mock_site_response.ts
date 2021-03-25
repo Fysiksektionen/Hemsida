@@ -2,11 +2,19 @@
  * Mock data for App.tsx
  */
 
-import { SiteResponse } from '../types/api_responses';
+import fysikLogo from '../Fysiksektionen_logo.svg';
+import { APIResponse } from '../types/general';
+import { Site } from '../types/api_object_types';
 
-export const mockSiteResp: SiteResponse = {
+export const mockSiteResp: APIResponse<Site> = {
     code: 200,
     data: {
+        rootUrl: 'https://f.kth.se/',
+        rootPage: {
+            id: 1,
+            detailUrl: 'https://f.kth.se/api/pages/1',
+            name: 'Hem'
+        },
         headerContentSv: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1',
@@ -21,6 +29,18 @@ export const mockSiteResp: SiteResponse = {
                     dbType: 'text',
                     attributes: {},
                     text: 'Fysiksektionen'
+                },
+                logo: {
+                    id: 1,
+                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    name: 'logo',
+                    dbType: 'image',
+                    attributes: {},
+                    image: {
+                        id: 1,
+                        detailUrl: 'https://f.kth.se/api/images/1',
+                        href: fysikLogo
+                    }
                 }
             }
         },
@@ -38,6 +58,18 @@ export const mockSiteResp: SiteResponse = {
                     dbType: 'text',
                     attributes: {},
                     text: 'The Physics Chapter'
+                },
+                logo: {
+                    id: 1,
+                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    name: 'logo',
+                    dbType: 'image',
+                    attributes: {},
+                    image: {
+                        id: 1,
+                        detailUrl: 'https://f.kth.se/api/images/1',
+                        href: fysikLogo
+                    }
                 }
             }
         },
@@ -103,7 +135,7 @@ export const mockSiteResp: SiteResponse = {
                     name: 'address',
                     dbType: 'text',
                     attributes: {},
-                    text: 'Brinellvägen 89, 114 28 Stockholm'
+                    text: 'Brinellvägen 89, 114 28 Stockholm, Sweden'
                 }
             }
         }
