@@ -3,11 +3,11 @@ import { Button, SvgIconTypeMap } from '@material-ui/core';
 import { FButtonProps } from './FButton';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 
-interface IFLargeIconButtonProps extends FButtonProps {
-  Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
+type FLargeIconButtonProps = FButtonProps & {
+    Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
 }
 
-export default function FLargeIconButton({ text, Icon, version = 'light', style, props } : IFLargeIconButtonProps) {
+export default function FLargeIconButton({ text, Icon, version = 'light', style, props } : FLargeIconButtonProps) {
     let colorString: String;
     switch (version) {
     case 'light':

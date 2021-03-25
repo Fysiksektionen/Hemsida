@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface InfoBoxProps {
+type InfoBoxProps = {
     color: string
 }
 

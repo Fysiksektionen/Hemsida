@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface IToeProps {
+type ToeProps = {
     webmaster: string;
     currYear: string;
 }
 
-export default function Toe({ webmaster, currYear } : IToeProps) {
+export default function Toe({ webmaster, currYear } : ToeProps) {
     return (
         <div className="container-fluid py-4 bg-dark text-white text-center"
             style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}

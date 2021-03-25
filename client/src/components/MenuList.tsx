@@ -1,12 +1,12 @@
 import React from 'react';
 import { List, ListItem } from '@material-ui/core';
-import { IMenuItem } from './HeaderMenu';
+import { MenuItem } from './HeaderMenu';
 
-interface IMenuListProps {
-  data: IMenuItem[];
+type MenuListProps = {
+  data: MenuItem[];
 }
 
-export default function MenuList({ data }: IMenuListProps) {
+export default function MenuList({ data }: MenuListProps) {
     return (
         <div
             className="bg-dark text-white"

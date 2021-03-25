@@ -5,48 +5,14 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 import PageTypeLoader from './components/PageTypeLoader';
 import Admin from './admin/Admin';
 import defaultLogo from 'Fysiksektionen_logo.svg';
 
-// Fake data for header and footer
-type SiteData = {
-    headerContentSv: { [key: string]: string },
-    headerContentEn: { [key: string]: string },
-    footerContentSv: { [key: string]: string },
-    footerContentEn: { [key: string]: string }
-};
-
-type SiteResp = {
-    code: number,
-    data: SiteData
-}
-
-const mockSiteResp: SiteResp = {
-    code: 200,
-    data: {
-        headerContentSv: {
-            logo: defaultLogo,
-            name: 'Fysiksektionen'
-        },
-        headerContentEn: {
-            logo: defaultLogo,
-            name: 'The Physics Chapter'
-        },
-        footerContentSv: {
-            webmaster: 'Christoffer Ejemyr',
-            currYear: '2021',
-            address: 'Brinellvägen 89, 114 28 Stockholm'
-        },
-        footerContentEn: {
-            webmaster: 'Christoffer Ejemyr',
-            currYear: '2021',
-            address: 'Brinellvägen 89, 114 28 Stockholm'
-        }
-    }
-};
 // End of fake data
+import { mockSiteResp } from './mock_data/mock_App';
+import { emptyPage } from './mock_data/mock_PageTypeLoader';
+
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
@@ -80,10 +46,7 @@ function App() {
                                     but left here for illustrative purposes of non-dynamic loading of
                                     components (i.e. login, admin, etc.). */}
                                 <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                                    <Frontpage pageType="start" />
-                                </Route>
-                                <Route path="/nyheter">
-                                    <NewsFeedPage newsArticles={dummyArticles}/>
+                                    <Frontpage {...emptyPage} />
                                 </Route>
                                 <Route component={PageTypeLoader}/>
                             </Switch>

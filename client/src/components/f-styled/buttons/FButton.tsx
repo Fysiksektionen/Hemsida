@@ -3,11 +3,11 @@ import { Button, SvgIconTypeMap } from '@material-ui/core';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 
 export type FButtonProps = {
-  text: String;
-  Icon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
-  version?: 'light' | 'dark';
-  style?: React.CSSProperties | undefined;
-  props?: any;
+    text: String;
+    Icon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
+    version?: 'light' | 'dark';
+    style?: React.CSSProperties | undefined;
+    props?: any;
 }
 
 export default function FButton({ text, Icon, version = 'light', style, ...props } : FButtonProps) {

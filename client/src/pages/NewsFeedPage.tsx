@@ -1,46 +1,9 @@
 import { List, ListItem } from '@material-ui/core';
 import React from 'react';
-import NewsArticle, { INewsItem } from '../components/news/NewsArticle';
+import NewsArticle from '../components/news/NewsArticle';
 import { MenuItem, SidebarMenu } from '../components/SidebarMenu';
-import newsPlaceholder from '../placeholder_images/news_placeholder.jpg';
-import newsPlaceholderImage1 from '../placeholder_images/news_placeholder1.jpg';
-import newsPlaceholderImage2 from '../placeholder_images/news_placeholder2.jpg';
-import newsPlaceholderImage3 from '../placeholder_images/news_placeholder3.jpg';
-
-export const dummyArticles: INewsItem[] = [
-    {
-        id: 'dummy_1',
-        image: newsPlaceholder,
-        title: 'Dummy news 1',
-        published: new Date('2021-01-21'),
-        text: 'Some news text here'
-    },
-    {
-        id: 'dummy_2',
-        image: newsPlaceholderImage1,
-        title: 'Dummy news 2',
-        published: new Date('2020-12-24'),
-        text: 'Some news text here'
-    },
-    {
-        id: 'dummy_3',
-        image: newsPlaceholderImage2,
-        title: 'Dummy news 3',
-        published: new Date('2020-12-23'),
-        text: 'Some news text here'
-    },
-    {
-        id: 'dummy_4',
-        image: newsPlaceholderImage3,
-        title: 'Dummy news 4',
-        published: new Date('2020-11-20'),
-        text: 'Some news text here'
-    }
-];
-
-interface INewsFeedProps {
-  newsArticles: INewsItem[];
-}
+import { PageComponentProps } from '../types/general';
+import { dummyArticles } from '../mock_data/mock_NewsFeedPage';
 
 const months: string[] = [
     'Januari',
@@ -82,7 +45,11 @@ const getRecentMonths = (): Date[] => {
 
 export const HEADER_HEIGHT = '150px';
 
-export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function NewsFeedPage(props: PageComponentProps) {
+    // Get news articles, mocked for now:
+    const newsArticles = dummyArticles;
+
     // assumes newsArticles is sorted by date
     const recentMonths = getRecentMonths();
     const menuItems: MenuItem[] = [];
@@ -96,11 +63,12 @@ export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
     let usedMonth = (recentMonths[0].getMonth() + 1) % 12;
 
     newsArticles.forEach(article => {
-        if (article.published.getMonth() < usedMonth || (article.published.getMonth() === 11 && usedMonth === 0)) {
-            usedMonth = article.published.getMonth();
+        const articleDate = new Date(article.publishedAt);
+        if (articleDate.getMonth() < usedMonth || (articleDate.getMonth() === 11 && usedMonth === 0)) {
+            usedMonth = articleDate.getMonth();
             menuItems.forEach(item => {
-                if (item.title === getMonthYearString(article.published)) {
-                    item.refsTo = article.id;
+                if (item.title === getMonthYearString(articleDate)) {
+                    item.refsTo = article.id.toString();
                 }
             });
         }
@@ -111,11 +79,6 @@ export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
         title: 'Senaste nytt',
         refsTo: 'news-header'
     });
-
-    // const itemRefs = feedItems.reduce((acc: { [id: string]: any }, item) => {
-    //   if (item.linkedBy) acc[item.content.id] = React.createRef();
-    //     return acc;
-    // }, {});
 
     return (
         <SidebarMenu menuItems={menuItems}>
@@ -129,7 +92,7 @@ export default function NewsFeedPage({ newsArticles }: INewsFeedProps) {
             <List>
                 {newsArticles.map(article =>
                     <ListItem
-                        id={article.id}
+                        id={article.id.toString()}
                         key={article.id}
                         className="py-2"
                         style={{ scrollMarginTop: HEADER_HEIGHT }} // 150px == height of page header
