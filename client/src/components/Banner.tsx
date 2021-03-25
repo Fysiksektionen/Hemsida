@@ -29,7 +29,7 @@ function MainText({mainText}: {mainText: string}) {
 
 function BottomText({bottomText}: {bottomText: string}) {
     return (
-        <div className="position-absolute w-100 p-0-5" style={{bottom: 0, backgroundColor: "rgba(40, 40, 40, 0.5)"}}>
+        <div className="position-absolute w-100 p-05" style={{bottom: 0, backgroundColor: "rgba(40, 40, 40, 0.5)"}}>
             {bottomText}
         </div>
     )
