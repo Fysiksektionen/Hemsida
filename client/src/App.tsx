@@ -8,6 +8,7 @@ import './App.css';
 import NewsFeedPage, { dummyArticles } from './pages/NewsFeedPage';
 import PageTypeLoader from './components/PageTypeLoader';
 import Admin from './admin/Admin';
+import defaultLogo from 'Fysiksektionen_logo.svg';
 
 // Fake data for header and footer
 type SiteData = {
@@ -26,9 +27,11 @@ const mockSiteResp: SiteResp = {
     code: 200,
     data: {
         headerContentSv: {
+            logo: defaultLogo,
             name: 'Fysiksektionen'
         },
         headerContentEn: {
+            logo: defaultLogo,
             name: 'The Physics Chapter'
         },
         footerContentSv: {

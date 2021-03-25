@@ -3,7 +3,6 @@ import { MenuItem, Select } from '@material-ui/core';
 import Navbar from 'react-bootstrap/Navbar';
 import { LocaleContext, locales } from '../contexts';
 import './Header.css';
-import defaultLogo from '../Fysiksektionen_logo.svg';
 import seFlag from '../country_flags/se.svg';
 import gbFlag from '../country_flags/gb.svg';
 import { GroupedSearch } from './SearchBox';
@@ -18,15 +17,18 @@ type Props = {
     contentEn: any
 }
 
-export default function Header(props: Props) {
-    const [logo, setLogo] = useState(defaultLogo);
+function setContentHookFactory() {
 
+}
+
+export default function Header(props: Props) {
     const flagIcons: { [key: string]: any; } = {
         sv: <img src={seFlag} alt={'Svenska flaggan'} style={{ height: '1rem', width: '1.6rem' }}/>,
         en: <img src={gbFlag} alt={'English flag'} style={{ height: '1rem', width: '2rem' }}/>
     };
     const locale = useContext(LocaleContext);
-    const content = locale === locales.sv ? props.contentSv : props.contentEn;
+
+    const [content, setContent] = useState(locale === locales.sv ? props.contentSv : props.contentEn);
 
     return (
         <LocaleContext.Consumer>
@@ -34,7 +36,7 @@ export default function Header(props: Props) {
                 <Navbar style={{ backgroundColor: 'var(--F-light-gray)', width: '100%' }} expand="lg" className="row justify-content-between">
                     <Navbar.Brand className="container ml-5 my-auto justify-content-start" href="#">
                         <Col xs={'auto'} className='justify-content-center'>
-                            <ImageCO updateHook={setLogo} src={logo} height="80" alt="" />
+                            <ImageCO updateHook={setContent} src={content.logo} height="80" alt="" />
                             <h4>{content.name}</h4>
                         </Col>
                     </Navbar.Brand>
