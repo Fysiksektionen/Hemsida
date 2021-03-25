@@ -3,25 +3,37 @@ $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues u
 
 $F-red: #DC3545;
 
+
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1500px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1400px
+);
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  45: ($spacer * 2.25),
+  5: ($spacer * 3),
+  6: ($spacer * 5)
+);
+
+
+
 @import "../node_modules/bootstrap/scss/bootstrap";
-
-.py-4-5 { /* top and bottom 4.5 (between py-4 and py-5)*/
-    padding-top: ($spacer * 2.25) !important;
-    padding-bottom: ($spacer * 2.25) !important;
-}
-.pt-4-5 { /* top 4.5 (between pt-4 and pt-5)*/
-    padding-top: ($spacer * 2.25) !important;
-}
-.pb-4-5 { /* bottom 4.5 (between pb-4 and pb-5)*/
-    padding-bottom: ($spacer * 2.25) !important;
-}
-
-.p-0-5 { /* small padding 0.5 */
-    padding: ($spacer * 0.125) !important;
-}
-
-@media (min-width: 1550px) {
-    .container {
-        max-width: 1400px;
-    }
-}

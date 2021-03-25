@@ -11,3 +11,9 @@ export function CenteredAbsolute(props: React.HTMLAttributes<HTMLDivElement>) {
     <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>{props.children}</div>
   )
 }
+
+export function CenteredMargin(props: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div className={"m-auto " + props.className}>{props.children}</div>
+  )
+}
