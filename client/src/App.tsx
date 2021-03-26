@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Locale, LocaleContext, locales } from './contexts';
+import { ContentObjectTreeProvider, Locale, LocaleContext, locales } from './contexts';
 import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -34,11 +34,14 @@ function App() {
                     </Route>
                     <Route>
                         {siteData
-                            ? <Header
-                                setLocale={setLocale}
-                                contentSv={siteData.headerContentSv}
-                                contentEn={siteData.headerContentEn}
-                            />
+                            ? <ContentObjectTreeProvider
+                                state={locale === locales.sv ? siteData.headerContentSv : siteData.headerContentEn}
+                            >
+                                <Header
+                                    content={locale === locales.sv ? siteData.headerContentSv : siteData.headerContentEn}
+                                    setLocale={setLocale}
+                                />
+                            </ContentObjectTreeProvider>
                             : <></>}
                         <div className="content container">
                             <Switch>
@@ -53,10 +56,11 @@ function App() {
                         </div>
 
                         {siteData
-                            ? <Footer
-                                contentSv={siteData.footerContentSv}
-                                contentEn={siteData.footerContentEn}
-                            />
+                            ? <ContentObjectTreeProvider
+                                state={locale === locales.sv ? siteData.footerContentSv : siteData.footerContentEn}
+                            >
+                                <Footer />
+                            </ContentObjectTreeProvider>
                             : <></>}
                     </Route>
                 </Switch>

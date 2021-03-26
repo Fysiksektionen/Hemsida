@@ -83,20 +83,6 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         event.stopPropagation();
     };
 
-    function updateHeaderContentStateHook(args: { sv: SiteHeaderContentTree, en: SiteHeaderContentTree }) {
-        setState({
-            ...state,
-            contents: {
-                ...state.contents,
-                initialData: {
-                    ...state.contents.initialData,
-                    headerContentSv: args.sv,
-                    headerContentEn: args.en
-                }
-            }
-        });
-    }
-
     return (
         <div>
             <h1>Settings</h1>
@@ -122,28 +108,19 @@ export default function SettingsAdminPage(props: AdminPageProps) {
                 </Form.Group>
             </Form>
             <hr />
-            <h2 className="d-flex flex-row justify-content-between">
-                <span>Site content</span>
-                <Button variant="primary" type="submit" disabled={!state.contents.hasChanged}>
-                    <i className="fas fa-save" /> Save
-                </Button>
-            </h2>
+            <h2>Site content</h2>
             <h3>Header</h3>
             <HeaderEditor
                 headerContent={{
                     sv: state.contents.initialData.headerContentSv,
                     en: state.contents.initialData.headerContentEn
                 }}
-                updateHeaderContentStateHook={updateHeaderContentStateHook}
             />
             <hr />
             <h3>Footer</h3>
-            <div className="border border-dark">
-                <Footer
-                    contentSv={state.contents.initialData.footerContentSv}
-                    contentEn={state.contents.initialData.footerContentEn}
-                />
-            </div>
+            {/* <div className="border border-dark"> */}
+            {/*    <Footer /> */}
+            {/* </div> */}
             <hr />
         </div>
     );

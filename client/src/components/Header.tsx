@@ -1,51 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { MenuItem, Select } from '@material-ui/core';
+import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import { Locale, LocaleContext, locales } from '../contexts';
+import { Locale, LocaleContext, useContentObjectTreeContext } from '../contexts';
 import './Header.css';
-import seFlag from '../country_flags/se.svg';
-import gbFlag from '../country_flags/gb.svg';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
-import { ArrowDropDown } from '@material-ui/icons';
 import ImageCO from './content_objects/ImageCO';
 import { Col, Container, Row } from 'react-bootstrap';
 import { SiteHeaderContentTree } from '../types/constent_object_trees';
+import LocaleSelector from './LocaleSelector';
 
 type Props = {
     setLocale?: (locale: Locale) => void,
-    contentSv: SiteHeaderContentTree,
-    contentEn: SiteHeaderContentTree
+    content: SiteHeaderContentTree
 }
 
-export default function Header(props: Props) {
-    const flagIcons: { [key: string]: any; } = {
-        sv: <img src={seFlag} alt={'Svenska flaggan'} style={{ height: '1rem', width: '1.6rem' }}/>,
-        en: <img src={gbFlag} alt={'English flag'} style={{ height: '1rem', width: '2rem' }}/>
-    };
-    const locale = useContext(LocaleContext);
-    const [content, setContent] = useState(locale === locales.sv ? props.contentSv : props.contentEn);
-
-    useEffect(() => {
-        setContent(locale === locales.sv ? props.contentSv : props.contentEn);
-    }, [locale, props.contentSv, props.contentEn]);
-
-    function setImage(img: string) {
-        setContent({
-            ...content,
-            items: {
-                ...content?.items,
-                logo: {
-                    ...content?.items.logo,
-                    image: {
-                        ...content?.items.logo.image,
-                        href: img
-                    }
-                }
-            }
-        });
-    }
-
+export default function Header({ setLocale, content }: Props) {
     return (
         <LocaleContext.Consumer>
             {locale =>
@@ -54,7 +23,7 @@ export default function Header(props: Props) {
                         <Container>
                             <Row>
                                 <Col xs={'auto'} className="my-auto">
-                                    <ImageCO updateHook={setImage} src={content.items.logo.image.href} height="80" alt="" />
+                                    <ImageCO imageCO={content.items.logo} height="80" alt="" />
                                 </Col>
                                 <Col xs={'auto'} className="my-auto d-none d-lg-flex">
                                     <h4 className="m-0">{content.items.name.text}</h4>
@@ -67,24 +36,7 @@ export default function Header(props: Props) {
                             <GroupedSearch/>
                         </Col>
                         <Col xs={'auto'}>
-                            <Select
-                                IconComponent={() => <ArrowDropDown visibility="hidden"/>}
-                                disableUnderline
-                                className="my-2"
-                                value={locale.id}
-                                onChange={event => {
-                                    if (props.setLocale !== undefined) {
-                                        props.setLocale(locales[event.target.value as string]);
-                                    }
-                                }}>
-                                {Object.keys(locales).map(key =>
-                                    <MenuItem value={key} key={key}>
-                                        <div className="d-flex justify-content-center" style={{ width: '100%' }}>
-                                            {flagIcons[key]}
-                                        </div>
-                                    </MenuItem>
-                                )}
-                            </Select>
+                            <LocaleSelector localeState={locale} setLocaleHook={setLocale}/>
                         </Col>
                         <Col xs={'auto'} className="">
                             <HeaderMenu/>
