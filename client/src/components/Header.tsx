@@ -18,10 +18,6 @@ type Props = {
     contentEn: SiteHeaderContentTree
 }
 
-function setContentHookFactory() {
-
-}
-
 export default function Header(props: Props) {
     const flagIcons: { [key: string]: any; } = {
         sv: <img src={seFlag} alt={'Svenska flaggan'} style={{ height: '1rem', width: '1.6rem' }}/>,
