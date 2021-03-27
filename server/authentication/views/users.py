@@ -1,4 +1,5 @@
 from authentication.models import Group, User
+from authentication.views.groups import GroupSerializer
 from rest_framework import viewsets, mixins, serializers
 from utils.serializers import DBObjectSerializer
 
@@ -7,23 +8,19 @@ class UserSerializer(DBObjectSerializer):
     """Serializer for rendering a User."""
 
     user_type = serializers.SerializerMethodField()
+    groups = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         exclude = ('password', 'user_permissions', 'is_superuser', 'is_staff')
-        depth = 2
+        depth = 1
 
-        # TODO: Fix serialization so that 'groups' are of type authentication.models.Group.
-        nested_serialization = {
-            'groups': {
-                'fields': ('group',),
-                'nested_serialization': {
-                    'group': {
-                        'fields': ('name', 'description', 'group_type', 'image')
-                    }
-                }
-            }
-        }
+    def get_groups(self, obj):
+        """Return human readable name instead of number for user_type"""
+        return [
+            GroupSerializer(instance=group.group, context=self.context, with_users=False).data
+            for group in obj.groups.all()
+        ]
 
     @staticmethod
     def get_user_type(obj):
