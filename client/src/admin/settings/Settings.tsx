@@ -48,7 +48,6 @@ export default function SettingsAdminPage(props: AdminPageProps) {
 
         formControl.parentNode.classList.add('was-validated');
         if (!state.settings.hasChanged) {
-            console.log('setting new state');
             setState({
                 ...state,
                 settings: {
@@ -66,7 +65,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         const form = event.currentTarget;
 
         if (form.checkValidity()) {
-            console.log('Updated!');
+            // Do something with data. (Send to server)
         }
         setValidated(true);
         setState({

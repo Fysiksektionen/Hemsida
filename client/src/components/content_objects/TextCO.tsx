@@ -1,7 +1,6 @@
 import React, { ImgHTMLAttributes, useState } from 'react';
 import { EditorialModeContext, useContentObjectTreeContext } from '../../contexts';
-import ImagePickerModal from '../editors/ImagePickerModal';
-import { ContentImage, ContentText } from '../../types/api_object_types';
+import { ContentText } from '../../types/api_object_types';
 import TextEditorModal from '../editors/TextEditorModal';
 
 type TextCOProps = ImgHTMLAttributes<HTMLImageElement> & {

@@ -50,6 +50,7 @@ type ContentObjectTreeDispatchAction = {
 
 // Context
 export const ContentObjectTreeContext = React.createContext<React.Dispatch<ContentObjectTreeDispatchAction>>(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (action: ContentObjectTreeDispatchAction) => {}
 );
 
@@ -88,8 +89,6 @@ function contentObjectTreeReducer(state: ContentObject, action: ContentObjectTre
     if (action.id === undefined) { // If no id: update entire tree.
         return action.value;
     } else { // If id: find that object and replace subtree with value.
-        console.log('action.value');
-        console.log(action.value);
         return replaceAtId(state, action.id, action.value);
     }
 }

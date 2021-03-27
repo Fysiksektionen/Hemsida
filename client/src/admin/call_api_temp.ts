@@ -19,6 +19,7 @@ const apiPathToResp: NodeJS.Dict<{contentType: any, response: APIResponse<any>}>
 
 export default function callApi({ path, getParams }: CallApiProps) {
     const getParamsString = getGETParamsStringFromObject(getParams);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fullPath = apiRootUrl + path + getParamsString;
 
     const respDef = apiPathToResp[path];
@@ -29,11 +30,7 @@ export default function callApi({ path, getParams }: CallApiProps) {
         resp = { code: 404, data: {} };
     }
 
-    console.log('Calling api: ' + fullPath);
-    setTimeout(() => {
-        console.log('Got answer: ');
-        console.log(resp);
-    }, callDelay);
+    setTimeout(() => {}, callDelay);
 
     return resp;
 };

@@ -1,7 +1,7 @@
 import React, { MouseEvent, useContext, useState } from 'react';
 import {
     ContentObjectTreeContext,
-    EditorialModeContext, Locale,
+    EditorialModeContext,
     LocaleContext,
     locales,
     useContentTreeReducer
