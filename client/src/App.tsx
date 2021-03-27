@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ContentObjectTreeProvider, Locale, LocaleContext, locales } from './contexts';
+import { Locale, LocaleContext, locales } from './contexts';
 import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -34,14 +34,10 @@ function App() {
                     </Route>
                     <Route>
                         {siteData
-                            ? <ContentObjectTreeProvider
-                                state={locale === locales.sv ? siteData.headerContentSv : siteData.headerContentEn}
-                            >
-                                <Header
-                                    content={locale === locales.sv ? siteData.headerContentSv : siteData.headerContentEn}
-                                    setLocale={setLocale}
-                                />
-                            </ContentObjectTreeProvider>
+                            ? <Header
+                                content={locale === locales.sv ? siteData.headerContentSv : siteData.headerContentEn}
+                                setLocale={setLocale}
+                            />
                             : <></>}
                         <div className="content container">
                             <Switch>
@@ -56,11 +52,7 @@ function App() {
                         </div>
 
                         {siteData
-                            ? <ContentObjectTreeProvider
-                                state={locale === locales.sv ? siteData.footerContentSv : siteData.footerContentEn}
-                            >
-                                <Footer />
-                            </ContentObjectTreeProvider>
+                            ? <Footer />
                             : <></>}
                     </Route>
                 </Switch>

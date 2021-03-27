@@ -9,11 +9,11 @@ type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
 
 export default function ImageCO(props: ImageCOProps) {
     const [showModal, setShowModal] = useState(false);
-    const contentTreeContext = useContentObjectTreeContext();
+    const contentTreeDispatcher = useContentObjectTreeContext();
 
     function updateImageHook(imgHref: string) {
         const newImage = { ...props.imageCO, image: { ...props.imageCO.image, href: imgHref } };
-        contentTreeContext.dispatch({ id: props.imageCO.id, value: newImage });
+        contentTreeDispatcher({ id: props.imageCO.id, value: newImage });
     }
 
     return (

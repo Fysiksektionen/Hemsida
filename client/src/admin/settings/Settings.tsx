@@ -111,7 +111,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
             <h2>Site content</h2>
             <h3>Header</h3>
             <HeaderEditor
-                headerContent={{
+                headerContentInitial={{
                     sv: state.contents.initialData.headerContentSv,
                     en: state.contents.initialData.headerContentEn
                 }}
