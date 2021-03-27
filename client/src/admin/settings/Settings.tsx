@@ -3,10 +3,10 @@ import { AdminPageProps } from '../../types/admin_components';
 import { APIResponse } from '../../types/general';
 import { Button, Col, Form } from 'react-bootstrap';
 import callApi from '../call_api_temp';
-import Footer from '../../components/Footer';
 import HeaderEditor from './HeaderEditor';
 import { MinimalPage, Site } from '../../types/api_object_types';
 import { SiteFooterContentTree, SiteHeaderContentTree } from '../../types/constent_object_trees';
+import FooterEditor from './FooterEditor';
 
 // TODO: Add current state updated onChange
 type FormState<T> = {
@@ -117,9 +117,12 @@ export default function SettingsAdminPage(props: AdminPageProps) {
             />
             <hr />
             <h3>Footer</h3>
-            {/* <div className="border border-dark"> */}
-            {/*    <Footer /> */}
-            {/* </div> */}
+            <FooterEditor
+                footerContentInitial={{
+                    sv: state.contents.initialData.footerContentSv,
+                    en: state.contents.initialData.footerContentEn
+                }}
+            />
             <hr />
         </div>
     );

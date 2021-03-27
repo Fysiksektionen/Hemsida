@@ -1,8 +1,10 @@
 import React from 'react';
+import { ContentText } from '../types/api_object_types';
+import TextCO from './content_objects/TextCO';
 
 type ToeProps = {
-    webmaster: string | undefined;
-    currYear: string | undefined;
+    webmaster: ContentText;
+    currYear: ContentText;
 }
 
 export default function Toe({ webmaster, currYear } : ToeProps) {
@@ -11,10 +13,10 @@ export default function Toe({ webmaster, currYear } : ToeProps) {
             style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
         >
             <div style={{ paddingRight: '2rem' }}>
-                {'© ' + currYear + ' Fysiksektionen, organisationsnummer 802411-8948'}
+                <span>{'© '}</span><TextCO textCO={currYear} /><span>{' Fysiksektionen, organisationsnummer 802411-8948'}</span>
             </div>
             <div style={{ fontWeight: 'bold', paddingLeft: '2rem' }}>
-                {'Webmaster: ' + webmaster + ' – webmaster@f.kth.se'}
+                <span>{'Webmaster: '}</span><TextCO textCO={webmaster} /><span>{' – webmaster@f.kth.se'}</span>
             </div>
         </div>
     );

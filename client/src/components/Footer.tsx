@@ -1,33 +1,36 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import GoogleMap from './GoogleMap';
 import './Footer.css';
 import Toe from './Toe';
-import { LocaleContext, locales, useContentObjectTreeContext } from '../contexts';
+import { LocaleContext, locales } from '../contexts';
 import { SiteFooterContentTree } from '../types/constent_object_trees';
+import TextCO from './content_objects/TextCO';
 
-function Footer() {
-    const locale = useContext(LocaleContext);
+type FooterProps = {
+    content: SiteFooterContentTree
+}
 
-    const contentTreeContext = useContentObjectTreeContext();
-
+function Footer({ content }: FooterProps) {
     return (
-        <div>
-            <div className="container-fluid py-4 bg-dark text-white text-center">
+        <LocaleContext.Consumer>
+            {locale =>
+                <div>
+                    <div className="container-fluid py-4 bg-dark text-white text-center">
 
-                <h3>{locale === locales.sv ? 'Hitta hit!' : 'Find us!'}</h3>
+                        <h3>{locale === locales.sv ? 'Hitta hit!' : 'Find us!'}</h3>
 
-                {/* {content.items.address.text} */}
+                        <TextCO textCO={content.items.address} />
 
-                <GoogleMap />
+                        <GoogleMap />
 
-            </div>
-            <Toe
-                // webmaster={content.items.webmaster.text}
-                // currYear={content.items.currYear.text}
-                webmaster={'content.items.webmaster.text'}
-                currYear={''}
-            />
-        </div>
+                    </div>
+                    <Toe
+                        webmaster={content.items.webmaster}
+                        currYear={content.items.currYear}
+                    />
+                </div>
+            }
+        </LocaleContext.Consumer>
     );
 }
 

@@ -1,5 +1,5 @@
-import React, { ImgHTMLAttributes, useState } from 'react';
-import { EditorialModeContext, useContentObjectTreeContext } from '../../contexts';
+import React, { ImgHTMLAttributes, useContext, useState } from 'react';
+import { ContentObjectTreeContext, EditorialModeContext } from '../../contexts';
 import { ContentText } from '../../types/api_object_types';
 import TextEditorModal from '../editors/TextEditorModal';
 
@@ -9,7 +9,7 @@ type TextCOProps = ImgHTMLAttributes<HTMLImageElement> & {
 
 export default function TextCO(props: TextCOProps) {
     const [showModal, setShowModal] = useState(false);
-    const contentTreeDispatcher = useContentObjectTreeContext();
+    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
 
     function updateTextHook(text: string) {
         const newText = { ...props.textCO, text: text };

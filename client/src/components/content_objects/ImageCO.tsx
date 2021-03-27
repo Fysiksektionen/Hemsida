@@ -1,5 +1,5 @@
-import React, { ImgHTMLAttributes, useState } from 'react';
-import { EditorialModeContext, useContentObjectTreeContext } from '../../contexts';
+import React, { ImgHTMLAttributes, useContext, useState } from 'react';
+import { ContentObjectTreeContext, EditorialModeContext } from '../../contexts';
 import ImagePickerModal from '../editors/ImagePickerModal';
 import { ContentImage } from '../../types/api_object_types';
 
@@ -9,7 +9,7 @@ type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
 
 export default function ImageCO(props: ImageCOProps) {
     const [showModal, setShowModal] = useState(false);
-    const contentTreeDispatcher = useContentObjectTreeContext();
+    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
 
     function updateImageHook(imgHref: string) {
         const newImage = { ...props.imageCO, image: { ...props.imageCO.image, href: imgHref } };

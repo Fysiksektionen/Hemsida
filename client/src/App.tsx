@@ -50,9 +50,12 @@ function App() {
                                 <Route component={PageTypeLoader}/>
                             </Switch>
                         </div>
-
                         {siteData
-                            ? <Footer />
+                            ? <Footer content={
+                                locale === locales.sv
+                                    ? siteData.footerContentSv
+                                    : siteData.footerContentEn
+                            } />
                             : <></>}
                     </Route>
                 </Switch>

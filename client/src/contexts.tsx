@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ContentList, ContentObject } from './types/api_object_types';
 
 /**
@@ -48,12 +48,21 @@ type ContentObjectTreeDispatchAction = {
     value: ContentObject
 };
 
-// Context
+/**
+ * Context delivering a dispatch method to change context object.
+ */
 export const ContentObjectTreeContext = React.createContext<React.Dispatch<ContentObjectTreeDispatchAction>>(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (action: ContentObjectTreeDispatchAction) => {}
 );
 
+/**
+ * Replace a sub-tree of a ContentObject-tree.
+ *
+ * @param tree: The entire tree.
+ * @param id: Id of the ContentObject at base of tree to be replaced.
+ * @param value: The ContentObject (tree) replacing the tree starting at CO with id.
+ */
 export function replaceAtId(tree: ContentObject, id: number, value: ContentObject) {
     if (tree.id === id) { // If at correct object
         return value;
@@ -99,10 +108,18 @@ type ContentObjectTreeProviderProps = {
     postDispatchHook?: (action: ContentObjectTreeDispatchAction, newState: ContentObject) => void
 }
 
+/**
+ * Wrapper of useReducer to allow for adding pre and post hooks to calling the dispatch. Pre and post
+ * often used for alter and save hooks.
+ *
+ * Note! When props.content.id is changed (aka) the state of the Reducer is updated and current state is lost!
+ * See to it that the state is saved in a place where you want it with help of the pre and post hooks.
+ */
 export function useContentTreeReducer(props: ContentObjectTreeProviderProps): [ContentObject, React.Dispatch<ContentObjectTreeDispatchAction>] {
     const [state, dispatch] = React.useReducer(contentObjectTreeReducer, props.content);
-
-    if (state.id !== props.content.id) {
+    const [propsContent, setPropsContent] = useState(props.content);
+    if (propsContent.id !== props.content.id) {
+        setPropsContent(props.content);
         dispatch({ value: props.content });
     }
 
@@ -117,11 +134,4 @@ export function useContentTreeReducer(props: ContentObjectTreeProviderProps): [C
     }
 
     return [state, wrappedDispatch];
-}
-
-/**
- * Use context method. Raises error if the context is not explicitly defined above using component.
- */
-export function useContentObjectTreeContext() {
-    return React.useContext(ContentObjectTreeContext);
 }
