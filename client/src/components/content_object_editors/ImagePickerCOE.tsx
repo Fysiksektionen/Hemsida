@@ -1,10 +1,10 @@
 import React from 'react';
 import { Col, Modal, Image, Row, Container } from 'react-bootstrap';
 import defaultLogo from '../../Fysiksektionen_logo.svg';
-import img1 from '../../placeholder_images/news_placeholder.jpg';
-import img2 from '../../placeholder_images/news_placeholder1.jpg';
-import img3 from '../../placeholder_images/news_placeholder2.jpg';
-import img4 from '../../placeholder_images/news_placeholder3.jpg';
+import img1 from '../../mediafiles/placeholder_images/news_placeholder.jpg';
+import img2 from '../../mediafiles/placeholder_images/news_placeholder1.jpg';
+import img3 from '../../mediafiles/placeholder_images/news_placeholder2.jpg';
+import img4 from '../../mediafiles/placeholder_images/news_placeholder3.jpg';
 
 type ImagePickerModalProps = {
     show: boolean,
@@ -12,7 +12,7 @@ type ImagePickerModalProps = {
     setImage: (image: string) => void
 }
 
-export default function ImagePickerModal({ show, setShow, setImage }: ImagePickerModalProps) {
+export default function ImagePickerCOE({ show, setShow, setImage }: ImagePickerModalProps) {
     const images = [defaultLogo, img1, img2, img3, img4];
 
     return (

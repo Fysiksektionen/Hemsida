@@ -1,5 +1,5 @@
 import React from 'react';
-import { AdminPageProps } from '../../types/admin_components';
+import { AdminPageProps } from '../../../types/admin_components';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ImagesAdminPage(props: AdminPageProps) {

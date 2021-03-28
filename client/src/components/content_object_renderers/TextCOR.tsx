@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { ContentObjectTreeContext, EditorialModeContext } from '../../contexts';
 import { ContentText } from '../../types/api_object_types';
-import TextEditorModal from '../editors/TextEditorModal';
+import TextEditorCOE from '../content_object_editors/TextEditorCOE';
 
 type TextCOProps = {
     textCO: ContentText,
@@ -9,7 +9,7 @@ type TextCOProps = {
     postText?: string
 }
 
-export default function TextCO(props: TextCOProps) {
+export default function TextCOR(props: TextCOProps) {
     const [showModal, setShowModal] = useState(false);
     const contentTreeDispatcher = useContext(ContentObjectTreeContext);
 
@@ -25,7 +25,7 @@ export default function TextCO(props: TextCOProps) {
         <EditorialModeContext.Consumer>
             {editing =>
                 <div>
-                    <TextEditorModal show={showModal} setText={updateTextHook} setShow={setShowModal} initialText={props.textCO.text} />
+                    <TextEditorCOE show={showModal} setText={updateTextHook} setShow={setShowModal} initialText={props.textCO.text} />
                     <span onClick={editing ? () => setShowModal(true) : () => {}}>{preText + props.textCO.text + postText}</span>
                 </div>
             }

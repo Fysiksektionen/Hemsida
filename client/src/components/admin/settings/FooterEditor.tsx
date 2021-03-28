@@ -5,17 +5,21 @@ import {
     LocaleContext,
     locales,
     useContentTreeReducer
-} from '../../contexts';
-import Footer from '../../components/Footer';
-import { SiteFooterContentTree } from '../../types/constent_object_trees';
+} from '../../../contexts';
+import Footer from '../../Footer';
+import { SiteFooterContentTree } from '../../../types/constent_object_trees';
 import { Button, Col, Row } from 'react-bootstrap';
-import LocaleSelector from '../../components/LocaleSelector';
+import LocaleSelector from '../../LocaleSelector';
 
-// TODO: Replace with contentObject types
 export type FooterEditorProps = {
     footerContentInitial: {sv: SiteFooterContentTree, en: SiteFooterContentTree},
 }
 
+/**
+ * Component providing editing behaviour of Footer component. Uses the ContentTreeReducer and
+ * EditorialModeContext to enable the built-it editing behaviour in the Footer component.
+ * @param footerContentInitial: Initial state of the content tree.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function FooterEditor({ footerContentInitial }: FooterEditorProps) {
     const [footerContent, setFooterContent] = useState({ content: footerContentInitial, hasChanged: false });

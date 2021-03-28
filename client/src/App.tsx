@@ -4,26 +4,21 @@ import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
-import './App.css';
+import { Site } from './types/api_object_types';
+import Admin from './components/admin/Admin';
 import PageTypeLoader from './components/PageTypeLoader';
-import Admin from './admin/Admin';
+import './App.css';
 
-// End of fake data
+// Import fake data
 import { mockSiteResp } from './mock_data/mock_site_response';
 import { emptyPage } from './mock_data/mock_PageTypeLoader';
-import { Site } from './types/api_object_types';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
-    const [siteData, setSiteData] = useState<Site>();
 
-    useEffect(() => {
-        // Fake start (replace by server call)
-        const siteResp = mockSiteResp;
-        // Fake end
-
-        setSiteData(siteResp.data);
-    }, []);
+    // TODO: Replace by server call to /api/site/
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [siteData, setSiteData] = useState<Site>(mockSiteResp.data);
 
     return (
         <div className="App">
@@ -34,10 +29,11 @@ function App() {
                     </Route>
                     <Route>
                         {siteData
-                            ? <Header
-                                content={locale === locales.sv ? siteData.headerContentSv : siteData.headerContentEn}
-                                setLocale={setLocale}
-                            />
+                            ? <Header content={
+                                locale === locales.sv
+                                    ? siteData.headerContentSv
+                                    : siteData.headerContentEn
+                            } setLocale={setLocale} />
                             : <></>}
                         <div className="content container">
                             <Switch>
