@@ -80,8 +80,8 @@ class Page(models.Model):
             raise ValidationError(
                 _("%(slug_field)s cannot be '' if %(parent_field)s is not None."),
                 params={
-                   'slug_field': self.Meta.get_field('slug').verbose_name,
-                   'parent_field': self.Meta.get_field('parent').verbose_name
+                   'slug_field': self._meta.get_field('slug').verbose_name,
+                   'parent_field': self._meta.get_field('parent').verbose_name
                 }
             )
 
