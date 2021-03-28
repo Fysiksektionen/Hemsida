@@ -63,7 +63,7 @@ export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps
                     <EditorialModeContext.Provider value={true}>
                         {/* eslint-disable @typescript-eslint/no-unused-vars */}
                         <ContentObjectTreeContext.Provider value={dispatch}>
-                            <div className="border border-dark col">
+                            <div className="border border-dark col-12 px-0">
                                 <Header content={content as SiteHeaderContentTree}/>
                             </div>
                         </ContentObjectTreeContext.Provider>

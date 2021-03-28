@@ -3,7 +3,7 @@ import { Col, Nav, Navbar, NavbarBrand, NavLink, Row } from 'react-bootstrap';
 import { AdminPageProps } from '../types/admin_components';
 import PagesAdminPage from './pages/Pages';
 import UsersAdminPage from './users/Users';
-import NewsAdminPage from './NewsEvents/NewsEvents';
+import NewsAdminPage from './news_events/NewsEvents';
 import ImagesAdminPage from './images/Images';
 import AdsAdminPage from './ads/Ads';
 import SettingsAdminPage from './settings/Settings';

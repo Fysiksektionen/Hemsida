@@ -63,7 +63,7 @@ export default function FooterEditor({ footerContentInitial }: FooterEditorProps
                     <EditorialModeContext.Provider value={true}>
                         {/* eslint-disable @typescript-eslint/no-unused-vars */}
                         <ContentObjectTreeContext.Provider value={dispatch}>
-                            <div className="border border-dark col">
+                            <div className="border border-dark col-12 px-0">
                                 <Footer content={content as SiteFooterContentTree}/>
                             </div>
                         </ContentObjectTreeContext.Provider>
