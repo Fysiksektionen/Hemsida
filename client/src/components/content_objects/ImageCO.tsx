@@ -7,6 +7,10 @@ type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
     imageCO: ContentImage,
 }
 
+/**
+ * Renders a ContentImage and allows for changing the image using a popup when in EditorialModeContext.
+ * @param props: The ContentImage object.
+ */
 export default function ImageCO(props: ImageCOProps) {
     const [showModal, setShowModal] = useState(false);
     const contentTreeDispatcher = useContext(ContentObjectTreeContext);

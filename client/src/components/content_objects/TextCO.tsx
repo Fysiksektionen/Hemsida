@@ -7,6 +7,10 @@ type TextCOProps = ImgHTMLAttributes<HTMLImageElement> & {
     textCO: ContentText,
 }
 
+/**
+ * Renders a ContentText and allows for changing the text using a popup when in EditorialModeContext.
+ * @param props: The ContentImage object.
+ */
 export default function TextCO(props: TextCOProps) {
     const [showModal, setShowModal] = useState(false);
     const contentTreeDispatcher = useContext(ContentObjectTreeContext);
