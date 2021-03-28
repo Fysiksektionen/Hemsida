@@ -5,7 +5,7 @@ import { Button, Col, Form } from 'react-bootstrap';
 import callApi from '../call_api_temp';
 import HeaderEditor from './HeaderEditor';
 import { MinimalPage, Site } from '../../../types/api_object_types';
-import { SiteFooterContentTree, SiteHeaderContentTree } from '../../../types/constent_object_trees';
+import { SiteFooterContentTree, SiteHeaderContentTree } from '../../../types/content_object_trees';
 import FooterEditor from './FooterEditor';
 
 // TODO: Add current state updated onChange

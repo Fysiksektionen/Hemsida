@@ -7,7 +7,7 @@ import {
     useContentTreeReducer
 } from '../../../contexts';
 import Footer from '../../Footer';
-import { SiteFooterContentTree } from '../../../types/constent_object_trees';
+import { SiteFooterContentTree } from '../../../types/content_object_trees';
 import { Button, Col, Row } from 'react-bootstrap';
 import LocaleSelector from '../../LocaleSelector';
 
