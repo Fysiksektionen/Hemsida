@@ -4,11 +4,11 @@ import { Locale, LocaleContext } from '../contexts';
 import './Header.css';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
-import ImageCO from './content_objects/ImageCO';
+import ImageCOR from './content_object_renderers/ImageCOR';
 import { Col, Container, Row } from 'react-bootstrap';
 import { SiteHeaderContentTree } from '../types/constent_object_trees';
 import LocaleSelector from './LocaleSelector';
-import TextCO from './content_objects/TextCO';
+import TextCOR from './content_object_renderers/TextCOR';
 
 type Props = {
     setLocale?: (locale: Locale) => void,
@@ -24,11 +24,11 @@ export default function Header({ setLocale, content }: Props) {
                         <Container>
                             <Row>
                                 <Col xs={'auto'} className="my-auto">
-                                    <ImageCO imageCO={content.items.logo} height="80" alt="" />
+                                    <ImageCOR imageCO={content.items.logo} height="80" alt="" />
                                 </Col>
                                 <Col xs={'auto'} className="my-auto d-none d-lg-flex">
                                     <h4 className="m-0">
-                                        <TextCO textCO={content.items.name} />
+                                        <TextCOR textCO={content.items.name} />
                                     </h4>
                                 </Col>
                             </Row>

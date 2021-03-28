@@ -5,17 +5,21 @@ import {
     LocaleContext,
     locales,
     useContentTreeReducer
-} from '../../contexts';
-import Header from '../../components/Header';
-import { SiteHeaderContentTree } from '../../types/constent_object_trees';
+} from '../../../contexts';
+import Header from '../../Header';
+import { SiteHeaderContentTree } from '../../../types/constent_object_trees';
 import { Button, Col, Row } from 'react-bootstrap';
-import LocaleSelector from '../../components/LocaleSelector';
+import LocaleSelector from '../../LocaleSelector';
 
-// TODO: Replace with contentObject types
 export type HeaderEditorProps = {
     headerContentInitial: {sv: SiteHeaderContentTree, en: SiteHeaderContentTree},
 }
 
+/**
+ * Component providing editing behaviour of Header component. Uses the ContentTreeReducer and
+ * EditorialModeContext to enable the built-it editing behaviour in the Header component.
+ * @param headerContentInitial: Initial state of the content tree.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps) {
     const [headerContent, setHeaderContent] = useState({ content: headerContentInitial, hasChanged: false });
@@ -63,7 +67,7 @@ export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps
                     <EditorialModeContext.Provider value={true}>
                         {/* eslint-disable @typescript-eslint/no-unused-vars */}
                         <ContentObjectTreeContext.Provider value={dispatch}>
-                            <div className="border border-dark col">
+                            <div className="border border-dark col-12 px-0">
                                 <Header content={content as SiteHeaderContentTree}/>
                             </div>
                         </ContentObjectTreeContext.Provider>

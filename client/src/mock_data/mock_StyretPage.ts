@@ -1,6 +1,6 @@
 import { ProfileCardInfo } from '../components/styret/ProfileCard';
-import profileImg1 from '../placeholder_images/gustav_profilecard.jpg';
-import profileImg2 from '../placeholder_images/morris_profilecard.jpg';
+import profileImg1 from '../mediafiles/placeholder_images/gustav_profilecard.jpg';
+import profileImg2 from '../mediafiles/placeholder_images/morris_profilecard.jpg';
 
 const gustavCard : ProfileCardInfo = {
     description: 'Har huvudansvar för sektionens ekonomi. Bokför även en hel del.',

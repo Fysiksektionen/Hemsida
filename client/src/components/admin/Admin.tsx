@@ -1,20 +1,16 @@
 import React, { createElement, useState } from 'react';
 import { Col, Nav, Navbar, NavbarBrand, NavLink, Row } from 'react-bootstrap';
-import { AdminPageProps } from '../types/admin_components';
+import { AdminPageProps } from '../../types/admin_components';
 import PagesAdminPage from './pages/Pages';
 import UsersAdminPage from './users/Users';
-import NewsAdminPage from './NewsEvents/NewsEvents';
+import NewsAdminPage from './news_events/NewsEvents';
 import ImagesAdminPage from './images/Images';
 import AdsAdminPage from './ads/Ads';
 import SettingsAdminPage from './settings/Settings';
 import ToolsAdminPage from './tools/Tools';
 import GroupsAdminPage from './groups/Groups';
 import { getGETParamsStringFromObject } from './utils';
-import PageNotFound from '../pages/PageNotFound';
-
-type AdminProps = {
-    adminRootPath: string
-}
+import PageNotFound from '../../pages/PageNotFound';
 
 type AdminMenuItem = {
     name: string,
@@ -28,7 +24,6 @@ export const adminMenuItems: NodeJS.Dict<AdminMenuItem> = {
     'pages/': {
         name: 'Pages',
         icon: 'fas fa-copy',
-        getParams: { hej: 'val', es: 1 },
         component: PagesAdminPage
     },
     'news/': {
@@ -67,6 +62,10 @@ export const adminMenuItems: NodeJS.Dict<AdminMenuItem> = {
         component: SettingsAdminPage
     }
 };
+
+type AdminProps = {
+    adminRootPath: string
+}
 
 /**
  * Basic ReactComponent of the Admin console. This component is responsible for the left hand side menu and loading
@@ -130,6 +129,10 @@ export default function Admin({ adminRootPath }: AdminProps) {
         );
     }
 
+    /**
+     * Changed the address bar and the component state on menu selection.
+     * @param key: The menu item key.
+     */
     function navOnSelect(key: (string | null)) {
         if (key !== null) {
             const params = { path: key, getParams: adminMenuItems[key]?.getParams };

@@ -2,8 +2,8 @@ import { ArrowDropDown } from '@material-ui/icons';
 import { Locale, locales } from '../contexts';
 import { MenuItem, Select } from '@material-ui/core';
 import React from 'react';
-import seFlag from '../country_flags/se.svg';
-import gbFlag from '../country_flags/gb.svg';
+import seFlag from '../mediafiles/country_flags/se.svg';
+import gbFlag from '../mediafiles/country_flags/gb.svg';
 
 type LocaleSelectorProps = {
     localeState: Locale,

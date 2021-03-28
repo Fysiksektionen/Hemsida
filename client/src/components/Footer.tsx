@@ -4,7 +4,7 @@ import './Footer.css';
 import Toe from './Toe';
 import { LocaleContext, locales } from '../contexts';
 import { SiteFooterContentTree } from '../types/constent_object_trees';
-import TextCO from './content_objects/TextCO';
+import TextCOR from './content_object_renderers/TextCOR';
 
 type FooterProps = {
     content: SiteFooterContentTree
@@ -19,7 +19,7 @@ function Footer({ content }: FooterProps) {
 
                         <h3>{locale === locales.sv ? 'Hitta hit!' : 'Find us!'}</h3>
 
-                        <TextCO textCO={content.items.address} />
+                        <TextCOR textCO={content.items.address} />
 
                         <GoogleMap />
 

@@ -1,6 +1,6 @@
 import React, { ImgHTMLAttributes, useContext, useState } from 'react';
 import { ContentObjectTreeContext, EditorialModeContext } from '../../contexts';
-import ImagePickerModal from '../editors/ImagePickerModal';
+import ImagePickerCOE from '../content_object_editors/ImagePickerCOE';
 import { ContentImage } from '../../types/api_object_types';
 
 type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
@@ -11,7 +11,7 @@ type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
  * Renders a ContentImage and allows for changing the image using a popup when in EditorialModeContext.
  * @param props: The ContentImage object.
  */
-export default function ImageCO(props: ImageCOProps) {
+export default function ImageCOR(props: ImageCOProps) {
     const [showModal, setShowModal] = useState(false);
     const contentTreeDispatcher = useContext(ContentObjectTreeContext);
 
@@ -24,7 +24,7 @@ export default function ImageCO(props: ImageCOProps) {
         <EditorialModeContext.Consumer>
             {editing =>
                 <div>
-                    <ImagePickerModal show={showModal} setImage={updateImageHook} setShow={setShowModal} />
+                    <ImagePickerCOE show={showModal} setImage={updateImageHook} setShow={setShowModal} />
                     <img
                         src={props.imageCO.image.href}
                         {...(props as ImgHTMLAttributes<HTMLImageElement>)}

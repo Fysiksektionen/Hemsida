@@ -8,7 +8,7 @@ type TextEditorModalProps = {
     initialText?: string
 }
 
-export default function TextEditorModal({ show, setShow, setText, initialText }: TextEditorModalProps) {
+export default function TextEditorCOE({ show, setShow, setText, initialText }: TextEditorModalProps) {
     const [text, setInternalText] = useState(initialText !== undefined ? initialText : '');
 
     function onSubmit(event: FormEvent) {

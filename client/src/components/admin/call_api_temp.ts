@@ -1,6 +1,10 @@
 import { getGETParamsStringFromObject } from './utils';
-import { APIResponse } from '../types/general';
-import { mockSiteResp } from '../mock_data/mock_site_response';
+import { APIResponse } from '../../types/general';
+import { mockSiteResp } from '../../mock_data/mock_site_response';
+
+/**
+ * This file is just a placeholder to a real APIMethod.
+ */
 
 type CallApiProps = {
     path: string,
@@ -17,6 +21,11 @@ const apiPathToResp: NodeJS.Dict<{contentType: any, response: APIResponse<any>}>
     }
 };
 
+/**
+ * Returns a static predefined value in apiPathToResp given a n api-path.
+ * @param path: Path relative to api-root to call
+ * @param getParams: Dict containing GET-args for the call.
+ */
 export default function callApi({ path, getParams }: CallApiProps) {
     const getParamsString = getGETParamsStringFromObject(getParams);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

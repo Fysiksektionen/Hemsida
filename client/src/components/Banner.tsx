@@ -1,4 +1,4 @@
-import placeholder from '../placeholder_images/placeholder.jpg';
+import placeholder from '../mediafiles/placeholder_images/placeholder.jpg';
 import React from 'react';
 import { Image } from 'react-bootstrap';
 
