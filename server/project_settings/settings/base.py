@@ -101,6 +101,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': PROJECT_ROOT / 'cache',
+    }
+}
 
 # Database
 DATABASES = {

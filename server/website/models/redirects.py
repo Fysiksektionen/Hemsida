@@ -86,3 +86,10 @@ class Redirect(models.Model):
 
         if errors:
             raise ValidationError(errors)
+
+    @property
+    def is_internal(self):
+        return self.page is not None
+
+    def __str__(self):
+        return "%s (%s)" % (self.from_path, "Internal" if self.is_internal else "External")
