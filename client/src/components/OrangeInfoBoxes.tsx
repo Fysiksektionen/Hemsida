@@ -100,3 +100,5 @@ function OrangeInfoBoxButton(props : InfoSingleBoxProps) {
     </div>
   )
 }
+
+export default OrangeInfoBoxes;

@@ -1,5 +1,12 @@
 $primary: #ff642b; /* Fysiksektionen orange color */
 $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
+$F-light-gray: #f8f9fa;
+
+$colors: (
+  primary:                           $primary,
+  secondary:                         $secondary,
+  F-light-gray:                      $F-light-gray
+);
 
 $F-red: #DC3545;
 
