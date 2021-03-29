@@ -1,5 +1,5 @@
 /**
- * Mock data for App.tsx
+ * Mock data for https://f.kth.se/api/site. Used in App.tsx and admin/settings/Settings.tsx.
  */
 
 import fysikLogo from '../Fysiksektionen_logo.svg';
@@ -12,19 +12,19 @@ export const mockSiteResp: APIResponse<Site> = {
         rootUrl: 'https://f.kth.se/',
         rootPage: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/pages/1',
+            detailUrl: 'https://f.kth.se/api/pages/1/',
             name: 'Hem'
         },
         headerContentSv: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 name: {
                     id: 2,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'name',
                     dbType: 'text',
                     attributes: {},
@@ -32,13 +32,13 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 logo: {
                     id: 3,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'logo',
                     dbType: 'image',
                     attributes: {},
                     image: {
                         id: 1,
-                        detailUrl: 'https://f.kth.se/api/images/1',
+                        detailUrl: 'https://f.kth.se/api/images/1/',
                         href: fysikLogo
                     }
                 }
@@ -46,14 +46,14 @@ export const mockSiteResp: APIResponse<Site> = {
         },
         headerContentEn: {
             id: 4,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 name: {
                     id: 5,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'name',
                     dbType: 'text',
                     attributes: {},
@@ -61,13 +61,13 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 logo: {
                     id: 6,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'logo',
                     dbType: 'image',
                     attributes: {},
                     image: {
                         id: 1,
-                        detailUrl: 'https://f.kth.se/api/images/1',
+                        detailUrl: 'https://f.kth.se/api/images/1/',
                         href: fysikLogo
                     }
                 }
@@ -75,14 +75,14 @@ export const mockSiteResp: APIResponse<Site> = {
         },
         footerContentSv: {
             id: 7,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 webmaster: {
                     id: 8,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'webmaster',
                     dbType: 'text',
                     attributes: {},
@@ -90,7 +90,7 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 currYear: {
                     id: 9,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'currYear',
                     dbType: 'text',
                     attributes: {},
@@ -98,7 +98,7 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 address: {
                     id: 10,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'address',
                     dbType: 'text',
                     attributes: {},
@@ -108,14 +108,14 @@ export const mockSiteResp: APIResponse<Site> = {
         },
         footerContentEn: {
             id: 11,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 webmaster: {
                     id: 12,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'webmaster',
                     dbType: 'text',
                     attributes: {},
@@ -123,7 +123,7 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 currYear: {
                     id: 13,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'currYear',
                     dbType: 'text',
                     attributes: {},
@@ -131,7 +131,7 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 address: {
                     id: 14,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1',
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     name: 'address',
                     dbType: 'text',
                     attributes: {},

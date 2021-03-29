@@ -56,7 +56,7 @@ const styretPageResp: APIResponse<Page> = {
         lastEditedAt: '',
         contentSv: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'root',
             dbType: 'dict',
             attributes: {},
@@ -64,7 +64,7 @@ const styretPageResp: APIResponse<Page> = {
         },
         contentEn: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'root',
             dbType: 'dict',
             attributes: {},
@@ -92,7 +92,7 @@ const newsarticleResp: APIResponse<Page> = {
         lastEditedAt: '',
         contentSv: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'root',
             dbType: 'dict',
             attributes: {},
@@ -100,7 +100,7 @@ const newsarticleResp: APIResponse<Page> = {
         },
         contentEn: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'root',
             dbType: 'dict',
             attributes: {},
@@ -128,7 +128,7 @@ const newsfeedResp: APIResponse<Page> = {
         lastEditedAt: '',
         contentSv: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'root',
             dbType: 'dict',
             attributes: {},
@@ -136,7 +136,7 @@ const newsfeedResp: APIResponse<Page> = {
         },
         contentEn: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
+            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             name: 'root',
             dbType: 'dict',
             attributes: {},
