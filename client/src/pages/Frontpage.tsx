@@ -7,7 +7,7 @@ import FDateButton from '../components/f-styled/buttons/FDateButton';
 import FLargeIconButton from '../components/f-styled/buttons/FLargeIconButton';
 import { PageComponentProps } from '../types/general';
 
-import placeholder from '../placeholder_images/placeholder.jpg';
+import placeholder from '../mediafiles/placeholder_images/placeholder.jpg';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Frontpage(props: PageComponentProps) {
