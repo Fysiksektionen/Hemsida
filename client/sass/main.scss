@@ -4,6 +4,37 @@
 // 2. Include any default variable overrides here
 $primary: #ff642b; /* Fysiksektionen orange color */
 $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
+$background-color: #F2F3F4;
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xxl: 1500px
+);
+
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px,
+        xxl: 1400px
+);
+
+$spacer: 1rem;
+$spacers: (
+        0: 0,
+        '05': ($spacer * 0.125),
+        1: ($spacer * .25),
+        2: ($spacer * .5),
+        3: $spacer,
+        4: ($spacer * 1.5),
+        45: ($spacer * 2.25),
+        5: ($spacer * 3),
+        6: ($spacer * 5)
+);
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../node_modules/bootstrap/scss/variables";
@@ -12,12 +43,16 @@ $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues u
 $F-light-gray: #f8f9fa;
 $F-medium-gray: #adadad;
 $F-dark-gray: #424242;
+$F-red: #DC3545;
 
 // Create your own map
 $custom-colors: (
     "F-light-gray": $F-light-gray,
     "F-medium-gray": $F-medium-gray,
-    "F-dark-gray": $F-dark-gray
+    "F-dark-gray": $F-dark-gray,
+    "F-orange": $primary,
+    "F-blue": $secondary,
+    "F-red": $F-red
 );
 
 // Merge the maps
