@@ -7,8 +7,7 @@ import FDateButton from '../components/f-styled/buttons/FDateButton';
 import FLargeIconButton from '../components/f-styled/buttons/FLargeIconButton';
 import { PageComponentProps } from '../types/general';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Frontpage(props: PageComponentProps) {
+function Frontpage(page: PageComponentProps) {
     return (
         <div>
             <Banner />

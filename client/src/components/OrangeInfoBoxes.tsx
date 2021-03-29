@@ -18,7 +18,6 @@ function OrangeInfoBox(props : InfoBoxProps) {
 }
 
 function OrangeInfoBoxes() {
-    // TODO: Temporary, should be improved in another branch
     return (
         <div>
             <table style={{ backgroundColor: 'orange', color: 'white' }}>

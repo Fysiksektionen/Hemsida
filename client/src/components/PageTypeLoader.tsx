@@ -5,35 +5,41 @@ import PageNotFound from '../pages/PageNotFound';
 import { Page } from '../types/api_object_types';
 
 // Import fake data
-import { emptyResp, pathToResp } from '../mock_data/mock_PageTypeLoader';
+import { emptyResp, pathToResp } from '../mock_data/pages/mock_PageTypeLoader';
 import { APIResponse } from '../types/general';
 
-export default function PageTypeLoader() {
-    /**
-     * Component loading correct component depending on current URL.
-     *
-     * @returns {JSX} Div containing correct component for URL or PageNotFound
-     *  component if no matching component was found.
-     */
+type PageTypeLoaderProps = {
+    page?: Page
+}
 
+/**
+ * Component loading correct component depending on current URL.
+ *
+ * @returns {JSX} Div containing correct component for URL or PageNotFound
+ *  component if no matching component was found.
+ */
+export default function PageTypeLoader({ page } : PageTypeLoaderProps) {
     const location = useLocation();
 
-    // Call /api/resolve-url?path=<path>
-    // const res = callAPI("/resolve-url", GET={path: params.path})
-    // Fake for now...
-    let res: APIResponse<Page>;
-    if (location.pathname in pathToResp) {
-        res = pathToResp[location.pathname];
-    } else {
-        res = emptyResp;
+    if (page === undefined) {
+        // Call /api/resolve-url?path=<path>
+        // const res = callAPI("/resolve-url", GET={path: params.path})
+        // Fake for now...
+        let res: APIResponse<Page>;
+        if (location.pathname in pathToResp) {
+            res = pathToResp[location.pathname];
+        } else {
+            res = emptyResp;
+        }
+        page = res.data;
+        // End of fake
     }
-    // End of fake
 
     // If defined in pageTypeMap, render page. Else give PageNotFound.
-    if (res.data.pageType in pageTypeMap) {
+    if (page.pageType in pageTypeMap) {
         return (
             <div id="dynamic_page_content">
-                {pageTypeMap[res.data.pageType](res.data)}
+                {pageTypeMap[page.pageType](page)}
             </div>
         );
     } else {

@@ -33,7 +33,7 @@ function StyretPage(props: PageComponentProps) {
                     Styret
                 </h1>
                 <Row className={'pb-4'}>
-                    <ProfileCards {...dummyCards}/>
+                    <ProfileCards cards={dummyCards}/>
                 </Row>
                 <Row
                     id="styret-veckobrev"

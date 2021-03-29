@@ -11,7 +11,8 @@ import './App.css';
 
 // Import fake data
 import { mockSiteResp } from './mock_data/mock_site_response';
-import { emptyPage } from './mock_data/mock_PageTypeLoader';
+import { emptyPage } from './mock_data/pages/mock_PageTypeLoader';
+import { frontpage } from './mock_data/pages/1_frontpage';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
@@ -41,7 +42,7 @@ function App() {
                                     but left here for illustrative purposes of non-dynamic loading of
                                     components (i.e. login, admin, etc.). */}
                                 <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                                    <Frontpage {...emptyPage} />
+                                    <Frontpage {...frontpage} />
                                 </Route>
                                 <Route component={PageTypeLoader}/>
                             </Switch>

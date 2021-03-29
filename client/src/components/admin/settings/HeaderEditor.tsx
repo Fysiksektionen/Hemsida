@@ -20,7 +20,6 @@ export type HeaderEditorProps = {
  * EditorialModeContext to enable the built-it editing behaviour in the Header component.
  * @param headerContentInitial: Initial state of the content tree.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps) {
     const [headerContent, setHeaderContent] = useState({ content: headerContentInitial, hasChanged: false });
     const globalLocale = useContext(LocaleContext);
@@ -30,10 +29,7 @@ export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps
         content: headerLocale === locales.sv ? headerContent.content.sv : headerContent.content.en,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         postDispatchHook: (action, newState) => {
-            setHeaderContent({
-                content: headerContent.content,
-                hasChanged: true
-            });
+            setHeaderContent({ ...headerContent, hasChanged: true });
         }
     });
 

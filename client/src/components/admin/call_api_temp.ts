@@ -1,7 +1,7 @@
 import { getGETParamsStringFromObject } from './utils';
 import { APIResponse } from '../../types/general';
 import { mockSiteResp } from '../../mock_data/mock_site_response';
-import { mockPageResp } from '../../mock_data/mock_pages_response';
+import { mockPageResp } from '../../mock_data/pages/mock_pages_response';
 
 /**
  * This file is just a placeholder to a real APIMethod.

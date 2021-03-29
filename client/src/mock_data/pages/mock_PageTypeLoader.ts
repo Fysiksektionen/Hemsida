@@ -1,8 +1,8 @@
 /**
  * Mock data for pages/PageTypeLoader.tsx
  */
-import { Page } from '../types/api_object_types';
-import { APIResponse } from '../types/general';
+import { Page } from '../../types/api_object_types';
+import { APIResponse } from '../../types/general';
 
 export const emptyPage: Page = {
     id: 1,

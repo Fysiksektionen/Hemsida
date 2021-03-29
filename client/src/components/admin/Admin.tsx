@@ -1,4 +1,5 @@
 import React, { createElement, useState } from 'react';
+import '../../index.css';
 import { Col, Nav, Navbar, NavbarBrand, NavLink, Row } from 'react-bootstrap';
 import { AdminPageProps } from '../../types/admin_components';
 import PagesAdminPage from './pages/Pages';
@@ -159,7 +160,7 @@ export default function Admin() {
                 </div>
 
                 {/* The AdminPage */}
-                <Col className={'px-5 pt-4'}>
+                <Col className='mx-0 px-0'>
                     {adminComponent !== null ? createElement(adminComponent, adminPageProps) : <PageNotFound />}
                 </Col>
             </Row>
