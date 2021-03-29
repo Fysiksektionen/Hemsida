@@ -32,6 +32,14 @@ type APIDocsState = {
     autoUpdateEnabled: boolean
 }
 
+/**
+ * Component for rendering our API-documentation.
+ * @param serverUrl: URL to the file server serving the API files.
+ * @param docs: List of documents that should be included in documentation.
+ * @param timeOut: Timeout for listening to server.
+ * @param updateInterval: How often the automatic update setting should update.
+ * @param autoUpdateEnabled: Weather to enable auto update at first render.
+ */
 function APIDocs({
     serverUrl = 'http://localhost:3001/',
     docs = [
