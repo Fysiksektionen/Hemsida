@@ -9,7 +9,7 @@ import { mockPageResp } from '../../mock_data/mock_pages_response';
 
 type CallApiProps = {
     path: string,
-    getParams: NodeJS.Dict<string|number|undefined>
+    getParams: NodeJS.Dict<string|undefined>
 }
 
 const apiRootUrl = 'http://f.kth.se/api/';

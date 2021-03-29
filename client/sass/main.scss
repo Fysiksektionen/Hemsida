@@ -1,11 +1,51 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../node_modules/bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
 $primary: #ff642b; /* Fysiksektionen orange color */
 $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
-$F-light-gray: #f8f9fa;
 
-$colors: (
-  primary:                           $primary,
-  secondary:                         $secondary,
-  F-light-gray:                      $F-light-gray
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+$F-light-gray: #f8f9fa;
+$F-medium-gray: #adadad;
+$F-dark-gray: #424242;
+
+// Create your own map
+$custom-colors: (
+    "F-light-gray": $F-light-gray,
+    "F-medium-gray": $F-medium-gray,
+    "F-dark-gray": $F-dark-gray
 );
 
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+// 4. Include any optional Bootstrap components as you like
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+
+// 5. Add additional custom scss
+
+.flex-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        .hidden#{$infix}   {
+            visibility: hidden !important;
+        }
+        .visible#{$infix}   {
+           visibility: visible !important;
+        }
+    }
+}
+

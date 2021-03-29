@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Locale, LocaleContext, locales } from './contexts';
 import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
@@ -25,7 +25,7 @@ function App() {
             <LocaleContext.Provider value={locale}>
                 <Switch>
                     <Route path="/admin">
-                        <Admin adminRootPath={'/admin/'}/>
+                        <Admin />
                     </Route>
                     <Route>
                         {siteData

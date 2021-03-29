@@ -1,30 +1,22 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
-import { TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import React, { useState } from 'react';
 import { AdminPageProps } from '../../../types/admin_components';
+import PageLister from './PageLister';
+import PageEditor from './PageEditor';
+import { setAddressField } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PagesAdminPage(props: AdminPageProps) {
-    return (
-        <div className="px-4 pt-4">
-            <h2>List all pages</h2>
+export default function PagesAdminPage({ path, getParams }: AdminPageProps) {
+    const [locationState, setLocationState] = useState(getParams);
 
-            <Table>
-                <TableHead>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Something else</TableCell>
-                </TableHead>
-                <TableBody>
-                    <TableRow>
-                        <TableCell>Page 1</TableCell>
-                        <TableCell>123</TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>Page 2</TableCell>
-                        <TableCell>534</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </div>
-    );
+    function setLocationHook(getParams: NodeJS.Dict<string>) {
+        setLocationState(getParams);
+        setAddressField({ path: 'pages/', getParams: getParams });
+    }
+
+    // Logic of loading a list or loading edit mode of a single page.
+    const pageId = locationState !== undefined ? locationState.id : undefined;
+
+    return pageId === undefined
+        ? <PageLister setPagesLocation={setLocationHook}/>
+        : <PageEditor setPagesLocation={setLocationHook} id={pageId} />;
 };

@@ -1,3 +1,7 @@
+import { AdminPageProps } from '../../types/admin_components';
+
+export const adminRootPath = '/admin/';
+
 /**
  * Function creating search string from 1-lvl (not nested) object.
  * @param getParamsObj: Non-nested object with GET-params.
@@ -21,4 +25,19 @@ export function getGETParamsStringFromObject(getParamsObj?: NodeJS.Dict<string|n
     } else {
         return '';
     }
+}
+
+/**
+ * Hook to set the state of the component, and also update the address field in the browser accordingly.
+ * @param path: Path relative to adminRootPath to display and set.
+ * @param getParams: Object to translate into GET-parameters in the URL-field.
+ */
+export function setAddressField({ path, getParams }: AdminPageProps) {
+    const getParamsString = getGETParamsStringFromObject(getParams);
+    const fullUrl = window.location.origin + adminRootPath + path;
+    window.history.replaceState(
+        window.history.state?.data,
+        window.history.state?.title,
+        fullUrl + getParamsString
+    );
 }
