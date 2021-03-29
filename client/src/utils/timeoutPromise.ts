@@ -8,7 +8,7 @@ export function timeoutPromise<T>(promise: Promise<T>, ms: number): Promise<T> {
      */
     return new Promise((resolve, reject) => {
         const timeoutId = setTimeout(() => {
-            reject(new Error("timeout"))
+            reject(new Error('timeout'));
         }, ms);
         promise.then(
             (res) => {
@@ -20,5 +20,5 @@ export function timeoutPromise<T>(promise: Promise<T>, ms: number): Promise<T> {
                 reject(err);
             }
         );
-    })
+    });
 }

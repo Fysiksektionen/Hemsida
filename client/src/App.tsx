@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
-import { Locale, LocaleContext, locales } from './contexts'
-import Frontpage from './pages/Frontpage'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import { Switch, Route } from "react-router-dom"
-import './App.css'
-import StyretPage from './pages/StyretPage'
-import APIDocs from "./pages/APIDocs/APIDocs";
+import React, { useState } from 'react';
+import { Locale, LocaleContext, locales } from './contexts';
+import Frontpage from './pages/Frontpage';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import { Switch, Route } from 'react-router-dom';
+import './App.css';
+import PageTypeLoader from './components/PageTypeLoader';
+import APIDocs from './pages/APIDocs/APIDocs';
 
 // Fake data for header and footer
 import { mockSiteResp } from './mock_data/mock_App';
