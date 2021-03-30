@@ -7,6 +7,8 @@ import { Page } from '../types/api_object_types';
 // Import fake data
 import { emptyResp, pathToResp } from '../mock_data/pages/mock_PageTypeLoader';
 import { APIResponse } from '../types/general';
+import { LocaleContext, locales } from '../contexts';
+import { frontpage } from '../mock_data/pages/1_frontpage';
 
 type PageTypeLoaderProps = {
     page?: Page
@@ -38,9 +40,17 @@ export default function PageTypeLoader({ page } : PageTypeLoaderProps) {
     // If defined in pageTypeMap, render page. Else give PageNotFound.
     if (page.pageType in pageTypeMap) {
         return (
-            <div id="dynamic_page_content">
-                {pageTypeMap[page.pageType](page)}
-            </div>
+            <LocaleContext.Consumer>
+                {locale =>
+                    <div id="dynamic_page_content">
+                        {
+                            page !== undefined
+                                ? pageTypeMap[page.pageType]((locale === locales.sv ? page.contentSv : page.contentEn))
+                                : <></>
+                        }
+                    </div>
+                }
+            </LocaleContext.Consumer>
         );
     } else {
         return <PageNotFound />;

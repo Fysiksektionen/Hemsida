@@ -1,42 +1,43 @@
 import React from 'react';
 import Banner from '../components/Banner';
-import OrangeInfoBoxes, { DummyData } from '../components/OrangeInfoBoxes';
+import OrangeInfoBoxes from '../components/OrangeInfoBoxes';
 import NewsWidget from '../components/news/FrontpageNewsWidget';
-import { AccountBalance } from '@material-ui/icons';
-import FDateButton from '../components/f-styled/buttons/FDateButton';
-import FLargeIconButton from '../components/f-styled/buttons/FLargeIconButton';
-import { PageComponentProps } from '../types/general';
-
 import placeholder from '../mediafiles/placeholder_images/placeholder.jpg';
+import { ContentObject } from '../types/api_object_types';
+import { FrontPageContentTree } from '../types/content_object_trees';
+import { Col, Row } from 'react-bootstrap';
+import ImageCOR from '../components/content_object_renderers/ImageCOR';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Frontpage(props: PageComponentProps) {
+function Frontpage(props: ContentObject) {
+    const content = props as FrontPageContentTree;
+
     return (
         <div>
-            <Banner image={placeholder} mainText="Fysiksektionen" bottomText="Aaaaaaaa"/>
-            <OrangeInfoBoxes {...DummyData}/>
-            <div style={{ height: '50px' }}/>
-            <div className="p-5"><NewsWidget /></div>
-            <div style={{ height: '100px' }}/>
-            <div
-                className="px-4 my-4"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                <FDateButton text="Namn på möte" date={new Date('1997-10-10')}/>
-                <FDateButton text="Namn på möte" date={new Date('1997-10-10')} version="dark"/>
-            </div>
-            <div
-                className="px-4 my-4"
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center'
-                }}
-            >
-                <FLargeIconButton text="Budget" Icon={AccountBalance}/>
-            </div>
+            <Banner image={placeholder} />
+            <Col>
+                <Row>
+                    <OrangeInfoBoxes {...content.items.orangeBoxes.items}/>
+                </Row>
+                <Row className="py-6 p-5 justify-content-center bg-F-light-gray">
+                    <NewsWidget />
+                </Row>
+                <Row className='py-6 p-5 justify-content-center'>
+                    <Col xs={12} xl={10}>
+                        <Row>
+                            <h1 className="mb-5 mb-xl-6 font-weight-bolder" style={{ fontSize: '3em' }}>Kommande event</h1>
+                        </Row>
+                        <Row>
+                            {/* Insert events */}
+                        </Row>
+                    </Col>
+                </Row>
+                <Row className='justify-content-center bg-F-light-gray'>
+                    <Col xs={6} sm={5} md={4} lg={3} xl={2} className='text-center'>
+                        <div className='font-weight-bold pt-5'>Huvudsponsor</div>
+                        <ImageCOR imageCO={content.items.sponsorLogo} fluid className='pb-5 pt-4 pt-md-5' />
+                    </Col>
+                </Row>
+            </Col>
         </div>
     );
 }

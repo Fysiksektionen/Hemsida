@@ -18,16 +18,16 @@ function BottomText({ bottomText }: {bottomText: string}) {
 
 type BannerProps = {
     image: string,
-    mainText: string,
-    bottomText: string
+    mainText?: string,
+    bottomText?: string
 }
 
 export default function Banner(props: BannerProps) {
     return (
         <BackgroundImage image={props.image} mode="sizeToFit" containerAspectRatio={7.5 / 16} className="text-white">
             <CenteredText>
-                <MainText mainText={props.mainText}/>
-                <BottomText bottomText={props.bottomText}/>
+                {props.mainText ? <MainText mainText={props.mainText}/> : <></>}
+                {props.bottomText ? <BottomText bottomText={props.bottomText}/> : <></>}
             </CenteredText>
         </BackgroundImage>
     );

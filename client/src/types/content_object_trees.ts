@@ -20,10 +20,17 @@ export type SiteFooterContentTree = ContentDict & {
 }
 
 export type OrangeInfoBoxContentTree = ContentDict & {
+    attributes: {
+        color: string
+    },
     items: {
         title: ContentText,
         text: ContentText,
-        button: ContentText
+        button: ContentText & {
+            attributes: {
+                link: string
+            }
+        }
     }
 }
 

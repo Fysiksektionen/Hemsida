@@ -11,7 +11,6 @@ import './App.css';
 
 // Import fake data
 import { mockSiteResp } from './mock_data/mock_site_response';
-import { emptyPage } from './mock_data/pages/mock_PageTypeLoader';
 import { frontpage } from './mock_data/pages/1_frontpage';
 
 function App() {
@@ -36,13 +35,13 @@ function App() {
                                     : siteData.headerContentEn
                             } setLocale={setLocale} />
                             : <></>}
-                        <div className="content container">
+                        <div className="content">
                             <Switch>
                                 {/* Frontpage should maybe be included in the dynamic page loader,
                                     but left here for illustrative purposes of non-dynamic loading of
                                     components (i.e. login, admin, etc.). */}
                                 <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                                    <Frontpage {...frontpage} />
+                                    <Frontpage {...(locale === locales.sv ? frontpage.contentSv : frontpage.contentEn)} />
                                 </Route>
                                 <Route component={PageTypeLoader}/>
                             </Switch>

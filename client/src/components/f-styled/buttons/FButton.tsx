@@ -7,10 +7,11 @@ export type FButtonProps = {
     Icon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
     version?: 'light' | 'dark';
     style?: React.CSSProperties | undefined;
+    href?: string,
     props?: any;
 }
 
-export default function FButton({ text, Icon, version = 'light', style, ...props } : FButtonProps) {
+export default function FButton({ text, Icon, version = 'light', style, href, ...props } : FButtonProps) {
     let bgColor: string = 'white';
     let textColor: string = 'black';
     switch (version) {
@@ -25,7 +26,7 @@ export default function FButton({ text, Icon, version = 'light', style, ...props
     }
     return (
         <Button
-            className={'text-center px-3 py-2 m-1'}
+            className={'text-center px-4 py-2 m-1'}
             endIcon={Icon ? <Icon/> : undefined}
             style={{
                 backgroundColor: bgColor,
@@ -35,9 +36,10 @@ export default function FButton({ text, Icon, version = 'light', style, ...props
                 fontWeight: 'bold',
                 ...style
             }}
+            href={href}
             {...props}
         >
-            <div>{text}</div>
+            {text}
         </Button>
     );
 }

@@ -1,5 +1,5 @@
-import React, { MouseEvent, useState } from 'react';
-import { ContentObject, Page } from '../../../types/api_object_types';
+import React, { useState } from 'react';
+import { ContentDict, ContentImage, ContentObject, Page } from '../../../types/api_object_types';
 import callApi from '../call_api_temp';
 import { Button, Row, Col } from 'react-bootstrap';
 import PageNotFound from '../../../pages/PageNotFound';
@@ -56,10 +56,21 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
             });
     }
 
+    // Send page with updated content down for rendering.
+    const pageWithNewContent = page !== undefined ? { ...pageData.page } : { ...emptyPage };
+    if (pageLocale === locales.sv) {
+        pageWithNewContent.contentSv = content;
+    } else {
+        pageWithNewContent.contentEn = content;
+    }
+
     return page !== undefined
         ? (
             <Col>
-                <Row className='d-flex justify-content-between border-bottom border-dark px-5 pb-3 pt-5'>
+                <Row className='px-4 pt-4 mb-3'>
+                    <a href='#' onClick={() => setPagesLocation({})}><i className='fa fa-angle-left'/> Tillbaka</a>
+                </Row>
+                <Row className='d-flex justify-content-between border-bottom border-dark px-5 pb-3'>
                     <h2 className='m-0 col'>Redigera sida: {page.name}</h2>
                     <Col xs={3}>
                         <Row className='justify-content-end'>
@@ -80,7 +91,7 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
                             } setLocale={() => {}} />
                             <EditorialModeContext.Provider value={true}>
                                 <ContentObjectTreeContext.Provider value={dispatch}>
-                                    <PageTypeLoader page={page} />
+                                    <PageTypeLoader page={pageWithNewContent} />
                                 </ContentObjectTreeContext.Provider>
                             </EditorialModeContext.Provider>
                             <Footer content={
