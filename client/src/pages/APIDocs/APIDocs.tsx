@@ -19,11 +19,11 @@ type DocsInfo = {
 }
 
 type APIDocsProps = {
-    serverUrl?: string // full URL with appended slash
-    docs?: DocsInfo[]
-    timeOut?: number // ms
-    updateInterval?: number
-    autoUpdateEnabled?: boolean
+    serverUrl: string // full URL with appended slash
+    docs: DocsInfo[]
+    timeOut: number // ms
+    updateInterval: number
+    autoUpdateEnabled: boolean
 }
 
 type APIDocsState = {
@@ -40,28 +40,19 @@ type APIDocsState = {
  * @param updateInterval: How often the automatic update setting should update.
  * @param autoUpdateEnabled: Weather to enable auto update at first render.
  */
-function APIDocs({
-    serverUrl = 'http://localhost:3001/',
-    docs = [
-        { fileName: 'general.json', displayName: 'General' },
-        { fileName: 'website.json', displayName: 'Website' },
-        { fileName: 'authentication.json', displayName: 'Authentication' }
-    ],
-    timeOut = 1000,
-    updateInterval = 2500,
-    autoUpdateEnabled = false
-}: APIDocsProps) {
-    const [state, setState] = useState({
-        jsonUrl: serverUrl,
+function APIDocs(props: APIDocsProps) {
+    // Set component state
+    const [state, setState] = useState<APIDocsState>({
+        jsonUrl: props.serverUrl,
         jsonData: {},
-        autoUpdateEnabled: autoUpdateEnabled
-    } as APIDocsState);
+        autoUpdateEnabled: props.autoUpdateEnabled
+    });
 
     const updateAPIData = async function(jsonUrl: string) {
         if (jsonUrl !== '') {
             const res = await timeoutPromise(
                 fetch(jsonUrl).then(response => response.json()),
-                timeOut
+                props.timeOut
             ).catch(reason => {
                 console.log(`Request on ${jsonUrl}: ${reason.message}`);
             });
@@ -82,7 +73,7 @@ function APIDocs({
             if (state.autoUpdateEnabled) {
                 updateAPIData(state.jsonUrl).then();
             }
-        }, updateInterval);
+        }, props.updateInterval);
 
         return () => { clearInterval(intervalId); };
     });
@@ -101,10 +92,10 @@ function APIDocs({
                 <Navbar.Collapse id="navbar-nav">
                     <Nav justify onSelect={(eventKey) => {
                         if (eventKey != null) {
-                            updateAPIData(serverUrl + eventKey).then();
+                            updateAPIData(props.serverUrl + eventKey).then();
                         }
                     }}>
-                        {docs.map((docsInfo, index) => {
+                        {props.docs.map((docsInfo, index) => {
                             return (
                                 <Nav.Link key={index} eventKey={docsInfo.fileName}>
                                     {docsInfo.displayName}
@@ -148,5 +139,17 @@ function APIDocs({
         </div>
     );
 }
+
+APIDocs.defaultProps = {
+    serverUrl: 'http://localhost:3001/',
+    docs: [
+        { fileName: 'general.json', displayName: 'General' },
+        { fileName: 'website.json', displayName: 'Website' },
+        { fileName: 'authentication.json', displayName: 'Authentication' }
+    ],
+    timeOut: 1000,
+    updateInterval: 2500,
+    autoUpdateEnabled: false
+};
 
 export default APIDocs;
