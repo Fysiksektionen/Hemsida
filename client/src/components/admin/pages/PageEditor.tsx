@@ -23,6 +23,12 @@ type PageEditorProps = {
     page?: Page,
 }
 
+/**
+ * Editor component for a single page. Puts the page in editorial mode and has a menu to change non-content values.
+ * @param setPagesLocation: Hook to navigate within the Pages admin-app.
+ * @param id: Id of the page. Currently as string.
+ * @param page: The page object. Can be passed if already fetched.
+ */
 export default function PageEditor({ setPagesLocation, id, page }: PageEditorProps) {
     // If we dont have page data, get page (mock data for now)
     if (page === undefined) {
@@ -33,9 +39,14 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
         }
     }
 
+    // Local context for editing
     const [pageLocale, setPageLocale] = useState(locales.sv);
+    // State of the saved data (that should have been sent to server).
     const [pageData, setPageData] = useState({ page: page as Page, hasChanged: false });
 
+    // Use the ContentTreeReducer to allow for child components to update the content tree.
+    // Use this state when passing down content to children.
+    // Alter postDispatchHook so that any updates to tree triggers an hasChanged=True state change.
     const [content, dispatch] = useContentTreeReducer({
         content: pageLocale === locales.sv ? pageData.page?.contentSv : pageData.page?.contentEn,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -44,6 +55,8 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
         }
     });
 
+    // Save the current content to the "saved" pageData state.
+    // TODO: Upload to server in this hook.
     function saveContent() {
         pageLocale === locales.sv
             ? setPageData({
@@ -56,7 +69,7 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
             });
     }
 
-    // Send page with updated content down for rendering.
+    // Send page with updated content down for rendering in children.
     const pageWithNewContent = page !== undefined ? { ...pageData.page } : { ...emptyPage };
     if (pageLocale === locales.sv) {
         pageWithNewContent.contentSv = content;
