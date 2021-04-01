@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ContentDict, ContentImage, ContentObject, Page } from '../../../types/api_object_types';
+import { ContentObject, Page } from '../../../types/api_object_types';
 import callApi from '../call_api_temp';
 import { Button, Row, Col } from 'react-bootstrap';
 import PageNotFound from '../../../pages/PageNotFound';

@@ -1,18 +1,36 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
+import { ContentObjectTreeContext } from '../../contexts';
+import { ContentText } from '../../types/api_object_types';
 
 type TextEditorModalProps = {
     show: boolean,
     setShow: (state: boolean) => void,
-    setText: (text: string) => void,
-    initialText?: string
+    content: ContentText
 }
 
-export default function TextEditorCOE({ show, setShow, setText, initialText }: TextEditorModalProps) {
-    const [text, setInternalText] = useState(initialText !== undefined ? initialText : '');
+/**
+ * Modal editor of single ContentText.
+ * @param show: Boolean to show/hide the modal.
+ * @param setShow: Hook to alter the show variable.
+ * @param content: The current ContentText with information to be edited.
+ */
+export default function TextEditorCOE({ show, setShow, content }: TextEditorModalProps) {
+    // Internal state during edit
+    const [text, setInternalText] = useState(content.text);
 
+    // Use context to get the dispatcher function
+    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
+
+    // Create new ContentText That copies the previous object and changes text. Send to disptcher
+    function updateTextHook(text: string) {
+        const newText = { ...content, text: text };
+        contentTreeDispatcher({ id: content.id, value: newText });
+    }
+
+    // Update content of tree and close modal on submit.
     function onSubmit(event: FormEvent) {
-        setText(text);
+        updateTextHook(text);
         setShow(false);
         event.preventDefault();
         event.stopPropagation();
@@ -38,14 +56,14 @@ export default function TextEditorCOE({ show, setShow, setText, initialText }: T
                             <Form.Control
                                 type="text"
                                 placeholder=""
-                                defaultValue={initialText}
+                                defaultValue={text}
                                 onChange={(event: ChangeEvent<any>) => {
                                     setInternalText(event.target.value);
                                 }}
                             />
                         </Form.Group>
                         <Button type={'submit'} variant={'success'}>
-                            Submit
+                            Spara
                         </Button>
                     </Form>
                 </Container>

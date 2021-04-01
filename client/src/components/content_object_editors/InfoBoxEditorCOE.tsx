@@ -1,5 +1,7 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
+import { ContentObjectTreeContext } from '../../contexts';
+import { OrangeInfoBoxContentTree } from '../../types/content_object_trees';
 
 export type InfoBoxData = {
     color: string,
@@ -12,24 +14,62 @@ export type InfoBoxData = {
 type InfoBoxModalProps = {
     show: boolean,
     setShow: (state: boolean) => void,
-    setData: (data: InfoBoxData) => void,
-    initial?: InfoBoxData
+    content: OrangeInfoBoxContentTree
 }
 
-export default function InfoBoxEditorCOE({ show, setShow, setData, initial }: InfoBoxModalProps) {
-    const [data, setInternalData] = useState(initial !== undefined
-        ? initial
-        : { color: '#FF642B', title: '', text: '', buttonText: '', buttonLink: '' }
-    );
+/**
+ * Modal editor of the content of a OrangeInfoBoxContentTree. Uses internal state to save form data and then runs
+ * dispatcher to update tree.
+ * @param show: Boolean to show/hide the modal.
+ * @param setShow: Hook to alter the show variable.
+ * @param content: The current ContentTree with information to be edited.
+ */
+export default function InfoBoxEditorCOE({ show, setShow, content }: InfoBoxModalProps) {
+    // Create internal state to save the form data temporarely.
+    const [data, setInternalData] = useState({
+        color: content.attributes.color,
+        title: content.items.title.text,
+        text: content.items.text.text,
+        buttonText: content.items.button.text,
+        buttonLink: content.items.button.attributes.link
+    });
 
-    useEffect(() => {
-        if (initial !== undefined) {
-            setInternalData(initial);
-        }
-    }, [initial, setInternalData]);
+    // Use the ContentObjectTreeContext to get dispatcher method for updating.
+    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
 
+    // Hook to save data to content tree.
+    function updateInfoBoxHook(data: InfoBoxData) {
+        // Create new object copying everything that is not altered.
+        const newContentTree = {
+            ...content,
+            attributes: {
+                color: data.color
+            },
+            items: {
+                title: {
+                    ...content.items.title,
+                    text: data.title
+                },
+                text: {
+                    ...content.items.text,
+                    text: data.text
+                },
+                button: {
+                    ...content.items.button,
+                    attributes: {
+                        link: data.buttonLink
+                    },
+                    text: data.buttonText
+                }
+            }
+        };
+        // Update with new value
+        contentTreeDispatcher({ id: content.id, value: newContentTree });
+    }
+
+    // Submitting saves the data to the tree and then closes modal.
     function onSubmit(event: FormEvent) {
-        setData(data);
+        updateInfoBoxHook(data);
         setShow(false);
         event.preventDefault();
         event.stopPropagation();
@@ -54,7 +94,7 @@ export default function InfoBoxEditorCOE({ show, setShow, setData, initial }: In
                             <Form.Group controlId="color" as={Col} md={4}>
                                 <Form.Label>Färg</Form.Label>
                                 <Form.Control
-                                    defaultValue={initial?.color}
+                                    defaultValue={data.color}
                                     onChange={(event: ChangeEvent<any>) => {
                                         setInternalData({
                                             ...data,
@@ -68,7 +108,7 @@ export default function InfoBoxEditorCOE({ show, setShow, setData, initial }: In
                             <Form.Group controlId="title" as={Col} md={4}>
                                 <Form.Label>Titel</Form.Label>
                                 <Form.Control
-                                    defaultValue={initial?.title}
+                                    defaultValue={data.title}
                                     onChange={(event: ChangeEvent<any>) => {
                                         setInternalData({
                                             ...data,
@@ -84,7 +124,7 @@ export default function InfoBoxEditorCOE({ show, setShow, setData, initial }: In
                                 <Form.Control
                                     as={'textarea'}
                                     rows={5}
-                                    defaultValue={initial?.text}
+                                    defaultValue={data.text}
                                     onChange={(event: ChangeEvent<any>) => {
                                         setInternalData({
                                             ...data,
@@ -98,7 +138,7 @@ export default function InfoBoxEditorCOE({ show, setShow, setData, initial }: In
                             <Form.Group controlId="buttonText" as={Col}>
                                 <Form.Label>Knapp-text</Form.Label>
                                 <Form.Control
-                                    defaultValue={initial?.buttonText}
+                                    defaultValue={data.buttonText}
                                     onChange={(event: ChangeEvent<any>) => {
                                         setInternalData({
                                             ...data,
@@ -110,7 +150,7 @@ export default function InfoBoxEditorCOE({ show, setShow, setData, initial }: In
                             <Form.Group controlId="buttonLink" as={Col}>
                                 <Form.Label>Knapp-länk</Form.Label>
                                 <Form.Control
-                                    defaultValue={initial?.buttonLink}
+                                    defaultValue={data.buttonLink}
                                     onChange={(event: ChangeEvent<any>) => {
                                         setInternalData({
                                             ...data,
@@ -121,7 +161,7 @@ export default function InfoBoxEditorCOE({ show, setShow, setData, initial }: In
                             </Form.Group>
                         </Form.Row>
                         <Button type={'submit'} variant={'success'}>
-                            Submit
+                            Spara
                         </Button>
                     </Form>
                 </Container>

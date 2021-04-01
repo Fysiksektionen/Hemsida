@@ -2,13 +2,12 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import pageTypeMap from '../pages/PageTypeMap';
 import PageNotFound from '../pages/PageNotFound';
+import { APIResponse } from '../types/general';
+import { LocaleContext, locales } from '../contexts';
 import { Page } from '../types/api_object_types';
 
 // Import fake data
 import { emptyResp, pathToResp } from '../mock_data/pages/mock_PageTypeLoader';
-import { APIResponse } from '../types/general';
-import { LocaleContext, locales } from '../contexts';
-import { frontpage } from '../mock_data/pages/1_frontpage';
 
 type PageTypeLoaderProps = {
     page?: Page

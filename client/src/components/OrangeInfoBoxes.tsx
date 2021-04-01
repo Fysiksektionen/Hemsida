@@ -10,21 +10,21 @@ export default function OrangeInfoBoxes(content: OrangeInfoBoxContentTree[]) {
         <div>
             <div className="d-lg-none">
                 <Col className='m-0 p-0 text-white'>
-                    <InfoBoxCOR content={content[0]} bgColor={content[0].attributes.color}/>
-                    <InfoBoxCOR content={content[1]} bgColor={content[1].attributes.color}/>
-                    <InfoBoxCOR content={content[2]} bgColor={content[2].attributes.color}/>
+                    <InfoBoxCOR content={content[0]} />
+                    <InfoBoxCOR content={content[1]} />
+                    <InfoBoxCOR content={content[2]} />
                 </Col>
             </div>
             <div className="d-none d-lg-block">
                 <Row className="m-0 p-0 text-white">
                     <Col className="p-0">
-                        <InfoBoxCOR content={content[0]} bgColor={content[0].attributes.color}/>
+                        <InfoBoxCOR content={content[0]} />
                     </Col>
                     <Col className="p-0">
-                        <InfoBoxCOR content={content[1]} bgColor={content[1].attributes.color}/>
+                        <InfoBoxCOR content={content[1]} />
                     </Col>
                     <Col className="p-0">
-                        <InfoBoxCOR content={content[2]} bgColor={content[2].attributes.color}/>
+                        <InfoBoxCOR content={content[2]} />
                     </Col>
                 </Row>
             </div>
