@@ -1,7 +1,35 @@
 from django.utils.translation import gettext_lazy as _
-from .pages import *
+from .base_page import *
 
-class News(Page):
+class NewsDraft(models.Model):
+    """
+    Model for a News draft.
+    """
+    class Meta:
+        verbose_name = _('news draft')
+        verbose_name_plural = _('news drafts')
+
+    page_type = models.CharField(verbose_name=_('page type'), max_length=255)
+    """Note: should probably move relationship to page model when we have our own admin page, 
+    because it will probably lead to a faster lookup. """
+    new = models.OneToOneField(
+        'website.News', verbose_name=_('news'), null=True, blank=False, on_delete=models.CASCADE,
+        related_name='news_draft'
+    )
+    content_sv = models.OneToOneField(
+        'website.ContentObjectBase', verbose_name=_('swedish content'), blank=True, null=True,
+        on_delete=models.SET_NULL, related_name='news_draft_sv'
+    )
+    content_en = models.OneToOneField(
+        'website.ContentObjectBase', verbose_name=_('english content'), blank=True, null=True,
+        on_delete=models.SET_NULL, related_name='news_draft_en'
+    )
+    last_edited_at = models.DateField(verbose_name=_('last edited at'), null=False, blank=False, auto_now=True)
+
+
+
+
+class News(BasePage):
     """Model for news."""
 
     class Meta:
@@ -10,15 +38,6 @@ class News(Page):
 
     author = models.CharField(verbose_name=_('created by'), max_length=255, blank=True)
     views = models.IntegerField()
-    publish_date = models.DateTimeField(verbose_name=_('publish date'), blank=True, null=True)
-    unpublish_date = models.DateTimeField(verbose_name=_('unpublish date'), blank=True, null=True)
-
-    """Models for the article"""
-    title = models.CharField(verbose_name=_('title'), max_length=50)
-    description = models.TextField(verbose_name=_('description'))
-    image = models.ImageField(verbose_name=_('image'), blank=True)
-    image_text = models.CharField(verbose_name=_('image text'), max_length=255, blank=True)
-
 
 
 

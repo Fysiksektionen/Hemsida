@@ -10,3 +10,4 @@ from .redirects import *
 from .site import *
 from .news import *
 from .ad import *
+from .base_page import *

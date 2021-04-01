@@ -22,7 +22,7 @@ class PageDraftInline(TabularInline):
 
 @admin.register(Page)
 class PageModelAdmin(GuardedModelAdmin):
-    list_display = ('name', 'slug', 'published', 'published_at', 'last_edited_at')
+    list_display = ('name', 'slug', 'published', 'first_published_at' ,'publish_time', 'unpublish_time', 'last_edited_at')
     search_fields = ('name', 'url',)
     prepopulated_fields = {'slug': ('name',), }
 
@@ -126,16 +126,13 @@ class SiteModelAdmin(admin.ModelAdmin):
 
 @admin.register(News)
 class NewsModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'published', 'published_at', 'last_edited_at')
-    search_fields = ('title', 'slug', 'url', 'author')
+    list_display = ('slug', 'published', 'first_published_at', 'publish_time', 'unpublish_time', 'last_edited_at')
+    search_fields = ('slug', 'url', 'author')
     fieldsets = (
-        (capfirst(_('about')), {
-            'fields': ('author', 'title', 'description')
+        (None, {
+            'fields': ('name', 'url', 'slug', 'page_type', 'parent', 'last_edited_at')
         }),
-        (capfirst(_('publish')), {
-            'fields': ('publish_date', 'unpublish_date')
-        }),
-        (capfirst(_('image')), {
-            'fields': ('image', 'image_text')
+        (capfirst(_('publication info')), {
+            'fields': ('first_published_at', 'publish_time', 'unpublish_time')
         })
     )
