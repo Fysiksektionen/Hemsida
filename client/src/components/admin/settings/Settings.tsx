@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { AdminPageProps } from '../../../types/admin_components';
 import { APIResponse } from '../../../types/general';
-import { Button, Col, Form } from 'react-bootstrap';
+import { Button, Col, Container, Form } from 'react-bootstrap';
 import callApi from '../call_api_temp';
 import HeaderEditor from './HeaderEditor';
 import { MinimalPage, Site } from '../../../types/api_object_types';
@@ -31,8 +31,14 @@ type SettingsAdminPageState = {
     contents: FormState<SiteContents>
 }
 
+/**
+ * Admin page for editing the site-object. (General settings of the project).
+ * Header and Footer is edited here.
+ * @param props: Object containing path information.
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function SettingsAdminPage(props: AdminPageProps) {
+    // Create state that contains the settings and content of header/footer separately.
     const [state, setState] = useState<SettingsAdminPageState>(() => {
         const data = (callApi({ path: 'site/', getParams: {} }) as APIResponse<Site>).data;
         return ({
@@ -41,6 +47,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         });
     });
 
+    /*  About the form TODO: Improve this! */
     const [validated, setValidated] = useState(false);
 
     const onChange = (event: ChangeEvent<any>) => {
@@ -55,7 +62,6 @@ export default function SettingsAdminPage(props: AdminPageProps) {
                     hasChanged: true
                 }
             });
-            console.log(state);
         }
         event.preventDefault();
         event.stopPropagation();
@@ -83,7 +89,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
     };
 
     return (
-        <div>
+        <Container className='pt-4'>
             <h1>Settings</h1>
             <hr />
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -124,6 +130,6 @@ export default function SettingsAdminPage(props: AdminPageProps) {
                 }}
             />
             <hr />
-        </div>
+        </Container>
     );
 };
