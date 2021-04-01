@@ -30,28 +30,24 @@ export const frontpage = {
     contentSv: {
         id: 1,
         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-        name: 'root',
         dbType: 'dict',
         attributes: {},
         items: {
             orangeBoxes: {
                 id: 2,
                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                name: 'orangeBoxes',
                 dbType: 'list',
                 attributes: {},
                 items: [
                     {
                         id: 3,
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                        name: 'box',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 4,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'root',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'Vill du hitta på något?'
@@ -59,7 +55,6 @@ export const frontpage = {
                             text: {
                                 id: 13,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'root',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'Vill du vara med och ta emot de som börjar till ' +
@@ -73,7 +68,6 @@ export const frontpage = {
                             button: {
                                 id: 5,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'root',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/engagera-dig/' },
                                 text: 'Engagera dig'
@@ -83,14 +77,12 @@ export const frontpage = {
                     {
                         id: 8,
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                        name: 'box',
                         dbType: 'dict',
                         attributes: { color: '#dc3545' },
                         items: {
                             title: {
                                 id: 9,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'title',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'Vad är Fysiksektionen?'
@@ -98,7 +90,6 @@ export const frontpage = {
                             text: {
                                 id: 10,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'text',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'Fysiksektionen är en organisation som hittar på roliga, ' +
@@ -111,7 +102,6 @@ export const frontpage = {
                             button: {
                                 id: 11,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'button',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/fysiksektionen/' },
                                 text: '0m sektionen'
@@ -121,14 +111,12 @@ export const frontpage = {
                     {
                         id: 14,
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                        name: 'box',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 15,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'title',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'Vad händer nu?'
@@ -136,7 +124,6 @@ export const frontpage = {
                             text: {
                                 id: 16,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'text',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'På Fysiksektionen är det hela tiden saker på gång. Vi har ' +
@@ -150,7 +137,6 @@ export const frontpage = {
                             button: {
                                 id: 17,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'button',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/event/' },
                                 text: 'Event'
@@ -162,7 +148,6 @@ export const frontpage = {
             sponsorLogo: {
                 id: 20,
                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                name: 'sponsorLogo',
                 dbType: 'image',
                 attributes: {},
                 image: {
@@ -176,28 +161,24 @@ export const frontpage = {
     contentEn: {
         id: 21,
         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-        name: 'root',
         dbType: 'dict',
         attributes: {},
         items: {
             orangeBoxes: {
                 id: 22,
                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                name: 'orangeBoxes',
                 dbType: 'list',
                 attributes: {},
                 items: [
                     {
                         id: 23,
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                        name: 'box',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 24,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'title',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'Want to do something?'
@@ -205,7 +186,6 @@ export const frontpage = {
                             text: {
                                 id: 25,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'text',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'Do you want to join and receive those who start to ' +
@@ -219,7 +199,6 @@ export const frontpage = {
                             button: {
                                 id: 26,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'button',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/engagera-dig/' },
                                 text: 'Get involved'
@@ -229,14 +208,12 @@ export const frontpage = {
                     {
                         id: 27,
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                        name: 'box',
                         dbType: 'dict',
                         attributes: { color: '#dc3545' },
                         items: {
                             title: {
                                 id: 28,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'title',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'What is the Physics Chapter?'
@@ -244,7 +221,6 @@ export const frontpage = {
                             text: {
                                 id: 29,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'text',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'The Physics Chapter is an organization that invents fun, ' +
@@ -257,7 +233,6 @@ export const frontpage = {
                             button: {
                                 id: 30,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'button',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/fysiksektionen/' },
                                 text: 'About the chapter'
@@ -267,14 +242,12 @@ export const frontpage = {
                     {
                         id: 31,
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                        name: 'box',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 32,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'title',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'What\'s up next?'
@@ -282,7 +255,6 @@ export const frontpage = {
                             text: {
                                 id: 33,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'text',
                                 dbType: 'text',
                                 attributes: {},
                                 text: 'At the Physics Chapter, things are always going on. We have ' +
@@ -296,7 +268,6 @@ export const frontpage = {
                             button: {
                                 id: 34,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                                name: 'button',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/event/' },
                                 text: 'Events'
@@ -308,7 +279,6 @@ export const frontpage = {
             sponsorLogo: {
                 id: 35,
                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                name: 'sponsorLogo',
                 dbType: 'image',
                 attributes: {},
                 image: {

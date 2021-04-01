@@ -68,7 +68,6 @@ export type Image = IDDetail & {
 type ContentObjectDBType = 'text' | 'image' | 'menu' | 'page' | 'dict' | 'list'
 
 type ContentObjectBase = IDDetail & {
-    name: string,
     dbType: ContentObjectDBType,
     attributes: object
 }

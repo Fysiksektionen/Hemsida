@@ -22,7 +22,6 @@ export const emptyPage: Page = {
     contentSv: {
         id: 1,
         detailUrl: 'https://f.kth.se/api/content_objects/1',
-        name: 'root',
         dbType: 'dict',
         attributes: {},
         items: {}
@@ -30,7 +29,6 @@ export const emptyPage: Page = {
     contentEn: {
         id: 1,
         detailUrl: 'https://f.kth.se/api/content_objects/1',
-        name: 'root',
         dbType: 'dict',
         attributes: {},
         items: {}
@@ -57,7 +55,6 @@ const styretPageResp: APIResponse<Page> = {
         contentSv: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'root',
             dbType: 'dict',
             attributes: {},
             items: {}
@@ -65,7 +62,6 @@ const styretPageResp: APIResponse<Page> = {
         contentEn: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'root',
             dbType: 'dict',
             attributes: {},
             items: {}
@@ -93,7 +89,6 @@ const newsarticleResp: APIResponse<Page> = {
         contentSv: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'root',
             dbType: 'dict',
             attributes: {},
             items: {}
@@ -101,7 +96,6 @@ const newsarticleResp: APIResponse<Page> = {
         contentEn: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'root',
             dbType: 'dict',
             attributes: {},
             items: {}
@@ -129,7 +123,6 @@ const newsfeedResp: APIResponse<Page> = {
         contentSv: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'root',
             dbType: 'dict',
             attributes: {},
             items: {}
@@ -137,7 +130,6 @@ const newsfeedResp: APIResponse<Page> = {
         contentEn: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'root',
             dbType: 'dict',
             attributes: {},
             items: {}

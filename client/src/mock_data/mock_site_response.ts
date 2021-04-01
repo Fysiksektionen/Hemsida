@@ -18,14 +18,12 @@ export const mockSiteResp: APIResponse<Site> = {
         headerContentSv: {
             id: 1,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 name: {
                     id: 2,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'name',
                     dbType: 'text',
                     attributes: {},
                     text: 'Fysiksektionen'
@@ -33,7 +31,6 @@ export const mockSiteResp: APIResponse<Site> = {
                 logo: {
                     id: 3,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'logo',
                     dbType: 'image',
                     attributes: {},
                     image: {
@@ -47,14 +44,12 @@ export const mockSiteResp: APIResponse<Site> = {
         headerContentEn: {
             id: 4,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 name: {
                     id: 5,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'name',
                     dbType: 'text',
                     attributes: {},
                     text: 'The Physics Chapter'
@@ -62,7 +57,6 @@ export const mockSiteResp: APIResponse<Site> = {
                 logo: {
                     id: 6,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'logo',
                     dbType: 'image',
                     attributes: {},
                     image: {
@@ -76,14 +70,12 @@ export const mockSiteResp: APIResponse<Site> = {
         footerContentSv: {
             id: 7,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 webmaster: {
                     id: 8,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'webmaster',
                     dbType: 'text',
                     attributes: {},
                     text: 'Christoffer Ejemyr'
@@ -91,7 +83,6 @@ export const mockSiteResp: APIResponse<Site> = {
                 currYear: {
                     id: 9,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'currYear',
                     dbType: 'text',
                     attributes: {},
                     text: '2021'
@@ -99,7 +90,6 @@ export const mockSiteResp: APIResponse<Site> = {
                 address: {
                     id: 10,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'address',
                     dbType: 'text',
                     attributes: {},
                     text: 'Brinellvägen 89, 114 28 Stockholm'
@@ -109,14 +99,12 @@ export const mockSiteResp: APIResponse<Site> = {
         footerContentEn: {
             id: 11,
             detailUrl: 'https://f.kth.se/api/content_objects/1/',
-            name: 'headerContent',
             dbType: 'dict',
             attributes: {},
             items: {
                 webmaster: {
                     id: 12,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'webmaster',
                     dbType: 'text',
                     attributes: {},
                     text: 'Christoffer Ejemyr'
@@ -124,7 +112,6 @@ export const mockSiteResp: APIResponse<Site> = {
                 currYear: {
                     id: 13,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'currYear',
                     dbType: 'text',
                     attributes: {},
                     text: '2021'
@@ -132,7 +119,6 @@ export const mockSiteResp: APIResponse<Site> = {
                 address: {
                     id: 14,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    name: 'address',
                     dbType: 'text',
                     attributes: {},
                     text: 'Brinellvägen 89, 114 28 Stockholm, Sweden'

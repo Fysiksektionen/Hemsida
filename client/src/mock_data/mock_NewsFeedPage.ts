@@ -11,8 +11,8 @@ import { NewsPageMinimal } from '../types/news';
 export const dummyArticles: NewsPageMinimal[] = [
     {
         id: 1,
-        name: '',
         detailUrl: '',
+        name: '',
         image: { id: 1, detailUrl: '', href: newsPlaceholder },
         title: 'Dummy news 1',
         preamble: 'Some news text here',
@@ -20,8 +20,8 @@ export const dummyArticles: NewsPageMinimal[] = [
     },
     {
         id: 2,
-        name: '',
         detailUrl: '',
+        name: '',
         image: { id: 1, detailUrl: '', href: newsPlaceholderImage1 },
         title: 'Dummy news 1',
         preamble: 'Some news text here',
@@ -29,8 +29,8 @@ export const dummyArticles: NewsPageMinimal[] = [
     },
     {
         id: 3,
-        name: '',
         detailUrl: '',
+        name: '',
         image: { id: 1, detailUrl: '', href: newsPlaceholderImage2 },
         title: 'Dummy news 1',
         preamble: 'Some news text here',
@@ -38,8 +38,8 @@ export const dummyArticles: NewsPageMinimal[] = [
     },
     {
         id: 4,
-        name: '',
         detailUrl: '',
+        name: '',
         image: { id: 1, detailUrl: '', href: newsPlaceholderImage3 },
         title: 'Dummy news 1',
         preamble: 'Some news text here',

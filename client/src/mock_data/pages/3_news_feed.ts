@@ -18,7 +18,6 @@ export const newsFeed = {
     contentSv: {
         id: 1,
         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-        name: 'root',
         dbType: 'dict',
         attributes: {},
         items: {}
@@ -26,7 +25,6 @@ export const newsFeed = {
     contentEn: {
         id: 1,
         detailUrl: 'https://f.kth.se/api/content_objects/1/',
-        name: 'root',
         dbType: 'dict',
         attributes: {},
         items: {}
