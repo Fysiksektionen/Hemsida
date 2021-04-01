@@ -10,14 +10,14 @@ class News(Page):
 
     author = models.CharField(verbose_name=_('created by'), max_length=255, blank=True)
     views = models.IntegerField()
-    set_unpublish_date = models.DateTimeField(verbose_name=_('unpublish date'), blank=False)
-    set_publish_date = models.DateTimeField(verbose_name=_('publish date'), blank=False)
+    publish_date = models.DateTimeField(verbose_name=_('publish date'), blank=True, null=True)
+    unpublish_date = models.DateTimeField(verbose_name=_('unpublish date'), blank=True, null=True)
 
     """Models for the article"""
     title = models.CharField(verbose_name=_('title'), max_length=50)
     description = models.TextField(verbose_name=_('description'))
-    image = models.ImageField(verbose_name=_('image'))
-    image_text = models.CharField(verbose_name=_('image text'), max_length=255)
+    image = models.ImageField(verbose_name=_('image'), blank=True)
+    image_text = models.CharField(verbose_name=_('image text'), max_length=255, blank=True)
 
 
 

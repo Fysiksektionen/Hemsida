@@ -4,7 +4,7 @@ from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInl
 from django.contrib import admin
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
-from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect, SiteModel
+from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect, SiteModel, News
 
 from utils.admin import GuardedModelAdmin
 
@@ -123,3 +123,19 @@ class SiteModelAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         """No one can remove object"""
         return False
+
+@admin.register(News)
+class NewsModelAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'published', 'published_at', 'last_edited_at')
+    search_fields = ('title', 'slug', 'url', 'author')
+    fieldsets = (
+        (capfirst(_('about')), {
+            'fields': ('author', 'title', 'description')
+        }),
+        (capfirst(_('publish')), {
+            'fields': ('publish_date', 'unpublish_date')
+        }),
+        (capfirst(_('image')), {
+            'fields': ('image', 'image_text')
+        })
+    )

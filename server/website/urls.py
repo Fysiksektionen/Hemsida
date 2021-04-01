@@ -17,4 +17,5 @@ router.register(r'pages', PageViewSet, basename='page')
 urlpatterns = [
     *router.urls,
     path('site/', SiteView.as_view(), name="site")
+
 ]
