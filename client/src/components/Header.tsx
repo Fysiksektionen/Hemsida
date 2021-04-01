@@ -6,13 +6,13 @@ import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
 import ImageCOR from './content_object_renderers/ImageCOR';
 import { Col, Container, Row } from 'react-bootstrap';
-import { SiteHeaderContentTree } from '../types/content_object_trees';
+import { SiteHeaderCT } from '../types/content_object_trees';
 import LocaleSelector from './LocaleSelector';
 import TextCOR from './content_object_renderers/TextCOR';
 
 type Props = {
     setLocale?: (locale: Locale) => void,
-    content: SiteHeaderContentTree
+    content: SiteHeaderCT
 }
 
 export default function Header({ setLocale, content }: Props) {

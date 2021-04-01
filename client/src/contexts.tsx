@@ -115,7 +115,7 @@ type ContentObjectTreeProviderProps = {
  * Note! When props.content.id is changed (aka) the state of the Reducer is updated and current state is lost!
  * See to it that the state is saved in a place where you want it with help of the pre and post hooks.
  */
-export function useContentTreeReducer(props: ContentObjectTreeProviderProps): [ContentObject, React.Dispatch<ContentObjectTreeDispatchAction>] {
+export function useCTReducer(props: ContentObjectTreeProviderProps): [ContentObject, React.Dispatch<ContentObjectTreeDispatchAction>] {
     const [state, dispatch] = React.useReducer(contentObjectTreeReducer, props.content);
     const [propsContent, setPropsContent] = useState(props.content);
     if (propsContent.id !== props.content.id) {

@@ -3,11 +3,11 @@ import GoogleMap from './GoogleMap';
 import './Footer.css';
 import Toe from './Toe';
 import { LocaleContext, locales } from '../contexts';
-import { SiteFooterContentTree } from '../types/content_object_trees';
+import { SiteFooterCT } from '../types/content_object_trees';
 import TextCOR from './content_object_renderers/TextCOR';
 
 type FooterProps = {
-    content: SiteFooterContentTree
+    content: SiteFooterCT
 }
 
 function Footer({ content }: FooterProps) {

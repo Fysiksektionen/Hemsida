@@ -4,19 +4,19 @@ import {
     EditorialModeContext,
     LocaleContext,
     locales,
-    useContentTreeReducer
+    useCTReducer
 } from '../../../contexts';
 import Header from '../../Header';
-import { SiteHeaderContentTree } from '../../../types/content_object_trees';
+import { SiteHeaderCT } from '../../../types/content_object_trees';
 import { Button, Col, Row } from 'react-bootstrap';
 import LocaleSelector from '../../LocaleSelector';
 
 export type HeaderEditorProps = {
-    headerContentInitial: {sv: SiteHeaderContentTree, en: SiteHeaderContentTree},
+    headerContentInitial: {sv: SiteHeaderCT, en: SiteHeaderCT},
 }
 
 /**
- * Component providing editing behaviour of Header component. Uses the ContentTreeReducer and
+ * Component providing editing behaviour of Header component. Uses the CTReducer and
  * EditorialModeContext to enable the built-it editing behaviour in the Header component.
  * @param headerContentInitial: Initial state of the content tree.
  */
@@ -25,7 +25,7 @@ export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps
     const globalLocale = useContext(LocaleContext);
     const [headerLocale, setHeaderLocale] = useState(globalLocale);
 
-    const [content, dispatch] = useContentTreeReducer({
+    const [content, dispatch] = useCTReducer({
         content: headerLocale === locales.sv ? headerContent.content.sv : headerContent.content.en,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         postDispatchHook: (action, newState) => {
@@ -37,12 +37,12 @@ export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps
     function saveContent(event: MouseEvent) {
         headerLocale === locales.sv
             ? setHeaderContent({
-                content: { ...headerContent.content, sv: content as SiteHeaderContentTree },
+                content: { ...headerContent.content, sv: content as SiteHeaderCT },
                 hasChanged: false
             }
             )
             : setHeaderContent({
-                content: { ...headerContent.content, en: content as SiteHeaderContentTree },
+                content: { ...headerContent.content, en: content as SiteHeaderCT },
                 hasChanged: false
             }
             );
@@ -64,7 +64,7 @@ export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps
                         {/* eslint-disable @typescript-eslint/no-unused-vars */}
                         <ContentObjectTreeContext.Provider value={dispatch}>
                             <div className="border border-dark col-12 px-0">
-                                <Header content={content as SiteHeaderContentTree}/>
+                                <Header content={content as SiteHeaderCT}/>
                             </div>
                         </ContentObjectTreeContext.Provider>
                     </EditorialModeContext.Provider>

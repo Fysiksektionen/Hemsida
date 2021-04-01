@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
 import { ContentObjectTreeContext } from '../../contexts';
-import { OrangeInfoBoxContentTree } from '../../types/content_object_trees';
+import { OrangeInfoBoxCT } from '../../types/content_object_trees';
 
 export type InfoBoxData = {
     color: string,
@@ -14,15 +14,15 @@ export type InfoBoxData = {
 type InfoBoxModalProps = {
     show: boolean,
     setShow: (state: boolean) => void,
-    content: OrangeInfoBoxContentTree
+    content: OrangeInfoBoxCT
 }
 
 /**
- * Modal editor of the content of a OrangeInfoBoxContentTree. Uses internal state to save form data and then runs
+ * Modal editor of the content of a OrangeInfoBoxCT. Uses internal state to save form data and then runs
  * dispatcher to update tree.
  * @param show: Boolean to show/hide the modal.
  * @param setShow: Hook to alter the show variable.
- * @param content: The current ContentTree with information to be edited.
+ * @param content: The current CT with information to be edited.
  */
 export default function InfoBoxEditorCOE({ show, setShow, content }: InfoBoxModalProps) {
     // Create internal state to save the form data temporarely.
@@ -35,12 +35,12 @@ export default function InfoBoxEditorCOE({ show, setShow, content }: InfoBoxModa
     });
 
     // Use the ContentObjectTreeContext to get dispatcher method for updating.
-    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
+    const CTDispatcher = useContext(ContentObjectTreeContext);
 
     // Hook to save data to content tree.
     function updateInfoBoxHook(data: InfoBoxData) {
         // Create new object copying everything that is not altered.
-        const newContentTree = {
+        const newCT = {
             ...content,
             attributes: {
                 color: data.color
@@ -64,7 +64,7 @@ export default function InfoBoxEditorCOE({ show, setShow, content }: InfoBoxModa
             }
         };
         // Update with new value
-        contentTreeDispatcher({ id: content.id, value: newContentTree });
+        CTDispatcher({ id: content.id, value: newCT });
     }
 
     // Submitting saves the data to the tree and then closes modal.

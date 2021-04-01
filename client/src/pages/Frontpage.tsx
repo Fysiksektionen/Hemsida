@@ -4,12 +4,12 @@ import OrangeInfoBoxes from '../components/OrangeInfoBoxes';
 import NewsWidget from '../components/news/FrontpageNewsWidget';
 import placeholder from '../mediafiles/placeholder_images/placeholder.jpg';
 import { ContentObject } from '../types/api_object_types';
-import { FrontPageContentTree } from '../types/content_object_trees';
+import { FrontPageCT } from '../types/content_object_trees';
 import { Col, Row } from 'react-bootstrap';
 import ImageCOR from '../components/content_object_renderers/ImageCOR';
 
 function Frontpage(props: ContentObject) {
-    const content = props as FrontPageContentTree;
+    const content = props as FrontPageCT;
 
     return (
         <div>

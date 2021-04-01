@@ -2,10 +2,10 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { OrangeInfoBoxContentTree } from '../types/content_object_trees';
+import { OrangeInfoBoxCT } from '../types/content_object_trees';
 import InfoBoxCOR from './content_object_renderers/InfoBoxCOR';
 
-export default function OrangeInfoBoxes(content: OrangeInfoBoxContentTree[]) {
+export default function OrangeInfoBoxes(content: OrangeInfoBoxCT[]) {
     return (
         <div>
             <div className="d-lg-none">

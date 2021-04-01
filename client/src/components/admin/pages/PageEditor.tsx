@@ -8,7 +8,7 @@ import {
     EditorialModeContext,
     LocaleContext,
     locales,
-    useContentTreeReducer
+    useCTReducer
 } from '../../../contexts';
 import PageTypeLoader from '../../PageTypeLoader';
 import Header from '../../Header';
@@ -44,10 +44,10 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
     // State of the saved data (that should have been sent to server).
     const [pageData, setPageData] = useState({ page: page as Page, hasChanged: false });
 
-    // Use the ContentTreeReducer to allow for child components to update the content tree.
+    // Use the CTReducer to allow for child components to update the content tree.
     // Use this state when passing down content to children.
     // Alter postDispatchHook so that any updates to tree triggers an hasChanged=True state change.
-    const [content, dispatch] = useContentTreeReducer({
+    const [content, dispatch] = useCTReducer({
         content: pageLocale === locales.sv ? pageData.page?.contentSv : pageData.page?.contentEn,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         postDispatchHook: () => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EditorialModeContext } from '../../contexts';
-import { OrangeInfoBoxContentTree } from '../../types/content_object_trees';
+import { OrangeInfoBoxCT } from '../../types/content_object_trees';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';
@@ -11,7 +11,7 @@ import InfoBoxEditorCOE from '../content_object_editors/InfoBoxEditorCOE';
 /**
  * Renders an InfoBox and allows for changing the title, text, color and button using a popup when in EditorialModeContext.
  */
-export default function InfoBoxCOR(props: {content: OrangeInfoBoxContentTree}) {
+export default function InfoBoxCOR(props: {content: OrangeInfoBoxCT}) {
     const [showModal, setShowModal] = useState(false);
 
     return (

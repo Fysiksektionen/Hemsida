@@ -1,4 +1,4 @@
-import { FrontPageContentTree } from '../../types/content_object_trees';
+import { FrontPageCT } from '../../types/content_object_trees';
 import ericsson from '../../mediafiles/placeholder_images/ERI_vertical_RGB.png';
 
 export const frontpage = {
@@ -157,7 +157,7 @@ export const frontpage = {
                 }
             }
         }
-    } as FrontPageContentTree,
+    } as FrontPageCT,
     contentEn: {
         id: 21,
         detailUrl: 'https://f.kth.se/api/content_objects/1/',
@@ -288,5 +288,5 @@ export const frontpage = {
                 }
             }
         }
-    } as FrontPageContentTree
+    } as FrontPageCT
 };

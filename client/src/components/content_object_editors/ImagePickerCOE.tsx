@@ -16,11 +16,11 @@ type ImagePickerModalProps = {
 
 export default function ImagePickerCOE({ show, setShow, content }: ImagePickerModalProps) {
     const images = [defaultLogo, img1, img2, img3, img4];
-    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
+    const CTDispatcher = useContext(ContentObjectTreeContext);
 
     function updateImage(imgHref: string) {
         const newImage = { ...content, image: { ...content.image, href: imgHref } };
-        contentTreeDispatcher({ id: content.id, value: newImage });
+        CTDispatcher({ id: content.id, value: newImage });
     }
 
     return (

@@ -20,12 +20,12 @@ export default function TextEditorCOE({ show, setShow, content }: TextEditorModa
     const [text, setInternalText] = useState(content.text);
 
     // Use context to get the dispatcher function
-    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
+    const CTDispatcher = useContext(ContentObjectTreeContext);
 
     // Create new ContentText That copies the previous object and changes text. Send to disptcher
     function updateTextHook(text: string) {
         const newText = { ...content, text: text };
-        contentTreeDispatcher({ id: content.id, value: newText });
+        CTDispatcher({ id: content.id, value: newText });
     }
 
     // Update content of tree and close modal on submit.
