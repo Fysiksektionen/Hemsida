@@ -122,7 +122,9 @@ function APIDocs(props: APIDocsProps) {
                             }
                             label="Automatic updates"
                         />
-                        <FButton text="Run manual update" version="dark" onClick={() => updateAPIData(state.jsonUrl)} />
+                        <div className={state.autoUpdateEnabled ? 'hidden' : ''}>
+                            <FButton text="Run manual update" version="dark" onClick={() => updateAPIData(state.jsonUrl)} />
+                        </div>
                     </Col>
                 </Row>
 
