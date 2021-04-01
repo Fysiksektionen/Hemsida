@@ -1,6 +1,6 @@
 import React, { MouseEvent, useContext, useState } from 'react';
 import {
-    ContentObjectTreeContext,
+    ContentTreeContext,
     EditorialModeContext,
     LocaleContext,
     locales,
@@ -66,11 +66,11 @@ export default function FooterEditor({ footerContentInitial }: FooterEditorProps
                 <LocaleContext.Provider value={footerLocale}>
                     <EditorialModeContext.Provider value={true}>
                         {/* eslint-disable @typescript-eslint/no-unused-vars */}
-                        <ContentObjectTreeContext.Provider value={dispatch}>
+                        <ContentTreeContext.Provider value={dispatch}>
                             <div className="border border-dark col-12 px-0">
                                 <Footer content={content as SiteFooterCT}/>
                             </div>
-                        </ContentObjectTreeContext.Provider>
+                        </ContentTreeContext.Provider>
                     </EditorialModeContext.Provider>
                 </LocaleContext.Provider>
             </Row>

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
-import { ContentObjectTreeContext } from '../../contexts';
+import { ContentTreeContext } from '../../contexts';
 import { OrangeInfoBoxCT } from '../../types/content_object_trees';
 
 export type InfoBoxData = {
@@ -34,8 +34,8 @@ export default function InfoBoxModalCOE({ show, setShow, content }: InfoBoxModal
         buttonLink: content.items.button.attributes.link
     });
 
-    // Use the ContentObjectTreeContext to get dispatcher method for updating.
-    const CTDispatcher = useContext(ContentObjectTreeContext);
+    // Use the ContentTreeContext to get dispatcher method for updating.
+    const CTDispatcher = useContext(ContentTreeContext);
 
     // Hook to save data to content tree.
     function updateInfoBoxHook(data: InfoBoxData) {

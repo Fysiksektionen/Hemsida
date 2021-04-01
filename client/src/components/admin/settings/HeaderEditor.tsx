@@ -1,6 +1,6 @@
 import React, { MouseEvent, useContext, useState } from 'react';
 import {
-    ContentObjectTreeContext,
+    ContentTreeContext,
     EditorialModeContext,
     LocaleContext,
     locales,
@@ -62,11 +62,11 @@ export default function HeaderEditor({ headerContentInitial }: HeaderEditorProps
                 <LocaleContext.Provider value={headerLocale}>
                     <EditorialModeContext.Provider value={true}>
                         {/* eslint-disable @typescript-eslint/no-unused-vars */}
-                        <ContentObjectTreeContext.Provider value={dispatch}>
+                        <ContentTreeContext.Provider value={dispatch}>
                             <div className="border border-dark col-12 px-0">
                                 <Header content={content as SiteHeaderCT}/>
                             </div>
-                        </ContentObjectTreeContext.Provider>
+                        </ContentTreeContext.Provider>
                     </EditorialModeContext.Provider>
                 </LocaleContext.Provider>
             </Row>

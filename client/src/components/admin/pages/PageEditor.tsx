@@ -4,7 +4,7 @@ import callApi from '../call_api_temp';
 import { Button, Row, Col } from 'react-bootstrap';
 import PageNotFound from '../../../pages/PageNotFound';
 import {
-    ContentObjectTreeContext,
+    ContentTreeContext,
     EditorialModeContext,
     LocaleContext,
     locales,
@@ -103,9 +103,9 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
                                     : mockSiteResp.data.headerContentEn
                             } setLocale={() => {}} />
                             <EditorialModeContext.Provider value={true}>
-                                <ContentObjectTreeContext.Provider value={dispatch}>
+                                <ContentTreeContext.Provider value={dispatch}>
                                     <PageTypeLoader page={pageWithNewContent} />
-                                </ContentObjectTreeContext.Provider>
+                                </ContentTreeContext.Provider>
                             </EditorialModeContext.Provider>
                             <Footer content={
                                 pageLocale === locales.sv

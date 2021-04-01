@@ -51,7 +51,7 @@ type ContentObjectTreeDispatchAction = {
 /**
  * Context delivering a dispatch method to change context object.
  */
-export const ContentObjectTreeContext = React.createContext<React.Dispatch<ContentObjectTreeDispatchAction>>(
+export const ContentTreeContext = React.createContext<React.Dispatch<ContentObjectTreeDispatchAction>>(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (action: ContentObjectTreeDispatchAction) => {}
 );

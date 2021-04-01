@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
-import { ContentObjectTreeContext } from '../../contexts';
+import { ContentTreeContext } from '../../contexts';
 import { ContentText } from '../../types/api_object_types';
 
 type TextEditorModalProps = {
@@ -20,7 +20,7 @@ export default function TextModalCOE({ show, setShow, content }: TextEditorModal
     const [text, setInternalText] = useState(content.text);
 
     // Use context to get the dispatcher function
-    const CTDispatcher = useContext(ContentObjectTreeContext);
+    const CTDispatcher = useContext(ContentTreeContext);
 
     // Create new ContentText That copies the previous object and changes text. Send to disptcher
     function updateTextHook(text: string) {

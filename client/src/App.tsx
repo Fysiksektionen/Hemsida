@@ -28,13 +28,12 @@ function App() {
                         <Admin />
                     </Route>
                     <Route>
-                        {siteData
-                            ? <Header content={
-                                locale === locales.sv
-                                    ? siteData.headerContentSv
-                                    : siteData.headerContentEn
-                            } setLocale={setLocale} />
-                            : <></>}
+                        {siteData &&
+                        <Header content={
+                            locale === locales.sv
+                                ? siteData.headerContentSv
+                                : siteData.headerContentEn
+                        } setLocale={setLocale} />}
                         <div className="content">
                             <Switch>
                                 {/* Frontpage should maybe be included in the dynamic page loader,
@@ -46,13 +45,12 @@ function App() {
                                 <Route component={PageTypeLoader}/>
                             </Switch>
                         </div>
-                        {siteData
-                            ? <Footer content={
-                                locale === locales.sv
-                                    ? siteData.footerContentSv
-                                    : siteData.footerContentEn
-                            } />
-                            : <></>}
+                        {siteData &&
+                        <Footer content={
+                            locale === locales.sv
+                                ? siteData.footerContentSv
+                                : siteData.footerContentEn
+                        } />}
                     </Route>
                 </Switch>
             </LocaleContext.Provider>
