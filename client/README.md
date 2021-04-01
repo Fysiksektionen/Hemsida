@@ -31,6 +31,11 @@ This compiles the entire bootstrap-library together with our own styling.
 
 (If this throws an error. Make sure you have sass installed using `npm install -g sass`.)
 
+### `npm run docs-serve`
+
+Serves the API-files needed by the API-viewer located at `/api-docs`. 
+
+
 ### `npm run lint-check`
 
 Check that the code is according to lint rules. Print errors and warnings.

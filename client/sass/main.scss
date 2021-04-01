@@ -1,12 +1,23 @@
 $primary: #ff642b; /* Fysiksektionen orange color */
 $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
 $F-light-gray: #f8f9fa;
+$F-dark-gray: #474747;
 
-$colors: (
-  primary:                           $primary,
-  secondary:                         $secondary,
-  F-light-gray:                      $F-light-gray
+$custom-colors: (
+    "F-light-gray": $F-light-gray,
+    "F-dark-gray": $F-dark-gray
 );
+
+
+
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
 
 $F-red: #DC3545;
 
@@ -47,3 +58,16 @@ $spacers: (
 
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        .hidden#{$infix}   {
+            visibility: hidden !important;
+        }
+        .visible#{$infix}   {
+            visibility: visible !important;
+        }
+    }
+}

@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import PageTypeLoader from './components/PageTypeLoader';
+import APIDocs from './pages/APIDocs/APIDocs';
 
 // Fake data for header and footer
 import { mockSiteResp } from './mock_data/mock_App';
@@ -20,30 +21,35 @@ function App() {
     return (
         <div className="App">
             <LocaleContext.Provider value={locale}>
+                <Switch>
+                    <Route path="/api-docs">
+                        <APIDocs />
+                    </Route>
+                    <Route>
+                        <Header
+                            setLocale={setLocale}
+                            contentSv={siteData.headerContentSv}
+                            contentEn={siteData.headerContentEn}
+                        />
 
-                <Header
-                    setLocale={setLocale}
-                    contentSv={siteData.headerContentSv}
-                    contentEn={siteData.headerContentEn}
-                />
+                        <div className="content container">
+                            <Switch>
+                                {/* Frontpage should maybe be included in the dynamic page loader,
+                                    but left here for illustrative purposes of non-dynamic loading of
+                                    components (i.e. login, admin, etc.). */}
+                                <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
+                                    <Frontpage {...emptyPage} />
+                                </Route>
+                                <Route component={PageTypeLoader}/>
+                            </Switch>
+                        </div>
 
-                <div className="content container">
-                    <Switch>
-                        {/* Frontpage should maybe be included in the dynamic page loader,
-                            but left here for illustrative purposes of non-dynamic loading of
-                            components (i.e. login, admin, etc.). */}
-                        <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                            <Frontpage {...emptyPage} />
-                        </Route>
-                        <Route component={PageTypeLoader}/>
-                    </Switch>
-                </div>
-
-                <Footer
-                    contentSv={siteData.footerContentSv}
-                    contentEn={siteData.footerContentEn}
-                />
-
+                        <Footer
+                            contentSv={siteData.footerContentSv}
+                            contentEn={siteData.footerContentEn}
+                        />
+                    </Route>
+                </Switch>
             </LocaleContext.Provider>
         </div>
     );
