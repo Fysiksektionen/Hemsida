@@ -50,7 +50,7 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
     const [content, dispatch] = useContentTreeReducer({
         content: pageLocale === locales.sv ? pageData.page?.contentSv : pageData.page?.contentEn,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        postDispatchHook: (action, newState) => {
+        postDispatchHook: () => {
             setPageData({ ...pageData, hasChanged: true });
         }
     });
