@@ -44,7 +44,7 @@ export const EditorialModeContext = React.createContext<boolean>(
  */
 
 type ContentObjectTreeDispatchAction = {
-    id?: number,
+    id: number,
     value: ContentObject
 };
 
@@ -52,8 +52,7 @@ type ContentObjectTreeDispatchAction = {
  * Context delivering a dispatch method to change context object.
  */
 export const ContentTreeContext = React.createContext<React.Dispatch<ContentObjectTreeDispatchAction>>(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (action: ContentObjectTreeDispatchAction) => {}
+    () => {}
 );
 
 /**
@@ -95,11 +94,8 @@ export function replaceAtId(tree: ContentObject, id: number, value: ContentObjec
  * @returns: New state
  */
 function contentObjectTreeReducer(state: ContentObject, action: ContentObjectTreeDispatchAction) {
-    if (action.id === undefined) { // If no id: update entire tree.
-        return action.value;
-    } else { // If id: find that object and replace subtree with value.
-        return replaceAtId(state, action.id, action.value);
-    }
+    // Find that object and replace subtree with value.
+    return replaceAtId(state, action.id, action.value);
 }
 
 type ContentObjectTreeProviderProps = {
@@ -117,12 +113,15 @@ type ContentObjectTreeProviderProps = {
  */
 export function useCTReducer(props: ContentObjectTreeProviderProps): [ContentObject, React.Dispatch<ContentObjectTreeDispatchAction>] {
     const [state, dispatch] = React.useReducer(contentObjectTreeReducer, props.content);
-    const [propsContent, setPropsContent] = useState(props.content);
-    if (propsContent.id !== props.content.id) {
-        setPropsContent(props.content);
-        dispatch({ value: props.content });
+    const [latestPropsId, setLatestPropsId] = useState(props.content.id); // Save latest props.id
+
+    // If top-level id has changed, replace entire state. (Happens when language is changed or when a new page is loaded)
+    if (latestPropsId !== props.content.id) {
+        dispatch({ id: latestPropsId, value: props.content });
+        setLatestPropsId(props.content.id);
     }
 
+    // Create new dispatch wrapping the real dispatch in pre and post hooks.
     function wrappedDispatch(action: ContentObjectTreeDispatchAction) {
         if (props.preDispatchHook !== undefined) {
             props.preDispatchHook(action);
