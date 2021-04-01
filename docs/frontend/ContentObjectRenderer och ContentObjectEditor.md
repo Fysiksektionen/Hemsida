@@ -91,7 +91,7 @@ Här följer exempel på hur editors kan funka.
 En COE är en React-komponent som (minst) tar in ett CT som ska kunna redigeras. Varje COE kan endast redigera en 
 specifik typ av CT. Varje COE ska ha en update-funktion som, när den kallas på via någon form av submit-action 
 (antingen automatiskt eller via ene knapp) ska uppdatera det övergripande content-state:et via dispatch-metoden i 
-`ContentObjectTreeContext`.
+`ContentTreeContext`.
 
 ### Exempel
 Ett enkelt exempel är `TextModalCOE`
@@ -114,7 +114,7 @@ export default function TextModalCOE({ show, setShow, content }: TextEditorModal
     const [text, setInternalText] = useState(content.text);
 
     // Use context to get the dispatcher function
-    const CTDispatcher = useContext(ContentObjectTreeContext);
+    const CTDispatcher = useContext(ContentTreeContext);
 
     // Create new ContentText That copies the previous object and changes text. Send to disptcher
     function updateTextHook(text: string) {
@@ -169,4 +169,4 @@ export default function TextModalCOE({ show, setShow, content }: TextEditorModal
 
 Denna ligger alltså i en COR och när COR:en klickas på öppnas denna Modal. Då kan objektet redigeras. När formuläret 
 submitas så uppdateras den del av content-trädet som vi redigerar just nu, via dispatch-metoden från 
-`ContentObjectTreeContext`.
+`ContentTreeContext`.
