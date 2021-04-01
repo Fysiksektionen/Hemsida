@@ -14,7 +14,7 @@ type ImagePickerModalProps = {
     content: ContentImage
 }
 
-export default function ImagePickerCOE({ show, setShow, content }: ImagePickerModalProps) {
+export default function ImagePickerModalCOE({ show, setShow, content }: ImagePickerModalProps) {
     const images = [defaultLogo, img1, img2, img3, img4];
     const CTDispatcher = useContext(ContentObjectTreeContext);
 

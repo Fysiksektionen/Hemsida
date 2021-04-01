@@ -24,7 +24,7 @@ type InfoBoxModalProps = {
  * @param setShow: Hook to alter the show variable.
  * @param content: The current CT with information to be edited.
  */
-export default function InfoBoxEditorCOE({ show, setShow, content }: InfoBoxModalProps) {
+export default function InfoBoxModalCOE({ show, setShow, content }: InfoBoxModalProps) {
     // Create internal state to save the form data temporarely.
     const [data, setInternalData] = useState({
         color: content.attributes.color,

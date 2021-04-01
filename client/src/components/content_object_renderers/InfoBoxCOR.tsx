@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';
 import parse from 'html-react-parser';
 import FButton from '../f-styled/buttons/FButton';
-import InfoBoxEditorCOE from '../content_object_editors/InfoBoxEditorCOE';
+import InfoBoxModalCOE from '../content_object_editors/InfoBoxModalCOE';
 
 /**
  * Renders an InfoBox and allows for changing the title, text, color and button using a popup when in EditorialModeContext.
@@ -18,7 +18,7 @@ export default function InfoBoxCOR(props: {content: OrangeInfoBoxCT}) {
         <EditorialModeContext.Consumer>
             {editing =>
                 <div className='h-100'>
-                    <InfoBoxEditorCOE content={props.content} show={showModal} setShow={setShowModal} />
+                    <InfoBoxModalCOE content={props.content} show={showModal} setShow={setShowModal} />
                     <Row className="d-flex flex-column align-content-center m-0 p-0 h-100"
                         style={{ backgroundColor: props.content.attributes.color }}
                         onClick={editing ? () => setShowModal(true) : () => {}}

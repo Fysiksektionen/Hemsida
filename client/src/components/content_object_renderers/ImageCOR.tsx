@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EditorialModeContext } from '../../contexts';
-import ImagePickerCOE from '../content_object_editors/ImagePickerCOE';
+import ImagePickerModalCOE from '../content_object_editors/ImagePickerModalCOE';
 import { ContentImage } from '../../types/api_object_types';
 import { Image } from 'react-bootstrap';
 import { ImageProps } from 'react-bootstrap/Image';
@@ -20,7 +20,7 @@ export default function ImageCOR(props: ImageCOProps) {
         <EditorialModeContext.Consumer>
             {editing =>
                 <div>
-                    <ImagePickerCOE content={props.imageCO} show={showModal} setShow={setShowModal} />
+                    <ImagePickerModalCOE content={props.imageCO} show={showModal} setShow={setShowModal} />
                     <Image
                         src={props.imageCO.image.href}
                         {...(props as (ImageProps & React.RefAttributes<HTMLImageElement>))}

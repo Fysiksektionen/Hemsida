@@ -15,7 +15,7 @@ type TextEditorModalProps = {
  * @param setShow: Hook to alter the show variable.
  * @param content: The current ContentText with information to be edited.
  */
-export default function TextEditorCOE({ show, setShow, content }: TextEditorModalProps) {
+export default function TextModalCOE({ show, setShow, content }: TextEditorModalProps) {
     // Internal state during edit
     const [text, setInternalText] = useState(content.text);
 
