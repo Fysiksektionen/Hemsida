@@ -99,4 +99,17 @@ type FrontPageCT = ContentDict & {
     }
 }
 ```
+Här ser vi att det definieras ett mindre CT som heter `OrangeInfoBoxCT`. Det är en `ContentDict` som *måste* ha 
+attributet `color`. Vidare *måste* det ha barnen `title`, `text` och `button` under `items`, som i sin tur är 
+ContentTexts. Vi använder sedan `OrangeInfoBoxCT` som typen av objekten i en `ContentList` i `FrontpageCT`. Tack 
+vare detta kommer vi kunna tolka svaret från serven som detta CT och då kommer vår interpreter (och vi) att anta att 
+dessa saker finns i svaret.
+
+### När använder vi CT's?
+Varje unik pageType (se [Om projektet](../Om%20projektet.md)) kommer att ha en unik och väldefinierad struktur på 
+sitt content. Denna struktur dokumenteras helt enkelt genom att definiera ett nytt CT som säger precis på vilken 
+struktur svaret kommer vara. Med hjälp av den definitionen kan vi dirrekt när motsvarande PageTemplate laddas, tolka 
+om page.content_* som något av denna förutbestämda typ. Exempel, se 
+[Frontpage](../../client/src/pages/Frontpage.tsx)
+
 
