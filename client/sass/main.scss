@@ -3,7 +3,7 @@
 
 // 2. Include any default variable overrides here
 $primary: #ff642b; /* Fysiksektionen orange color */
-$secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
+$secondary: #003545; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
 $background-color: #F2F3F4;
 
 $line-height-base: 1.75;
@@ -42,16 +42,20 @@ $spacers: (
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
 
-$F-light-gray: #f8f9fa;
-$F-medium-gray: #adadad;
-$F-dark-gray: #424242;
+$F-super-light-gray: $gray-100;
+$F-light-gray: $gray-200;
+$F-medium-gray: $gray-400;
+$F-dark-gray: $gray-700;
+$F-super-dark-gray: $gray-900;
 $F-red: #DC3545;
 
 // Create your own map
 $custom-colors: (
+    "F-super-light-gray": $F-super-light-gray,
     "F-light-gray": $F-light-gray,
     "F-medium-gray": $F-medium-gray,
     "F-dark-gray": $F-dark-gray,
+    "F-super-dark-gray": $F-super-dark-gray,
     "F-orange": $primary,
     "F-blue": $secondary,
     "F-red": $F-red
@@ -86,6 +90,18 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
     }
 }
 
-.normalCursor {
+.normal-cursor {
     cursor: default;
+}
+
+.pointer-cursor {
+    cursor: pointer;
+}
+
+.darken-on-hover:hover {
+    filter: brightness(90%);
+}
+
+.lighten-on-hover:hover {
+    filter: brightness(110%);
 }

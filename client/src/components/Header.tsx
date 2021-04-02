@@ -19,7 +19,7 @@ export default function Header({ setLocale, content }: Props) {
     return (
         <LocaleContext.Consumer>
             {locale =>
-                <Navbar style={{ backgroundColor: 'var(--F-light-gray)' }} expand="lg" className="d-flex justify-content-between">
+                <Navbar expand="lg" className="d-flex justify-content-between">
                     <Navbar.Brand className="ml-lg-2 ml-xl-5 my-auto justify-content-start" href="#">
                         <Container>
                             <Row>

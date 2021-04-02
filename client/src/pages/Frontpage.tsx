@@ -18,7 +18,7 @@ function Frontpage(props: ContentObject) {
                 <Row>
                     <OrangeInfoBoxes {...content.items.orangeBoxes.items}/>
                 </Row>
-                <Row className="py-6 p-5 justify-content-center bg-F-light-gray">
+                <Row className="py-6 p-5 justify-content-center bg-F-super-light-gray">
                     <NewsWidget />
                 </Row>
                 <Row className='py-6 p-5 justify-content-center'>
@@ -31,7 +31,7 @@ function Frontpage(props: ContentObject) {
                         </Row>
                     </Col>
                 </Row>
-                <Row className='justify-content-center bg-F-light-gray'>
+                <Row className='justify-content-center bg-F-super-light-gray'>
                     <Col xs={6} sm={5} md={4} lg={3} xl={2} className='text-center'>
                         <div className='font-weight-bold pt-5'>Huvudsponsor</div>
                         <ImageCOR imageCO={content.items.sponsorLogo} fluid className='pb-5 pt-4 pt-md-5' />

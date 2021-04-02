@@ -35,7 +35,7 @@ export default function PageLister({ setPagesLocation }: PageListerProps) {
             <Row>
                 <Col xs={12}>
                     <Card>
-                        <Card.Header className={'font-weight-bold border-bottom'}>
+                        <Card.Header className='font-weight-bold text-white border-bottom bg-F-dark-gray'>
                             <Row>
                                 <Col xs={6} xl={5}>
                                     Namn
@@ -56,8 +56,8 @@ export default function PageLister({ setPagesLocation }: PageListerProps) {
                                 return (
                                     // eslint-disable-next-line @typescript-eslint/no-unused-vars
                                     <Row
-                                        className={'p-3 mx-0' + (
-                                            index % 2 === 0 ? ' bg-F-light-gray' : ''
+                                        className={'p-3 mx-0 darken-on-hover pointer-cursor' + (
+                                            index % 2 === 0 ? ' bg-F-light-gray' : ' bg-F-super-light-gray'
                                         )}
                                         key={index}
                                         onClick={() => setPagesLocation({ id: page.id.toString() })}
