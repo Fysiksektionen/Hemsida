@@ -86,3 +86,6 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
     }
 }
 
+.normalCursor {
+    cursor: default;
+}
