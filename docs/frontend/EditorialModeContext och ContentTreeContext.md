@@ -40,6 +40,8 @@ med COs att göra alls (ex. olika länkar eller effekter).
 
 
 ## ContentTreeContext
+Denna context möjliggör för vilken komponent som helst inom detta context att anropa en dispatcher-metod när 
+komponenten vill göra en innehållsförändring i trädet. Används uteslutande tillsammans med [CTReducer](CTReducer.md).
 
 ### Definition
 Detta context har ett state som består av en dispatcher-funktion. Denna funktion tar in ett id och ett ContentObject.
@@ -48,7 +50,7 @@ Som en säkerhet så definieras default beteendet som en "gör inget"-metod.
 
 ```typescript jsx
 type ContentObjectTreeDispatchAction = {
-    id?: number,
+    id: number,
     value: ContentObject
 };
 
@@ -62,8 +64,10 @@ export const ContentTreeContext = React.createContext<React.Dispatch<ContentObje
 
 ### Var och hur används det?
 #### Providers
-
-
+Providers till denna context används kring komponenter som ansvarar för att redigera content-träd. Den används då 
+genom att skicka med en dispatcher-funktion med önskat beteende. I normalfallet kommer denna dispatcher-funktion att 
+ha hämtats direkt från metoden `useCTReducer`. Se mer om det under [CTReducer](CTReducer.md).
 
 #### Consumers
-
+Consumers av denna context är komponenter som behöver kunna förändra delar av content-trädet. I normalfallet är 
+detta ContentObjectEditors. För att veta mer om hur dispatchern fungerar, kolla in [CTReducer](CTReducer.md).
