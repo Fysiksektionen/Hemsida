@@ -22,6 +22,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "final-form": "^4.20.2",
     "font-awesome": "^4.7.0",
+    "http-server": "^0.12.3",
     "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
@@ -31,6 +32,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "sass": "^1.32.7",
+    "swagger-ui-react": "^3.45.1",
     "typescript": "^4.1.3",
     "web-vitals": "^0.2.4"
   },
@@ -41,7 +43,8 @@
     "eject": "react-scripts eject",
     "css": "sass sass/main.scss > src/index.css",
     "lint-check": "eslint --ext .tsx --ext .ts src/",
-    "lint-fix": "eslint --ext .tsx --ext .ts --fix src/"
+    "lint-fix": "eslint --ext .tsx --ext .ts --fix src/",
+    "docs-serve": "http-server ../api-docs/ --port=3001 --cors=Authorization -c 1"
   },
   "eslintConfig": {
     "extends": [
@@ -62,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@types/swagger-ui-react": "^3.35.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "^7.22.0",

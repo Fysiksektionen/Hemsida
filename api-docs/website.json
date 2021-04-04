@@ -1,0 +1,738 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Website API",
+        "version": "1.0.0 ",
+        "description": "The API definition of the website-related API-calls.\n"
+    },
+    "paths": {
+        "/pages": {
+            "get": {
+                "summary": "get multiple pages",
+                "description": "Lists all pages. Response is authentication restricted and only pages that requesting user can view is returned.",
+                "responses": {
+                    "200": {
+                        "description": "OK: List of pages user have view permission to.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Page"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pages/{id}": {
+            "get": {
+                "summary": "get single page",
+                "description": "Returns a single page based on {id}. Response is authentication restricted.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Id of page",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Page/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK: Page data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Page"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BAD REQUEST: Something is wrong with the way you specified the request. See error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED: You do not have access to this recourse (credentials are missing or you do not have permission).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NO CONTENT: No page found with id={id}.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/resolve-url": {
+            "get": {
+                "summary": "get multiple redirects",
+                "description": "Resolve the page object at a given path. Resolves internal redirects to a page result. Redirects are returned as '302 Found', pages as '200 OK'.",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "path",
+                        "description": "Path from root to resolve (with or without leading slash and without GET-params.)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "/namnder/fcom"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK: Page data of page located at the given path.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Page"
+                                }
+                            }
+                        }
+                    },
+                    "302": {
+                        "description": "FOUND (MOVED TEMPORARILY): Redirect response to the URL specified in an external redirect.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BAD REQUEST: Something is wrong with the way you specified the request. See error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED: You do not have access to this recourse (credentials are missing or you do not have permission).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NO CONTENT: No page or redirect was found at {path}.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/menus": {
+            "get": {
+                "summary": "get multiple menus",
+                "description": "List all menus. Use filters in GET-parameters to filter data.\n",
+                "responses": {
+                    "200": {
+                        "description": "OK: List of menus user have view permission to.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Menu"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/menus/{id}": {
+            "get": {
+                "summary": "get single menu",
+                "description": "List all menus. Use filters in GET-parameters to filter data.\n",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Unique id of menu",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Menu/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK: Menu data.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Menu"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BAD REQUEST: Something is wrong with the way you specified the request. See error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED: You do not have access to this recourse (credentials are missing or you do not have permission).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NO CONTENT: No menu found with id={id}.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/redirects": {
+            "get": {
+                "summary": "get multiple redirects",
+                "description": "List all redirects. Use filters in GET-parameters to filter data.\n",
+                "responses": {
+                    "200": {
+                        "description": "OK: List of redirects user have view permission to.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Page"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/redirects/{id}": {
+            "get": {
+                "summary": "get single redirects",
+                "description": "Get a single redirect object",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Unique id of redirect",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Redirect/properties/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK: Redirect data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Redirect"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BAD REQUEST: Something is wrong with the way you specified the request. See error message for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UNAUTHORIZED: You do not have access to this recourse (credentials are missing or you do not have permission).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "NO CONTENT: No redirect found with id={id}.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "general.json#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/site": {
+            "get": {
+                "summary": "get the site singelton object",
+                "description": "Get the site singelton object",
+                "responses": {
+                    "200": {
+                        "description": "OK: Site data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Site"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Site": {
+                "type": "object",
+                "properties": {
+                    "root_url": {
+                        "type": "string",
+                        "example": "https://f.kth.se/"
+                    },
+                    "root_page": {
+                        "$ref": "#/components/schemas/Page"
+                    },
+                    "banner_content": {
+                        "type": "object",
+                        "properties": {
+                            "sv": {
+                                "$ref": "#/components/schemas/ContentDict"
+                            },
+                            "en": {
+                                "$ref": "#/components/schemas/ContentDict"
+                            }
+                        }
+                    },
+                    "footer_content": {
+                        "type": "object",
+                        "properties": {
+                            "sv": {
+                                "$ref": "#/components/schemas/ContentDict"
+                            },
+                            "en": {
+                                "$ref": "#/components/schemas/ContentDict"
+                            }
+                        }
+                    }
+                }
+            },
+            "Page": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "readOnly": true,
+                        "example": 42
+                    },
+                    "detail_url": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "https://f.kth.se/api/pages/42/"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Nämnder"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "example": "namnder"
+                    },
+                    "page_type": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "list_namnder_page"
+                    },
+                    "parent": {
+                        "$ref": "#/components/schemas/MinimalPage"
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MinimalPage"
+                        }
+                    },
+                    "published": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "published_at": {
+                        "type": "string",
+                        "format": "ISO8601 with time zone Z",
+                        "example": "2021-03-01T10:59:21.522778+01:00"
+                    },
+                    "last_edited_at": {
+                        "type": "string",
+                        "format": "ISO8601 with time zone Z",
+                        "example": "2021-03-01T10:59:21.522778+01:00"
+                    },
+                    "content_sv": {
+                        "$ref": "#/components/schemas/ContentDict"
+                    },
+                    "content_en": {
+                        "$ref": "#/components/schemas/ContentDict"
+                    }
+                }
+            },
+            "MinimalPage": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/Page/properties/id"
+                    },
+                    "detail_url": {
+                        "$ref": "#/components/schemas/Page/properties/detail_url"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/Page/properties/name"
+                    }
+                }
+            },
+            "MenuItem": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 42
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Nämnder"
+                    },
+                    "link": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "https://f.kth.se/namnder/"
+                    },
+                    "url": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "page": {
+                        "$ref": "#/components/schemas/MinimalPage"
+                    },
+                    "is_menu": {
+                        "type": "boolean",
+                        "readOnly": true,
+                        "example": false
+                    }
+                }
+            },
+            "Menu": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/MenuItem/properties/id"
+                    },
+                    "detail_url": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "https://f.kth.se/api/menus/42/"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/MenuItem/properties/name"
+                    },
+                    "link": {
+                        "$ref": "#/components/schemas/MenuItem/properties/link"
+                    },
+                    "url": {
+                        "$ref": "#/components/schemas/MenuItem/properties/url"
+                    },
+                    "page": {
+                        "$ref": "#/components/schemas/MenuItem/properties/page"
+                    },
+                    "is_menu": {
+                        "$ref": "#/components/schemas/MenuItem/properties/is_menu"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MenuItem"
+                        },
+                        "description": "If is_menu is true the object is redered as a Menu."
+                    }
+                }
+            },
+            "Redirect": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 1
+                    },
+                    "detail_url": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "https://f.kth.se/api/redirects/1/"
+                    },
+                    "from_path": {
+                        "type": "string",
+                        "example": "/hem"
+                    },
+                    "link": {
+                        "type": "string",
+                        "example": "https://f.kth.se/"
+                    },
+                    "url": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": null
+                    },
+                    "page": {
+                        "$ref": "#/components/schemas/MinimalPage"
+                    }
+                }
+            },
+            "ContentObjectBase": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": true,
+                        "example": 21362
+                    },
+                    "detail_url": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "https://f.kth.se/api/content-object/21362/"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "sidebar"
+                    },
+                    "db_type": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "type": "json",
+                        "example": "{\"color\": \"black\"}"
+                    }
+                }
+            },
+            "ContentText": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/id"
+                    },
+                    "detail_url": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/detail_url"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/name"
+                    },
+                    "db_type": {
+                        "type": "string",
+                        "example": "text"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/attributes"
+                    },
+                    "text": {
+                        "type": "string",
+                        "example": "<h1>En rubriktext</h1>"
+                    }
+                }
+            },
+            "ContentImage": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/id"
+                    },
+                    "detail_url": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/detail_url"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/name"
+                    },
+                    "db_type": {
+                        "type": "string",
+                        "example": "image"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/attributes"
+                    },
+                    "image": {
+                        "$ref": "general.json#/components/schemas/Image"
+                    }
+                }
+            },
+            "ContentMenu": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/id"
+                    },
+                    "detail_url": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/detail_url"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/name"
+                    },
+                    "db_type": {
+                        "type": "string",
+                        "example": "menu"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/attributes"
+                    },
+                    "menu": {
+                        "$ref": "#/components/schemas/Menu"
+                    }
+                }
+            },
+            "ContentPage": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/id"
+                    },
+                    "detail_url": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/detail_url"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/name"
+                    },
+                    "db_type": {
+                        "type": "string",
+                        "example": "page"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/attributes"
+                    },
+                    "page": {
+                        "$ref": "#/components/schemas/MinimalPage"
+                    }
+                }
+            },
+            "ContentDict": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/id"
+                    },
+                    "detail_url": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/detail_url"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/name"
+                    },
+                    "db_type": {
+                        "type": "string",
+                        "example": "dict"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/attributes"
+                    },
+                    "items": {
+                        "type": "object",
+                        "description": "Dictionary with (obj.name: {obj}) with any of the follwowing types.",
+                        "items": {
+                            "oneOf": [
+                                {"$ref": "#/components/schemas/ContentText"},
+                                {"$ref": "#/components/schemas/ContentImage"},
+                                {"$ref": "#/components/schemas/ContentMenu"},
+                                {"$ref": "#/components/schemas/ContentPage"},
+                                {"$ref": "#/components/schemas/ContentDict"},
+                                {"$ref": "#/components/schemas/ContentList"}
+                            ]
+                        }
+                    }
+                }
+            },
+            "ContentList": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/id"
+                    },
+                    "detail_url": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/detail_url"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/name"
+                    },
+                    "db_type": {
+                        "type": "string",
+                        "example": "list"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ContentObjectBase/properties/attributes"
+                    },
+                    "items": {
+                        "type": "array",
+                        "description": "Ordered list with ContentObjects with any of the follwowing types.",
+                        "items": {
+                            "oneOf": [
+                                {"$ref": "#/components/schemas/ContentText"},
+                                {"$ref": "#/components/schemas/ContentImage"},
+                                {"$ref": "#/components/schemas/ContentMenu"},
+                                {"$ref": "#/components/schemas/ContentPage"},
+                                {"$ref": "#/components/schemas/ContentDict"},
+                                {"$ref": "#/components/schemas/ContentList"}
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
