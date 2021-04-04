@@ -1,37 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Locale, LocaleContext, locales } from './contexts';
 import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
-import './App.css';
+import { Site } from './types/api_object_types';
+import Admin from './components/admin/Admin';
 import PageTypeLoader from './components/PageTypeLoader';
 import APIDocs from './pages/APIDocs/APIDocs';
+import './App.css';
 
-// Fake data for header and footer
-import { mockSiteResp } from './mock_data/mock_App';
+// Import fake data
+import { mockSiteResp } from './mock_data/mock_site_response';
 import { emptyPage } from './mock_data/mock_PageTypeLoader';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
 
-    // Do server call for Site-data. Faked for now.
-    const siteData = mockSiteResp.data;
+    // TODO: Replace by server call to /api/site/
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [siteData, setSiteData] = useState<Site>(mockSiteResp.data);
 
     return (
         <div className="App">
             <LocaleContext.Provider value={locale}>
                 <Switch>
+                    <Route path="/admin">
+                        <Admin adminRootPath={'/admin/'}/>
+                    </Route>
                     <Route path="/api-docs">
                         <APIDocs />
                     </Route>
                     <Route>
-                        <Header
-                            setLocale={setLocale}
-                            contentSv={siteData.headerContentSv}
-                            contentEn={siteData.headerContentEn}
-                        />
-
+                        {siteData
+                            ? <Header content={
+                                locale === locales.sv
+                                    ? siteData.headerContentSv
+                                    : siteData.headerContentEn
+                            } setLocale={setLocale} />
+                            : <></>}
                         <div className="content container">
                             <Switch>
                                 {/* Frontpage should maybe be included in the dynamic page loader,
@@ -43,12 +50,15 @@ function App() {
                                 <Route component={PageTypeLoader}/>
                             </Switch>
                         </div>
-
-                        <Footer
-                            contentSv={siteData.footerContentSv}
-                            contentEn={siteData.footerContentEn}
-                        />
+                        {siteData
+                            ? <Footer content={
+                                locale === locales.sv
+                                    ? siteData.footerContentSv
+                                    : siteData.footerContentEn
+                            } />
+                            : <></>}
                     </Route>
+
                 </Switch>
             </LocaleContext.Provider>
         </div>
