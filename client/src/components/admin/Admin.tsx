@@ -9,7 +9,7 @@ import AdsAdminPage from './ads/Ads';
 import SettingsAdminPage from './settings/Settings';
 import ToolsAdminPage from './tools/Tools';
 import GroupsAdminPage from './groups/Groups';
-import { getGETParamsStringFromObject } from './utils';
+import { getGETParamsStringFromObject, GETParamsToDict } from './utils';
 import PageNotFound from '../../pages/PageNotFound';
 
 type AdminMenuItem = {
@@ -78,40 +78,13 @@ type AdminProps = {
 export default function Admin({ adminRootPath }: AdminProps) {
     const BANNER_HEIGHT = '56px'; // Banner height in pixels
 
-    /**
-     * Function that parses the path and GET-parameters to desired format. Removes /admin/ from path and creates
-     * an object of the GET-parameters.
-     * @param path The path currently visited (relative to '/admin/').
-     * @param searchString The get parameters given in path by the search parameter.
-     */
-    function getAdminPagePropsFromPath(path: string, searchString: string): AdminPageProps {
-        // Remove leading ?
-        if (searchString.length > 0 && searchString[0] === '?') {
-            searchString = searchString.substring(1);
-        }
-        // Split over different args
-        const splitArgs = searchString.split('&');
-
-        // For each element, if it has value, use that. Else just set the key with undefined.
-        const getParamsReturn: NodeJS.Dict<string | undefined> = {};
-        splitArgs.forEach((item) => {
-            if (item.includes('=')) {
-                const [key, val] = item.split('=', 1);
-                getParamsReturn[key] = val;
-            } else if (item !== '') {
-                getParamsReturn[item] = undefined;
-            }
-        });
-
-        // Remove adminRootPath from the path
-        if (path.startsWith(adminRootPath)) {
-            path = path.substring(adminRootPath.length);
-        }
-
-        return { path: path, getParams: getParamsReturn };
+    let path = window.location.pathname;
+    // Remove adminRootPath from the path
+    if (path.startsWith(adminRootPath)) {
+        path = path.substring(adminRootPath.length);
     }
 
-    const adminPageProps = getAdminPagePropsFromPath(window.location.pathname, window.location.search);
+    const adminPageProps = { path: path, getParams: GETParamsToDict(window.location.search) };
     const [state, setState] = useState(adminPageProps.path);
 
     /**
