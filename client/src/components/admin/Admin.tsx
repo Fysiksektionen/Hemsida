@@ -1,6 +1,6 @@
 import React, { createElement, useState } from 'react';
 import '../../index.css';
-import { Col, Nav, Navbar, NavbarBrand, NavLink, Row } from 'react-bootstrap';
+import { Col, Container, Image, Navbar, NavLink, Row } from 'react-bootstrap';
 import { AdminPageProps } from '../../types/admin_components';
 import PagesAdminPage from './pages/Pages';
 import UsersAdminPage from './users/Users';
@@ -12,6 +12,7 @@ import ToolsAdminPage from './tools/Tools';
 import GroupsAdminPage from './groups/Groups';
 import PageNotFound from '../../pages/PageNotFound';
 import { adminRootPath, setAddressField } from './utils';
+import logo from '../../Fysiksektionen_logo.svg';
 
 type AdminMenuItem = {
     name: string,
@@ -72,8 +73,6 @@ export const adminMenuItems: NodeJS.Dict<AdminMenuItem> = {
  * Changing currently loaded page is preferably done by setState and setAddressField, not by moving to another URL.
  */
 export default function Admin() {
-    const BANNER_HEIGHT = '56px'; // Banner height in pixels
-
     /**
      * Function that parses the path and GET-parameters to desired format. Removes /admin/ from path and creates
      * an object of the GET-parameters.
@@ -126,44 +125,41 @@ export default function Admin() {
     const adminComponent = (adminMenuItem !== undefined) ? adminMenuItem.component : null;
 
     return (
-        <div className={'m-0 p-0 d-flex flex-column vh-100'}>
+        <Container fluid className='mx-0 px-0'>
             {/* Top bar */}
-            <Navbar fixed='top' variant='dark' className="bg-dark">
-                <NavbarBrand>
-                    Adminpanelen
-                </NavbarBrand>
-            </Navbar>
-
-            {/* Below top bar full area */}
-            <Row className="flex-grow-1 m-0" style={{ paddingTop: BANNER_HEIGHT }}>
-                {/* Menu collapsed to only icons */}
-                <div className="d-lg-none d-flex flex-column bg-secondary py-2 flex-shrink-1">
-                    <Nav className="d-flex flex-column py-1 align-content-center" onSelect={navOnSelect}>
-                        {Object.keys(adminMenuItems).map((path, index) =>
-                            <NavLink key={index} eventKey={path}>
-                                <h4 className="text-center"><i className={adminMenuItems[path]?.icon + ' mx-2'} /></h4>
-                            </NavLink>
-                        )}
-                    </Nav>
-                </div>
-
-                {/* Menu expanded */}
-                <div className="d-none d-lg-flex flex-column bg-secondary py-2 flex-shrink-1">
-                    <Nav className="d-flex flex-column py-1 mr-4" onSelect={navOnSelect}>
-                        {Object.keys(adminMenuItems).map((path, index) =>
-                            <NavLink key={index} eventKey={path}>
-                                {/* TODO: Fix icon alignment */}
-                                <h4><i className={adminMenuItems[path]?.icon + ' mr-4 ml-2'}/>{adminMenuItems[path]?.name}</h4>
-                            </NavLink>
-                        )}
-                    </Nav>
+            <div className='d-flex justify-content-center w-100 text-white bg-secondary'>
+                <Col xs={10}>
+                    <Row className='pt-6 pb-45'>
+                        <Image height='85px' src={logo} />
+                    </Row>
+                </Col>
+            </div>
+            <div className='d-none d-lg-block'>
+                <div className='d-flex justify-content-center w-100 text-white bg-secondary sticky-top'>
+                    <Col xs={10}>
+                        <Row>
+                            <Navbar className="w-100 px-1 py-0 adminnav" onSelect={navOnSelect}>
+                                {Object.keys(adminMenuItems).map((path, index) =>
+                                    <NavLink key={index} eventKey={path}
+                                        className='ml-2 mr-5 px-1 py-3 text-white font-weight-bold'>
+                                        {adminMenuItems[path]?.name}
+                                    </NavLink>
+                                )}
+                            </Navbar>
+                        </Row>
+                    </Col>
                 </div>
 
                 {/* The AdminPage */}
                 <Col className='mx-0 px-0'>
                     {adminComponent !== null ? createElement(adminComponent, adminPageProps) : <PageNotFound />}
                 </Col>
-            </Row>
-        </div>
+            </div>
+            <div className='d-lg-none'>
+                <Col className='text-center pt-5'>
+                    Adminpanelen kräver en fönsterstorlek på minst 992 px.
+                </Col>
+            </div>
+        </Container>
     );
 };

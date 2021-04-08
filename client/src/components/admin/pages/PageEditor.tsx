@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ContentObject, Page } from '../../../types/api_object_types';
 import callApi from '../call_api_temp';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import PageNotFound from '../../../pages/PageNotFound';
 import {
     ContentTreeContext,
@@ -11,11 +11,9 @@ import {
     useCTReducer
 } from '../../../contexts';
 import PageTypeLoader from '../../PageTypeLoader';
-import Header from '../../Header';
-import Footer from '../../Footer';
-import { mockSiteResp } from '../../../mock_data/mock_site_response';
 import { emptyPage } from '../../../mock_data/pages/mock_PageTypeLoader';
 import LocaleSelector from '../../LocaleSelector';
+import PageMetaForm from './PageMetaForm';
 
 type PageEditorProps = {
     setPagesLocation: (props: NodeJS.Dict<string>) => void;
@@ -29,6 +27,7 @@ type PageEditorProps = {
  * @param id: Id of the page. Currently as string.
  * @param page: The page object. Can be passed if already fetched.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function PageEditor({ setPagesLocation, id, page }: PageEditorProps) {
     // If we dont have page data, get page (mock data for now)
     if (page === undefined) {
@@ -77,45 +76,76 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
         pageWithNewContent.contentEn = content;
     }
 
+    const [showMetaInfo, setShowMetaInfo] = useState(false);
+
     return page !== undefined
         ? (
-            <Col>
-                <Row className='px-4 pt-4 mb-3'>
-                    <a href='#' onClick={() => setPagesLocation({})}><i className='fa fa-angle-left'/> Tillbaka</a>
-                </Row>
-                <Row className='d-flex justify-content-between border-bottom border-dark px-5 pb-3'>
-                    <h2 className='m-0 col'>Redigera sida: {page.name}</h2>
-                    <Col xs={3}>
-                        <Row className='justify-content-end'>
-                            <LocaleSelector localeState={pageLocale} setLocaleHook={setPageLocale}/>
-                            <Button variant='primary' onClick={saveContent} disabled={!pageData.hasChanged}>
-                                <i className="fas fa-save" /> Save
-                            </Button>
+            <Container fluid>
+                <div style={{ height: '100px' }}/>
+                <Row className='justify-content-center'>
+                    <Col xs={10} xl={8} className='pl-5'>
+                        {/* Title and save */}
+                        <Row className='mx-2 mb-4 justify-content-between'>
+                            <h1 className='font-weight-bolder'>Redigera sida</h1>
+                            <div className='d-flex flex-row'>
+                                <div className='my-auto'>
+                                    Språk: <LocaleSelector localeState={pageLocale} setLocaleHook={setPageLocale}/>
+                                </div>
+                                <div className='mx-4'/>
+                                <Button className='my-auto' onClick={saveContent} disabled={!pageData.hasChanged}>
+                                    Spara
+                                </Button>
+                            </div>
+                        </Row>
+
+                        {/* Page meta info */}
+                        <Row>
+                            <Col>
+                                <Row className={!showMetaInfo ? 'd-none' : ''}>
+                                    <Col>
+                                        <PageMetaForm
+                                            page={pageData.page}
+                                            setPageHook={(page: Page) => setPageData({
+                                                page: page, hasChanged: pageData.hasChanged
+                                            })}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row className='text-center'>
+                                    <div
+                                        className='w-100 d-flex flex-column'
+                                        onClick={() => setShowMetaInfo(!showMetaInfo)}
+                                        style={{ cursor: 'click' }}
+                                    >
+                                        {showMetaInfo ? '' : 'Redigera meta-info'}
+                                        <span
+                                            className={'fa fa-angle-' + (showMetaInfo ? 'up' : 'down')}
+                                        />
+                                        {showMetaInfo ? 'Stäng' : ''}
+                                    </div>
+                                </Row>
+                            </Col>
+                        </Row>
+
+                        {/* Horizontal line */}
+                        <Row className='justify-content-center my-5'>
+                            <div className='border border-bottom' style={{ width: '85%' }}/>
+                        </Row>
+
+                        {/* Page */}
+                        <Row style={{ zoom: 9 / 12 }}>
+                            <LocaleContext.Provider value={pageLocale}>
+                                <EditorialModeContext.Provider value={true}>
+                                    <ContentTreeContext.Provider value={dispatch}>
+                                        <PageTypeLoader page={pageWithNewContent} />
+                                    </ContentTreeContext.Provider>
+                                </EditorialModeContext.Provider>
+                            </LocaleContext.Provider>
                         </Row>
                     </Col>
                 </Row>
-                <Row>
-                    <Col className={'px-0'}>
-                        <LocaleContext.Provider value={pageLocale}>
-                            <Header content={
-                                pageLocale === locales.sv
-                                    ? mockSiteResp.data.headerContentSv
-                                    : mockSiteResp.data.headerContentEn
-                            } setLocale={() => {}} />
-                            <EditorialModeContext.Provider value={true}>
-                                <ContentTreeContext.Provider value={dispatch}>
-                                    <PageTypeLoader page={pageWithNewContent} />
-                                </ContentTreeContext.Provider>
-                            </EditorialModeContext.Provider>
-                            <Footer content={
-                                pageLocale === locales.sv
-                                    ? mockSiteResp.data.footerContentSv
-                                    : mockSiteResp.data.footerContentEn
-                            }/>
-                        </LocaleContext.Provider>
-                    </Col>
-                </Row>
-            </Col>
+                <div style={{ height: '100px' }}/>
+            </Container>
         )
         : <PageNotFound />;
 }

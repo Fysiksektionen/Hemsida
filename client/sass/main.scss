@@ -105,3 +105,20 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 .lighten-on-hover:hover {
     filter: brightness(110%);
 }
+.adminnav {
+    overflow: hidden;
+    a {
+        text-decoration: none;
+        border-bottom: 5px solid transparent;
+        &:hover {
+            border-bottom: 5px solid $primary;
+        }
+        &.active {
+            border-bottom: 5px solid $primary;
+        }
+    }
+}
+
+h1 {
+    font-size: 3.5em;
+}
