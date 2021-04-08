@@ -1,6 +1,5 @@
 import React from 'react';
 import NewsItemTiny from './NewsItemTiny';
-import Container from 'react-bootstrap/Container';
 import { NewsPageMinimal } from '../../types/news';
 import Button from 'react-bootstrap/Button';
 
@@ -16,14 +15,14 @@ function NewsFeedTiny(props : NewsFeedTinyProps) {
     );
 
     return (
-        <Container>
+        <div>
             <ul className="list-unstyled">
                 {tinyFeed}
             </ul>
             <div className="text-center">
                 <Button variant={'secondary'}>Fler nyheter</Button>
             </div>
-        </Container>
+        </div>
     );
 }
 

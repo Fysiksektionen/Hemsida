@@ -15,7 +15,7 @@ function Footer({ content }: FooterProps) {
         <LocaleContext.Consumer>
             {locale =>
                 <div>
-                    <div className="container-fluid py-4 bg-dark text-white text-center">
+                    <div className="py-4 bg-dark text-white text-center">
 
                         <h3>{locale === locales.sv ? 'Hitta hit!' : 'Find us!'}</h3>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Modal, Image, Row, Container } from 'react-bootstrap';
+import { Col, Modal, Image, Row } from 'react-bootstrap';
 import defaultLogo from '../../Fysiksektionen_logo.svg';
 import img1 from '../../mediafiles/placeholder_images/news_placeholder.jpg';
 import img2 from '../../mediafiles/placeholder_images/news_placeholder1.jpg';
@@ -28,15 +28,13 @@ export default function ImagePickerCOE({ show, setShow, setImage }: ImagePickerM
                 <Modal.Title id="image-picker">Pick an image!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Container>
-                    <Row className="justify-content-between h-100">
-                        {images.map((imgSrc, index) => (
-                            <Col key={index} xs={2} className="my-auto">
-                                <Image fluid={true} src={imgSrc} onClick={() => { setImage(imgSrc); setShow(false); }}/>
-                            </Col>
-                        ))}
-                    </Row>
-                </Container>
+                <Row className="justify-content-between h-100">
+                    {images.map((imgSrc, index) => (
+                        <Col key={index} xs={2} className="my-auto">
+                            <Image fluid={true} src={imgSrc} onClick={() => { setImage(imgSrc); setShow(false); }}/>
+                        </Col>
+                    ))}
+                </Row>
             </Modal.Body>
             <Modal.Footer>
 
