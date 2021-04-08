@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 def create_site_and_root_page(sender, **kwargs):
-    print('KÖÖööööööööööööööööööööööööör')
     site_model = apps.get_model('website.SiteModel')
     if not site_model.objects.filter(pk=site_model._singleton_pk).exists():
         root_page = apps.get_model('website.Page')(name="Start", slug='')  # might not be needed in the future
