@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .base_page import BasePage
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
 
 
 class PageDraft(models.Model):

@@ -15,41 +15,41 @@ class NewsTest(ValidationTestCase):
 
         self.content_sv.save()
         self.content_en.save()
-        self.parent = News(name='Parent news', page_type='0', url="https://f.kth.se", slug='parent',
-                           content_sv=self.content_sv, content_en=self.content_en, views=0)
+        self.parent = News(name='Parent news', page_type='0', url="https://f.kth.se", slug='parent', views=0,
+                           content_sv=self.content_sv, content_en=self.content_en)
         self.parent.save()
 
     def test_default_slug(self):
         """Test setting default slug if slug is not specified."""
+        # Create new content objects to avoid validation error
+        self.content_sv = ContentObjectBase()
+        self.content_en = ContentObjectBase()
         # Check normal behaviour
-        self.news_with_slug = News(name='0', page_type='0', url="https://f.kth.se/0", slug='fkm',
+        self.news_with_slug = News(name='0', page_type='0', url="https://f.kth.se/0", slug='fkm', views=0,
                                    content_sv=self.content_sv, content_en=self.content_en)
         self.assertEqual(self.news_with_slug.slug, 'fkm')
 
+        # Cleaning new with slug should not raise error
+        self.assertEqual(self.news_with_slug.full_clean(), None)
+
         # If slug is not specified -> slug = slugify('name')
-        self.news_no_slug = News(name='1', page_type='0', url="https://f.kth.se/1",
+        self.news_no_slug = News(name='1', page_type='0', url="https://f.kth.se/1", views=0,
                                  content_sv=self.content_sv, content_en=self.content_en)
         self.assertEqual(self.news_no_slug.slug, '1')
 
         # If slug is None -> slug = ''
-        self.news_none_slug = News(name='2', page_type='0', url="https://f.kth.se/2", slug=None,
+        self.news_none_slug = News(name='2', page_type='0', url="https://f.kth.se/2", slug=None, views=0,
                                    content_sv=self.content_sv, content_en=self.content_en)
 
         self.assertEqual(self.news_none_slug.slug, '')
 
         # Slug = '' should raise ValidationError
-        # TODO: Make it so this test actually works
-        self.news_empty_slug = News(name='3', page_type='0', url="https://f.kth.se/3", slug='',
-                                              content_sv=self.content_sv, content_en=self.content_en)
+        self.news_empty_slug = News(name='3', page_type='0', url="https://f.kth.se/3", slug='', views=0,
+                                    content_sv=self.content_sv, content_en=self.content_en)
         self.assertRaisesMessage(
-            ValidationError(
-                _("%(slug_field)s cannot be ''."),
-                params={
-                    'slug_field': News._meta.get_field('slug').verbose_name
-                }
-            ),
-            self.news_empty_slug.full_clean
-        )
+            ValidationError,
+            _('Slug cannot be \'\'.'),
+            self.news_empty_slug.full_clean,)
 
     def test_get_content(self):
         """Test function get_content."""

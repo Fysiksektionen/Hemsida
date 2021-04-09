@@ -44,8 +44,6 @@ class News(BasePage):
             raise ValidationError(
                 _("%(slug_field)s cannot be ''."),
                 params={
-                   'slug_field': self.Meta.get_field('slug').verbose_name
+                   'slug_field': self._meta.get_field('slug').verbose_name
                 }
             )
-
-
