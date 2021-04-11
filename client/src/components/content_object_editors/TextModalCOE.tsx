@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
-import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
+import { Col, Modal, Form, Button } from 'react-bootstrap';
 import { ContentTreeContext } from '../../contexts';
 import { ContentText } from '../../types/api_object_types';
 
