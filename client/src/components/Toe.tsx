@@ -9,7 +9,7 @@ type ToeProps = {
 
 export default function Toe({ webmaster, currYear } : ToeProps) {
     return (
-        <div className="container-fluid py-4 bg-dark text-white text-center"
+        <div className="py-4 bg-dark text-white text-center"
             style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
         >
             <div style={{ paddingRight: '2rem' }}>

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
+import { Col, Modal, Form, Button } from 'react-bootstrap';
 
 type TextEditorModalProps = {
     show: boolean,
@@ -31,24 +31,22 @@ export default function TextEditorCOE({ show, setShow, setText, initialText }: T
                 <Modal.Title id="text-editor">Pick an image!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Container>
-                    <Form onSubmit={onSubmit}>
-                        <Form.Group controlId="rootUrl" as={Col} md={4}>
-                            <Form.Label>Text field</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder=""
-                                defaultValue={initialText}
-                                onChange={(event: ChangeEvent<any>) => {
-                                    setInternalText(event.target.value);
-                                }}
-                            />
-                        </Form.Group>
-                        <Button type={'submit'} variant={'success'}>
-                            Submit
-                        </Button>
-                    </Form>
-                </Container>
+                <Form onSubmit={onSubmit}>
+                    <Form.Group controlId="rootUrl" as={Col} md={4}>
+                        <Form.Label>Text field</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder=""
+                            defaultValue={initialText}
+                            onChange={(event: ChangeEvent<any>) => {
+                                setInternalText(event.target.value);
+                            }}
+                        />
+                    </Form.Group>
+                    <Button type={'submit'} variant={'success'}>
+                        Submit
+                    </Button>
+                </Form>
             </Modal.Body>
             <Modal.Footer>
 
