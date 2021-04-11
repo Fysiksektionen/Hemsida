@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import { Locale, LocaleContext } from '../contexts';
-import './Header.css';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
 import ImageCOR from './content_object_renderers/ImageCOR';

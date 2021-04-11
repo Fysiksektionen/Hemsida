@@ -8,7 +8,7 @@ export type FButtonProps = {
     version?: 'light' | 'dark';
     style?: React.CSSProperties | undefined;
     href?: string,
-    onClick?: () => void,
+    onClick?: (event: React.MouseEvent) => void,
     props?: any;
 }
 
@@ -25,6 +25,11 @@ export default function FButton({ text, Icon, version = 'light', style, href, on
         textColor = 'white';
         break;
     }
+
+    if (onClick === undefined) {
+        onClick = () => {};
+    }
+
     return (
         <Button
             className={'text-center px-3 py-2 m-1 text-' + textColor + ' bg-' + bgColor}

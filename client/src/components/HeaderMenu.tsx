@@ -31,10 +31,7 @@ export default function HeaderMenu() {
     const edit = useContext(EditorialModeContext);
 
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-        if ((event.type === 'keydown' &&
-            ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) ||
-            edit
-        ) {
+        if ((event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) || edit) {
             return;
         }
 
@@ -46,7 +43,7 @@ export default function HeaderMenu() {
             <FButton {...{
                 text: 'Meny',
                 Icon: Menu,
-                onClick: () => { toggleDrawer(true); },
+                onClick: toggleDrawer(true),
                 style: { width: '8rem' }
             }}
             />

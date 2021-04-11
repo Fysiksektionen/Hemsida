@@ -1,6 +1,5 @@
 import React from 'react';
 import GoogleMap from './GoogleMap';
-import './Footer.css';
 import Toe from './Toe';
 import { LocaleContext, locales } from '../contexts';
 import { SiteFooterCT } from '../types/content_object_trees';
