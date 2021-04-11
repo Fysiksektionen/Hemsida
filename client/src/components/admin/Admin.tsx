@@ -150,7 +150,8 @@ export default function Admin() {
                             <Navbar className="w-100 px-1 py-0 adminnav" onSelect={navOnSelect}>
                                 {Object.keys(adminMenuItems).map((path, index) =>
                                     <NavLink key={index} eventKey={path}
-                                        className='ml-2 mr-5 px-1 py-3 text-white font-weight-bold'>
+                                        className={'ml-2 mr-5 px-1 py-3 text-white font-weight-bold' +
+                                        (locationState.path === path ? ' active' : '')}>
                                         {adminMenuItems[path]?.name}
                                     </NavLink>
                                 )}
