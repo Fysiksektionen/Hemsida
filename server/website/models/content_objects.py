@@ -1,5 +1,4 @@
-from adminsortable.models import SortableMixin
-# from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from jsonfield import JSONField
@@ -14,19 +13,23 @@ CONTENT_DB_TYPES = {
 }
 
 
-class ContentObjectBase(SortableMixin, models.Model):
+class ContentObjectBase(models.Model):
     """
     Model for ContentObjects. Non-abstract since we want to query all objects on
     The objects can be related to each other in a tree structure.
     """
-    # TODO: Should we really use SortableMixin? Maybe implement our own mixin for this. Would be nice.
-    #       Issue is that stuff happen on save, which is generally not so nice.
 
     class Meta:
         verbose_name = _("base content object")
         verbose_name_plural = _("base content objects")
         ordering = ['order']
 
+    containing_page = models.ForeignKey(
+        'Page',
+        verbose_name=_('containing page'),
+        null=False, blank=False,
+        on_delete=models.CASCADE
+    )
     name = models.CharField(verbose_name=_('name'), max_length=255, null=False, blank=True, default="")
     component = models.CharField(verbose_name=_('component'), max_length=255, null=False, blank=True, default="")
 
@@ -63,11 +66,19 @@ class ContentObjectBase(SortableMixin, models.Model):
         )
 
     def clean(self):
-        """Validation of state of values in item.
+        """Raises ValidationError if:
 
-        :raises ValidationError if
-            - uniqness of
+        - Parent page and collections parent page are not the same. (containing_page != collection.containing_page)
         """
+
+        if self.collection is not None and self.containing_page != self.collection.containing_page:
+            raise ValidationError(
+                _('%(containing_page_field)s and %(containing_page_field)s of %(collection_field)s must match.'),
+                params={
+                    'containing_page_field': self._meta.get_field('containing_page').verbose_name,
+                    'collection_field': self._meta.get_field('collection').verbose_name
+                }
+            )
 
     def _get_unique_checks(self, exclude=None):
         """Add unique-checks depending on which collection type the item belongs to."""

@@ -19,6 +19,11 @@ class GroupSerializer(DBObjectSerializer):
             }
         }
 
+    def __init__(self, *args, with_users=True, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not with_users:
+            self.fields.pop('user_set')
+
     @staticmethod
     def get_group_type(obj):
         """Return human readable name instead of number for user_type"""

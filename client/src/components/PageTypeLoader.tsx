@@ -2,11 +2,11 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import pageTypeMap from '../pages/PageTypeMap';
 import PageNotFound from '../pages/PageNotFound';
-import { APIResponse } from '../types/api_responses';
 import { Page } from '../types/api_object_types';
 
 // Import fake data
 import { emptyResp, pathToResp } from '../mock_data/mock_PageTypeLoader';
+import { APIResponse } from '../types/general';
 
 export default function PageTypeLoader() {
     /**
@@ -24,10 +24,6 @@ export default function PageTypeLoader() {
     let res: APIResponse<Page>;
     if (location.pathname in pathToResp) {
         res = pathToResp[location.pathname];
-        console.log(location.pathname);
-        console.log(res);
-        console.log(res.data.pageType);
-        console.log(pageTypeMap[res.data.pageType]);
     } else {
         res = emptyResp;
     }
