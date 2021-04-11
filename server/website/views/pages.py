@@ -1,9 +1,21 @@
-from django.forms import model_to_dict
 from rest_framework import viewsets, mixins, serializers
 from utils.serializers import DBObjectSerializer
+from website.models import ContentObjectBase
 from website.models.pages import Page
 from website.selectors.content_objects import get_content_object_trees
-from website.views import content_objects
+
+
+class ContentObjectBaseSerializer(DBObjectSerializer):
+    class Meta:
+        model = ContentObjectBase
+        exclude = ['parent_page', 'collection', 'order', 'name']
+
+class TextSerializer(serializers.Serializer):
+    text = serializers.CharField(required=True, allow_blank=True)
+
+content_object_value_serializers = {
+    'text': TextSerializer
+}
 
 
 class PageSerializer(DBObjectSerializer):
@@ -28,18 +40,23 @@ class PageSerializer(DBObjectSerializer):
             }
         }
 
-    @staticmethod
-    def get_content(obj):
-        def serialize_item(item):
-            serialized_item = {}
-            print(type(item['object']))
-            print(item['object'])
-            for field in [a for a in dir(item['object']) if not a.startswith('__') and not callable(getattr(item['object'], a))]:  # här
-                print(field)
-                if field == 'items' and item['db_type'] in ['dict', 'list']:
-                    serialized_item[field] = serialize_item(item['items'])
-                else:
-                    serialized_item[field] = item['object'].field.value
+    def get_content(self, obj):
+        def serialize_item(item, get_children=True):
+            serialized_item = ContentObjectBaseSerializer(item['object'], context=self.context).data
+
+            if item['db_type'] == 'dict':
+                if get_children:
+                    serialized_item['items'] = {}
+                    for child in item['items']:
+                        serialized_item['items'][child['object'].name] = serialize_item(child)
+            elif item['db_type'] == 'list':
+                if get_children:
+                    serialized_item['items'] = []
+                    for child in item['items']:
+                        serialized_item['items'].append(serialize_item(child))
+            else:
+                serialized_item[item['db_type']] = content_object_value_serializers[item['db_type']](item['object']).data
+
             return serialized_item
 
         if obj.content_sv:
@@ -47,11 +64,9 @@ class PageSerializer(DBObjectSerializer):
             serialized_content = []
             for items in content:
                 serialized_items = serialize_item(items)
-                print(1, serialized_items)
                 serialized_content.append(serialized_items)
             return serialized_content
         else:
-            print(2)
             return None
 
 
