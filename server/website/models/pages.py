@@ -31,6 +31,9 @@ class PageDraft(models.Model):
 
 
 class Page(BasePage):
+    """
+    Model for a page.
+    """
     class Meta:
         verbose_name = _('page')
         verbose_name_plural = _('pages')

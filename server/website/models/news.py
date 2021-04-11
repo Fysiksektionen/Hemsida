@@ -30,8 +30,9 @@ class NewsDraft(models.Model):
 
 
 class News(BasePage):
-    """Model for news."""
-
+    """
+    Model for a news.
+    """
     class Meta:
         verbose_name = "news"
         verbose_name_plural = "news"

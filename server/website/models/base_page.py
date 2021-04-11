@@ -20,7 +20,6 @@ class BasePage(models.Model):
     slug = models.SlugField(verbose_name='Slug', null=True, blank=True)
     published = models.BooleanField(verbose_name=_('is published'), default=False)
     # TODO: fix publish method so timestamp is automatically updated
-
     first_published_at = models.DateField(verbose_name=_('first published at'), null=True, blank=True)
     publish_time = models.DateTimeField(verbose_name=_('publish time'), null=True, blank=True)
     unpublish_time = models.DateTimeField(verbose_name=_('unpublish time'), null=True, blank=True)
