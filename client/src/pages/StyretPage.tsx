@@ -1,6 +1,5 @@
 import React from 'react';
 import ProfileCards from '../components/styret/ProfileCardsGrid';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { MenuItem, SidebarMenu } from '../components/SidebarMenu';
 import { HEADER_HEIGHT } from './NewsFeedPage';
@@ -24,7 +23,7 @@ function StyretPage(props: ContentObject) {
 
     return (
         <SidebarMenu menuItems={menuItems}>
-            <Container className="pb-5">
+            <div className="pb-5">
                 <h1
                     id="styret-header"
                     className="pb-4"
@@ -46,7 +45,7 @@ function StyretPage(props: ContentObject) {
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, deleniti quas dolorem dolores repellat aperiam eum aut. Libero ipsa autem dolorem, atque minus, dolor dolore quis illo omnis aperiam fugit?
                     </div>
                 </Row>
-            </Container>
+            </div>
         </SidebarMenu>
     );
 }

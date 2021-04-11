@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import './ProfileCard.css';
 import { Image } from 'react-bootstrap';
@@ -18,24 +17,21 @@ export type ProfileCardInfo = {
 function ProfileCard(personInfo: ProfileCardInfo) {
     const imageAltText = personInfo.role + ' ' + personInfo.name;
     return (
-        <Container>
-            <Col>
-                <Image fluid={true} src={personInfo.imageUrl} alt={imageAltText} className={'rounded'} />
+        <Col>
+            <Image fluid={true} src={personInfo.imageUrl} alt={imageAltText} className={'rounded'} />
 
-                <div className={'pt-3'}>
-                    <h5 className={'m-0 profile-card-role'}>{personInfo.role}</h5>
-                    <div className={'py-3'}>
-                        <p className={'my-0 profile-card-name'}>{personInfo.name}</p>
-                        <p className={'my-0'}>{personInfo.yearCode}</p>
-                        <a className={'profile-card-email'} href={'mailto:' + personInfo.email}>
-                            <p className={'my-0'}> {personInfo.email} </p>
-                        </a>
-                    </div>
-                    <p>{personInfo.description}</p>
+            <div className={'pt-3'}>
+                <h5 className={'m-0 profile-card-role'}>{personInfo.role}</h5>
+                <div className={'py-3'}>
+                    <p className={'my-0 profile-card-name'}>{personInfo.name}</p>
+                    <p className={'my-0'}>{personInfo.yearCode}</p>
+                    <a className={'profile-card-email'} href={'mailto:' + personInfo.email}>
+                        <p className={'my-0'}> {personInfo.email} </p>
+                    </a>
                 </div>
-            </Col>
-        </Container>
-
+                <p>{personInfo.description}</p>
+            </div>
+        </Col>
     );
 }
 

@@ -2,7 +2,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from utils.tests import ValidationTestCase
 from website.models.content_objects import ContentObjectBase
-from website.models.pages import Page, PageDraft
+from website.models.pages import Page
+from website.tests.utils import create_test_page
 
 
 class PageTest(ValidationTestCase):
@@ -10,8 +11,9 @@ class PageTest(ValidationTestCase):
 
     def setUp(self):
         """Creation of objects"""
-        self.content_sv = ContentObjectBase()
-        self.content_en = ContentObjectBase()
+        self.parent_page = create_test_page()
+        self.content_sv = ContentObjectBase(containing_page=self.parent_page)
+        self.content_en = ContentObjectBase(containing_page=self.parent_page)
 
         self.content_sv.save()
         self.content_en.save()

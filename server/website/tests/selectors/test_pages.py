@@ -1,4 +1,4 @@
-from utils.tests import ValidationTestCase, num_queries
+from utils.tests import ValidationTestCase
 from website.models import *
 from website.selectors.pages import _get_path_page_dict, get_page_from_path
 from website.tests.utils import create_test_page
@@ -23,7 +23,7 @@ class PagesSelectorTest(ValidationTestCase):
         # Add to check for buggs regarding loose pages
         self.loose_page = create_test_page()
 
-    def test__get_path_page_dict(self):
+    def test_get_path_page_dict(self):
         """Tests the `_get_path_page_dict` method."""
         actual_dict = {
             '/' + path: id
@@ -37,7 +37,7 @@ class PagesSelectorTest(ValidationTestCase):
         }
         self.assertDictEqual(actual_dict, _get_path_page_dict())
 
-    def get_page_from_path(self):
+    def test_get_page_from_path(self):
         """Tests the `get_page_from_path` method."""
         # Clearing cache
         get_page_from_path('/', clear_cache=True)
@@ -58,6 +58,6 @@ class PagesSelectorTest(ValidationTestCase):
         self.assertEqual(self.child_1, get_page_from_path('/' + self.child_1.slug))
 
         # Check that cache works as intended (only one lookup when cached, multiple else).
-        num_queries()  # Reset count
-        self.assertNotEqual(get_page_from_path('', clear_cache=True), num_queries())
-        self.assertEqual(get_page_from_path(''), num_queries())
+        with self.assertRaises(self.failureException):
+            self.assertNumQueries(1, get_page_from_path, '', {'clear_cache': True})
+        self.assertNumQueries(1, get_page_from_path, '')

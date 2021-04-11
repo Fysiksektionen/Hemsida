@@ -49,24 +49,22 @@ export default function TextModalCOE({ show, setShow, content }: TextEditorModal
                 <Modal.Title id="text-editor">Pick an image!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Container>
-                    <Form onSubmit={onSubmit}>
-                        <Form.Group controlId="rootUrl" as={Col} md={4}>
-                            <Form.Label>Text field</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder=""
-                                defaultValue={text}
-                                onChange={(event: ChangeEvent<any>) => {
-                                    setInternalText(event.target.value);
-                                }}
-                            />
-                        </Form.Group>
-                        <Button type={'submit'} variant={'success'}>
-                            Spara
-                        </Button>
-                    </Form>
-                </Container>
+                <Form onSubmit={onSubmit}>
+                    <Form.Group controlId="rootUrl" as={Col} md={4}>
+                        <Form.Label>Text field</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder=""
+                            defaultValue={text}
+                            onChange={(event: ChangeEvent<any>) => {
+                                setInternalText(event.target.value);
+                            }}
+                        />
+                    </Form.Group>
+                    <Button type={'submit'} variant={'success'}>
+                        Submit
+                    </Button>
+                </Form>
             </Modal.Body>
             <Modal.Footer>
 
