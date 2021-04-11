@@ -8,38 +8,38 @@ export type FButtonProps = {
     version?: 'light' | 'dark';
     style?: React.CSSProperties | undefined;
     href?: string,
+    onClick?: () => void,
     props?: any;
 }
 
-export default function FButton({ text, Icon, version = 'light', style, href, ...props } : FButtonProps) {
+export default function FButton({ text, Icon, version = 'light', style, href, onClick, ...props } : FButtonProps) {
     let bgColor: string = 'white';
     let textColor: string = 'black';
     switch (version) {
     case 'light':
-        bgColor = 'var(--F-light-gray)';
+        bgColor = 'F-light-gray';
         textColor = 'black';
         break;
     case 'dark':
-        bgColor = 'var(--F-dark-gray)';
+        bgColor = 'F-dark-gray';
         textColor = 'white';
         break;
     }
     return (
         <Button
-            className={'text-center px-4 py-2 m-1'}
+            className={'text-center px-3 py-2 m-1 text-' + textColor + ' bg-' + bgColor}
             endIcon={Icon ? <Icon/> : undefined}
             style={{
-                backgroundColor: bgColor,
-                color: textColor,
                 minWidth: '8rem',
                 textTransform: 'none',
                 fontWeight: 'bold',
                 ...style
             }}
+            onClick={onClick}
             href={href}
             {...props}
         >
-            {text}
+            <div>{text}</div>
         </Button>
     );
 }
