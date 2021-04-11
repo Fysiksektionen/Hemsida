@@ -11,8 +11,8 @@ import { NewsPageMinimal } from '../types/news';
 export const DummyData : NewsPageMinimal[] = [
     {
         id: 1,
-        name: '',
         detailUrl: '',
+        name: '',
         image: { id: 1, detailUrl: '', href: newsPlaceholderImage1 },
         title: 'Nyhet om fem unga fysiker som sitter och sjunger',
         preamble: 'Some news text here',
@@ -20,8 +20,8 @@ export const DummyData : NewsPageMinimal[] = [
     },
     {
         id: 2,
-        name: '',
         detailUrl: '',
+        name: '',
         image: { id: 2, detailUrl: '', href: newsPlaceholderImage2 },
         title: 'Nyhet om fem unga fysiker som sitter och sjunger',
         preamble: 'Some news text here',
@@ -29,8 +29,8 @@ export const DummyData : NewsPageMinimal[] = [
     },
     {
         id: 3,
-        name: '',
         detailUrl: '',
+        name: '',
         image: { id: 3, detailUrl: '', href: newsPlaceholderImage3 },
         title: 'En nyhet som ingen kommer att läsa',
         preamble: 'Some news text here',

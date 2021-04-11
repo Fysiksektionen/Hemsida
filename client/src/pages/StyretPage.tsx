@@ -3,11 +3,11 @@ import ProfileCards from '../components/styret/ProfileCardsGrid';
 import Row from 'react-bootstrap/Row';
 import { MenuItem, SidebarMenu } from '../components/SidebarMenu';
 import { HEADER_HEIGHT } from './NewsFeedPage';
-import { PageComponentProps } from '../types/general';
 import { dummyCards } from '../mock_data/mock_StyretPage';
+import { ContentObject } from '../types/api_object_types';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function StyretPage(props: PageComponentProps) {
+function StyretPage(props: ContentObject) {
     const menuItems: MenuItem[] = [
         {
             id: 'styret',

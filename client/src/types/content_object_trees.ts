@@ -4,14 +4,14 @@ import { ContentDict, ContentImage, ContentList, ContentText } from './api_objec
  * File defining content trees.
  */
 
-export type SiteHeaderContentTree = ContentDict & {
+export type SiteHeaderCT = ContentDict & {
     items: {
         name: ContentText,
         logo: ContentImage
     }
 }
 
-export type SiteFooterContentTree = ContentDict & {
+export type SiteFooterCT = ContentDict & {
     items: {
         webmaster: ContentText,
         currYear: ContentText,
@@ -19,16 +19,25 @@ export type SiteFooterContentTree = ContentDict & {
     }
 }
 
-export type FrontPageContentTree = ContentDict & {
+export type OrangeInfoBoxCT = ContentDict & {
+    attributes: {
+        color: string
+    },
+    items: {
+        title: ContentText,
+        text: ContentText,
+        button: ContentText & {
+            attributes: {
+                link: string
+            }
+        }
+    }
+}
+
+export type FrontPageCT = ContentDict & {
     items: {
         orangeBoxes: ContentList & {
-            items: (ContentDict & {
-                items: {
-                    title: ContentText,
-                    text: ContentText,
-                    actionBtnText: ContentText
-                }
-            })[]
+            items: OrangeInfoBoxCT[]
         },
         sponsorLogo: ContentImage
     }

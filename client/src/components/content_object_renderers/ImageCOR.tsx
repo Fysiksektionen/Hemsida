@@ -1,9 +1,11 @@
-import React, { ImgHTMLAttributes, useContext, useState } from 'react';
-import { ContentObjectTreeContext, EditorialModeContext } from '../../contexts';
-import ImagePickerCOE from '../content_object_editors/ImagePickerCOE';
+import React, { useState } from 'react';
+import { EditorialModeContext } from '../../contexts';
+import ImagePickerModalCOE from '../content_object_editors/ImagePickerModalCOE';
 import { ContentImage } from '../../types/api_object_types';
+import { Image } from 'react-bootstrap';
+import { ImageProps } from 'react-bootstrap/Image';
 
-type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
+type ImageCOProps = ImageProps & React.RefAttributes<HTMLImageElement> & {
     imageCO: ContentImage,
 }
 
@@ -13,21 +15,15 @@ type ImageCOProps = ImgHTMLAttributes<HTMLImageElement> & {
  */
 export default function ImageCOR(props: ImageCOProps) {
     const [showModal, setShowModal] = useState(false);
-    const contentTreeDispatcher = useContext(ContentObjectTreeContext);
-
-    function updateImageHook(imgHref: string) {
-        const newImage = { ...props.imageCO, image: { ...props.imageCO.image, href: imgHref } };
-        contentTreeDispatcher({ id: props.imageCO.id, value: newImage });
-    }
 
     return (
         <EditorialModeContext.Consumer>
             {editing =>
                 <div>
-                    <ImagePickerCOE show={showModal} setImage={updateImageHook} setShow={setShowModal} />
-                    <img
+                    <ImagePickerModalCOE content={props.imageCO} show={showModal} setShow={setShowModal} />
+                    <Image
                         src={props.imageCO.image.href}
-                        {...(props as ImgHTMLAttributes<HTMLImageElement>)}
+                        {...(props as (ImageProps & React.RefAttributes<HTMLImageElement>))}
                         onClick={editing ? () => { setShowModal(true); } : () => {}}
                     />
                 </div>

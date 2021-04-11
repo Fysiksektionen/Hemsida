@@ -1,22 +1,22 @@
 import React, { MouseEvent, useContext, useState } from 'react';
 import {
-    ContentObjectTreeContext,
+    ContentTreeContext,
     EditorialModeContext,
     LocaleContext,
     locales,
-    useContentTreeReducer
+    useCTReducer
 } from '../../../contexts';
 import Footer from '../../Footer';
-import { SiteFooterContentTree } from '../../../types/content_object_trees';
+import { SiteFooterCT } from '../../../types/content_object_trees';
 import { Button, Col, Row } from 'react-bootstrap';
 import LocaleSelector from '../../LocaleSelector';
 
 export type FooterEditorProps = {
-    footerContentInitial: {sv: SiteFooterContentTree, en: SiteFooterContentTree},
+    footerContentInitial: {sv: SiteFooterCT, en: SiteFooterCT},
 }
 
 /**
- * Component providing editing behaviour of Footer component. Uses the ContentTreeReducer and
+ * Component providing editing behaviour of Footer component. Uses the CTReducer and
  * EditorialModeContext to enable the built-it editing behaviour in the Footer component.
  * @param footerContentInitial: Initial state of the content tree.
  */
@@ -26,7 +26,7 @@ export default function FooterEditor({ footerContentInitial }: FooterEditorProps
     const globalLocale = useContext(LocaleContext);
     const [footerLocale, setFooterLocale] = useState(globalLocale);
 
-    const [content, dispatch] = useContentTreeReducer({
+    const [content, dispatch] = useCTReducer({
         content: footerLocale === locales.sv ? footerContent.content.sv : footerContent.content.en,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         postDispatchHook: (action, newState) => {
@@ -41,12 +41,12 @@ export default function FooterEditor({ footerContentInitial }: FooterEditorProps
     function saveContent(event: MouseEvent) {
         footerLocale === locales.sv
             ? setFooterContent({
-                content: { ...footerContent.content, sv: content as SiteFooterContentTree },
+                content: { ...footerContent.content, sv: content as SiteFooterCT },
                 hasChanged: false
             }
             )
             : setFooterContent({
-                content: { ...footerContent.content, en: content as SiteFooterContentTree },
+                content: { ...footerContent.content, en: content as SiteFooterCT },
                 hasChanged: false
             }
             );
@@ -66,11 +66,11 @@ export default function FooterEditor({ footerContentInitial }: FooterEditorProps
                 <LocaleContext.Provider value={footerLocale}>
                     <EditorialModeContext.Provider value={true}>
                         {/* eslint-disable @typescript-eslint/no-unused-vars */}
-                        <ContentObjectTreeContext.Provider value={dispatch}>
+                        <ContentTreeContext.Provider value={dispatch}>
                             <div className="border border-dark col-12 px-0">
-                                <Footer content={content as SiteFooterContentTree}/>
+                                <Footer content={content as SiteFooterCT}/>
                             </div>
-                        </ContentObjectTreeContext.Provider>
+                        </ContentTreeContext.Provider>
                     </EditorialModeContext.Provider>
                 </LocaleContext.Provider>
             </Row>
