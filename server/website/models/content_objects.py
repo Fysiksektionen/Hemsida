@@ -24,6 +24,9 @@ class ContentObjectBase(models.Model):
         verbose_name_plural = _("base content objects")
         ordering = ['order']
 
+    class ObjectMeta:
+        detail_view_name = 'api:website:content-detail'
+
     parent_page = models.ForeignKey(
         'Page',
         verbose_name=_('containing page'),
@@ -68,7 +71,8 @@ class ContentObjectBase(models.Model):
     def clean(self):
         """Raises ValidationError if:
 
-        - Parent page and collections parent page are not the same. (parent_page != collection.parent_page)
+        :raises ValidationError if
+            - uniqness of
         """
 
         if self.collection is not None and self.parent_page != self.collection.parent_page:
