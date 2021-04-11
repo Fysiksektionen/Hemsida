@@ -1,7 +1,7 @@
 import React, { createElement, useState } from 'react';
 import '../../index.css';
 import { Col, Container, Image, Navbar, NavLink, Row } from 'react-bootstrap';
-import { AdminPageProps } from '../../types/admin_components';
+import { AdminLocation, AdminPageProps } from '../../types/admin_components';
 import PagesAdminPage from './pages/Pages';
 import UsersAdminPage from './users/Users';
 import NewsAdminPage from './news_events/NewsEvents';
@@ -78,8 +78,9 @@ export default function Admin() {
      * an object of the GET-parameters.
      * @param path The path currently visited (relative to '/admin/').
      * @param searchString The get parameters given in path by the search parameter.
+     * @returns object of type {path: string, getParams: NodeJS.Dict<string|undefined>>}
      */
-    function getAdminPagePropsFromPath(path: string, searchString: string): AdminPageProps {
+    function getPathAndGetParams(path: string, searchString: string) {
         // Remove leading ?
         if (searchString.length > 0 && searchString[0] === '?') {
             searchString = searchString.substring(1);
@@ -88,7 +89,7 @@ export default function Admin() {
         const splitArgs = searchString.split('&');
 
         // For each element, if it has value, use that. Else just set the key with undefined.
-        const getParamsReturn: NodeJS.Dict<string | undefined> = {};
+        const getParamsReturn: NodeJS.Dict<string> = {};
         splitArgs.forEach((item) => {
             if (item.includes('=')) {
                 const [key, val] = item.split('=', 2);
@@ -106,8 +107,16 @@ export default function Admin() {
         return { path: path, getParams: getParamsReturn };
     }
 
-    const adminPageProps = getAdminPagePropsFromPath(window.location.pathname, window.location.search);
-    const [state, setState] = useState(adminPageProps.path);
+    const pathAndGetParams = getPathAndGetParams(window.location.pathname, window.location.search);
+    const [locationState, setLocationState] = useState<AdminLocation>(pathAndGetParams);
+
+    const adminPageProps = {
+        ...pathAndGetParams,
+        setLocationHook: (props: AdminLocation) => {
+            setAddressField(props);
+            setLocationState(props);
+        }
+    };
 
     /**
      * Changed the address bar and the component state on menu selection.
@@ -115,13 +124,13 @@ export default function Admin() {
      */
     function navOnSelect(key: (string | null)) {
         if (key !== null) {
-            const params = { path: key, getParams: adminMenuItems[key]?.getParams };
+            const params = { path: key, getParams: adminMenuItems[key]?.getParams || {} };
             setAddressField(params);
-            setState(params.path);
+            setLocationState({ path: params.path, getParams: {} });
         }
     }
 
-    const adminMenuItem = adminMenuItems[state];
+    const adminMenuItem = adminMenuItems[locationState.path];
     const adminComponent = (adminMenuItem !== undefined) ? adminMenuItem.component : null;
 
     return (

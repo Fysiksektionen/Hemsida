@@ -14,9 +14,10 @@ import PageTypeLoader from '../../PageTypeLoader';
 import { emptyPage } from '../../../mock_data/pages/mock_PageTypeLoader';
 import LocaleSelector from '../../LocaleSelector';
 import PageMetaForm from './PageMetaForm';
+import { AdminLocation } from '../../../types/admin_components';
 
 type PageEditorProps = {
-    setPagesLocation: (props: NodeJS.Dict<string>) => void;
+    setLocationHook: (props: AdminLocation) => void,
     id: string,
     page?: Page,
 }
@@ -28,7 +29,7 @@ type PageEditorProps = {
  * @param page: The page object. Can be passed if already fetched.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PageEditor({ setPagesLocation, id, page }: PageEditorProps) {
+export default function PageEditor({ setLocationHook, id, page }: PageEditorProps) {
     // If we dont have page data, get page (mock data for now)
     if (page === undefined) {
         page = emptyPage;
@@ -86,7 +87,7 @@ export default function PageEditor({ setPagesLocation, id, page }: PageEditorPro
                     <Col xs={10} xl={8} className='pl-5'>
                         {/* Title and save */}
                         <Row className='mx-2 mb-4 justify-content-between'>
-                            <h1 className='font-weight-bolder'>Redigera sida</h1>
+                            <h1>Redigera sida</h1>
                             <div className='d-flex flex-row'>
                                 <div className='my-auto'>
                                     Språk: <LocaleSelector localeState={pageLocale} setLocaleHook={setPageLocale}/>

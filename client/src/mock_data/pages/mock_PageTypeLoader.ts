@@ -43,6 +43,10 @@ export const emptyResp = { code: 404, data: emptyPage };
 
 export const pathToResp: { [key: string]: APIResponse<Page> } = {
     '/': { code: 200, data: frontpage },
+    '/start': { code: 200, data: frontpage },
+    '/index': { code: 200, data: frontpage },
+    '/hem': { code: 200, data: frontpage },
+    '/home': { code: 200, data: frontpage },
     '/styret': { code: 200, data: styret },
     '/nyheter': { code: 200, data: newsFeed },
     '/newsarticle': { code: 200, data: newsArticle }

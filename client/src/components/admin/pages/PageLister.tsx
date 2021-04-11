@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Form, FormControl, Col, Row, Card } from 'react-bootstrap';
+import { Form, FormControl, Col, Row, Card, Container } from 'react-bootstrap';
 import callApi from '../call_api_temp';
 import { APIResponse } from '../../../types/general';
 import { Page } from '../../../types/api_object_types';
+import { AdminLocation } from '../../../types/admin_components';
 
 type PageListerProps = {
-    setPagesLocation: (props: NodeJS.Dict<string>) => void;
+    setLocationHook: (props: AdminLocation) => void
 }
 
 /**
  * Component that lists all pages and allows for filtering and search behaviour.
  * @param setPagesLocation: Hook to be able to change the location within the pages Admin-app.
  */
-export default function PageLister({ setPagesLocation }: PageListerProps) {
+export default function PageLister({ setLocationHook }: PageListerProps) {
     const [allPages, setAllPages] = useState<Page[]>();
     const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -23,7 +24,7 @@ export default function PageLister({ setPagesLocation }: PageListerProps) {
     const pagesFiltered = searchTerm === '' ? allPages : allPages?.filter(page => page.name.includes(searchTerm));
 
     return (
-        <div className="px-4 pt-4">
+        <Container className="pt-5">
             <h1>Sidor</h1>
             <Row className={'mt-5 mb-2 d-flex justify-content-end'}>
                 <Form inline className={'col-4'}>
@@ -60,7 +61,9 @@ export default function PageLister({ setPagesLocation }: PageListerProps) {
                                             index % 2 === 0 ? ' bg-F-light-gray' : ' bg-F-super-light-gray'
                                         )}
                                         key={index}
-                                        onClick={() => setPagesLocation({ id: page.id.toString() })}
+                                        onClick={() => setLocationHook({
+                                            path: 'pages/', getParams: { id: page.id.toString() }
+                                        })}
                                     >
                                         <Col xs={6} xl={5}>
                                             {page.name}
@@ -81,6 +84,6 @@ export default function PageLister({ setPagesLocation }: PageListerProps) {
                     </Card>
                 </Col>
             </Row>
-        </div>
+        </Container>
     );
 }

@@ -89,7 +89,7 @@ export default function SettingsAdminPage(props: AdminPageProps) {
     };
 
     return (
-        <Container className='pt-4'>
+        <Container className='pt-5'>
             <h1>Settings</h1>
             <hr />
             <Form noValidate validated={validated} onSubmit={handleSubmit}>

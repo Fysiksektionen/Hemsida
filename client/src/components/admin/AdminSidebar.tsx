@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes, HTMLAttributes, PropsWithChildren } from 'react';
+import React, { HTMLAttributes, PropsWithChildren } from 'react';
 import { Col } from 'react-bootstrap';
 
 export default function AdminSidebar(props: PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {side: 'right'|'left'}) {

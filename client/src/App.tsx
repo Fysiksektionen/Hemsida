@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Locale, LocaleContext, locales } from './contexts';
-import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
@@ -11,7 +10,6 @@ import './App.css';
 
 // Import fake data
 import { mockSiteResp } from './mock_data/mock_site_response';
-import { frontpage } from './mock_data/pages/1_frontpage';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
@@ -35,15 +33,7 @@ function App() {
                                 : siteData.headerContentEn
                         } setLocale={setLocale} />}
                         <div className="content">
-                            <Switch>
-                                {/* Frontpage should maybe be included in the dynamic page loader,
-                                    but left here for illustrative purposes of non-dynamic loading of
-                                    components (i.e. login, admin, etc.). */}
-                                <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                                    <Frontpage {...(locale === locales.sv ? frontpage.contentSv : frontpage.contentEn)} />
-                                </Route>
-                                <Route component={PageTypeLoader}/>
-                            </Switch>
+                            <PageTypeLoader />
                         </div>
                         {siteData &&
                         <Footer content={

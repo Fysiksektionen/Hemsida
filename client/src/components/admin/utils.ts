@@ -1,5 +1,3 @@
-import { AdminPageProps } from '../../types/admin_components';
-
 export const adminRootPath = '/admin/';
 
 /**
@@ -32,7 +30,7 @@ export function getGETParamsStringFromObject(getParamsObj?: NodeJS.Dict<string|n
  * @param path: Path relative to adminRootPath to display and set.
  * @param getParams: Object to translate into GET-parameters in the URL-field.
  */
-export function setAddressField({ path, getParams }: AdminPageProps) {
+export function setAddressField({ path, getParams }: {path: string, getParams: NodeJS.Dict<string|undefined>}) {
     const getParamsString = getGETParamsStringFromObject(getParams);
     const fullUrl = window.location.origin + adminRootPath + path;
     window.history.replaceState(
