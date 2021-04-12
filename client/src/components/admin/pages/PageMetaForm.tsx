@@ -22,7 +22,7 @@ export default function PageMetaForm(props: {page: Page, setPageHook: (page: Pag
                         }}
                     />
                 </Form.Group>
-                <Form.Group controlId="slug" as={Col} md={4}>
+                <Form.Group controlId="pageType" as={Col} md={4}>
                     <Form.Label>Page type</Form.Label>
                     <Form.Control
                         as='select'

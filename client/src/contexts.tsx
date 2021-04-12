@@ -35,6 +35,15 @@ export const EditorialModeContext = React.createContext<boolean>(
     false // Default
 );
 
+type AddIdDispatchAction = {
+    id?: number
+};
+
+export const ContentTreeAddIdContext = React.createContext<{ id: number, decrementHook: React.Dispatch<AddIdDispatchAction> }>(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    { id: -1, decrementHook: ({ id }) => {} } // Default
+);
+
 /**
  * ContentObjectTree related providers and contexts.
  * =================================================
@@ -112,6 +121,14 @@ function CTReducer(state: ContentObject, action: CTDispatchAction) {
     return replaceAtId(state, action.id, action.value).value;
 }
 
+function decrementOrResetReducer(prevState: number, action: AddIdDispatchAction) {
+    if (action.id !== undefined) {
+        return action.id;
+    } else {
+        return prevState - 1;
+    }
+}
+
 type UseCTReducerProps = {
     content: ContentObject
     preDispatchHook?: (action: CTDispatchAction) => void,
@@ -125,14 +142,16 @@ type UseCTReducerProps = {
  * Note! When props.content.id is changed (aka) the state of the Reducer is updated and current state is lost!
  * See to it that the state is saved in a place where you want it with help of the pre and post hooks.
  */
-export function useCTReducer(props: UseCTReducerProps): [ContentObject, React.Dispatch<CTDispatchAction>] {
+export function useCTReducer(props: UseCTReducerProps): [ContentObject, React.Dispatch<CTDispatchAction>, number, React.Dispatch<AddIdDispatchAction>] {
     const [state, dispatch] = React.useReducer(CTReducer, props.content);
     const [latestPropsId, setLatestPropsId] = useState(props.content.id); // Save latest props.id
+    const [addId, decrementIdHook] = React.useReducer(decrementOrResetReducer, -1);
 
     // If top-level id has changed, replace entire state. (Happens when language is changed or when a new page is loaded)
     if (latestPropsId !== props.content.id) {
         dispatch({ id: latestPropsId, value: props.content });
         setLatestPropsId(props.content.id);
+        decrementIdHook({ id: -1 });
     }
 
     // Create new dispatch wrapping the real dispatch in pre and post hooks.
@@ -146,5 +165,5 @@ export function useCTReducer(props: UseCTReducerProps): [ContentObject, React.Di
         }
     }
 
-    return [state, wrappedDispatch];
+    return [state, wrappedDispatch, addId, decrementIdHook];
 }

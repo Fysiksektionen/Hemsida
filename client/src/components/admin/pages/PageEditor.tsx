@@ -4,6 +4,7 @@ import callApi from '../call_api_temp';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 import PageNotFound from '../../../pages/PageNotFound';
 import {
+    ContentTreeAddIdContext,
     ContentTreeContext,
     EditorialModeContext,
     LocaleContext,
@@ -47,7 +48,7 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
     // Use the CTReducer to allow for child components to update the content tree.
     // Use this state when passing down content to children.
     // Alter postDispatchHook so that any updates to tree triggers an hasChanged=True state change.
-    const [content, dispatch] = useCTReducer({
+    const [content, dispatch, addId, decrementAddIdHook] = useCTReducer({
         content: pageLocale === locales.sv ? pageData.page?.contentSv : pageData.page?.contentEn,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         postDispatchHook: () => {
@@ -138,7 +139,12 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
                             <LocaleContext.Provider value={pageLocale}>
                                 <EditorialModeContext.Provider value={true}>
                                     <ContentTreeContext.Provider value={dispatch}>
-                                        <PageTypeLoader page={pageWithNewContent} />
+                                        <ContentTreeAddIdContext.Provider value={{
+                                            id: addId,
+                                            decrementHook: decrementAddIdHook
+                                        }}>
+                                            <PageTypeLoader page={pageWithNewContent} />
+                                        </ContentTreeAddIdContext.Provider>
                                     </ContentTreeContext.Provider>
                                 </EditorialModeContext.Provider>
                             </LocaleContext.Provider>

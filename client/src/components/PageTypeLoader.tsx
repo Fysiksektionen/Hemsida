@@ -41,7 +41,7 @@ export default function PageTypeLoader({ page } : PageTypeLoaderProps) {
         return (
             <LocaleContext.Consumer>
                 {locale =>
-                    <div id="dynamic_page_content">
+                    <div id="dynamic_page_content" className='w-100'>
                         {
                             page !== undefined
                                 ? pageTypeMap[page.pageType]((locale === locales.sv ? page.contentSv : page.contentEn))
