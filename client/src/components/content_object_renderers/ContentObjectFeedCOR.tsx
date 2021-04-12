@@ -6,7 +6,6 @@ import { ContentImage, ContentText } from '../../types/api_object_types';
 import { Col, Image, Row } from 'react-bootstrap';
 
 import parse from 'html-react-parser';
-import ImageCOR from './ImageCOR';
 
 function FeedTextCOR({ content }: {content: ContentText}) {
     const textContent = (content.attributes as NodeJS.Dict<string>).isHTML ? parse(content.text) : content.text;
@@ -28,7 +27,7 @@ function FeedTextCOR({ content }: {content: ContentText}) {
     if (retObj !== undefined) {
         return <Row>{retObj}</Row>;
     } else {
-        return <Row></Row>;
+        return <Row/>;
     }
 }
 

@@ -7,6 +7,6 @@ export type ContentObjectFeedCOEProps = {
 
 export default function ContentObjectFeedCOE({ content }: ContentObjectFeedCOEProps) {
     return (
-        <div>Edit!</div>
+        <div>{content}</div>
     );
 }
