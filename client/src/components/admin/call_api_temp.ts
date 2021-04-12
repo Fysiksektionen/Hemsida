@@ -39,6 +39,12 @@ const apiPathToResp: NodeJS.Dict<{response: APIResponse<any>}> = {
             code: 200,
             data: mockPageResp.data[2]
         }
+    },
+    'pages/4/': {
+        response: {
+            code: 200,
+            data: mockPageResp.data[3]
+        }
     }
 };
 

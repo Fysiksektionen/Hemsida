@@ -42,3 +42,12 @@ export type FrontPageCT = ContentDict & {
         sponsorLogo: ContentImage
     }
 }
+
+export type ContentObjectFeed = ContentList;
+
+export type NamndPageCT = ContentDict & {
+    items: {
+        title: ContentText,
+        content: ContentObjectFeed
+    }
+}

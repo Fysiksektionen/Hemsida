@@ -2,6 +2,7 @@ import StyretPage from './StyretPage';
 import NewsFeedPage from './NewsFeedPage';
 import { PageComponent } from '../types/general';
 import Frontpage from './Frontpage';
+import NamndPage from './NamndPage';
 
 /**
  * Dictionary mapping a page_type string to a page component.
@@ -11,7 +12,8 @@ import Frontpage from './Frontpage';
 const pageTypeMap: { [key: string]: PageComponent } = {
     frontpage: Frontpage,
     styret: StyretPage,
-    news_feed: NewsFeedPage
+    news_feed: NewsFeedPage,
+    namnd: NamndPage
 };
 
 export default pageTypeMap;

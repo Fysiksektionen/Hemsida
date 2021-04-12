@@ -86,7 +86,7 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
                 <Row className='justify-content-center'>
                     <Col xs={10} xl={8} className='pl-5'>
                         {/* Title and save */}
-                        <Row className='mx-2 mb-4 justify-content-between'>
+                        <Row className='mb-4 justify-content-between'>
                             <h1>Redigera sida</h1>
                             <div className='d-flex flex-row'>
                                 <div className='my-auto'>

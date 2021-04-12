@@ -8,12 +8,14 @@ import { Page } from '../../types/api_object_types';
 import { frontpage } from './1_frontpage';
 import { styret } from './2_styret';
 import { newsFeed } from './3_news_feed';
+import { fcomPage } from './5_fcom';
 
 export const mockPageResp: APIResponse<Page[]> = {
     code: 200,
     data: [
         frontpage,
         styret,
-        newsFeed
+        newsFeed,
+        fcomPage
     ]
 };

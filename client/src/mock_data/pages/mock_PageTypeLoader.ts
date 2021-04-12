@@ -7,6 +7,7 @@ import { frontpage } from './1_frontpage';
 import { styret } from './2_styret';
 import { newsFeed } from './3_news_feed';
 import { newsArticle } from './4_newsarticle';
+import { fcomPage } from './5_fcom';
 
 export const emptyPage: Page = {
     id: 1,
@@ -49,5 +50,6 @@ export const pathToResp: { [key: string]: APIResponse<Page> } = {
     '/home': { code: 200, data: frontpage },
     '/styret': { code: 200, data: styret },
     '/nyheter': { code: 200, data: newsFeed },
-    '/newsarticle': { code: 200, data: newsArticle }
+    '/newsarticle': { code: 200, data: newsArticle },
+    '/fcom': { code: 200, data: fcomPage }
 };
