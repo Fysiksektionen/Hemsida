@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContentObject } from '../types/api_object_types';
-import { NamndPageCT } from '../types/content_object_trees';
-import ContentObjectFeedCOR from '../components/content_object_renderers/ContentObjectFeedCOR';
+import { NamndPageCT } from '../types/content_objects/pages/namnd';
+import BlockFeedCOR from '../components/content_object_renderers/blocks/BlockFeedCOR';
 import TextCOR from '../components/content_object_renderers/TextCOR';
 import { Col, Container, Row } from 'react-bootstrap';
 
@@ -18,7 +18,7 @@ export default function NamndPage(props: ContentObject) {
                         </h1>
                     </Row>
                     <Row>
-                        <ContentObjectFeedCOR content={content.items.content} />
+                        <BlockFeedCOR content={content.items.content} />
                     </Row>
                 </Col>
             </Row>

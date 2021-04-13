@@ -7,7 +7,7 @@ import {
     useCTReducer
 } from '../../../contexts';
 import Header from '../../Header';
-import { SiteHeaderCT } from '../../../types/content_object_trees';
+import { SiteHeaderCT } from '../../../types/content_objects/content_object_trees';
 import { Button, Col, Row } from 'react-bootstrap';
 import LocaleSelector from '../../LocaleSelector';
 

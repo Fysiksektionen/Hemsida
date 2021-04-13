@@ -1,4 +1,4 @@
-import { NamndPageCT } from '../../types/content_object_trees';
+import { NamndPageCT } from '../../types/content_objects/pages/namnd';
 import fcom from '../../mediafiles/placeholder_images/Fcom-ikoner.png';
 
 export const fcomPage = {
@@ -40,6 +40,7 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'image',
                         attributes: {
+                            blockType: 'image',
                             alignment: 'center',
                             width: '100%'
                         },
@@ -54,7 +55,8 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            size: 3
+                            blockType: 'heading',
+                            size: 2
                         },
                         text: 'Om Kommunikationsnämnden Fcom'
                     },
@@ -63,7 +65,7 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            isHTML: true
+                            blockType: 'richText'
                         },
                         text: 'Fysiksektionens Kommunikationsnämnd, även kallad <b>Fcom</b>, arbetar med att stödja' +
                             ' sektionen inom allt som är kommunikationsrelaterat. Vår huvuduppgift är att' +
@@ -79,6 +81,7 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
+                            blockType: 'heading',
                             size: 3
                         },
                         text: 'Engagera dig'
@@ -88,7 +91,7 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            isHTML: true
+                            blockType: 'richText'
                         },
                         text: 'Har du varit <b>intresserad</b> av att engagera dig i Fysiksektionen, men känt att tiden' +
                             ' inte riktigt räcker till? Då erbjuder Fcom ett ypperligt tillfälle att prova på att' +
@@ -127,6 +130,7 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'image',
                         attributes: {
+                            blockType: 'image',
                             alignment: 'center',
                             width: '100%'
                         },
@@ -140,7 +144,9 @@ export const fcomPage = {
                         id: 25,
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
-                        attributes: {},
+                        attributes: {
+                            blockType: 'richText'
+                        },
                         text: 'Some info'
                     }
                 ]

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
 import { ContentTreeContext } from '../../contexts';
-import { OrangeInfoBoxCT } from '../../types/content_object_trees';
+import { OrangeInfoBoxCT } from '../../types/content_objects/pages/frontpage';
 
 export type InfoBoxData = {
     color: string,

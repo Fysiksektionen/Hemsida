@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, SvgIconTypeMap } from '@material-ui/core';
 import { FButtonProps } from './FButton';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
-import { on } from 'cluster';
 
 type FLargeIconButtonProps = FButtonProps & {
     Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;

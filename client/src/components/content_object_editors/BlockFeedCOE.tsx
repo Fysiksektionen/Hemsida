@@ -1,35 +1,49 @@
 import React, { useContext } from 'react';
-import { ContentImage, ContentList, ContentObject, ContentText } from '../../types/api_object_types';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
-import { ContentObjectFeed } from '../../types/content_object_trees';
+import { Block, BlockFeed, BlockType, HeaderBlock, ImageBlock, RichTextBlock } from '../../types/content_objects/blocks';
 import { Popover } from '@material-ui/core';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import FLargeIconButton from '../f-styled/buttons/FLargeIconButton';
-import TextCOR from '../content_object_renderers/TextCOR';
-import ImageCOR from '../content_object_renderers/ImageCOR';
+import { BlockToBlockCOR } from '../content_object_renderers/blocks/BlockFeedCOR';
 
-type BlockType = 'text' | 'image'
-const defaultBlocks: {[key: string]: ContentObject} = {
-    text: {
+const defaultBlocks: {[key: string]: Block} = {
+    heading: {
         id: -1,
         detailUrl: '',
         dbType: 'text',
-        attributes: {},
-        text: 'New item: -1'
-    } as ContentText,
+        attributes: {
+            blockType: 'heading',
+            size: 1
+        },
+        text: 'Heading'
+    } as HeaderBlock,
+    richText: {
+        id: -1,
+        detailUrl: '',
+        dbType: 'text',
+        attributes: {
+            blockType: 'richText'
+        },
+        text: 'Some text'
+    } as RichTextBlock,
     image: {
         id: -1,
         detailUrl: '',
         dbType: 'image',
-        attributes: {},
+        attributes: {
+            blockType: 'image',
+            alignment: 'center',
+            width: '100%'
+        },
         image: {
             id: -1,
             detailUrl: '',
             href: ''
         }
-    } as ContentImage
+    } as ImageBlock
 };
 
 /**
@@ -38,12 +52,12 @@ const defaultBlocks: {[key: string]: ContentObject} = {
  * @param ListCO The CO containing list of feed as items.
  * @constructor
  */
-function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: ContentObjectFeed }) {
+function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: BlockFeed }) {
     const dispatch = useContext(ContentTreeContext);
     const addIdState = useContext(ContentTreeAddIdContext);
 
     function add(blockType: BlockType) {
-        const newBlock = defaultBlocks[blockType] as ContentObject;
+        const newBlock = defaultBlocks[blockType];
         newBlock.id = addIdState.id;
         addIdState.decrementHook({});
 
@@ -52,7 +66,7 @@ function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: ContentObjec
         };
         const items = FeedCO.items.slice(0, index + 1);
         items.push(newBlock);
-        newCOFeed.items = items.concat(FeedCO.items.slice(index + 1, undefined));
+        newCOFeed.items = items.concat(FeedCO.items.slice(index + 1, undefined)) as Block[];
 
         dispatch({ id: FeedCO.id, value: newCOFeed });
     }
@@ -96,7 +110,10 @@ function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: ContentObjec
                 <Container>
                     <Row>
                         <Col>
-                            <FLargeIconButton text='Text' Icon={TextFieldsIcon} onClick={() => add('text')}/>
+                            <FLargeIconButton text='Heading' Icon={TextFieldsIcon} onClick={() => add('heading')}/>
+                        </Col>
+                        <Col>
+                            <FLargeIconButton text='Rich text' Icon={FormatAlignLeftIcon} onClick={() => add('richText')}/>
                         </Col>
                         <Col>
                             <FLargeIconButton text='Image' Icon={ImageIcon} onClick={() => add('image')}/>
@@ -108,11 +125,11 @@ function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: ContentObjec
     );
 }
 
-export type ContentObjectFeedCOEProps = {
-    content: ContentList
+export type BlockFeedCOEProps = {
+    content: BlockFeed
 }
 
-export default function ContentObjectFeedCOE({ content }: ContentObjectFeedCOEProps) {
+export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
     const dispatch = useContext(ContentTreeContext);
 
     function deleteBlock(index: number) {
@@ -120,7 +137,7 @@ export default function ContentObjectFeedCOE({ content }: ContentObjectFeedCOEPr
             ...content
         };
         const items = content.items.slice(0, index);
-        newCOFeed.items = items.concat(content.items.slice(index + 1, undefined));
+        newCOFeed.items = items.concat(content.items.slice(index + 1, undefined)) as Block[];
 
         dispatch({ id: content.id, value: newCOFeed });
     }
@@ -131,12 +148,7 @@ export default function ContentObjectFeedCOE({ content }: ContentObjectFeedCOEPr
                 <AddBlockButton index={-1} FeedCO={content} />
             </Row>
             {content.items.map((obj, index) => {
-                let objectRender = <></>;
-                if (obj.dbType === 'text') {
-                    objectRender = <TextCOR textCO={obj} />;
-                } else if (obj.dbType === 'image') {
-                    objectRender = <ImageCOR imageCO={obj} className='w-100' />;
-                }
+                const objectRender = <BlockToBlockCOR block={obj} />;
 
                 return (
                     <>

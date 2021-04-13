@@ -5,6 +5,8 @@
 import React from 'react';
 import { ContentObject } from './api_object_types';
 
+export type ChangeKeyType<T, K extends keyof T, U> = Omit<T, K> & { [k in K]: U };
+
 export type PageComponent = React.FunctionComponent<ContentObject>;
 
 // TODO: Change object to content object

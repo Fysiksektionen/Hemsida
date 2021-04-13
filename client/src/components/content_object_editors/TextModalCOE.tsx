@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import { Col, Modal, Form, Button } from 'react-bootstrap';
 import { ContentTreeContext } from '../../contexts';
 import { ContentText } from '../../types/api_object_types';
@@ -18,6 +18,9 @@ type TextEditorModalProps = {
 export default function TextModalCOE({ show, setShow, content }: TextEditorModalProps) {
     // Internal state during edit
     const [text, setInternalText] = useState(content.text);
+    useEffect(() => {
+        setInternalText(content.text);
+    }, [content.text]);
 
     // Use context to get the dispatcher function
     const CTDispatcher = useContext(ContentTreeContext);
@@ -46,12 +49,11 @@ export default function TextModalCOE({ show, setShow, content }: TextEditorModal
             animation={false}
         >
             <Modal.Header closeButton>
-                <Modal.Title id="text-editor">Pick an image!</Modal.Title>
+                <Modal.Title id="text-editor">Textredigerare</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={onSubmit}>
                     <Form.Group controlId="rootUrl" as={Col} md={4}>
-                        <Form.Label>Text field</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder=""

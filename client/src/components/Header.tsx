@@ -5,7 +5,7 @@ import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
 import ImageCOR from './content_object_renderers/ImageCOR';
 import { Col, Row } from 'react-bootstrap';
-import { SiteHeaderCT } from '../types/content_object_trees';
+import { SiteHeaderCT } from '../types/content_objects/content_object_trees';
 import LocaleSelector from './LocaleSelector';
 import TextCOR from './content_object_renderers/TextCOR';
 

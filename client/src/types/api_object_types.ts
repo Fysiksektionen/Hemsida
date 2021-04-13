@@ -4,7 +4,7 @@
  * This file should only contain types that help us parse the raw response of the server.
  * Do not add related types that are not returned by the server.
  */
-import { SiteFooterCT, SiteHeaderCT } from './content_object_trees';
+import { SiteFooterCT, SiteHeaderCT } from './content_objects/content_object_trees';
 
 type IDDetail = {
     id: number,
