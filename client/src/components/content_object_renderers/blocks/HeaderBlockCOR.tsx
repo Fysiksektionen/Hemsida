@@ -38,9 +38,9 @@ export default function HeaderBlockCOR({ content }: {content: HeaderBlock}) {
 
     if (renderContent !== undefined) {
         return (
-            <Row className='w-100'>
+            <div className='w-100'>
                 {renderContent}
-            </Row>
+            </div>
         );
     } else {
         return <Row>Size not found in attributes error: CO.id == {content.id}</Row>;

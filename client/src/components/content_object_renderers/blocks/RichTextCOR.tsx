@@ -1,8 +1,8 @@
 import { RichTextBlock } from '../../../types/content_objects/blocks';
-import { Row } from 'react-bootstrap';
 import parse from 'html-react-parser';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { ContentTreeContext, EditorialModeContext } from '../../../contexts';
+import RichTextExample from './RichEditor/richtext';
 
 export default function RichTextCOR({ content }: {content: RichTextBlock}) {
     const [text, setInternalText] = useState(content.text);
@@ -17,7 +17,7 @@ export default function RichTextCOR({ content }: {content: RichTextBlock}) {
     }
 
     const edit = useContext(EditorialModeContext);
-    const [showEditor, setShowEditor] = useState(false);
+    const [showEditor, setShowEditor] = useState(true);
 
     return (
         <div>
@@ -26,7 +26,7 @@ export default function RichTextCOR({ content }: {content: RichTextBlock}) {
                     {parse(text)}
                 </div>
                 : <div>
-                    Insert editor!
+                    <RichTextExample content={content} />
                 </div>
             }
         </div>
