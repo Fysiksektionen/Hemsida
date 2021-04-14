@@ -3,8 +3,7 @@ import { ChangeKeyType } from '../general';
 
 export type HeaderBlock = ContentText & {
     attributes: {
-        blockType: 'heading',
-        size: 1 | 2 | 3 | 4 | 5
+        blockType: 'heading'
     }
 }
 export type RichTextBlock = ContentText & {

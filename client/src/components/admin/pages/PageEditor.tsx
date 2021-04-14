@@ -49,7 +49,7 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
     // Use this state when passing down content to children.
     // Alter postDispatchHook so that any updates to tree triggers an hasChanged=True state change.
     const [content, dispatch, addId, decrementAddIdHook] = useCTReducer({
-        content: pageLocale === locales.sv ? pageData.page?.contentSv : pageData.page?.contentEn,
+        content: pageLocale === locales.sv ? pageData.page.contentSv : pageData.page.contentEn,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         postDispatchHook: () => {
             setPageData({ ...pageData, hasChanged: true });
@@ -59,6 +59,9 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
     // Save the current content to the "saved" pageData state.
     // TODO: Upload to server in this hook.
     function saveContent() {
+        console.log(pageData.page.contentSv);
+        console.log(content);
+
         pageLocale === locales.sv
             ? setPageData({
                 page: { ...pageData.page, contentSv: content as ContentObject },

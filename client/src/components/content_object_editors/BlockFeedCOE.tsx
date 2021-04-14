@@ -15,10 +15,9 @@ const defaultBlocks: {[key: string]: Block} = {
         detailUrl: '',
         dbType: 'text',
         attributes: {
-            blockType: 'heading',
-            size: 1
+            blockType: 'heading'
         },
-        text: 'Heading'
+        text: '<h3></h3>'
     } as HeaderBlock,
     richText: {
         id: -1,
@@ -27,7 +26,7 @@ const defaultBlocks: {[key: string]: Block} = {
         attributes: {
             blockType: 'richText'
         },
-        text: 'Some text'
+        text: '<p></p>'
     } as RichTextBlock,
     image: {
         id: -1,

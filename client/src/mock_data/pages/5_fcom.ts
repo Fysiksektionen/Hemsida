@@ -55,10 +55,9 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            blockType: 'heading',
-                            size: 2
+                            blockType: 'heading'
                         },
-                        text: 'Om Kommunikationsnämnden Fcom'
+                        text: '<h3>Om Kommunikationsnämnden Fcom</h3>'
                     },
                     {
                         id: 6,
@@ -67,14 +66,15 @@ export const fcomPage = {
                         attributes: {
                             blockType: 'richText'
                         },
-                        text: 'Fysiksektionens Kommunikationsnämnd, även kallad <b>Fcom</b>, arbetar med att stödja' +
+                        text: '<p><span>Fysiksektionens Kommunikationsnämnd, även kallad' +
+                            ' </span><span><strong>Fcom</strong></span><span> arbetar med att stödja' +
                             ' sektionen inom allt som är kommunikationsrelaterat. Vår huvuduppgift är att' +
                             ' upprätthålla sektionens kommunikationskanaler, och se till att dessa används på rätt' +
                             ' sätt. Dessutom är vi ansvariga för att utveckla sektionens IT-resurser, producera och' +
                             ' publicera sektionstidningen Force, och ta fram och sälja profilsaker. Vi hjälper också' +
                             ' gärna till med diverse kommunikationsrelaterade saker, så som grafisk design,' +
                             ' fotografi, och mejlutskick. Hör gärna av dig till kommunikationsnämnden på' +
-                            ' kommunikation@f.kth.se om du eller din nämnd vill ha hjälp med någonting.'
+                            ' kommunikation@f.kth.se om du eller din nämnd vill ha hjälp med någonting.</span></p>'
                     },
                     {
                         id: 7,
@@ -84,7 +84,7 @@ export const fcomPage = {
                             blockType: 'heading',
                             size: 3
                         },
-                        text: 'Engagera dig'
+                        text: '<h3>Engagera dig</h3>'
                     },
                     {
                         id: 8,
@@ -93,14 +93,16 @@ export const fcomPage = {
                         attributes: {
                             blockType: 'richText'
                         },
-                        text: 'Har du varit <b>intresserad</b> av att engagera dig i Fysiksektionen, men känt att tiden' +
+                        text: '<p><span>Har du varit </span><span><strong>intresserad</strong></span><span> av att engagera' +
+                            ' dig i Fysiksektionen, men känt att tiden' +
                             ' inte riktigt räcker till? Då erbjuder Fcom ett ypperligt tillfälle att prova på att' +
                             ' vara sektionsaktiv utan att binda sig vid något ansvar. Du behöver inte ha några' +
                             ' förkunskaper för att gå med, så länge du är intresserad av att lära dig! Som medlem i' +
                             ' Fcom finns det en otrolig variation bland sakerna du kan göra, från foto och design' +
                             ' till skrivande och programmering. Dessutom är du alltid välkommen att delta på' +
                             ' nämndens möten, och att vara med i någon av nämndens undergrupper; Force-redaktionen' +
-                            ' och programmeringsgruppen F.dev. Fyll i detta formulär om du vill gå med i Fcom!'
+                            ' och programmeringsgruppen F.dev. Fyll i detta formulär om du vill gå med i' +
+                            ' Fcom!</span></p>'
                     }
                 ]
             }
@@ -147,7 +149,7 @@ export const fcomPage = {
                         attributes: {
                             blockType: 'richText'
                         },
-                        text: 'Some info'
+                        text: '<p>Some info</p>'
                     }
                 ]
             }
