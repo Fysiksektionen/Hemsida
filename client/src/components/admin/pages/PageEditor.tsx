@@ -36,45 +36,37 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
         page = emptyPage;
         const resp = callApi({ path: 'pages/' + id + '/', getParams: {} });
         if (resp.code === 200) {
-            page = resp.data;
+            page = resp.data as Page;
         }
     }
 
     // Local context for editing
     const [pageLocale, setPageLocale] = useState(locales.sv);
     // State of the saved data (that should have been sent to server).
-    const [pageData, setPageData] = useState({ page: page as Page, hasChanged: false });
+    const [pageDataHasChanged, setPageDataHasChanged] = useState(false);
+    const [pageData, setPageData] = useState<Page>(page);
 
     // Use the CTReducer to allow for child components to update the content tree.
     // Use this state when passing down content to children.
     // Alter postDispatchHook so that any updates to tree triggers an hasChanged=True state change.
     const [content, dispatch, addId, decrementAddIdHook] = useCTReducer({
-        content: pageLocale === locales.sv ? pageData.page.contentSv : pageData.page.contentEn,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        content: pageLocale === locales.sv ? pageData.contentSv : pageData.contentEn,
         postDispatchHook: () => {
-            setPageData({ ...pageData, hasChanged: true });
+            setPageDataHasChanged(true);
         }
     });
 
     // Save the current content to the "saved" pageData state.
     // TODO: Upload to server in this hook.
     function saveContent() {
-        console.log(pageData.page.contentSv);
-        console.log(content);
-
         pageLocale === locales.sv
-            ? setPageData({
-                page: { ...pageData.page, contentSv: content as ContentObject },
-                hasChanged: false
-            })
-            : setPageData({
-                page: { ...pageData.page, contentEn: content as ContentObject },
-                hasChanged: false
-            });
+            ? setPageData({ ...pageData, contentSv: content as ContentObject })
+            : setPageData({ ...pageData, contentEn: content as ContentObject });
+        setPageDataHasChanged(false);
     }
 
     // Send page with updated content down for rendering in children.
-    const pageWithNewContent = page !== undefined ? { ...pageData.page } : { ...emptyPage };
+    const pageWithNewContent = page !== undefined ? { ...pageData } : { ...emptyPage };
     if (pageLocale === locales.sv) {
         pageWithNewContent.contentSv = content;
     } else {
@@ -97,7 +89,7 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
                                     Språk: <LocaleSelector localeState={pageLocale} setLocaleHook={setPageLocale}/>
                                 </div>
                                 <div className='mx-4'/>
-                                <Button className='my-auto' onClick={saveContent} disabled={!pageData.hasChanged}>
+                                <Button className='my-auto' onClick={saveContent} disabled={!pageDataHasChanged}>
                                     Spara
                                 </Button>
                             </div>
@@ -109,10 +101,8 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
                                 <Row className={!showMetaInfo ? 'd-none' : ''}>
                                     <Col>
                                         <PageMetaForm
-                                            page={pageData.page}
-                                            setPageHook={(page: Page) => setPageData({
-                                                page: page, hasChanged: pageData.hasChanged
-                                            })}
+                                            page={pageData}
+                                            setPageHook={(page: Page) => setPageData(page)}
                                         />
                                     </Col>
                                 </Row>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
 import { Block, BlockFeed, BlockType, HeaderBlock, ImageBlock, RichTextBlock } from '../../types/content_objects/blocks';
@@ -141,16 +141,12 @@ export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
         dispatch({ id: content.id, value: newCOFeed });
     }
 
-    useEffect(() => { console.log(content.items); }, [content]);
-
     return (
         <Col xs={12}>
             <Row>
                 <AddBlockButton index={-1} FeedCO={content} />
             </Row>
             {content.items.map((obj, index) => {
-                const objectRender = <BlockToBlockCOR block={obj} />;
-
                 return (
                     <>
                         <Row className='position-relative show-children-on-hover'>
@@ -164,7 +160,7 @@ export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
                                 }}
                                 onClick={() => deleteBlock(index)}
                             />
-                            {objectRender}
+                            <BlockToBlockCOR block={obj} />
                         </Row>
                         <Row>
                             <AddBlockButton index={index} FeedCO={content} />

@@ -11,7 +11,7 @@ export default function NamndPage(props: ContentObject) {
     return (
         <Container>
             <Row className='justify-content-center'>
-                <Col xl={6} lg={8} md={10} xs={11}>
+                <Col xl={8} md={10} xs={11}>
                     <Row className='mb-5'>
                         <h1>
                             <TextCOR textCO={content.items.title} />

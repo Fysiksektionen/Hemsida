@@ -1,5 +1,4 @@
 import { HeaderBlock, RichTextBlock } from '../../../types/content_objects/blocks';
-import { Row } from 'react-bootstrap';
 import React, { useContext } from 'react';
 import { ContentTreeContext, EditorialModeContext } from '../../../contexts';
 import RichTextEditor from './rich_text_editor/RichTextEditor';
@@ -13,23 +12,17 @@ export default function HeaderBlockCOR({ content }: {content: HeaderBlock}) {
     }
 
     const edit = useContext(EditorialModeContext);
-
-    const renderContent = !edit
-        ? <>{ parse(content.text) }</>
-        : <RichTextEditor
-            content={content}
-            onDoneEdit={updateContentValue}
-            markActions={[]}
-            blockActions={['h1', 'h2', 'h3', 'h4', 'h5']}
-        />;
-
-    if (renderContent !== undefined) {
-        return (
-            <div className='w-100'>
-                {renderContent}
-            </div>
-        );
-    } else {
-        return <Row>Size not found in attributes error: CO.id == {content.id}</Row>;
-    }
+    return (
+        <div className='w-100'>
+            {!edit
+                ? <>{ parse(content.text) }</>
+                : <RichTextEditor
+                    content={content}
+                    onDoneEdit={updateContentValue}
+                    markActions={[]}
+                    blockActions={['h1', 'h2', 'h3', 'h4', 'h5']}
+                />
+            }
+        </div>
+    );
 }

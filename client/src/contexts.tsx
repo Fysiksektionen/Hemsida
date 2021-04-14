@@ -131,7 +131,7 @@ function decrementOrResetReducer(prevState: number, action: AddIdDispatchAction)
 
 type UseCTReducerProps = {
     content: ContentObject
-    preDispatchHook?: (action: CTDispatchAction) => void,
+    preDispatchHook?: (action: CTDispatchAction, oldState: ContentObject) => void,
     postDispatchHook?: (action: CTDispatchAction, newState: ContentObject) => void
 }
 
@@ -151,13 +151,12 @@ export function useCTReducer(props: UseCTReducerProps): [ContentObject, React.Di
     if (latestPropsId !== props.content.id) {
         dispatch({ id: latestPropsId, value: props.content });
         setLatestPropsId(props.content.id);
-        // decrementIdHook({ id: -1 });
     }
 
     // Create new dispatch wrapping the real dispatch in pre and post hooks.
     function wrappedDispatch(action: CTDispatchAction) {
         if (props.preDispatchHook !== undefined) {
-            props.preDispatchHook(action);
+            props.preDispatchHook(action, state);
         }
         dispatch(action);
         if (props.postDispatchHook !== undefined) {

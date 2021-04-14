@@ -35,9 +35,7 @@ type RichTextEditorProps = {
 }
 
 export default function RichTextEditor(props: RichTextEditorProps) {
-    const contentDeserialized = deserialize(props.content.text);
-
-    const [value, setValue] = useState<Descendant[]>(contentDeserialized);
+    const [value, setValue] = useState<Descendant[]>(deserialize(props.content.text));
     const renderElement = useCallback(props => <Element {...props} />, []);
     const renderLeaf = useCallback(props => <Leaf {...props} />, []);
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
