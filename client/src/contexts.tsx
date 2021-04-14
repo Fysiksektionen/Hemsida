@@ -151,7 +151,7 @@ export function useCTReducer(props: UseCTReducerProps): [ContentObject, React.Di
     if (latestPropsId !== props.content.id) {
         dispatch({ id: latestPropsId, value: props.content });
         setLatestPropsId(props.content.id);
-        decrementIdHook({ id: -1 });
+        // decrementIdHook({ id: -1 });
     }
 
     // Create new dispatch wrapping the real dispatch in pre and post hooks.

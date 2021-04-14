@@ -43,9 +43,9 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const [showToolbar, setShowToolbar] = useState(false);
 
-    // useEffect(() => {
-    //     setValue(contentDeserialized);
-    // }, [contentDeserialized]);
+    useEffect(() => {
+        setValue(deserialize(props.content.text));
+    }, [props.content]);
 
     function updateContent() {
         const newContent = { ...props.content, text: serialize(value) };

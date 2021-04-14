@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
 import { Block, BlockFeed, BlockType, HeaderBlock, ImageBlock, RichTextBlock } from '../../types/content_objects/blocks';
@@ -140,6 +140,8 @@ export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
 
         dispatch({ id: content.id, value: newCOFeed });
     }
+
+    useEffect(() => { console.log(content.items); }, [content]);
 
     return (
         <Col xs={12}>

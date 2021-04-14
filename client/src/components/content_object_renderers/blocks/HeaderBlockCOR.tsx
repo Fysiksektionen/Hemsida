@@ -1,8 +1,9 @@
 import { HeaderBlock, RichTextBlock } from '../../../types/content_objects/blocks';
-import { Form, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import React, { useContext } from 'react';
 import { ContentTreeContext, EditorialModeContext } from '../../../contexts';
 import RichTextEditor from './rich_text_editor/RichTextEditor';
+import parse from 'html-react-parser';
 
 export default function HeaderBlockCOR({ content }: {content: HeaderBlock}) {
     const dispatch = useContext(ContentTreeContext);
@@ -14,7 +15,7 @@ export default function HeaderBlockCOR({ content }: {content: HeaderBlock}) {
     const edit = useContext(EditorialModeContext);
 
     const renderContent = !edit
-        ? <>{content.text}</>
+        ? <>{ parse(content.text) }</>
         : <RichTextEditor
             content={content}
             onDoneEdit={updateContentValue}
