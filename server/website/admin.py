@@ -130,7 +130,7 @@ class NewsModelAdmin(admin.ModelAdmin):
     search_fields = ('slug', 'url', 'author')
     fieldsets = (
         (None, {
-            'fields': ('name', 'url', 'slug', 'page_type', 'parent', 'last_edited_at')
+            'fields': ('name', 'url', 'slug')
         }),
         (capfirst(_('publication info')), {
             'fields': ('first_published_at', 'publish_time', 'unpublish_time')
