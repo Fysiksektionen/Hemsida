@@ -40,7 +40,6 @@ class TextSerializer(serializers.Serializer):
 
 
 class COMenuSerializer(ExtendedModelSerializer):
-    # TODO: fix so that it isn't just the menu id
     menu = MenuItemSerializer
 
     class Meta:
