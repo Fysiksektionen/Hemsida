@@ -3,7 +3,7 @@ import { Col, Modal, Form, Button } from 'react-bootstrap';
 import { ContentTreeContext } from '../../contexts';
 import { ContentText } from '../../types/api_object_types';
 
-type TextEditorModalProps = {
+type TextCOEProps = {
     show: boolean,
     setShow: (state: boolean) => void,
     content: ContentText
@@ -15,7 +15,7 @@ type TextEditorModalProps = {
  * @param setShow: Hook to alter the show variable.
  * @param content: The current ContentText with information to be edited.
  */
-export default function TextModalCOE({ show, setShow, content }: TextEditorModalProps) {
+export default function TextCOE({ show, setShow, content }: TextCOEProps) {
     // Internal state during edit
     const [text, setInternalText] = useState(content.text);
     useEffect(() => {

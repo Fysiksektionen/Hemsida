@@ -34,7 +34,7 @@ function Frontpage(props: ContentObject) {
                 <Row className='justify-content-center bg-F-super-light-gray'>
                     <Col xs={6} sm={5} md={4} lg={3} xl={2} className='text-center'>
                         <div className='font-weight-bold pt-5'>Huvudsponsor</div>
-                        <ImageCOR imageCO={content.items.sponsorLogo} fluid className='pb-5 pt-4 pt-md-5' />
+                        <ImageCOR content={content.items.sponsorLogo} fluid className='pb-5 pt-4 pt-md-5' />
                     </Col>
                 </Row>
             </Col>

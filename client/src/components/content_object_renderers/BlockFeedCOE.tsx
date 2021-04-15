@@ -1,30 +1,51 @@
-import React, { useContext } from 'react';
+import React, { CSSProperties, useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
-import { Block, BlockFeed, BlockType, HeaderBlock, ImageBlock, RichTextBlock } from '../../types/content_objects/blocks';
-import { Popover } from '@material-ui/core';
+import { Block, BlockFeed, BlockType, ImageBlock, RichTextBlock } from '../../types/content_objects/blocks';
+import { Popover, SvgIconTypeMap } from '@material-ui/core';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import FLargeIconButton from '../f-styled/buttons/FLargeIconButton';
-import { BlockToBlockCOR } from '../content_object_renderers/blocks/BlockFeedCOR';
+import { OverridableComponent } from '@material-ui/core/OverridableComponent';
+import BlockCOR from './blocks/BlockCOR';
 
-const defaultBlocks: {[key: string]: Block} = {
+const blockIcons: { blockType: BlockType, text: string, icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>}[] = [
+    {
+        blockType: 'heading',
+        text: 'Heading',
+        icon: TextFieldsIcon
+    },
+    {
+        blockType: 'bodyText',
+        text: 'Text',
+        icon: FormatAlignLeftIcon
+    },
+    {
+        blockType: 'image',
+        text: 'Image',
+        icon: ImageIcon
+    }
+];
+
+const defaultBlocks: {[key in BlockType]: Block} = {
     heading: {
         id: -1,
         detailUrl: '',
         dbType: 'text',
         attributes: {
-            blockType: 'heading'
+            blockType: 'heading',
+            richTextEditorType: 'only-headings'
         },
         text: '<h3></h3>'
-    } as HeaderBlock,
-    richText: {
+    } as RichTextBlock,
+    bodyText: {
         id: -1,
         detailUrl: '',
         dbType: 'text',
         attributes: {
-            blockType: 'richText'
+            blockType: 'bodyText',
+            richTextEditorType: 'body-text'
         },
         text: '<p></p>'
     } as RichTextBlock,
@@ -45,13 +66,18 @@ const defaultBlocks: {[key: string]: Block} = {
     } as ImageBlock
 };
 
+type AddBlockButtonProps = {
+    index: number,
+    content: BlockFeed
+}
+
 /**
  * Adds a block *after* index in the list of children of FeedCO.
  * @param index The index in FeedCO.items to add blick after
  * @param ListCO The CO containing list of feed as items.
  * @constructor
  */
-function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: BlockFeed }) {
+function AddBlockButton({ index, content }: AddBlockButtonProps) {
     const dispatch = useContext(ContentTreeContext);
     const addIdState = useContext(ContentTreeAddIdContext);
 
@@ -60,14 +86,12 @@ function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: BlockFeed })
         newBlock.id = addIdState.id;
         addIdState.decrementHook({});
 
-        const newCOFeed = {
-            ...FeedCO
-        };
-        const items = FeedCO.items.slice(0, index + 1);
+        const newContent = { ...content };
+        const items = content.items.slice(0, index + 1);
         items.push(newBlock);
-        newCOFeed.items = items.concat(FeedCO.items.slice(index + 1, undefined)) as Block[];
+        newContent.items = items.concat(content.items.slice(index + 1, undefined)) as Block[];
 
-        dispatch({ id: FeedCO.id, value: newCOFeed });
+        dispatch({ id: content.id, value: newContent });
     }
 
     const [anchorEl, setAnchorEl] = React.useState<EventTarget & Element | null>(null);
@@ -108,15 +132,13 @@ function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: BlockFeed })
             >
                 <Container>
                     <Row>
-                        <Col>
-                            <FLargeIconButton text='Heading' Icon={TextFieldsIcon} onClick={() => add('heading')}/>
-                        </Col>
-                        <Col>
-                            <FLargeIconButton text='Rich text' Icon={FormatAlignLeftIcon} onClick={() => add('richText')}/>
-                        </Col>
-                        <Col>
-                            <FLargeIconButton text='Image' Icon={ImageIcon} onClick={() => add('image')}/>
-                        </Col>
+                        {blockIcons.map((item, index) => {
+                            return (
+                                <Col key={index}>
+                                    <FLargeIconButton text={item.text} Icon={item.icon} onClick={() => add(item.blockType)}/>
+                                </Col>
+                            );
+                        })}
                     </Row>
                 </Container>
             </Popover>
@@ -124,11 +146,14 @@ function AddBlockButton({ index, FeedCO }: { index: number, FeedCO: BlockFeed })
     );
 }
 
-export type BlockFeedCOEProps = {
-    content: BlockFeed
+type RemoveBlockButtonProps = {
+    index: number,
+    content: BlockFeed,
+    className?: string,
+    style?: CSSProperties
 }
 
-export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
+function RemoveBlockButton({ index, content, className, style }: RemoveBlockButtonProps) {
     const dispatch = useContext(ContentTreeContext);
 
     function deleteBlock(index: number) {
@@ -141,29 +166,39 @@ export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
         dispatch({ id: content.id, value: newCOFeed });
     }
 
+    return (<i
+        className={'position-absolute fa fa-times-circle show-on-parent-hover ' + className ?? ''}
+        onClick={() => deleteBlock(index)}
+        style={style}
+    />);
+}
+
+export type BlockFeedCOEProps = {
+    content: BlockFeed
+}
+
+export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
     return (
         <Col xs={12}>
             <Row>
-                <AddBlockButton index={-1} FeedCO={content} />
+                <AddBlockButton index={-1} content={content} />
             </Row>
             {content.items.map((obj, index) => {
                 return (
                     <>
                         <Row className='position-relative show-children-on-hover'>
-                            <i
-                                className='position-absolute fa fa-times-circle show-on-parent-hover '
+                            <RemoveBlockButton index={index} content={content}
                                 style={{
-                                    top: '-10px',
-                                    right: '-10px',
                                     width: '20px',
-                                    height: '20px'
+                                    height: '20px',
+                                    right: '-10px',
+                                    top: '-10px'
                                 }}
-                                onClick={() => deleteBlock(index)}
                             />
-                            <BlockToBlockCOR block={obj} />
+                            <BlockCOR block={obj} />
                         </Row>
                         <Row>
-                            <AddBlockButton index={index} FeedCO={content} />
+                            <AddBlockButton index={index} content={content} />
                         </Row>
                     </>
                 );

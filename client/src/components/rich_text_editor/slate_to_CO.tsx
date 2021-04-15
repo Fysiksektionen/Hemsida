@@ -4,7 +4,7 @@ import ReactDOMServer from 'react-dom/server';
 import { jsx } from 'slate-hyperscript';
 import { Descendant, Text } from 'slate';
 import { Element as ElementUI, Leaf as LeafUI } from './editor_UI';
-import { CustomText } from './custom_types';
+import { CustomText } from './slate_types';
 
 export const serialize = (nodes: Descendant[]) => {
     return nodes.map((node: Descendant) => {
@@ -35,8 +35,6 @@ function deserializeMarks(element: Node): CustomText {
     } as CustomText;
 
     const children = element.childNodes;
-    // console.log('children: ');
-    // console.log(children);
     if (children.length === 1) {
         text = deserializeMarks(element.childNodes[0]);
     }
@@ -104,8 +102,6 @@ function deserializeBlocks(element: Node): null | string | Descendant | Descenda
 
 export function deserialize(stringRep: string): Descendant[] {
     const document = new DOMParser().parseFromString(stringRep, 'text/html');
-    // console.log('document.body');
-    // console.log(document.body);
     const ret = deserializeBlocks(document.body);
     return ret as Descendant[];
 }

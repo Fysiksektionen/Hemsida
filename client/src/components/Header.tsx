@@ -22,7 +22,7 @@ export default function Header({ setLocale, content }: Props) {
                     <Navbar.Brand className="ml-lg-2 ml-xl-5 my-auto justify-content-start" href="#">
                         <Row>
                             <Col xs={'auto'} className="my-auto">
-                                <ImageCOR imageCO={content.items.logo} height="80" alt="" />
+                                <ImageCOR content={content.items.logo} height="80" alt="" />
                             </Col>
                             <Col xs={'auto'} className="my-auto d-none d-lg-flex">
                                 <h4 className="m-0">

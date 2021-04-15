@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContentObject } from '../types/api_object_types';
 import { NamndPageCT } from '../types/content_objects/pages/namnd';
-import BlockFeedCOR from '../components/content_object_renderers/blocks/BlockFeedCOR';
+import BlockFeedCOR from '../components/content_object_renderers/BlockFeedCOR';
 import TextCOR from '../components/content_object_renderers/TextCOR';
 import { Col, Container, Row } from 'react-bootstrap';
 

@@ -1,4 +1,4 @@
-import { CustomEditor, LIST_TYPES } from './custom_types';
+import { CustomEditor, LIST_TYPES } from './slate_types';
 import { Editor, Element as SlateElement, Transforms } from 'slate';
 
 export const isBlockActive = (editor: CustomEditor, format: string) => {

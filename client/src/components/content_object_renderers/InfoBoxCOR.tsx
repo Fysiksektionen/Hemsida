@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';
 import parse from 'html-react-parser';
 import FButton from '../f-styled/buttons/FButton';
-import InfoBoxModalCOE from '../content_object_editors/InfoBoxModalCOE';
+import InfoBoxModalCOE from './InfoBoxCOE';
 
 /**
  * Renders an InfoBox and allows for changing the title, text, color and button using a popup when in EditorialModeContext.

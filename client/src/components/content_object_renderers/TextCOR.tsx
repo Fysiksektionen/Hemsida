@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { EditorialModeContext } from '../../contexts';
 import { ContentText } from '../../types/api_object_types';
-import TextModalCOE from '../content_object_editors/TextModalCOE';
+import TextCOE from './TextCOE';
 
 type TextCORProps = {
     textCO: ContentText,
@@ -23,7 +23,7 @@ export default function TextCOR(props: TextCORProps) {
         <EditorialModeContext.Consumer>
             {editing =>
                 <div>
-                    <TextModalCOE content={props.textCO} show={showModal} setShow={setShowModal} />
+                    <TextCOE content={props.textCO} show={showModal} setShow={setShowModal} />
                     <span onClick={editing ? () => setShowModal(true) : () => {}}>{preText + props.textCO.text + postText}</span>
                 </div>
             }

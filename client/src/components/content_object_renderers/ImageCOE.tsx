@@ -8,13 +8,13 @@ import img4 from '../../mediafiles/placeholder_images/news_placeholder3.jpg';
 import { ContentTreeContext } from '../../contexts';
 import { ContentImage } from '../../types/api_object_types';
 
-type ImagePickerModalProps = {
+type ImageCOEProps = {
     show: boolean,
     setShow: (image: boolean) => void,
     content: ContentImage
 }
 
-export default function ImagePickerModalCOE({ show, setShow, content }: ImagePickerModalProps) {
+export default function ImageCOE({ show, setShow, content }: ImageCOEProps) {
     const images = [defaultLogo, img1, img2, img3, img4];
     const CTDispatcher = useContext(ContentTreeContext);
 

@@ -14,7 +14,7 @@ export default function ImageBlockCOR({ content }: {content: ImageBlock}) {
 
     return (
         <Row className={justificationClass + ' w-100'}>
-            <ImageCOR imageCO={content} width={content.attributes.width}/>
+            <ImageCOR content={content} width={content.attributes.width}/>
         </Row>
     );
 }

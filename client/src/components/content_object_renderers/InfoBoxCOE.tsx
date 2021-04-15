@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react';
-import { Col, Modal, Container, Form, Button } from 'react-bootstrap';
 import { ContentTreeContext } from '../../contexts';
+import { Button, Col, Container, Form, Modal } from 'react-bootstrap';
 import { OrangeInfoBoxCT } from '../../types/content_objects/pages/frontpage';
 
 export type InfoBoxData = {
@@ -10,13 +10,11 @@ export type InfoBoxData = {
     buttonText: string,
     buttonLink: string
 }
-
-type InfoBoxModalProps = {
+type InfoBoxCOEProps = {
     show: boolean,
     setShow: (state: boolean) => void,
     content: OrangeInfoBoxCT
 }
-
 /**
  * Modal editor of the content of a OrangeInfoBoxCT. Uses internal state to save form data and then runs
  * dispatcher to update tree.
@@ -24,7 +22,11 @@ type InfoBoxModalProps = {
  * @param setShow: Hook to alter the show variable.
  * @param content: The current CT with information to be edited.
  */
-export default function InfoBoxModalCOE({ show, setShow, content }: InfoBoxModalProps) {
+export default function InfoBoxModalCOE({
+    show,
+    setShow,
+    content
+}: InfoBoxCOEProps) {
     // Create internal state to save the form data temporarely.
     const [data, setInternalData] = useState({
         color: content.attributes.color,
@@ -64,7 +66,10 @@ export default function InfoBoxModalCOE({ show, setShow, content }: InfoBoxModal
             }
         };
         // Update with new value
-        CTDispatcher({ id: content.id, value: newCT });
+        CTDispatcher({
+            id: content.id,
+            value: newCT
+        });
     }
 
     // Submitting saves the data to the tree and then closes modal.
@@ -78,7 +83,9 @@ export default function InfoBoxModalCOE({ show, setShow, content }: InfoBoxModal
     return (
         <Modal
             show={show}
-            onHide={() => { setShow(false); }}
+            onHide={() => {
+                setShow(false);
+            }}
             size="xl"
             aria-labelledby="text-editor"
             centered
