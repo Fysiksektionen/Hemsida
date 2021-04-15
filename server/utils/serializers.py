@@ -2,15 +2,15 @@
 import copy
 from collections import OrderedDict
 
+from rest_framework import serializers
 from rest_framework.fields import Field
 from rest_framework.relations import HyperlinkedIdentityField
-from rest_framework.serializers import ModelSerializer
 from rest_framework.settings import api_settings
 from rest_framework.utils import model_meta
 from rest_framework.utils.field_mapping import get_nested_relation_kwargs
 
 
-class ExtendedModelSerializer(ModelSerializer):
+class ExtendedModelSerializer(serializers.ModelSerializer):
     """Serializer extending ModelSerializer to define nested behaviour through Meta class.
 
     NestedSerializerParentClass [Serializer]: Serializer class for nested objects. (Default = self.__class__).
@@ -240,3 +240,12 @@ class OptionalHyperlinkedIdentityField(HyperlinkedIdentityField):
                 return None
         else:
             return super().get_url(obj, view_name, request, format)
+
+
+class ErrorSerializer(serializers.Serializer):
+    """Serializer for generic error. Neither error_code or message is required."""
+
+    # Error code for identification of error origin
+    error_code = serializers.IntegerField(allow_null=True, min_value=0, required=False)
+    # Message for explanation of error. Usually a translated string.
+    message = serializers.CharField(allow_null=True, allow_blank=True, required=False)

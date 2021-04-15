@@ -1,27 +1,37 @@
 import React from 'react';
-import GoogleMap from './GoogleMap'
-import './Footer.css'
+import GoogleMap from './GoogleMap';
+import './Footer.css';
 import Toe from './Toe';
+import { LocaleContext, locales } from '../contexts';
+import { SiteFooterContentTree } from '../types/content_object_trees';
+import TextCOR from './content_object_renderers/TextCOR';
 
-function Footer() {
-    
+type FooterProps = {
+    content: SiteFooterContentTree
+}
+
+function Footer({ content }: FooterProps) {
     return (
-        <>
-        <div className="container-fluid py-4 bg-dark text-white text-center">
+        <LocaleContext.Consumer>
+            {locale =>
+                <div>
+                    <div className="py-4 bg-dark text-white text-center">
 
-            <h3>Hitta hit</h3>
+                        <h3>{locale === locales.sv ? 'Hitta hit!' : 'Find us!'}</h3>
 
-            Brinellvägen 89, 114 28 Stockholm
+                        <TextCOR textCO={content.items.address} />
 
-            <GoogleMap />
+                        <GoogleMap />
 
-        </div>
-        <Toe
-            webmaster="Christoffer Ejemyr"
-            currYear={2021}
-        />
-        </>
-    )
+                    </div>
+                    <Toe
+                        webmaster={content.items.webmaster}
+                        currYear={content.items.currYear}
+                    />
+                </div>
+            }
+        </LocaleContext.Consumer>
+    );
 }
 
 export default Footer;

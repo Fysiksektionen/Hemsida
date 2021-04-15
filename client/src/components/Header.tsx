@@ -1,48 +1,49 @@
-import { Select } from '@material-ui/core';
-import { LocaleContext, locales } from '../contexts'
-import './Header.css'
-import logo from '../Fysiksektionen_logo.svg';
+import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import { Locale, LocaleContext } from '../contexts';
+import './Header.css';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
-
+import ImageCOR from './content_object_renderers/ImageCOR';
+import { Col, Row } from 'react-bootstrap';
+import { SiteHeaderContentTree } from '../types/content_object_trees';
+import LocaleSelector from './LocaleSelector';
+import TextCOR from './content_object_renderers/TextCOR';
 
 type Props = {
-    setLocale: Function
+    setLocale?: (locale: Locale) => void,
+    content: SiteHeaderContentTree
 }
 
-function Header(props: Props) {
+export default function Header({ setLocale, content }: Props) {
     return (
         <LocaleContext.Consumer>
             {locale =>
-                <div
-                className="navbar sticky-top bg-light px-4"
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between"
-                }}
-                >
-                <a className="navbar-brand mx-5 text-center" href="/">
-                    <img src={logo} width="80" height="80" alt="" />
-                    <h2>Fysiksektionen</h2>
-                </a>
-                <div>
-                <div className="mx-4">
-                    <GroupedSearch/>
-                </div>
-                <HeaderMenu/>
-                </div>
-
-                    <Select value={locale.id} onChange={event => {
-                        props.setLocale(locales[event.target.value as string])
-                    }}>
-                        {Object.keys(locales).map(key =>
-                            <option value={key} key={key}>{locales[key].name}</option>
-                        )}
-                    </Select>
-
-            </div>}
+                <Navbar style={{ backgroundColor: 'var(--F-light-gray)', width: '100%' }} expand="lg" className="row justify-content-between">
+                    <Navbar.Brand className="ml-lg-2 ml-xl-5 my-auto justify-content-start" href="#">
+                        <Row>
+                            <Col xs={'auto'} className="my-auto">
+                                <ImageCOR imageCO={content.items.logo} height="80" alt="" />
+                            </Col>
+                            <Col xs={'auto'} className="my-auto d-none d-lg-flex">
+                                <h4 className="m-0">
+                                    <TextCOR textCO={content.items.name} />
+                                </h4>
+                            </Col>
+                        </Row>
+                    </Navbar.Brand>
+                    <Navbar.Collapse className="justify-content-end">
+                        <Col xs={'auto'} className="d-none d-xl-flex">
+                            <GroupedSearch/>
+                        </Col>
+                        <Col xs={'auto'}>
+                            <LocaleSelector localeState={locale} setLocaleHook={setLocale}/>
+                        </Col>
+                        <Col xs={'auto'} className="">
+                            <HeaderMenu/>
+                        </Col>
+                    </Navbar.Collapse>
+                </Navbar>}
         </LocaleContext.Consumer>
     );
 }
-
-export default Header;

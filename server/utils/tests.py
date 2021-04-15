@@ -1,5 +1,6 @@
 import uuid
 
+import django.db
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.test import TestCase

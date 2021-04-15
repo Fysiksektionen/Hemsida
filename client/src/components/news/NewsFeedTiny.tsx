@@ -1,35 +1,29 @@
 import React from 'react';
-import NewsItemTiny, {INewsItemTiny} from './NewsItemTiny';
-import SomeButton, {IButton} from '../Button';
-import Container from 'react-bootstrap/Container';
+import NewsItemTiny from './NewsItemTiny';
+import { NewsPageMinimal } from '../../types/news';
+import Button from 'react-bootstrap/Button';
 
-
-export interface INewsFeedTiny {
-  items : INewsItemTiny[]
+type NewsFeedTinyProps = {
+    items : NewsPageMinimal[]
 }
 
+function NewsFeedTiny(props : NewsFeedTinyProps) {
+    const tinyFeed = props.items.map((item, index) =>
+        <li key={index} className="mb-3" style={{ backgroundColor: '#f0f0f0' }}>
+            <NewsItemTiny {...item}/>
+        </li>
+    );
 
-// TODO: remove
-const DummyData : IButton = {type: "secondary", text: "Fler nyheter"}
-
-
-function NewsFeedTiny(props : INewsFeedTiny) {
-  const tinyFeed = props.items.map((item, index) =>
-    <li key={index} className="mb-3" style={{backgroundColor: "#f0f0f0"}}>
-      <NewsItemTiny {...item}/>
-    </li>
-  )
-
-  return (
-    <Container>
-      <ul className="list-unstyled">
-        {tinyFeed}
-      </ul>
-      <div className="text-center">
-        <SomeButton {...DummyData}/>
-      </div>
-    </Container>
-  )
+    return (
+        <div>
+            <ul className="list-unstyled">
+                {tinyFeed}
+            </ul>
+            <div className="text-center">
+                <Button variant={'secondary'}>Fler nyheter</Button>
+            </div>
+        </div>
+    );
 }
 
 export default NewsFeedTiny;

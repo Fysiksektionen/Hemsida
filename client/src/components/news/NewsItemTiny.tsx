@@ -1,31 +1,27 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { NewsPageMinimal } from '../../types/news';
+import { Image } from 'react-bootstrap';
 
-
-export interface INewsItemTiny {
-  thumbnail: string
-  title: string
-  published: Date
+export type NewsItemTinyProps = {
+    thumbnail: string
+    title: string
+    published: Date
 }
 
-function NewsItemTiny(props : INewsItemTiny) {
-  // I tried using <Media>, it is great but it doesn't have a proper relative postion anchor.
-  // This works just fine as well, just not as pretty code-wise. 
-  return (
-    <Container>
-      <Row>
-        <Col className="col-5 pl-0">
-          <img src={props.thumbnail} width={150} alt='' />
-        </Col>
-        <Col className="col-7 pt-2 pl-0">
-          <h6>{props.title}</h6>
-          <small className="position-absolute" style={{bottom: "0.5rem"}}>{props.published.toLocaleDateString()}</small>
-        </Col>
-      </Row>
-    </Container>
-  )
+function NewsItemTiny(props : NewsPageMinimal) {
+    return (
+        <Row>
+            <Col className="col-5 pl-0">
+                <Image src={props.image.href} width={150} alt='' />
+            </Col>
+            <Col className="col-7 pt-2 pl-0">
+                <h6>{props.title}</h6>
+                <small className="position-absolute" style={{ bottom: '0.5rem' }}>{props.publishedAt}</small>
+            </Col>
+        </Row>
+    );
 }
 
 export default NewsItemTiny;

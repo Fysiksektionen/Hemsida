@@ -1,4 +1,9 @@
+from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from .base_page import BasePage
 from django.core.exceptions import ValidationError
@@ -32,7 +37,7 @@ class PageDraft(models.Model):
 
 class Page(BasePage):
     """
-    Model for a page.
+    Model for a Page.
     """
     class Meta:
         verbose_name = _('page')
@@ -53,3 +58,11 @@ class Page(BasePage):
                    'parent_field': self._meta.get_field('parent').verbose_name
                 }
             )
+
+@receiver(post_save, sender=Page)
+def invalidate_page_caches(sender, **kwargs):
+    """Hook that invalidates caches on post_save of any page_object."""
+    # List of caches to be invalidated on post_save. Add to list if new cache is introduced.
+    caches = ['path_page_dict']
+
+    cache.delete_many(caches)  # Invalidate caches

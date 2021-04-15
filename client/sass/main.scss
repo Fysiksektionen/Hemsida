@@ -1,4 +1,73 @@
 $primary: #ff642b; /* Fysiksektionen orange color */
 $secondary: #093144; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
+$F-light-gray: #f8f9fa;
+$F-dark-gray: #474747;
+
+$custom-colors: (
+    "F-light-gray": $F-light-gray,
+    "F-dark-gray": $F-dark-gray
+);
+
+
+
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+
+$F-red: #DC3545;
+
+$background-color: #F2F3F4;
+
+
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1500px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1400px
+);
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  '05': ($spacer * 0.125),
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  45: ($spacer * 2.25),
+  5: ($spacer * 3),
+  6: ($spacer * 5)
+);
+
+
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        .hidden#{$infix}   {
+            visibility: hidden !important;
+        }
+        .visible#{$infix}   {
+            visibility: visible !important;
+        }
+    }
+}
