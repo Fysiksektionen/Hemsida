@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-11 16:07+0200\n"
+"POT-Creation-Date: 2021-04-15 20:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,22 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: project_settings/settings/base.py:128
+#: .\project_settings\settings\base.py:128
 msgid "Swedish"
 msgstr "Svenska"
 
-#: project_settings/settings/base.py:129
+#: .\project_settings\settings\base.py:129
 msgid "English"
 msgstr "Engelska"
 
-#: templates/admin/base_site.html:23
+#: .\templates\admin\base_site.html:23
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: templates/admin/base_site.html:27
+#: .\templates\admin\base_site.html:27
 msgid "Change password"
 msgstr "Byt lösenord"
 
-#: templates/admin/base_site.html:29
+#: .\templates\admin\base_site.html:29
 msgid "Log out"
 msgstr "Logga ut"
