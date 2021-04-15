@@ -1,21 +1,8 @@
 from rest_framework import viewsets, mixins, serializers
 from utils.serializers import DBObjectSerializer
-from website.models import ContentObjectBase
 from website.models.pages import Page
 from website.selectors.content_objects import get_content_object_trees
-
-
-class ContentObjectBaseSerializer(DBObjectSerializer):
-    class Meta:
-        model = ContentObjectBase
-        exclude = ['parent_page', 'collection', 'order', 'name']
-
-class TextSerializer(serializers.Serializer):
-    text = serializers.CharField(required=True, allow_blank=True)
-
-content_object_value_serializers = {
-    'text': TextSerializer
-}
+from website.views.content_objects import serialize_item
 
 
 class PageSerializer(DBObjectSerializer):
@@ -41,28 +28,11 @@ class PageSerializer(DBObjectSerializer):
         }
 
     def get_content(self, obj):
-        def serialize_item(item, get_children=True):
-            serialized_item = ContentObjectBaseSerializer(item['object'], context=self.context).data
-
-            if item['db_type'] == 'dict':
-                if get_children:
-                    serialized_item['items'] = {}
-                    for child in item['items']:
-                        serialized_item['items'][child['object'].name] = serialize_item(child)
-            elif item['db_type'] == 'list':
-                if get_children:
-                    serialized_item['items'] = []
-                    for child in item['items']:
-                        serialized_item['items'].append(serialize_item(child))
-            else:
-                serialized_item[item['db_type']] = content_object_value_serializers[item['db_type']](item['object']).data
-
-            return serialized_item
-
         if obj.content_sv:
             content = get_content_object_trees([obj.content_sv])
             serialized_content = []
             for items in content:
+                # TODO: Add context so detail_url is added
                 serialized_items = serialize_item(items)
                 serialized_content.append(serialized_items)
             return serialized_content
