@@ -4,6 +4,7 @@ from website.views.menus import MenuViewSet
 from website.views.redirects import RedirectViewSet
 from website.views.pages import PageViewSet
 from website.views.site import SiteView
+from website.views.news import NewsViewSet
 
 app_name = 'website'
 
@@ -12,6 +13,7 @@ router = DefaultRouter()
 router.register(r'menus', MenuViewSet, basename='menu')
 router.register(r'redirects', RedirectViewSet, basename='redirect')
 router.register(r'pages', PageViewSet, basename='page')
+router.register(r'news', NewsViewSet, basename='news')
 
 # Url-patterns for website app.
 urlpatterns = [

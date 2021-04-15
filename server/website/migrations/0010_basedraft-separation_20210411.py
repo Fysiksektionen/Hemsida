@@ -98,4 +98,14 @@ class Migration(migrations.Migration):
             name='last_edited_at',
             field=models.DateTimeField(auto_now=True, verbose_name='last edited at'),
         ),
+        migrations.AlterField(
+            model_name='news',
+            name='views',
+            field=models.IntegerField(default=0, verbose_name='views'),
+        ),
+        migrations.AlterField(
+            model_name='news',
+            name='slug',
+            field=models.SlugField(blank=True, null=True, unique=True, verbose_name='Slug'),
+        ),
     ]
