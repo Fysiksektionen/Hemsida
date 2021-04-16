@@ -48,7 +48,6 @@
     "build": "slate-plain-serializerreact-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "css": "sass src/main.scss > src/index.css",
     "lint-check": "eslint --ext .tsx --ext .ts src/",
     "lint-fix": "eslint --ext .tsx --ext .ts --fix src/",
     "docs-serve": "http-server ../api-docs/ --port=3001 --cors=Authorization -c 1"

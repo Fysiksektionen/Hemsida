@@ -1,5 +1,4 @@
 import React, { createElement, useState } from 'react';
-import '../../index.css';
 import { Col, Container, Image, Navbar, NavLink, Row } from 'react-bootstrap';
 import { AdminLocation, AdminPageProps } from '../../types/admin_components';
 import PagesAdminPage from './pages/Pages';
