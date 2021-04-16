@@ -2,7 +2,7 @@
  * Mock data for https://f.kth.se/api/site. Used in App.tsx and admin/settings/Settings.tsx.
  */
 
-import fysikLogo from '../Fysiksektionen_logo.svg';
+import fysikLogo from '../mediafiles/placeholder_images/Fysiksektionen_logo.svg';
 import { APIResponse } from '../types/general';
 import { Site } from '../types/api_object_types';
 

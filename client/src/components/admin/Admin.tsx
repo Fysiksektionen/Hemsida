@@ -11,7 +11,7 @@ import ToolsAdminPage from './tools/Tools';
 import GroupsAdminPage from './groups/Groups';
 import PageNotFound from '../../pages/PageNotFound';
 import { adminRootPath, setAddressField } from './utils';
-import logo from '../../Fysiksektionen_logo.svg';
+import logo from '../../mediafiles/placeholder_images/Fysiksektionen_logo.svg';
 
 type AdminMenuItem = {
     name: string,

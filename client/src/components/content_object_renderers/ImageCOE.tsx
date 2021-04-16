@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Col, Modal, Image, Row } from 'react-bootstrap';
-import defaultLogo from '../../Fysiksektionen_logo.svg';
+import defaultLogo from '../../mediafiles/placeholder_images/Fysiksektionen_logo.svg';
 import img1 from '../../mediafiles/placeholder_images/news_placeholder.jpg';
 import img2 from '../../mediafiles/placeholder_images/news_placeholder1.jpg';
 import img3 from '../../mediafiles/placeholder_images/news_placeholder2.jpg';
