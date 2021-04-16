@@ -2,10 +2,10 @@ import React, { HTMLAttributes } from 'react';
 import { Element as SlateElement, Text as SlateText } from 'slate';
 import { useSlate } from 'slate-react';
 import { isBlockActive, isMarkActive, toggleBlock, toggleMark } from './block_mark_utils';
-import { BlockTypes, MarkTypes } from './slate_types';
+import { SlateBlockType, SlateMarkType } from './slate_types';
 import { Row } from 'react-bootstrap';
 
-export const Element = ({ attributes, children, element }: { attributes: HTMLAttributes<HTMLElement>, children: JSX.Element, element: SlateElement }) => {
+export const Element = ({ attributes, children, element }: { attributes: HTMLAttributes<HTMLElement>, children?: JSX.Element, element: SlateElement }) => {
     switch (element.type) {
     case 'numbered-list':
         return <ol {...attributes}>{children}</ol>;
@@ -28,7 +28,7 @@ export const Element = ({ attributes, children, element }: { attributes: HTMLAtt
     }
 };
 
-export const Leaf = ({ attributes, children, leaf }: { attributes: HTMLAttributes<HTMLElement>, children: JSX.Element, leaf: SlateText }) => {
+export const Leaf = ({ attributes, children, leaf }: { attributes: HTMLAttributes<HTMLElement>, children?: JSX.Element, leaf: SlateText }) => {
     if ('bold' in leaf && leaf.bold) {
         children = <strong>{children}</strong>;
     }
@@ -55,14 +55,14 @@ function ToolbarButton({ icon, active, onClickAction } : {icon?: JSX.Element, ac
                 onClickAction();
                 event.preventDefault();
             }}
-            className={'pointer-cursor' + (active ? ' text-dark' : ' text-black-50')}
+            className={'pointer-cursor' + (active ? ' text-dark' : ' text-F-medium-gray')}
         >
             {icon}
         </span>
     );
 }
 
-export const BlockButton = ({ format, icon }: { format: BlockTypes, icon?: JSX.Element }) => {
+export const BlockButton = ({ format, icon }: { format: SlateBlockType, icon?: JSX.Element }) => {
     const editor = useSlate();
 
     return (
@@ -74,7 +74,7 @@ export const BlockButton = ({ format, icon }: { format: BlockTypes, icon?: JSX.E
     );
 };
 
-export const MarkButton = ({ format, icon }: { format: MarkTypes, icon?: JSX.Element }) => {
+export const MarkButton = ({ format, icon }: { format: SlateMarkType, icon?: JSX.Element }) => {
     const editor = useSlate();
 
     return (
@@ -95,17 +95,17 @@ const markFormatIconDict: NodeJS.Dict<JSX.Element> = {
 const blockFormatIconDict: NodeJS.Dict<JSX.Element> = {
     'numbered-list': <i className={'fas fa-list-ol'} />,
     'bulleted-list': <i className={'fas fa-list-ul'} />,
-    h1: <><i className={'fas fa-heading'} />1</>,
-    h2: <><i className={'fas fa-heading'} />2</>,
-    h3: <><i className={'fas fa-heading'} />3</>,
-    h4: <><i className={'fas fa-heading'} />4</>,
-    h5: <><i className={'fas fa-heading'} />5</>
+    h1: <span className='font-weight-bolder'>H1</span>,
+    h2: <span className='font-weight-bolder'>H2</span>,
+    h3: <span className='font-weight-bolder'>H3</span>,
+    h4: <span className='font-weight-bolder'>H4</span>,
+    h5: <span className='font-weight-bolder'>H5</span>
 };
 
 type ToolbarProps = {
     show: boolean
-    markActions: MarkTypes[],
-    blockActions: BlockTypes[]
+    markActions: SlateMarkType[],
+    blockActions: SlateBlockType[]
 }
 
 export function ToolbarRow(props: ToolbarProps) {

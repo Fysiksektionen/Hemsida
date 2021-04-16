@@ -1,9 +1,9 @@
-import { ContentDict, ContentText } from '../../api_object_types';
-import { BlockFeed } from '../blocks';
+import { ContentDict } from '../../api_object_types';
+import { BlockFeed, HeadingBlock } from '../blocks';
 
 export type NamndPageCT = ContentDict & {
     items: {
-        title: ContentText,
+        title: HeadingBlock,
         content: BlockFeed
     }
 }

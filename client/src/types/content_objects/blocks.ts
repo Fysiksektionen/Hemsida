@@ -4,14 +4,14 @@ import { ChangeKeyType } from '../general';
 export type HeadingBlock = ContentText & {
     attributes: {
         blockType: 'heading',
-        richTextEditorType: 'only-headings'
+        richTextEditorType: 'only-headings' | 'none'
     }
 }
 
 export type BodyTextBlock = ContentText & {
     attributes: {
         blockType: 'bodyText',
-        richTextEditorType: 'body-text'
+        richTextEditorType: 'body-text' | 'all' | 'none'
     }
 }
 

@@ -129,6 +129,7 @@ function AddBlockButton({ index, content }: AddBlockButtonProps) {
                     vertical: 'bottom',
                     horizontal: 'center'
                 }}
+                className='zoom-xs-10 zoom-xl-8'
             >
                 <Container>
                     <Row>

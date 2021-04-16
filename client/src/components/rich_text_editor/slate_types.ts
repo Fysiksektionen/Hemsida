@@ -43,13 +43,13 @@ declare module 'slate' {
     }
 }
 
-export type BlockTypes = CustomElement['type'];
-export type MarkTypes = keyof Omit<CustomText, 'text'>;
+export type SlateBlockType = CustomElement['type'];
+export type SlateMarkType = keyof Omit<CustomText, 'text'>;
 
 export const LIST_TYPES = ['bulleted-list', 'numbered-list'];
 export const EMPTY_VALUE = [{ type: 'paragraph', children: [{ text: '' }] }] as Descendant[];
 
-export const HOTKEYS: NodeJS.Dict<string> = {
+export const HOTKEYS: NodeJS.Dict<SlateMarkType> = {
     'mod+b': 'bold',
     'mod+i': 'italic',
     'mod+u': 'underline',

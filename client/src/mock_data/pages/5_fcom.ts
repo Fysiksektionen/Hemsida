@@ -26,8 +26,11 @@ export const fcomPage = {
                 id: 2,
                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'text',
-                attributes: {},
-                text: 'Fcom'
+                attributes: {
+                    blockType: 'heading',
+                    richTextEditorType: 'none'
+                },
+                text: '<p>Fcom</p>'
             },
             content: {
                 id: 3,
@@ -55,7 +58,8 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            blockType: 'heading'
+                            blockType: 'heading',
+                            richTextEditorType: 'only-headings'
                         },
                         text: '<h3>Om Kommunikationsnämnden Fcom</h3>'
                     },
@@ -64,7 +68,8 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            blockType: 'richText'
+                            blockType: 'bodyText',
+                            richTextEditorType: 'body-text'
                         },
                         text: '<p><span>Fysiksektionens Kommunikationsnämnd, även kallad' +
                             ' </span><span><strong>Fcom</strong></span><span> arbetar med att stödja' +
@@ -82,7 +87,7 @@ export const fcomPage = {
                         dbType: 'text',
                         attributes: {
                             blockType: 'heading',
-                            size: 3
+                            richTextEditorType: 'only-headings'
                         },
                         text: '<h3>Engagera dig</h3>'
                     },
@@ -91,7 +96,8 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            blockType: 'richText'
+                            blockType: 'bodyText',
+                            richTextEditorType: 'body-text'
                         },
                         text: '<p><span>Har du varit </span><span><strong>intresserad</strong></span><span> av att engagera' +
                             ' dig i Fysiksektionen, men känt att tiden' +
@@ -118,8 +124,11 @@ export const fcomPage = {
                 id: 22,
                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'text',
-                attributes: {},
-                text: 'Fcom'
+                attributes: {
+                    blockType: 'heading',
+                    richTextEditorType: 'none'
+                },
+                text: '<p>Fcom</p>'
             },
             content: {
                 id: 23,
@@ -147,9 +156,10 @@ export const fcomPage = {
                         detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
-                            blockType: 'richText'
+                            blockType: 'heading',
+                            richTextEditorType: 'only-headings'
                         },
-                        text: '<p>Some info</p>'
+                        text: '<h3>Some heading</h3>'
                     }
                 ]
             }

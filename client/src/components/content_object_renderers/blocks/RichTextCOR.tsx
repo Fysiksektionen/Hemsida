@@ -3,16 +3,27 @@ import parse from 'html-react-parser';
 import React, { useContext } from 'react';
 import { ContentTreeContext, EditorialModeContext } from '../../../contexts';
 import RichTextEditor from '../../rich_text_editor/RichTextEditor';
-import { BlockTypes, MarkTypes } from '../../rich_text_editor/slate_types';
+import { SlateBlockType, SlateMarkType } from '../../rich_text_editor/slate_types';
 
-const richTextEditorSettings: {[key in RichTextBlock['attributes']['richTextEditorType']]: { marks: MarkTypes[], blocks: BlockTypes[] }} = {
+const richTextEditorSettings: {[key in RichTextBlock['attributes']['richTextEditorType']]: { marks: SlateMarkType[], blocks: SlateBlockType[], singleLine?: boolean }} = {
     'body-text': {
         marks: ['bold', 'italic', 'underline', 'code'],
         blocks: ['bulleted-list', 'numbered-list']
     },
     'only-headings': {
         marks: [],
-        blocks: ['h1', 'h2', 'h3', 'h4', 'h5']
+        blocks: ['h1', 'h2', 'h3', 'h4', 'h5'],
+        singleLine: true
+    },
+    none: {
+        marks: [],
+        blocks: [],
+        singleLine: true
+    },
+    all: {
+        marks: ['bold', 'italic', 'underline', 'code'],
+        blocks: ['h1', 'h2', 'h3', 'h4', 'h5', 'bulleted-list', 'numbered-list'],
+        singleLine: true
     }
 };
 
@@ -33,6 +44,7 @@ export default function RichTextCOR({ content }: {content: RichTextBlock}) {
                     onDoneEdit={updateContentValue}
                     markActions={richTextEditorSettings[content.attributes.richTextEditorType].marks}
                     blockActions={richTextEditorSettings[content.attributes.richTextEditorType].blocks}
+                    singleLine={richTextEditorSettings[content.attributes.richTextEditorType].singleLine}
                 />
             }
         </div>

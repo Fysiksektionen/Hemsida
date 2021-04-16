@@ -128,7 +128,7 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
                         </Row>
 
                         {/* Page */}
-                        <Row style={{ zoom: 9 / 12 }}>
+                        <Row className='zoom-xs-10 zoom-xl-8'>
                             <LocaleContext.Provider value={pageLocale}>
                                 <EditorialModeContext.Provider value={true}>
                                     <ContentTreeContext.Provider value={dispatch}>
