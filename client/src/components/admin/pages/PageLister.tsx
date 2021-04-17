@@ -55,7 +55,6 @@ export default function PageLister({ setLocationHook }: PageListerProps) {
                         <Card.Body className={'p-0'}>
                             {pagesFiltered?.map((page, index) => {
                                 return (
-                                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                                     <Row
                                         className={'p-3 mx-0 darken-on-hover pointer-cursor' + (
                                             index % 2 === 0 ? ' bg-F-light-gray' : ' bg-F-super-light-gray'

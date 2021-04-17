@@ -3,7 +3,10 @@ import { AdminPage, AdminPageProps } from '../../../types/admin_components';
 import PageLister from './PageLister';
 import PageEditor from './PageEditor';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+/**
+ * AminPage component responsible for editing of Pages.
+ * @param props Standard props of an AdminPage
+ */
 const PagesAdminPage: AdminPage = (props: AdminPageProps) => {
     // Logic of loading a list or loading edit mode of a single page.
     const pageId = props.getParams !== undefined ? props.getParams.id : undefined;

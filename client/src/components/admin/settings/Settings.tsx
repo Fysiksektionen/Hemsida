@@ -92,43 +92,49 @@ export default function SettingsAdminPage(props: AdminPageProps) {
         <Container className='pt-5'>
             <h1>Settings</h1>
             <hr />
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <h2 className="d-flex flex-row justify-content-between">
-                    <span>Site settings</span>
-                    <Button variant="primary" type="submit" disabled={!state.settings.hasChanged}>
-                        <i className="fas fa-save" /> Save
-                    </Button>
-                </h2>
-                <Form.Group controlId="rootUrl" as={Col} md={4}>
-                    <Form.Label>Root URL</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="Root URL"
-                        defaultValue={state.settings.initialData.rootUrl}
-                        onChange={onChange}
-                    />
-                    <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">Looks bad!</Form.Control.Feedback>
-                </Form.Group>
-            </Form>
+            <>
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                    <h2 className="d-flex flex-row justify-content-between">
+                        <span>Site settings</span>
+                        <Button variant="primary" type="submit" disabled={!state.settings.hasChanged}>
+                            <i className="fas fa-save" /> Save
+                        </Button>
+                    </h2>
+                    <Form.Group controlId="rootUrl" as={Col} md={4}>
+                        <Form.Label>Root URL</Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            placeholder="Root URL"
+                            defaultValue={state.settings.initialData.rootUrl}
+                            onChange={onChange}
+                        />
+                        <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">Looks bad!</Form.Control.Feedback>
+                    </Form.Group>
+                </Form>
+            </>
             <hr />
-            <h2>Site content</h2>
-            <h3>Header</h3>
-            <HeaderEditor
-                headerContentInitial={{
-                    sv: state.contents.initialData.headerContentSv,
-                    en: state.contents.initialData.headerContentEn
-                }}
-            />
+            <h1>Site content</h1>
+            <>
+                <h3>Header</h3>
+                <HeaderEditor
+                    headerContentInitial={{
+                        sv: state.contents.initialData.headerContentSv,
+                        en: state.contents.initialData.headerContentEn
+                    }}
+                />
+            </>
             <hr />
-            <h3>Footer</h3>
-            <FooterEditor
-                footerContentInitial={{
-                    sv: state.contents.initialData.footerContentSv,
-                    en: state.contents.initialData.footerContentEn
-                }}
-            />
+            <>
+                <h3>Footer</h3>
+                <FooterEditor
+                    footerContentInitial={{
+                        sv: state.contents.initialData.footerContentSv,
+                        en: state.contents.initialData.footerContentEn
+                    }}
+                />
+            </>
             <hr />
         </Container>
     );

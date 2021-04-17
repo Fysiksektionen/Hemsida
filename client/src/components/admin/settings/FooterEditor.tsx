@@ -20,7 +20,6 @@ export type FooterEditorProps = {
  * EditorialModeContext to enable the built-it editing behaviour in the Footer component.
  * @param footerContentInitial: Initial state of the content tree.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function FooterEditor({ footerContentInitial }: FooterEditorProps) {
     const [footerContent, setFooterContent] = useState({ content: footerContentInitial, hasChanged: false });
     const globalLocale = useContext(LocaleContext);
