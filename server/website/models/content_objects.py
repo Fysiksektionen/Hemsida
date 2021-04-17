@@ -154,7 +154,7 @@ class ContentText(ContentObjectBase):
         verbose_name = _("text content object")
         verbose_name_plural = _("text content objects")
 
-    text = models.TextField(verbose_name=_('text'), null=True, blank=True)
+    text = models.TextField(verbose_name=_('text'), null=False, blank=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
