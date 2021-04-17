@@ -1,6 +1,8 @@
 from utils.serializers import DBObjectSerializer, ExtendedModelSerializer
 from django.core.cache import cache
 from rest_framework import viewsets, mixins, serializers
+
+from website.models import Menu
 from website.models.content_objects import *
 from website.views.menus import MenuItemSerializer
 
@@ -32,25 +34,46 @@ class ContentObjectBaseSerializer(DBObjectSerializer):
 
 
 class ImageSerializer(serializers.Serializer):
-    image = serializers.ImageField
+    image = serializers.ImageField()
 
 
 class TextSerializer(serializers.Serializer):
     text = serializers.CharField(required=True, allow_blank=True)
 
 
-class COMenuSerializer(ExtendedModelSerializer):
-    menu = MenuItemSerializer
+class COMenuItemSerializer(ExtendedModelSerializer):
+    """Serializer for rendering COMenuItem."""
+    # Maybe change so that it inherits from MenuItemSerializer when it has DetailURl
+
+    class Meta:
+        model = Menu
+        fields = ['name', 'link', 'items', 'is_menu']
+        depth = 3  # Godtyckligt vald
+        extra_kwargs = {
+            'detail_url': {
+                'url_null_deciding_attribute': 'is_menu'
+            }
+        }
+        nested_serialization = {
+            'items': {
+                'use_base_meta': True,
+                'reuse_nested_serialization': True
+            }
+        }
+
+
+class COMenuSerializer(DBObjectSerializer):
+    menu = COMenuItemSerializer()
 
     class Meta:
         model = ContentMenu
         fields = ['menu']
+        # Fult att id är med två gånger
 
 
 class COPageSerializer(ExtendedModelSerializer):
-    pass
     """page = något
-
+    kan ej vara pageserializer pga circular import
     class Meta:
         model = ContentPage
         fields = ['page']"""

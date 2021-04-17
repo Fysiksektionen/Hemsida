@@ -23,21 +23,26 @@ class PageSerializer(DBObjectSerializer):
                 'fields': ['name']
             },
             'page_draft': {
-                'fields': ['page_type', 'content_sv', 'content_en']
+                'fields': ['page_type', 'content']
             }
         }
 
     def get_content(self, obj):
+        serialized_content = {'content_sv': None, 'content_en': None}
+        content = []
+        language = []
         if obj.content_sv:
-            content = get_content_object_trees([obj.content_sv])
-            serialized_content = []
-            for items in content:
-                # TODO: Add context so detail_url is added
-                serialized_items = serialize_item(items)
-                serialized_content.append(serialized_items)
-            return serialized_content
-        else:
-            return None
+            content.append(obj.content_sv)
+            language.append('content_sv')
+        if obj.content_en:
+            content.append(obj.content_en)
+            language.append('content_en')
+        content = get_content_object_trees(content)
+        for i, items in zip(language, content):
+            # TODO: Add context so detail_url is added
+            serialized_items = serialize_item(items)
+            serialized_content[i] = serialized_items
+        return serialized_content
 
 
 class PageViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
