@@ -6,14 +6,11 @@ from website.views.content_objects import serialize_item
 
 
 class PageSerializer(DBObjectSerializer):
-    """Serializer for rendering a Page. Shows id, detail_url and name of child/parent pages."""
-
-    content = serializers.SerializerMethodField()
 
     class Meta:
         model = Page
         fields = ['name', 'url', 'slug', 'page_type', 'parent', 'children', 'published',
-                  'published_at', 'last_edited_at', 'content', 'page_draft']
+                  'published_at', 'last_edited_at', 'page_draft']
         depth = 1
         nested_serialization = {
             'children': {
@@ -23,8 +20,21 @@ class PageSerializer(DBObjectSerializer):
                 'fields': ['name']
             },
             'page_draft': {
-                'fields': ['page_type', 'content']
+                'fields': ['page_type']
             }
+        }
+
+
+class FullPageSerializer(PageSerializer):
+    """Serializer for rendering a Page. Shows id, detail_url and name of child/parent pages."""
+
+    content = serializers.SerializerMethodField()
+
+    class Meta(PageSerializer.Meta):
+        fields = ['name', 'url', 'slug', 'page_type', 'parent', 'children', 'published',
+                  'published_at', 'last_edited_at', 'content', 'page_draft']
+        PageSerializer.Meta.nested_serialization['page_draft'] = {
+            'fields': ['page_type', 'content']
         }
 
     def get_content(self, obj):
@@ -40,12 +50,12 @@ class PageSerializer(DBObjectSerializer):
         content = get_content_object_trees(content)
         for i, items in zip(language, content):
             # TODO: Add context so detail_url is added
-            serialized_items = serialize_item(items)
+            serialized_items = serialize_item(items, self.context)
             serialized_content[i] = serialized_items
         return serialized_content
 
 
 class PageViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """A simple ViewSet for listing and retrieving Pages."""
-    serializer_class = PageSerializer
+    serializer_class = FullPageSerializer
     queryset = Page.objects.all()

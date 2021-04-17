@@ -4,25 +4,27 @@ from rest_framework import viewsets, mixins, serializers
 
 from website.models import Menu
 from website.models.content_objects import *
+from website.selectors.content_objects import get_content_object_trees
 from website.views.menus import MenuItemSerializer
+# from website.views.pages import PageSerializer
 
 
-def serialize_item(item, get_children=True):
+def serialize_item(item, context, get_children=True):
     """Recursive method used to rebuild content object tree as a dictionary."""
-    serialized_item = ContentObjectBaseSerializer(item['object']).data
+    serialized_item = ContentObjectBaseSerializer(item['object'], context=context).data #data or initial_data
 
     if item['db_type'] == 'dict':
         if get_children:
             serialized_item['items'] = {}
             for child in item['items']:
-                serialized_item['items'][child['object'].name] = serialize_item(child)
+                serialized_item['items'][child['object'].name] = serialize_item(item=child, context=context)
     elif item['db_type'] == 'list':
         if get_children:
             serialized_item['items'] = []
             for child in item['items']:
-                serialized_item['items'].append(serialize_item(child))
+                serialized_item['items'].append(serialize_item(item=child, context=context))
     else:
-        serialized_item[item['db_type']] = content_object_value_serializers[item['db_type']](item['object']).data
+        serialized_item[item['db_type']] = content_object_value_serializers[item['db_type']](item['object'], context=context).data
 
     return serialized_item
 
@@ -41,13 +43,13 @@ class TextSerializer(serializers.Serializer):
     text = serializers.CharField(required=True, allow_blank=True)
 
 
-class COMenuItemSerializer(ExtendedModelSerializer):
+class COMenuItemSerializer(MenuItemSerializer):
     """Serializer for rendering COMenuItem."""
-    # Maybe change so that it inherits from MenuItemSerializer when it has DetailURl
 
-    class Meta:
-        model = Menu
-        fields = ['name', 'link', 'items', 'is_menu']
+    class Meta(MenuItemSerializer.Meta):
+        inf_depth = False
+        """model = Menu
+        # fields = ['name', 'link', 'items', 'is_menu']
         depth = 3  # Godtyckligt vald
         extra_kwargs = {
             'detail_url': {
@@ -59,7 +61,7 @@ class COMenuItemSerializer(ExtendedModelSerializer):
                 'use_base_meta': True,
                 'reuse_nested_serialization': True
             }
-        }
+        }"""
 
 
 class COMenuSerializer(DBObjectSerializer):
@@ -72,11 +74,11 @@ class COMenuSerializer(DBObjectSerializer):
 
 
 class COPageSerializer(ExtendedModelSerializer):
-    """page = något
-    kan ej vara pageserializer pga circular import
+    #page = PageSerializer
+
     class Meta:
         model = ContentPage
-        fields = ['page']"""
+        fields = ['page']
 
 
 content_object_value_serializers = {
@@ -85,4 +87,31 @@ content_object_value_serializers = {
     'menu': COMenuSerializer,
     'page': COPageSerializer,
 }
+
+
+class ContentObjectsSerializer(DBObjectSerializer):
+    value = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ContentObjectBase
+        fields = ['name', 'db_type', 'component', 'parent_page',
+                  'attributes', 'collection', 'order', 'value']
+        nested_serialization = {
+            'parent_page': {
+                'fields': ['name']
+            },
+            'collection': {
+                'fields': ['db_type']
+            },
+        }
+
+    def get_value(self, obj):
+        item = get_content_object_trees([obj])
+        serialized_item = serialize_item(item=item[0], context=self.context)
+        return serialized_item
+
+
+class ContentObjectsViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    serializer_class = ContentObjectsSerializer
+    queryset = ContentObjectBase.objects.all()
 
