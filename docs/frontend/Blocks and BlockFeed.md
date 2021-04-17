@@ -28,4 +28,5 @@ BlockFeedCOR. Denna kommer möjliggöra redigering av blocken samt att kunna lä
 
 ### Blocks
 Det finns CORs och COEs för alla block också. Dessa går utmärkt att använda utan att lägga det inuti ett BlockFeed. 
-Detta passar väl till redigering av små texter eller rubriker.
+Detta passar väl till redigering av små texter eller rubriker. Här kan det vara värt att veta att delar av beteendet 
+om hur redigering och rendrering går till kan ligga i själva blocket (se exempelvis `HeadingBlock`). 
