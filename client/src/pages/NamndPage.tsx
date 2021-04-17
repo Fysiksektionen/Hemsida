@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContentObject } from '../types/api_object_types';
-import { NamndPageCT } from '../types/content_objects/pages/namnd';
+import { NamndPageCT } from '../types/content_objects/content_trees/namnd';
 import BlockFeedCOR from '../components/content_object_renderers/BlockFeedCOR';
 import { Col, Container, Row } from 'react-bootstrap';
 import BlockCOR from '../components/content_object_renderers/blocks/BlockCOR';

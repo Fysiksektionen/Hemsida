@@ -1,4 +1,4 @@
-import { NamndPageCT } from '../../types/content_objects/pages/namnd';
+import { NamndPageCT } from '../../types/content_objects/content_trees/namnd';
 import fcom from '../../mediafiles/placeholder_images/Fcom-ikoner.png';
 
 export const fcomPage = {

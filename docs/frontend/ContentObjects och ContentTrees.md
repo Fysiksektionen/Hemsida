@@ -70,7 +70,7 @@ Tack vare hur TypeScript funkar kan vi bygga upp mer komplexa strukturer av vår
 ContentTrees (_CT's_). Ett CO är det minsta möjliga CT.
 
 ### Definition
-Tills vidare definieras våra CT's i [src/types/content_object_trees.ts](../../client/src/types/content_object_trees.ts),
+Tills vidare definieras våra CT's i [src/types/site.ts](../../client/src/types/site.ts),
 men det kan komma att ändras när projektet blir större. Nedan följer ett exempel på ett litet CT som definierar det 
 innehåll som behövs för att visa vår Frontpage som den ser ut i skrivande stund.
 

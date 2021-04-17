@@ -1,5 +1,5 @@
 // @refresh reset
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import isHotkey from 'is-hotkey';
 import { createEditor, Descendant } from 'slate';
 import { Editable, withReact, Slate } from 'slate-react';
@@ -8,29 +8,34 @@ import { withHistory } from 'slate-history';
 import { toggleMark } from './block_mark_utils';
 import { Leaf, Element, ToolbarRow } from './editor_UI';
 import { SlateMarkType, SlateBlockType, HOTKEYS } from './slate_types';
-import { RichTextBlock } from '../../types/content_objects/blocks';
+import { RichTextBlock } from '../../../../types/content_objects/blocks';
 import { deserialize, serialize } from './slate_to_CO';
 import { Col, Row } from 'react-bootstrap';
+import { ContentTreeContext } from '../../../../contexts';
 
 type RichTextEditorProps = {
     content: RichTextBlock,
-    onDoneEdit: (block: RichTextBlock) => void,
     markActions: SlateMarkType[],
     blockActions: SlateBlockType[],
     singleLine?: boolean
 }
 
-export default function RichTextEditor(props: RichTextEditorProps) {
+export default function RichTextCOE(props: RichTextEditorProps) {
     const [value, setValue] = useState<Descendant[]>(deserialize(props.content.text));
     const renderElement = useCallback(props => <Element {...props} />, []);
     const renderLeaf = useCallback(props => <Leaf {...props} />, []);
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const [showToolbar, setShowToolbar] = useState(false);
 
+    const dispatch = useContext(ContentTreeContext);
+
     function updateContent() {
-        props.onDoneEdit({
-            ...props.content,
-            text: serialize(value)
+        dispatch({
+            id: props.content.id,
+            value: {
+                ...props.content,
+                text: serialize(value)
+            }
         });
     }
 

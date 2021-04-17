@@ -2,7 +2,7 @@ import React from 'react';
 import GoogleMap from './GoogleMap';
 import Toe from './Toe';
 import { LocaleContext, locales } from '../contexts';
-import { SiteFooterCT } from '../types/content_objects/content_object_trees';
+import { SiteFooterCT } from '../types/content_objects/content_trees/site';
 import TextCOR from './content_object_renderers/TextCOR';
 
 type FooterProps = {

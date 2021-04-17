@@ -15,9 +15,10 @@ att visa en bild eller en text. Ibland handlar det om mer avancerade strukturer.
 använda sub-komponenter för detta, men det är vanligt att enkla CORs bara har layouten direkt i sig (ex. `TextCOR`). 
 
 #### Om `EditorialMode==true`
-Här är uppgiften följande: Möjliggör för användaren att använda en tillhörande COE för att redigera innehållet. 
-Vilken COE som ska användas här ska hårdkodas i COR:en. Detta kan göras genom att ha en COE som är en popup, som 
-visas när någon klickar på COR:en (se ex. `TextCOR` och `TextModalCOE`).
+Här är uppgiften följande: Möjliggör för användaren att redigera innehållet. Detta görs ofta genom att definiera 
+en ContentObjectEditor som ansvarar för beteendet vid redigering. Detta kan göras genom att ha en COE som är en 
+popup, som visas när någon klickar på COR:en (se ex.`TextCOR` och `TextModalCOE`) eller något som tillåter inline 
+redigering.
 
 
 ### När i content-trädet av en sida ska man använda en COR?
@@ -65,16 +66,19 @@ export default function TextCOR(props: TextCORProps) {
 ```
 
 Värt att notera:
-- COR:en har **inte** något internt state som sparar vad som ska visas, utran visar alltid det som kommer vi props. 
+- COR:en har **inte** något internt state som sparar vad som ska visas, utan visar alltid det som kommer vi props. 
   Detta är viktigt för att saker ska uppdateras korrekt.
-- Beroende på EditorialMode så går det att på upp en COE om man klickar på texten som visas.
+- Beroende på EditorialMode ska redigeringsläge vara på eller av.
 - Extra funktionalitet så som preText och postText går att lägga till på en COR för att göra att den går att använda 
   i fler än ett sammanhang.
+- En COR innehåller ofta en COE, men i sin tur är det okej för en COE att ha flera COR:s i sig. Detta kan vara 
+  relevant när man redigerar större datastrukturer som både behöver kunna redigeras på nivån av varje löv i 
+  Content-trädet och även genensamt på något "större" sätt (ex. `BlockFeedCOE`).
 
 
 ## ContentObjectEditor
 En ContentObjectEditor (_COE_) är en komponent som på tar in ett CT och på något sätt tillåter redigering av objektets 
-innehåll. Varje COR har en COE associerad till sig och aktiverar COE:n när den behövs i `EditorialMode`.
+innehåll. Dessa används bara inuti COR:s när `EditorialMode == true`.
 
 ### Exempel på editor-typer
 Här följer exempel på hur editors kan funka.
@@ -83,9 +87,9 @@ Här följer exempel på hur editors kan funka.
   redigeras. I popupen finns någon typ av formulär eller väljare eller så som tillåter den att ändra innehållet. 
   När det sparas stängs popupen.
 - En editor kan vara in-place och när man klickar på komponenten vars innehåll ska ändras så blir informationen till 
-  ett formulär in-place som går att ändra och spara.
-- En editor kan definiera ett eget interface där saker kan flyttas runt och redigeras direkt på sidan, tänk editorn 
-  i wordpress just nu.
+  ett formulär in-place som går att ändra och spara. (ex. `RichTextCOE`).
+- En editor kan definiera ett eget interface där saker kan flyttas runt och redigeras direkt på sidan (ex. 
+  `BlockFeedCOE`).
   
 ### Definition
 En COE är en React-komponent som (minst) tar in ett CT som ska kunna redigeras. Varje COE kan endast redigera en 

@@ -10,8 +10,8 @@ type PageListerProps = {
 }
 
 /**
- * Component that lists all pages and allows for filtering and search behaviour.
- * @param setPagesLocation: Hook to be able to change the location within the pages Admin-app.
+ * Component that lists all content_trees and allows for filtering and search behaviour.
+ * @param setPagesLocation: Hook to be able to change the location within the content_trees Admin-app.
  */
 export default function PageLister({ setLocationHook }: PageListerProps) {
     const [allPages, setAllPages] = useState<Page[]>();

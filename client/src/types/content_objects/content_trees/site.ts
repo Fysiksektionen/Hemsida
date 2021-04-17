@@ -1,4 +1,4 @@
-import { ContentDict, ContentImage, ContentText } from '../api_object_types';
+import { ContentDict, ContentImage, ContentText } from '../../api_object_types';
 
 /**
  * File defining content trees.

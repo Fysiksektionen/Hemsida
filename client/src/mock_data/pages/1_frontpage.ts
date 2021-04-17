@@ -1,4 +1,4 @@
-import { FrontPageCT } from '../../types/content_objects/pages/frontpage';
+import { FrontPageCT } from '../../types/content_objects/content_trees/frontpage';
 import ericsson from '../../mediafiles/placeholder_images/ERI_vertical_RGB.png';
 
 export const frontpage = {
@@ -49,21 +49,27 @@ export const frontpage = {
                                 id: 4,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'Vill du hitta på något?'
+                                attributes: {
+                                    blockType: 'heading',
+                                    richTextEditorType: 'none'
+                                },
+                                text: '<p>Vill du hitta på något?</p>'
                             },
                             text: {
                                 id: 13,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'Vill du vara med och ta emot de som börjar till ' +
+                                attributes: {
+                                    blockType: 'bodyText',
+                                    richTextEditorType: 'only-marks'
+                                },
+                                text: '<p><span>Vill du vara med och ta emot de som börjar till ' +
                                     'hösten? Vill du anordna en fest? Vill du gå på en fest? ' +
                                     'Vill du förbättra utbildningen? Vill du jobba på dina ' +
                                     'företagskontakter? Vill du bara hänga med andra som ' +
                                     'pluggar fysik och matte? På Fysiksektionen finns det ' +
-                                    'mängder med sätt att vara med och engagera sig. <b>Läs ' +
-                                    'mer om hur du kan vara med genom att följa länken.</b>'
+                                    'mängder med sätt att vara med och engagera sig. </span><span><strong>Läs ' +
+                                    'mer om hur du kan vara med genom att följa länken.</strong></span></p>'
                             },
                             button: {
                                 id: 5,
@@ -84,20 +90,26 @@ export const frontpage = {
                                 id: 9,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'Vad är Fysiksektionen?'
+                                attributes: {
+                                    blockType: 'heading',
+                                    richTextEditorType: 'none'
+                                },
+                                text: '<p>Vad är Fysiksektionen?</p>'
                             },
                             text: {
                                 id: 10,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'Fysiksektionen är en organisation som hittar på roliga, ' +
+                                attributes: {
+                                    blockType: 'bodyText',
+                                    richTextEditorType: 'only-marks'
+                                },
+                                text: '<p><span>Fysiksektionen är en organisation som hittar på roliga, ' +
                                     'nyttiga, annorlunda, och viktiga saker för alla de som ' +
                                     'studerar Teknisk fysik och Teknisk matematik vid KTH. ' +
                                     'Målet är att det ska finnas mer än något för alla som vill ' +
-                                    'ha mer än något. <b>Vill du veta mer om Fysiksektionen? ' +
-                                    'Följ då länken nedan.</b>'
+                                    'ha mer än något. </span><span><strong>Vill du veta mer om Fysiksektionen? ' +
+                                    'Följ då länken nedan.</strong></span></p>'
                             },
                             button: {
                                 id: 11,
@@ -118,21 +130,27 @@ export const frontpage = {
                                 id: 15,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'Vad händer nu?'
+                                attributes: {
+                                    blockType: 'heading',
+                                    richTextEditorType: 'none'
+                                },
+                                text: '<p>Vad händer nu?</p>'
                             },
                             text: {
                                 id: 16,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'På Fysiksektionen är det hela tiden saker på gång. Vi har ' +
+                                attributes: {
+                                    blockType: 'bodyText',
+                                    richTextEditorType: 'only-marks'
+                                },
+                                text: '<p><span>På Fysiksektionen är det hela tiden saker på gång. Vi har ' +
                                     'fester titt som tätt, det hålls bokcirklar, en ' +
                                     'arbetsmarknadsdag anordnas, ett spex sätts ihop, Åre ' +
                                     'besöks, de nyantagna tas emot och även om det inte är ' +
                                     'något annat så kan du räkna med att det är en pub i ' +
-                                    'Konsultatet varje tisdag. <b>Vill du veta mer om vilka ' +
-                                    'evenemang som är på gång just nu? Följ länken nedan.</b>'
+                                    'Konsultatet varje tisdag. </span><span><strong>Vill du veta mer om vilka ' +
+                                    'evenemang som är på gång just nu? Följ länken nedan.</strong></span></p>'
                             },
                             button: {
                                 id: 17,
@@ -180,21 +198,27 @@ export const frontpage = {
                                 id: 24,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'Want to do something?'
+                                attributes: {
+                                    blockType: 'heading',
+                                    richTextEditorType: 'none'
+                                },
+                                text: '<p>Want to do something?</p>'
                             },
                             text: {
                                 id: 25,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'Do you want to join and receive those who start to ' +
+                                attributes: {
+                                    blockType: 'bodyText',
+                                    richTextEditorType: 'only-marks'
+                                },
+                                text: '<p><span>Do you want to join and receive those who start to ' +
                                     'autumn? Do you want to organize a party? Do you want to go to a party? ' +
                                     'Do you want to improve education? Do you want to work on your ' +
                                     'business contacts? Do you just want to hang out with others like ' +
                                     'study physics and math? In the Physics section there is' +
-                                    'lots of ways to get involved and get involved. <b>Read ' +
-                                    'more about how to join by following the link.</b>'
+                                    'lots of ways to get involved and get involved. </span><span><strong>Read ' +
+                                    'more about how to join by following the link.</strong></span></p>'
                             },
                             button: {
                                 id: 26,
@@ -215,20 +239,26 @@ export const frontpage = {
                                 id: 28,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'What is the Physics Chapter?'
+                                attributes: {
+                                    blockType: 'heading',
+                                    richTextEditorType: 'none'
+                                },
+                                text: '<p>What is the Physics Chapter?</p>'
                             },
                             text: {
                                 id: 29,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'The Physics Chapter is an organization that invents fun, ' +
+                                attributes: {
+                                    blockType: 'bodyText',
+                                    richTextEditorType: 'only-marks'
+                                },
+                                text: '<p><span>The Physics Chapter is an organization that invents fun, ' +
                                     'useful, different, and important things for all those who' +
                                     'studies Technical Physics and Technical Mathematics at KTH. ' +
                                     'The goal is that there should be more than something for everyone who wants' +
-                                    'have more than anything. <b>Want to know more about the Physics Chapter? ' +
-                                    'Then follow the link below.</b>'
+                                    'have more than anything. </span><span><strong>Want to know more about the Physics Chapter? ' +
+                                    'Then follow the link below.</strong></span></p>'
                             },
                             button: {
                                 id: 30,
@@ -249,21 +279,27 @@ export const frontpage = {
                                 id: 32,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'What\'s up next?'
+                                attributes: {
+                                    blockType: 'heading',
+                                    richTextEditorType: 'none'
+                                },
+                                text: '<p>What\'s up next?</p>'
                             },
                             text: {
                                 id: 33,
                                 detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
-                                attributes: {},
-                                text: 'At the Physics Chapter, things are always going on. We have ' +
+                                attributes: {
+                                    blockType: 'bodyText',
+                                    richTextEditorType: 'only-marks'
+                                },
+                                text: '<p><span>At the Physics Chapter, things are always going on. We have ' +
                                     'parties look like tight, book circles are held, a' +
                                     'labor market day is arranged, a spex is put together, Åre' +
                                     'visited, the newly admitted are received and even if it is not' +
                                     'something else, you can count on it being a pub in' +
-                                    'The consultation every Tuesday. <b>Want to know more about which ' +
-                                    'events going on right now? Follow the link below.</b>'
+                                    'The consultation every Tuesday. </span><span><strong>Want to know more about which ' +
+                                    'events going on right now? Follow the link below.</strong></span></p>'
                             },
                             button: {
                                 id: 34,

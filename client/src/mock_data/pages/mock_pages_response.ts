@@ -1,6 +1,6 @@
 /**
  * Mock data for https://f.kth.se/api/pages/ and https://f.kth.se/api/pages/id/.
- * Used in App.tsx and admin/pages/Pages.tsx.
+ * Used in App.tsx and admin/content_trees/Pages.tsx.
  */
 
 import { APIResponse } from '../../types/general';

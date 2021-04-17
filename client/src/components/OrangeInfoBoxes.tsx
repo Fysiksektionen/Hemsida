@@ -2,29 +2,29 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { OrangeInfoBoxCT } from '../types/content_objects/pages/frontpage';
-import InfoBoxCOR from './content_object_renderers/InfoBoxCOR';
+import { OrangeInfoBoxCT } from '../types/content_objects/content_trees/frontpage';
+import InfoBox2COR from './content_object_renderers/InfoBox2COR';
 
 export default function OrangeInfoBoxes(content: OrangeInfoBoxCT[]) {
     return (
         <div>
             <div className="d-lg-none">
                 <Col className='m-0 p-0 text-white'>
-                    <InfoBoxCOR content={content[0]} />
-                    <InfoBoxCOR content={content[1]} />
-                    <InfoBoxCOR content={content[2]} />
+                    <InfoBox2COR content={content[0]} />
+                    <InfoBox2COR content={content[1]} />
+                    <InfoBox2COR content={content[2]} />
                 </Col>
             </div>
             <div className="d-none d-lg-block">
                 <Row className="m-0 p-0 text-white">
                     <Col className="p-0">
-                        <InfoBoxCOR content={content[0]} />
+                        <InfoBox2COR content={content[0]} />
                     </Col>
                     <Col className="p-0">
-                        <InfoBoxCOR content={content[1]} />
+                        <InfoBox2COR content={content[1]} />
                     </Col>
                     <Col className="p-0">
-                        <InfoBoxCOR content={content[2]} />
+                        <InfoBox2COR content={content[2]} />
                     </Col>
                 </Row>
             </div>

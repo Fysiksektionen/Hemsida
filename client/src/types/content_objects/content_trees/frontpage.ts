@@ -1,12 +1,13 @@
 import { ContentDict, ContentImage, ContentList, ContentText } from '../../api_object_types';
+import { HeadingBlock, RichTextBlock } from '../blocks';
 
 export type OrangeInfoBoxCT = ContentDict & {
     attributes: {
         color: string
     },
     items: {
-        title: ContentText,
-        text: ContentText,
+        title: HeadingBlock,
+        text: RichTextBlock,
         button: ContentText & {
             attributes: {
                 link: string

@@ -1,5 +1,5 @@
 /**
- * Mock data for pages/NewsFeedPage.tsx
+ * Mock data for content_trees/NewsFeedPage.tsx
  */
 
 import newsPlaceholder from '../mediafiles/placeholder_images/news_placeholder.jpg';

@@ -1,5 +1,5 @@
 /**
- * Mock data for pages/PageTypeLoader.tsx
+ * Mock data for content_trees/PageTypeLoader.tsx
  */
 import { Page } from '../../types/api_object_types';
 import { APIResponse } from '../../types/general';
