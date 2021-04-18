@@ -24,10 +24,11 @@ class ContentObjectBase(models.Model):
         verbose_name_plural = _("base content objects")
         ordering = ['order']
 
+    #TODO CHANGE BACK null = False when finished with serializer
     containing_page = models.ForeignKey(
         'Page',
         verbose_name=_('containing page'),
-        null=False, blank=False,
+        null=True, blank=False,
         on_delete=models.CASCADE
     )
     name = models.CharField(verbose_name=_('name'), max_length=255, null=False, blank=True, default="")

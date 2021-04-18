@@ -2,8 +2,84 @@ from django.apps import apps
 from rest_framework import serializers, generics
 from rest_framework.fields import empty
 
-from utils.serializers import ExtendedListSerializer
+from utils.serializers import ExtendedListSerializer, DBObjectSerializer
 from website.models.content_objects import *
+
+#TODO VALIDATE DATA EVERYWHERE! (currently just proof of concept)
+class ContentTextSerializer(DBObjectSerializer):
+    collection = serializers.PrimaryKeyRelatedField(queryset= ContentCollection.objects.all())
+    class Meta:
+        model = ContentText
+        exclude = ('name', 'order')
+        depth = 1
+
+
+
+    def save(self, **kwargs):
+        #Containing page does not implementet just allowed it to be null NEED TO CHANGE BACK!
+        super().save(containing_page = kwargs.pop('containing_page', None), db_type = "text")
+
+
+class ContentCollectionListSerializer(DBObjectSerializer):
+
+    collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default= None)
+
+    class Meta:
+        model = ContentCollectionList
+        exclude = ('name', 'order')
+        depth = 1
+
+    def __init__(self, *args, **kwargs):
+        items = kwargs.pop('items')
+        super().__init__(*args, **kwargs)
+        self.initial_data["items"] = items
+
+    def is_valid(self, raise_exception=False):
+
+        super().is_valid()
+        # uhhh validate the data
+        self.validated_data["items"] = self.initial_data["items"]
+
+    def save(self, **kwargs):
+        items = self.validated_data.pop("items")
+        instance = super().save()
+        for item in items:
+            item["collection"] = instance.id
+            ser = ContentObjectBaseSerializer(data = item)
+            ser.save()
+        return instance
+
+#TODO: Remove BaseSerializer inheritance or fix all the base serializer functions
+class ContentObjectBaseSerializer(serializers.BaseSerializer):
+
+    def __init__(self, data):
+        self.initial_data = data
+
+
+    def save(self, **kwargs):
+        print(self.initial_data)
+        if(self.initial_data["db_type"] == "text"):
+            ser = ContentTextSerializer(data= self.initial_data)
+
+        if (self.initial_data["db_type"] == "list"):
+            items = self.initial_data.pop("items")
+            ser = ContentCollectionListSerializer(data=self.initial_data, items = items)
+
+
+        ser.is_valid()
+        ser.save()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class ContentObjectListSerializer(ExtendedListSerializer):
@@ -28,6 +104,7 @@ class ContentObjectListSerializer(ExtendedListSerializer):
             ret.collection = self.collection
 
         return ret
+
 
 
 class ContentObjectSerializer(serializers.ModelSerializer):
