@@ -31,7 +31,6 @@ class ContentObjectBase(models.Model):
         on_delete=models.CASCADE
     )
     name = models.CharField(verbose_name=_('name'), max_length=255, null=False, blank=True, default="")
-    component = models.CharField(verbose_name=_('component'), max_length=255, null=False, blank=True, default="")
 
     db_type = models.CharField(
         verbose_name=_('database type'),
