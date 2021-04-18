@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { EditorialModeContext } from '../../contexts';
 import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/frontpage';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';
-import parse from 'html-react-parser';
 import FButton from '../f-styled/buttons/FButton';
-import InfoBoxModalCOE from './InfoBoxCOE';
 import RichTextCOR from './blocks/RichTextCOR';
 
 /**

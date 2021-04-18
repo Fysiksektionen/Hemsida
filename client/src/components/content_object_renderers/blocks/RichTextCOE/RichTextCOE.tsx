@@ -20,15 +20,25 @@ type RichTextEditorProps = {
     singleLine?: boolean
 }
 
+/**
+ * Editor replacing a richText on edit.
+ * @param props If to show the toolbar and what blocks and actions that should be available. Also the Content
+ * to show
+ * @constructor
+ */
 export default function RichTextCOE(props: RichTextEditorProps) {
+    // Store updated value internally while editing and update CO onDoneEdit
     const [value, setValue] = useState<Descendant[]>(deserialize(props.content.text));
+    const dispatch = useContext(ContentTreeContext);
+
+    // Slate stuff
     const renderElement = useCallback(props => <Element {...props} />, []);
     const renderLeaf = useCallback(props => <Leaf {...props} />, []);
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+
     const [showToolbar, setShowToolbar] = useState(false);
 
-    const dispatch = useContext(ContentTreeContext);
-
+    // Update value in content tree
     function updateContent() {
         dispatch({
             id: props.content.id,
@@ -39,6 +49,7 @@ export default function RichTextCOE(props: RichTextEditorProps) {
         });
     }
 
+    // Reset internal value of object change
     useEffect(() => {
         setValue(deserialize(props.content.text));
     }, [props.content.text]);
@@ -48,8 +59,10 @@ export default function RichTextCOE(props: RichTextEditorProps) {
     return (
         <Slate editor={editor} value={value} onChange={value => setValue(value)}>
             <Col>
-
+                {/* Toolbar */}
                 { hasActions && <ToolbarRow show={showToolbar} markActions={props.markActions} blockActions={props.blockActions} /> }
+
+                {/* Editable area */}
                 <Row>
                     <Editable
                         className='w-100'

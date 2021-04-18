@@ -5,6 +5,9 @@ import { EditorialModeContext } from '../../../contexts';
 import RichTextCOE from './RichTextCOE/RichTextCOE';
 import { SlateBlockType, SlateMarkType } from './RichTextCOE/slate_types';
 
+/**
+ * Mapping of `richTextEditorType` settings to settings given to RichTextEditor
+ */
 const richTextEditorSettings: {[key in RichTextBlock['attributes']['richTextEditorType']]: { marks: SlateMarkType[], blocks: SlateBlockType[], singleLine?: boolean }} = {
     'body-text': {
         marks: ['bold', 'italic', 'underline', 'code'],
@@ -31,6 +34,11 @@ const richTextEditorSettings: {[key in RichTextBlock['attributes']['richTextEdit
     }
 };
 
+/**
+ * A block renderer for RichTextBlock. I.e used in BlockFeed
+ * @param content The RichTextBlock to show and edit.
+ * @constructor
+ */
 export default function RichTextCOR({ content }: {content: RichTextBlock}) {
     return (
         <div className='w-100'>

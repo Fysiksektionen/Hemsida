@@ -5,6 +5,13 @@ import { isBlockActive, isMarkActive, toggleBlock, toggleMark } from './block_ma
 import { SlateBlockType, SlateMarkType } from './slate_types';
 import { Row } from 'react-bootstrap';
 
+/**
+ * Component rendering each block type.
+ * @param attributes Attributes passed to the HTML tag
+ * @param children Content of the HTML tag
+ * @param element The SlateElement representing the slate block
+ * @constructor
+ */
 export const Element = ({ attributes, children, element }: { attributes: HTMLAttributes<HTMLElement>, children?: JSX.Element, element: SlateElement }) => {
     switch (element.type) {
     case 'numbered-list':
@@ -28,6 +35,13 @@ export const Element = ({ attributes, children, element }: { attributes: HTMLAtt
     }
 };
 
+/**
+ * Component rendering each mark.
+ * @param attributes Attributes passed to the HTML tag
+ * @param children Content of the HTML tag
+ * @param element The SlateText representing the slate text with the marks as attributes
+ * @constructor
+ */
 export const Leaf = ({ attributes, children, leaf }: { attributes: HTMLAttributes<HTMLElement>, children?: JSX.Element, leaf: SlateText }) => {
     if ('bold' in leaf && leaf.bold) {
         children = <strong>{children}</strong>;
@@ -48,6 +62,13 @@ export const Leaf = ({ attributes, children, leaf }: { attributes: HTMLAttribute
     return <span {...attributes}>{children}</span>;
 };
 
+/**
+ * Component of the buttons in the toolbar of a RichTextEditor
+ * @param icon The component rendering in the toolbar
+ * @param active Boolean indicating if the button is active. I.e wether it is dark or light.
+ * @param onClickAction Action on click. (Called onMouseDown)
+ * @constructor
+ */
 function ToolbarButton({ icon, active, onClickAction } : {icon?: JSX.Element, active: boolean, onClickAction: () => void}) {
     return (
         <span
@@ -62,6 +83,12 @@ function ToolbarButton({ icon, active, onClickAction } : {icon?: JSX.Element, ac
     );
 }
 
+/**
+ * Specific behaviour of the ToolbarButton when the button links to a block.
+ * @param format The block type to toggle
+ * @param icon The icon to show in toolbar.
+ * @constructor
+ */
 export const BlockButton = ({ format, icon }: { format: SlateBlockType, icon?: JSX.Element }) => {
     const editor = useSlate();
 
@@ -74,6 +101,12 @@ export const BlockButton = ({ format, icon }: { format: SlateBlockType, icon?: J
     );
 };
 
+/**
+ * Specific behaviour of the ToolbarButton when the button links to a mark.
+ * @param format The mark type to toggle
+ * @param icon The icon to show in toolbar.
+ * @constructor
+ */
 export const MarkButton = ({ format, icon }: { format: SlateMarkType, icon?: JSX.Element }) => {
     const editor = useSlate();
 
@@ -86,12 +119,18 @@ export const MarkButton = ({ format, icon }: { format: SlateMarkType, icon?: JSX
     );
 };
 
+/**
+ * Mapping from mark type to icon
+ */
 const markFormatIconDict: NodeJS.Dict<JSX.Element> = {
     bold: <i className={'fas fa-bold'} />,
     italic: <i className={'fas fa-italic'} />,
     underline: <i className={'fas fa-underline'} style={{ verticalAlign: '-10%' }} />,
     code: <i className={'fas fa-code'} />
 };
+/**
+ * Mapping from block type to icon
+ */
 const blockFormatIconDict: NodeJS.Dict<JSX.Element> = {
     'numbered-list': <i className={'fas fa-list-ol'} />,
     'bulleted-list': <i className={'fas fa-list-ul'} />,
@@ -108,6 +147,11 @@ type ToolbarProps = {
     blockActions: SlateBlockType[]
 }
 
+/**
+ * Component for the Toolbar appearing over the RichTextEditor.
+ * @param props Takes if to show the toolbar and what blocks and actions that should be available.
+ * @constructor
+ */
 export function ToolbarRow(props: ToolbarProps) {
     return (
         <Row

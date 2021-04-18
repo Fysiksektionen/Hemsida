@@ -6,7 +6,11 @@ import { Descendant, Text } from 'slate';
 import { Element as ElementUI, Leaf as LeafUI } from './editor_UI';
 import { CustomText } from './slate_types';
 
-export const serialize = (nodes: Descendant[]) => {
+/**
+ * Serializes a list of slate objects to string.
+ * @param nodes List of SlateElements or SlateTexts
+ */
+export function serialize(nodes: Descendant[]) {
     return nodes.map((node: Descendant) => {
         if (Text.isText(node)) {
             const element = LeafUI({
@@ -27,8 +31,12 @@ export const serialize = (nodes: Descendant[]) => {
             return ReactDOMServer.renderToStaticMarkup(element).replace(/&lt;/g, '<').replace(/&gt;/g, '>');
         }
     }).join('');
-};
+}
 
+/**
+ * Deserialize the marks of a single span to create a SlateText object.
+ * @param element The HTML element to deserialize
+ */
 function deserializeMarks(element: Node): CustomText {
     let text = {
         text: ''
@@ -59,6 +67,10 @@ function deserializeMarks(element: Node): CustomText {
     return text;
 }
 
+/**
+ * Deserialize the blocks of an HTML object.
+ * @param element The HTML element to deserialize
+ */
 function deserializeBlocks(element: Node): null | string | Descendant | Descendant[] {
     if (element.nodeType === 3) {
         return deserializeMarks(element);
@@ -100,6 +112,10 @@ function deserializeBlocks(element: Node): null | string | Descendant | Descenda
     }
 }
 
+/**
+ * Deserializes a string containing HTML markup compatible with slate blocks and marks.
+ * @param stringRep String to deserialize
+ */
 export function deserialize(stringRep: string): Descendant[] {
     const document = new DOMParser().parseFromString(stringRep, 'text/html');
     const ret = deserializeBlocks(document.body);

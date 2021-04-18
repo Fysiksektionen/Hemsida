@@ -2,6 +2,9 @@ import { Descendant, BaseEditor } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { HistoryEditor } from 'slate-history';
 
+/**
+ * Slate blocks
+ */
 export type BulletedListElement = { type: 'bulleted-list', children: Descendant[] }
 export type NumberedListElement = { type: 'numbered-list', children: Descendant[] }
 export type ListItemElement = { type: 'list-item'; children: Descendant[] }
@@ -25,6 +28,9 @@ export type CustomElement =
   | ListItemElement
   | ParagraphElement
 
+/**
+ * Slate text with marks
+ */
 export type CustomText = {
     bold?: boolean
     italic?: boolean
@@ -33,8 +39,10 @@ export type CustomText = {
     text: string
 }
 
+/**
+ * Slate related overrides
+ */
 export type CustomEditor = BaseEditor & ReactEditor & HistoryEditor
-
 declare module 'slate' {
     interface CustomTypes {
         Editor: CustomEditor
@@ -43,6 +51,9 @@ declare module 'slate' {
     }
 }
 
+/**
+ * Useful types, lists and maps.
+ */
 export type SlateBlockType = CustomElement['type'];
 export type SlateMarkType = keyof Omit<CustomText, 'text'>;
 

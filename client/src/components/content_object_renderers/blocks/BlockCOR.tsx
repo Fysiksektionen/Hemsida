@@ -3,6 +3,11 @@ import RichTextCOR from './RichTextCOR';
 import ImageBlockCOR from './ImageBlockCOR';
 import React from 'react';
 
+/**
+ * Component returning the correct component for a given Block based on block type.
+ * @param block The block
+ * @constructor
+ */
 export default function BlockCOR({ block }: {block: Block}) {
     if ((RichTextBlockTypes as BlockType[]).includes(block.attributes.blockType)) {
         return <RichTextCOR content={block as RichTextBlock} />;
