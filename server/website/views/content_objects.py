@@ -1,4 +1,4 @@
-from utils.serializers import DBObjectSerializer, ExtendedModelSerializer
+from utils.serializers import DBObjectSerializer
 from django.core.cache import cache
 from rest_framework import viewsets, mixins, serializers
 
@@ -6,7 +6,7 @@ from website.models import Menu
 from website.models.content_objects import *
 from website.selectors.content_objects import get_content_object_trees
 from website.views.menus import MenuItemSerializer
-# from website.views.pages import PageSerializer
+from website.views.pages import PageSerializer
 
 
 def serialize_item(item, context, get_children=True):
@@ -30,6 +30,8 @@ def serialize_item(item, context, get_children=True):
 
 
 class ContentObjectBaseSerializer(DBObjectSerializer):
+    """Serializer for rendering content objects without all the fields.
+    Used when rendering content objects for a page."""
     class Meta:
         model = ContentObjectBase
         exclude = ['parent_page', 'collection', 'order', 'name']
@@ -65,6 +67,7 @@ class COMenuItemSerializer(MenuItemSerializer):
 
 
 class COMenuSerializer(DBObjectSerializer):
+    """Serializer for rendering COMenu."""
     menu = COMenuItemSerializer()
 
     class Meta:
@@ -73,8 +76,9 @@ class COMenuSerializer(DBObjectSerializer):
         # Fult att id är med två gånger
 
 
-class COPageSerializer(ExtendedModelSerializer):
-    #page = PageSerializer
+class COPageSerializer(DBObjectSerializer):
+    """Serializer for rendering COPage."""
+    page = PageSerializer
 
     class Meta:
         model = ContentPage
@@ -90,6 +94,7 @@ content_object_value_serializers = {
 
 
 class ContentObjectsSerializer(DBObjectSerializer):
+    """Serializer for rendering content objects with complete information."""
     value = serializers.SerializerMethodField()
 
     class Meta:
@@ -112,6 +117,7 @@ class ContentObjectsSerializer(DBObjectSerializer):
 
 
 class ContentObjectsViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    """Simple viewset used for rendering content objects."""
     serializer_class = ContentObjectsSerializer
     queryset = ContentObjectBase.objects.all()
 

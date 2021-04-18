@@ -17,10 +17,12 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "react-hooks"
     ],
     "globals": {
-        "NodeJS": true
+        "NodeJS": true,
+        "JSX": true
     },
     "rules": {
         "space-before-function-paren": "off",
@@ -30,7 +32,9 @@
         "@typescript-eslint/no-use-before-define": ["error"],
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": ["warn"],
-        "no-duplicate-imports": ["error"]
+        "no-duplicate-imports": ["error"],
+        "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+        "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
     },
     "overrides": [
         {

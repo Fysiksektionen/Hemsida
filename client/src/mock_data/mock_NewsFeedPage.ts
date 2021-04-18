@@ -2,10 +2,10 @@
  * Mock data for pages/NewsFeedPage.tsx
  */
 
-import newsPlaceholder from '../placeholder_images/news_placeholder.jpg';
-import newsPlaceholderImage1 from '../placeholder_images/news_placeholder1.jpg';
-import newsPlaceholderImage2 from '../placeholder_images/news_placeholder2.jpg';
-import newsPlaceholderImage3 from '../placeholder_images/news_placeholder3.jpg';
+import newsPlaceholder from '../mediafiles/placeholder_images/news_placeholder.jpg';
+import newsPlaceholderImage1 from '../mediafiles/placeholder_images/news_placeholder1.jpg';
+import newsPlaceholderImage2 from '../mediafiles/placeholder_images/news_placeholder2.jpg';
+import newsPlaceholderImage3 from '../mediafiles/placeholder_images/news_placeholder3.jpg';
 import { NewsPageMinimal } from '../types/news';
 
 export const dummyArticles: NewsPageMinimal[] = [

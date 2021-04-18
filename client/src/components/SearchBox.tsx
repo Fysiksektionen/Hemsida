@@ -57,7 +57,7 @@ export function GroupedSearch() {
             groupBy={(option: Result) => option.type.toUpperCase()}
             getOptionLabel={(option: Result) => option.title}
             className="d-inline-flex"
-            style={{ width: 300 }}
+            style={{ width: 250 }}
             renderInput={(params) => <SearchField {...params}/>}
         />
     );

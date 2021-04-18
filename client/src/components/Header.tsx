@@ -1,64 +1,48 @@
-import React, { useContext } from 'react';
-import { MenuItem, Select } from '@material-ui/core';
+import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import { LocaleContext, locales } from '../contexts';
+import { Locale, LocaleContext } from '../contexts';
 import './Header.css';
-import logo from '../Fysiksektionen_logo.svg';
-import seFlag from '../country_flags/se.svg';
-import gbFlag from '../country_flags/gb.svg';
 import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
-import { ArrowDropDown } from '@material-ui/icons';
-import { ContentObject, ContentText } from '../types/api_object_types';
+import ImageCOR from './content_object_renderers/ImageCOR';
+import { Col, Row } from 'react-bootstrap';
+import { SiteHeaderContentTree } from '../types/content_object_trees';
+import LocaleSelector from './LocaleSelector';
+import TextCOR from './content_object_renderers/TextCOR';
 
 type Props = {
-    setLocale: Function,
-    contentSv: ContentObject,
-    contentEn: ContentObject
+    setLocale?: (locale: Locale) => void,
+    content: SiteHeaderContentTree
 }
 
-export default function Header(props: Props) {
-    const flagIcons: { [key: string]: any; } = {
-        sv: <img src={seFlag} alt={'Svenska flaggan'} style={{ height: '1rem', width: '1.6rem' }}/>,
-        en: <img src={gbFlag} alt={'English flag'} style={{ height: '1rem', width: '2rem' }}/>
-    };
-    const locale = useContext(LocaleContext);
-    const content = (locale === locales.sv ? props.contentSv : props.contentEn) as ContentText;
-
+export default function Header({ setLocale, content }: Props) {
     return (
         <LocaleContext.Consumer>
             {locale =>
                 <Navbar style={{ backgroundColor: 'var(--F-light-gray)', width: '100%' }} expand="lg" className="row justify-content-between">
-                    <Navbar.Brand className="col mx-5 my-2" href="#" style={{ fontSize: '2.35rem' }}> {/* fontSize is an ugly hack to make the text centered */}
-                        <a href="/"><img src={logo} height="80" alt="" /></a>
-                        <h2 className="d-inline pl-3 mt-3 mx-3 hidden">{content.text}</h2>
+                    <Navbar.Brand className="ml-lg-2 ml-xl-5 my-auto justify-content-start" href="#">
+                        <Row>
+                            <Col xs={'auto'} className="my-auto">
+                                <ImageCOR imageCO={content.items.logo} height="80" alt="" />
+                            </Col>
+                            <Col xs={'auto'} className="my-auto d-none d-lg-flex">
+                                <h4 className="m-0">
+                                    <TextCOR textCO={content.items.name} />
+                                </h4>
+                            </Col>
+                        </Row>
                     </Navbar.Brand>
-                    <div className="col">
-                        <div className="row d-flex flex-row-reverse">
-                            <Select
-                                IconComponent={() => <ArrowDropDown visibility="hidden"/>}
-                                disableUnderline
-                                className="my-2"
-                                value={locale.id}
-                                onChange={event => {
-                                    props.setLocale(locales[event.target.value as string]);
-                                }}>
-                                {Object.keys(locales).map(key =>
-                                    <MenuItem value={key} key={key}>
-                                        <div className="d-flex justify-content-center" style={{ width: '100%' }}>
-                                            {flagIcons[key]}
-                                        </div>
-                                    </MenuItem>
-                                )}
-                            </Select>
-                        </div>
-                        <div className="row d-flex flex-row-reverse">
-                            <HeaderMenu/>
-                        </div>
-                        <div className="row d-flex flex-row-reverse mx-3 mb-3">
+                    <Navbar.Collapse className="justify-content-end">
+                        <Col xs={'auto'} className="d-none d-xl-flex">
                             <GroupedSearch/>
-                        </div>
-                    </div>
+                        </Col>
+                        <Col xs={'auto'}>
+                            <LocaleSelector localeState={locale} setLocaleHook={setLocale}/>
+                        </Col>
+                        <Col xs={'auto'} className="">
+                            <HeaderMenu/>
+                        </Col>
+                    </Navbar.Collapse>
                 </Navbar>}
         </LocaleContext.Consumer>
     );

@@ -6,6 +6,7 @@ from website.views.content_objects import serialize_item
 
 
 class PageSerializer(DBObjectSerializer):
+    """Serializer for rendering a page without content objects."""
 
     class Meta:
         model = Page
@@ -49,7 +50,6 @@ class FullPageSerializer(PageSerializer):
             language.append('content_en')
         content = get_content_object_trees(content)
         for i, items in zip(language, content):
-            # TODO: Add context so detail_url is added
             serialized_items = serialize_item(items, self.context)
             serialized_content[i] = serialized_items
         return serialized_content

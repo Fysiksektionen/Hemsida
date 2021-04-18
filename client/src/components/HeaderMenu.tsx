@@ -47,7 +47,7 @@ export default function HeaderMenu() {
             <FButton {...{
                 text: 'Meny',
                 Icon: Menu,
-                onClick: toggleDrawer(true),
+                onClick: () => { toggleDrawer(true); },
                 style: { width: '8rem' }
             }}
             />
