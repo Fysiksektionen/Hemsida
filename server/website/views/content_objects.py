@@ -5,11 +5,13 @@ from rest_framework.fields import empty
 from utils.serializers import ExtendedListSerializer, DBObjectSerializer
 from website.models.content_objects import *
 from website.models.pages import Page
+from website.models.menus import Menu
 
-#TODO VALIDATE DATA EVERYWHERE! (currently just proof of concept)
+
+#TODO Check that the copy pasted classes work
 class ContentTextSerializer(DBObjectSerializer):
 
-    collection = serializers.PrimaryKeyRelatedField(queryset= ContentCollection.objects.all())
+    collection = serializers.PrimaryKeyRelatedField(queryset= ContentCollection.objects.all(), default= None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset= Page.objects.all())
 
     class Meta:
@@ -21,8 +23,89 @@ class ContentTextSerializer(DBObjectSerializer):
         super().save(db_type="text")
 
 
-class ContentCollectionListSerializer(DBObjectSerializer):
+class ContentImageSerializer(DBObjectSerializer):
+    collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
+    containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
 
+    class Meta:
+        model = ContentText
+        fields = "__all__"
+        depth = 1
+
+    def save(self, **kwargs):
+        super().save(db_type="image")
+
+
+class ContentMenuSerializer(DBObjectSerializer):
+    collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
+    containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+    menu = serializers.PrimaryKeyRelatedField(queryset=Menu.objects.all())
+
+    class Meta:
+        model = ContentText
+        fields = "__all__"
+        depth = 1
+
+    def save(self, **kwargs):
+        super().save(db_type="image")
+
+class ContentPageSerializer(DBObjectSerializer):
+    collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
+    containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+    page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+
+    class Meta:
+        model = ContentText
+        fields = "__all__"
+        depth = 1
+
+    def save(self, **kwargs):
+        super().save(db_type="image")
+
+
+class ContentCollectionSerializer(DBObjectSerializer):
+    collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
+    containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+
+    class Meta:
+        model = ContentCollectionList
+        fields = "__all__"
+        depth = 1
+
+    def __init__(self, instance=None, data=empty, *args, **kwargs):
+        items = kwargs.pop('items')
+        super().__init__(instance, data, *args, **kwargs)
+        self.initial_data["items"] = items
+
+    def is_valid(self, raise_exception=False):
+
+        if not super().is_valid():
+            return False
+
+        items = self.initial_data["items"]
+
+        keys = list(items.keys())
+        self.serlist = list()
+        for i in range(len(items)):
+            items[keys[i]]["containing_page"] = self.validated_data.get("containing_page").id
+            items[keys[i]]["order"] = i
+            items[keys[i]]["name"]=keys[i]
+            self.serlist.append(ContentObjectBaseSerializer(data=items[keys[i]]))
+            if not self.serlist[i].is_valid():
+                # TODO Check if more cleaning has to be done here
+                self.serlist.clear()
+                return False
+        return True
+
+    def save(self, **kwargs):
+        instance = super().save()
+        for ser in self.serlist:
+            ser.save(collection=instance.id)
+        return instance
+
+
+
+class ContentCollectionListSerializer(DBObjectSerializer):
     collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default= None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
 
@@ -33,37 +116,30 @@ class ContentCollectionListSerializer(DBObjectSerializer):
 
     def __init__(self, instance = None, data = empty,*args, **kwargs):
         items = kwargs.pop('items')
-        print(data)
         super().__init__(instance,data,*args, **kwargs)
         self.initial_data["items"] = items
 
     def is_valid(self, raise_exception=False):
 
         if not super().is_valid():
-            print("Super error")
             return False
 
         items = self.initial_data["items"]
         self.serlist = list()
         for i in range(len(items)):
-            items[i]["containing_page"] = self.validated_data.get("containing_page")
+            items[i]["containing_page"] = self.validated_data.get("containing_page").id
             items[i]["order"] = i
             self.serlist.append(ContentObjectBaseSerializer(data=items[i]))
             if not self.serlist[i].is_valid():
-                print("error" + str(i))
+                #TODO Check if more cleaning has to be done here
                 self.serlist.clear()
                 return False
         return True
 
     def save(self, **kwargs):
-        items = self.validated_data.pop("items")
         instance = super().save()
-        for i in range(len(items)):
-            items[i]["collection"] = instance.id
-            items[i]["containing_page"] = instance.containing_page.id
-            items[i]["order"] = i
-            ser = ContentObjectBaseSerializer(data=items[i])
-            ser.save()
+        for ser in self.serlist:
+            ser.save(collection=instance.id)
         return instance
 
 #TODO: Remove BaseSerializer inheritance or fix all the base serializer functions
@@ -71,19 +147,30 @@ class ContentObjectBaseSerializer(serializers.BaseSerializer):
 
     def __init__(self, instance = None, data = empty, **kwargs):
         self.initial_data = data
-
-    def is_valid(self, raise_exception=False):
-        return True
-
-    def save(self, **kwargs):
-        print(self.initial_data)
-        if(self.initial_data["db_type"] == "text"):
-
-            ser = ContentTextSerializer(data= self.initial_data)
+        if (self.initial_data["db_type"] == "text"):
+            self.ser = ContentTextSerializer(data=self.initial_data)
 
         if (self.initial_data["db_type"] == "list"):
             items = self.initial_data.pop("items")
-            ser = ContentCollectionListSerializer(data=self.initial_data, items = items)
+            self.ser = ContentCollectionListSerializer(data=self.initial_data, items=items)
+
+    def is_valid(self, raise_exception=False):
+        if self.ser.is_valid():
+            self._validated_data = self.initial_data
+            return True
+        return False
+
+    #TODO steal assertions from Baseserializer
+    def save(self,collection = None, **kwargs):
+
+        if collection:
+            self.validated_data["collection"] = collection
+        if(self.validated_data["db_type"] == "text"):
+            ser = ContentTextSerializer(data= self.validated_data)
+
+        if (self.validated_data["db_type"] == "list"):
+            items = self.validated_data.pop("items")
+            ser = ContentCollectionListSerializer(data=self.validated_data, items = items)
 
 
         if ser.is_valid():
@@ -92,6 +179,9 @@ class ContentObjectBaseSerializer(serializers.BaseSerializer):
             print(ser.errors)
 
 
+    def add_collection(self, collection):
+
+        print(self.ser.collection)
 
 
 
