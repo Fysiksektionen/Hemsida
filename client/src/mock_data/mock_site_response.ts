@@ -5,6 +5,7 @@
 import fysikLogo from '../mediafiles/placeholder_images/Fysiksektionen_logo.svg';
 import { APIResponse } from '../types/general';
 import { Site } from '../types/api_object_types';
+import { headerMidMenuEn, headerMidMenuSv, mainMenuEn, mainMenuSv } from './mock_menus';
 
 export const mockSiteResp: APIResponse<Site> = {
     code: 200,
@@ -21,15 +22,8 @@ export const mockSiteResp: APIResponse<Site> = {
             dbType: 'dict',
             attributes: {},
             items: {
-                name: {
-                    id: 2,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    dbType: 'text',
-                    attributes: {},
-                    text: 'Fysiksektionen'
-                },
                 logo: {
-                    id: 3,
+                    id: 1,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'image',
                     attributes: {},
@@ -38,6 +32,20 @@ export const mockSiteResp: APIResponse<Site> = {
                         detailUrl: 'https://f.kth.se/api/images/1/',
                         href: fysikLogo
                     }
+                },
+                midMenu: {
+                    id: 2,
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
+                    dbType: 'menu',
+                    attributes: {},
+                    menu: headerMidMenuSv
+                },
+                mainMenu: {
+                    id: 3,
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
+                    dbType: 'menu',
+                    attributes: {},
+                    menu: mainMenuSv
                 }
             }
         },
@@ -47,15 +55,8 @@ export const mockSiteResp: APIResponse<Site> = {
             dbType: 'dict',
             attributes: {},
             items: {
-                name: {
-                    id: 5,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
-                    dbType: 'text',
-                    attributes: {},
-                    text: 'The Physics Chapter'
-                },
                 logo: {
-                    id: 6,
+                    id: 4,
                     detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'image',
                     attributes: {},
@@ -64,6 +65,20 @@ export const mockSiteResp: APIResponse<Site> = {
                         detailUrl: 'https://f.kth.se/api/images/1/',
                         href: fysikLogo
                     }
+                },
+                midMenu: {
+                    id: 5,
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
+                    dbType: 'menu',
+                    attributes: {},
+                    menu: headerMidMenuEn
+                },
+                mainMenu: {
+                    id: 6,
+                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
+                    dbType: 'menu',
+                    attributes: {},
+                    menu: mainMenuEn
                 }
             }
         },

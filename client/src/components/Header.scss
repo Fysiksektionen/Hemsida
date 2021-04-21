@@ -1,0 +1,51 @@
+@import '../index';
+
+.headerXs {
+    height: 112px;
+    .logoContainer {
+        margin-left: 32px;
+        img {
+            width: 43.18px;
+            height: 43.18px;
+        }
+    }
+    .icon {
+        font-size: 30px;
+        margin-right: 32px;
+    }
+}
+
+.headerMd {
+    height: 160px;
+    .logoContainer {
+        margin-left: 122.23px;
+        img {
+            width: 93px;
+            height: 93px;
+        }
+    }
+    .icon {
+        font-size: 30px;
+        @at-root #search {
+            margin-right: 38.57px;
+        }
+        @at-root #menu {
+            margin-right: 81px;
+        }
+    }
+    .midMenuLink {
+        color: black;
+        margin-top: auto;
+        margin-left: 50px;
+        margin-right: 50px;
+        padding-bottom: 49px;
+        font-size: 1.5em;
+        font-weight: bold;
+        border-bottom: 9px solid transparent;
+        &:hover {
+            color: black;
+            text-decoration: none;
+            border-bottom: 9px solid $primary;
+        }
+    }
+}

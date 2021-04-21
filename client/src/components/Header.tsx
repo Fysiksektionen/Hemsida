@@ -1,48 +1,114 @@
-import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
+import React, { useContext, useState } from 'react';
 import { Locale, LocaleContext } from '../contexts';
-import { GroupedSearch } from './SearchBox';
 import HeaderMenu from './HeaderMenu';
 import ImageCOR from './content_object_renderers/ImageCOR';
 import { Col, Row } from 'react-bootstrap';
 import { SiteHeaderCT } from '../types/content_objects/content_trees/site';
-import LocaleSelector from './LocaleSelector';
-import TextCOR from './content_object_renderers/TextCOR';
+import './Header.scss';
 
 type Props = {
     setLocale?: (locale: Locale) => void,
     content: SiteHeaderCT
 }
 
-export default function Header({ setLocale, content }: Props) {
+/**
+ * Header used when view-size is smaller than md.
+ * @param setLocale Hook to set locale of entire page
+ * @param content ContentObject to render header
+ * @param setMenuOpen Hook to open side-menu
+ * @constructor
+ */
+function HeaderXs({ setLocale, content, setMenuOpen }: Props & { setMenuOpen: (open: boolean) => void }) {
     return (
-        <LocaleContext.Consumer>
-            {locale =>
-                <Navbar expand="lg" className="d-flex justify-content-between">
-                    <Navbar.Brand className="ml-lg-2 ml-xl-5 my-auto justify-content-start" href="#">
-                        <Row>
-                            <Col xs={'auto'} className="my-auto">
-                                <ImageCOR content={content.items.logo} height="80" alt="" />
-                            </Col>
-                            <Col xs={'auto'} className="my-auto d-none d-lg-flex">
-                                <h4 className="m-0">
-                                    <TextCOR textCO={content.items.name} />
-                                </h4>
-                            </Col>
-                        </Row>
-                    </Navbar.Brand>
-                    <Navbar.Collapse className="justify-content-end">
-                        <Col xs={'auto'} className="d-none d-xl-flex">
-                            <GroupedSearch/>
-                        </Col>
-                        <Col xs={'auto'}>
-                            <LocaleSelector localeState={locale} setLocaleHook={setLocale}/>
-                        </Col>
-                        <Col xs={'auto'} className="">
-                            <HeaderMenu/>
-                        </Col>
-                    </Navbar.Collapse>
-                </Navbar>}
-        </LocaleContext.Consumer>
+        <Col>
+            <Row className='headerXs'>
+                <Col className='my-auto px-0'>
+                    <div className='logoContainer'>
+                        <ImageCOR content={content.items.logo} />
+                    </div>
+                </Col>
+                <Col className='my-auto'>
+                    <Row className='justify-content-end'>
+                        <a
+                            className='fas fa-bars nostyle icon'
+                            onClick={() => { setMenuOpen(true); }}
+                        />
+                    </Row>
+                </Col>
+            </Row>
+        </Col>
+    );
+}
+
+/**
+ * Header used when view-size is lager than md.
+ * @param setLocale Hook to set locale of entire page
+ * @param content ContentObject to render header
+ * @param setMenuOpen Hook to open side-menu
+ * @constructor
+ */
+function HeaderMd({ setLocale, content, setMenuOpen }: Props & { setMenuOpen: (open: boolean) => void }) {
+    return (
+        <Col>
+            <Row className='headerMd'>
+                <Col className='my-auto px-0'>
+                    <div className='logoContainer'>
+                        <ImageCOR content={content.items.logo} />
+                    </div>
+                </Col>
+                <Col xs={'auto'} className='h-100'>
+                    <Row className='d-none d-xxl-flex justify-content-center h-100'>
+                        {content.items.midMenu.menu.items.map((item, index) => {
+                            return (
+                                <a
+                                    key={index}
+                                    className='midMenuLink'
+                                    href={item.link}
+                                >
+                                    {item.name}
+                                </a>
+                            );
+                        })}
+                    </Row>
+                </Col>
+                <Col className='my-auto' >
+                    <Row className='justify-content-end'>
+                        <a
+                            id='search'
+                            className='fas fa-search fa-flip-horizontal nostyle icon'
+                        />
+                        <a
+                            id='menu'
+                            className='fas fa-bars nostyle icon'
+                            onClick={() => { setMenuOpen(true); }}
+                        />
+                    </Row>
+                </Col>
+            </Row>
+        </Col>
+    );
+}
+
+/**
+ * Component for the header.
+ * @param setLocale Hook to set the locale of the entire page
+ * @param content ContentObject of the header
+ * @constructor
+ */
+export default function Header({ setLocale, content }: Props) {
+    const locale = useContext(LocaleContext);
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    return (
+        <Col>
+            <Row className='d-none d-md-flex'>
+                <HeaderMd content={content} setMenuOpen={setMenuOpen} setLocale={setLocale} />
+                <HeaderMenu content={content.items.mainMenu} open={menuOpen} setOpen={setMenuOpen} />
+            </Row>
+            <Row className='d-md-none'>
+                <HeaderXs content={content} setMenuOpen={setMenuOpen} setLocale={setLocale} />
+                {/* <HeaderMenu content={content.items.mainMenu} open={menuOpen} setOpen={setMenuOpen} /> */}
+            </Row>
+        </Col>
     );
 }

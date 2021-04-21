@@ -2,10 +2,6 @@
 @import "../node_modules/bootstrap/scss/functions";
 
 // 2. Include any default variable overrides here
-$primary: #ff642b; /* Fysiksektionen orange color */
-$secondary: #003545; /* Fysiksektionen blue color |  NOTE: There are two blues used, also #062432 */
-$background-color: #F2F3F4;
-
 $line-height-base: 1.75;
 
 $grid-breakpoints: (
@@ -38,27 +34,34 @@ $spacers: (
         6: ($spacer * 5)
 );
 
+$F-darkest-gray: #141414;
+$F-dark-gray: #181818;
+$F-darkest-blue: #062432;
+$F-dark-blue: #093144;
+$F-gray: #D4D4D4;
+$F-red: #CF2927;
+$F-indigo: #4148A4;
+$F-turquoise: #01A9C7;
+$F-orange: #FF642B;
+
+$primary: $F-orange;
+$body-color: $F-dark-gray;
+
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
 
-$F-super-light-gray: $gray-100;
-$F-light-gray: $gray-200;
-$F-medium-gray: $gray-400;
-$F-dark-gray: $gray-700;
-$F-super-dark-gray: $gray-900;
-$F-red: #DC3545;
-
 // Create your own map
 $custom-colors: (
-    "F-super-light-gray": $F-super-light-gray,
-    "F-light-gray": $F-light-gray,
-    "F-medium-gray": $F-medium-gray,
-    "F-dark-gray": $F-dark-gray,
-    "F-super-dark-gray": $F-super-dark-gray,
-    "F-orange": $primary,
-    "F-blue": $secondary,
-    "F-red": $F-red
+    F-darkest-gray: $F-darkest-gray,
+    F-dark-gray: $F-dark-gray,
+    F-darkest-blue: $F-darkest-blue,
+    F-dark-blue: $F-dark-blue,
+    F-gray: $F-gray,
+    F-red: $F-red,
+    F-indigo: $F-indigo,
+    F-turquoise: $F-turquoise,
+    F-orange: $F-orange
 );
 
 // Merge the maps
@@ -172,5 +175,15 @@ $heading-sizes: (1, 2, 3, 4, 5);
 @each $heading-size in $heading-sizes {
     .h#{$heading-size} {
         @extend h#{$heading-size};
+    }
+}
+
+.nostyle {
+    color: inherit;
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
     }
 }
