@@ -8,6 +8,11 @@ import { FrontPageCT } from '../types/content_objects/content_trees/frontpage';
 import { Col, Row } from 'react-bootstrap';
 import ImageCOR from '../components/content_object_renderers/ImageCOR';
 
+/**
+ * Page template of `frontpage` pageType. Requires title and includes a BlockFeed as main content.
+ * @param props The ContentObject of the page.
+ * @constructor
+ */
 function Frontpage(props: ContentObject) {
     const content = props as FrontPageCT;
 

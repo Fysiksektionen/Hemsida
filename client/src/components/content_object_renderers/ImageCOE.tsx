@@ -14,6 +14,13 @@ type ImageCOEProps = {
     content: ContentImage
 }
 
+/**
+ * Popup image-picker for a ContentImage.
+ * @param show Weather to show the popup or not
+ * @param setShow Hook to alter show/hide
+ * @param content The ContentImage to edit
+ * @constructor
+ */
 export default function ImageCOE({ show, setShow, content }: ImageCOEProps) {
     const images = [defaultLogo, img1, img2, img3, img4];
     const CTDispatcher = useContext(ContentTreeContext);

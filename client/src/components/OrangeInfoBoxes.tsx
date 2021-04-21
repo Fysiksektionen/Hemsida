@@ -5,6 +5,11 @@ import Col from 'react-bootstrap/Col';
 import { OrangeInfoBoxCT } from '../types/content_objects/content_trees/frontpage';
 import InfoBox2COR from './content_object_renderers/InfoBox2COR';
 
+/**
+ * Component of the InfoBoxes on the start page.
+ * @param content List of ContentDicts to render
+ * @constructor
+ */
 export default function OrangeInfoBoxes(content: OrangeInfoBoxCT[]) {
     return (
         <div>

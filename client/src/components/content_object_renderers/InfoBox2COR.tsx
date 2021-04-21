@@ -8,7 +8,7 @@ import FButton from '../f-styled/buttons/FButton';
 import RichTextCOR from './blocks/RichTextCOR';
 
 /**
- * Renders an InfoBox and allows for changing the title, text, color and button using a popup when in EditorialModeContext.
+ * Renders an InfoBox and allows for changing the title and text using RichTextEditor when in EditorialModeContext.
  */
 export default function InfoBox2COR(props: {content: OrangeInfoBoxCT}) {
     return (

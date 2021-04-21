@@ -1,7 +1,7 @@
 import { ContentDict, ContentImage, ContentText } from '../../api_object_types';
 
 /**
- * File defining content trees.
+ * ContentTrees of the site object
  */
 
 export type SiteHeaderCT = ContentDict & {

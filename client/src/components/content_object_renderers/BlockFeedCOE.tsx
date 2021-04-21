@@ -10,6 +10,9 @@ import FLargeIconButton from '../f-styled/buttons/FLargeIconButton';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import BlockCOR from './blocks/BlockCOR';
 
+/**
+ * Array of available blocks in block chooser popup.
+ */
 const blockIcons: { blockType: BlockType, text: string, icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>}[] = [
     {
         blockType: 'heading',
@@ -28,6 +31,9 @@ const blockIcons: { blockType: BlockType, text: string, icon: OverridableCompone
     }
 ];
 
+/**
+ * Definition of default blocks used for different block types.
+ */
 const defaultBlocks: {[key in BlockType]: Block} = {
     heading: {
         id: -1,
@@ -154,6 +160,14 @@ type RemoveBlockButtonProps = {
     style?: CSSProperties
 }
 
+/**
+ * Removes the block at index in the list of children of `content`.
+ * @param index Index to remove at
+ * @param content ContentList containing the list from which to remove the item
+ * @param className Extra classNames on the <i> tag
+ * @param style Extra styling added to the <i> tag
+ * @constructor
+ */
 function RemoveBlockButton({ index, content, className, style }: RemoveBlockButtonProps) {
     const dispatch = useContext(ContentTreeContext);
 
@@ -178,6 +192,11 @@ export type BlockFeedCOEProps = {
     content: BlockFeed
 }
 
+/**
+ * Component rendering a BlockFeed and allows for editing behaviour. Allows for adding blocks and removing blocks.
+ * @param content The BlockFeed object to render and edit.
+ * @constructor
+ */
 export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
     return (
         <Col xs={12}>

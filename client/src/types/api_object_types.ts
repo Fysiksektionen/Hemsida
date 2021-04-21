@@ -65,7 +65,7 @@ export type Image = IDDetail & {
     href: string
 } // More to be defined later
 
-// TODO: Flytta till content_trees mappen
+// TODO: Flytta till content_objects mappen
 type ContentObjectDBType = 'text' | 'image' | 'menu' | 'page' | 'dict' | 'list'
 
 type ContentObjectBase = IDDetail & {

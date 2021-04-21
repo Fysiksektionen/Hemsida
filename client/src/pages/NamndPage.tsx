@@ -1,10 +1,15 @@
 import React from 'react';
 import { ContentObject } from '../types/api_object_types';
-import { NamndPageCT } from '../types/content_objects/content_trees/namnd';
+import { NamndPageCT } from '../types/content_objects/content_trees/pages';
 import BlockFeedCOR from '../components/content_object_renderers/BlockFeedCOR';
 import { Col, Container, Row } from 'react-bootstrap';
 import BlockCOR from '../components/content_object_renderers/blocks/BlockCOR';
 
+/**
+ * Page template of `namnd` pageType. Requires title and includes a BlockFeed as main content.
+ * @param props The ContentObject of the page.
+ * @constructor
+ */
 export default function NamndPage(props: ContentObject) {
     const content = props as NamndPageCT;
 
