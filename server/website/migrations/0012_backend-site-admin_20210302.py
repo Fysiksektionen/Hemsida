@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('website', '0009_backend-redirects_20210228'),
+        ('website', '0011_backend-content-object-tree-selector_20210411'),
     ]
 
     operations = [
