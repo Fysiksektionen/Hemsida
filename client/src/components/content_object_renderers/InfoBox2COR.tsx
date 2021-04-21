@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';
 import FButton from '../f-styled/buttons/FButton';
 import RichTextCOR from './blocks/RichTextCOR';
+import { Button } from 'react-bootstrap';
 
 /**
  * Renders an InfoBox and allows for changing the title and text using RichTextEditor when in EditorialModeContext.
@@ -46,11 +47,13 @@ export default function InfoBox2COR(props: {content: OrangeInfoBoxCT}) {
                             </div>
                             <div className='flex-grow-1 my-2'/>
                             <Centered>
-                                <FButton
-                                    text={props.content.items.button.text}
+                                <Button
+                                    variant='light'
                                     href={editing ? '#' : props.content.items.button.attributes.link}
-                                    style={{ fontSize: '1rem' }}
-                                />
+                                    className='font-weight-bold px-3'
+                                >
+                                    {props.content.items.button.text}
+                                </Button>
                             </Centered>
                         </Col>
                     </Row>

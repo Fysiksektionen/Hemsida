@@ -1,7 +1,7 @@
 import React from 'react';
 import Banner from '../components/Banner';
 import OrangeInfoBoxes from '../components/OrangeInfoBoxes';
-import NewsWidget from '../components/news/FrontpageNewsWidget';
+import FrontpageNewsWidget from '../components/news/FrontpageNewsWidget';
 import placeholder from '../mediafiles/placeholder_images/placeholder.jpg';
 import { ContentObject } from '../types/api_object_types';
 import { FrontPageCT } from '../types/content_objects/content_trees/pages';
@@ -23,8 +23,8 @@ function Frontpage(props: ContentObject) {
                 <Row>
                     <OrangeInfoBoxes {...content.items.orangeBoxes.items}/>
                 </Row>
-                <Row className="py-6 p-5 justify-content-center bg-F-super-light-gray">
-                    <NewsWidget />
+                <Row className="py-6 p-5 justify-content-center bg-F-gray">
+                    <FrontpageNewsWidget />
                 </Row>
                 <Row className='py-6 p-5 justify-content-center'>
                     <Col xs={12} xl={10}>

@@ -17,7 +17,7 @@ function BottomText(props: {opened: boolean}) {
     return (<div className="read-more">{props.opened ? Share() : ReadMore()}</div>);
 }
 
-function NewsItemCompact(props : NewsPageMinimal) {
+function NewsItemLarge(props : NewsPageMinimal) {
     const [open, setOpen] = useState(false);
     return (
         <div onClick={() => setOpen(!open)}>
@@ -44,4 +44,4 @@ function NewsItemCompact(props : NewsPageMinimal) {
     );
 }
 
-export default NewsItemCompact;
+export default NewsItemLarge;
