@@ -1,4 +1,4 @@
-import { FrontPageCT } from '../../types/content_objects/content_trees/frontpage';
+import { FrontPageCT } from '../../types/content_objects/content_trees/pages';
 import ericsson from '../../mediafiles/placeholder_images/ERI_vertical_RGB.png';
 
 export const frontpage = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { EditorialModeContext } from '../../contexts';
-import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/frontpage';
+import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/pages';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';
@@ -12,6 +12,7 @@ import RichTextCOR from './blocks/RichTextCOR';
  */
 export default function InfoBox2COR(props: {content: OrangeInfoBoxCT}) {
     return (
+
         <EditorialModeContext.Consumer>
             {editing =>
                 <div className='h-100'>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EditorialModeContext } from '../../contexts';
-import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/frontpage';
+import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/pages';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';

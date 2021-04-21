@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { OrangeInfoBoxCT } from '../types/content_objects/content_trees/frontpage';
+import { OrangeInfoBoxCT } from '../types/content_objects/content_trees/pages';
 import InfoBox2COR from './content_object_renderers/InfoBox2COR';
 
 /**
