@@ -27,7 +27,7 @@ export default function ImageCOR(props: ImageCORProps) {
                         <Image
                             src={props.content.image.href !== '' ? props.content.image.href : placeholder}
                             {...(props as (ImageProps & React.RefAttributes<HTMLImageElement>))}
-                            onClick={editing ? () => { setShowModal(true); } : () => {}}
+                            onClick={editing ? (event) => { setShowModal(true); event.preventDefault(); } : () => {}}
                         />
                     </a>
                 </div>
