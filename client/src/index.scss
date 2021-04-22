@@ -36,6 +36,7 @@ $spacers: (
 
 $F-darkest-gray: #141414;
 $F-dark-gray: #181818;
+$F-lightest-gray: #F8F8F8;
 $F-darkest-blue: #062432;
 $F-dark-blue: #093144;
 $F-gray: #D4D4D4;
@@ -55,13 +56,16 @@ $body-color: $F-dark-gray;
 $custom-colors: (
     F-darkest-gray: $F-darkest-gray,
     F-dark-gray: $F-dark-gray,
+    F-lightest-gray: $F-lightest-gray,
     F-darkest-blue: $F-darkest-blue,
     F-dark-blue: $F-dark-blue,
     F-gray: $F-gray,
     F-red: $F-red,
     F-indigo: $F-indigo,
     F-turquoise: $F-turquoise,
-    F-orange: $F-orange
+    F-orange: $F-orange,
+    white: $white,
+    black: $black
 );
 
 // Merge the maps

@@ -1,12 +1,12 @@
 import React from 'react';
-import Banner from '../components/Banner';
-import OrangeInfoBoxes from '../components/OrangeInfoBoxes';
-import FrontpageNewsWidget from '../components/news/FrontpageNewsWidget';
-import placeholder from '../mediafiles/placeholder_images/placeholder.jpg';
-import { ContentObject } from '../types/api_object_types';
-import { FrontPageCT } from '../types/content_objects/content_trees/pages';
+import Banner from './Banner';
+import OrangeInfoBoxes from './OrangeInfoBoxes';
+import FrontpageNewsWidget from '../../components/news/FrontpageNewsWidget';
+import placeholder from '../../mediafiles/placeholder_images/placeholder.jpg';
+import { ContentObject } from '../../types/api_object_types';
+import { FrontPageCT } from '../../types/content_objects/content_trees/pages';
 import { Col, Row } from 'react-bootstrap';
-import ImageCOR from '../components/content_object_renderers/ImageCOR';
+import ImageCOR from '../../components/content_object_renderers/ImageCOR';
 
 /**
  * Page template of `frontpage` pageType. Requires title and includes a BlockFeed as main content.

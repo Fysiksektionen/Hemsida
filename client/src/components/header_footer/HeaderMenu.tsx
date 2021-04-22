@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Drawer } from '@material-ui/core';
-import { EditorialModeContext } from '../contexts';
+import { EditorialModeContext } from '../../contexts';
 import { Col, Container, Row } from 'react-bootstrap';
-import { ContentMenu, Menu, MenuItem } from '../types/api_object_types';
+import { ContentMenu, Menu, MenuItem } from '../../types/api_object_types';
 import './HeaderMenu.scss';
 
 /**

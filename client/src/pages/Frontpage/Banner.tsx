@@ -1,6 +1,6 @@
 import React from 'react';
-import BackgroundImage from './BackgroundImage';
-import { CenteredText, CenteredAbsolute } from './Centered';
+import BackgroundImage from '../../components/BackgroundImage';
+import { CenteredText, CenteredAbsolute } from '../../components/Centered';
 
 function MainText({ mainText }: {mainText: string}) {
     return (

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Locale, LocaleContext } from '../contexts';
+import { Locale, LocaleContext } from '../../contexts';
 import HeaderMenu from './HeaderMenu';
-import ImageCOR from './content_object_renderers/ImageCOR';
+import ImageCOR from '../content_object_renderers/ImageCOR';
 import { Col, Row } from 'react-bootstrap';
-import { SiteHeaderCT } from '../types/content_objects/content_trees/site';
+import { SiteHeaderCT } from '../../types/content_objects/content_trees/site';
 import './Header.scss';
 
 type Props = {

@@ -15,7 +15,7 @@ export function serialize(nodes: Descendant[]) {
         if (Text.isText(node)) {
             const element = LeafUI({
                 attributes: {},
-                children: <>{node.text}</>,
+                children: <>{node.text.replace(/\n/g, '<br/>')}</>,
                 leaf: node
             });
 
@@ -44,7 +44,20 @@ function deserializeMarks(element: Node): CustomText {
 
     const children = element.childNodes;
     if (children.length === 1) {
-        text = deserializeMarks(element.childNodes[0]);
+        const childNode = element.childNodes[0];
+        if (childNode.nodeType === 3) {
+            text.text = childNode.textContent !== null ? childNode.textContent : '';
+        } else {
+            text = deserializeMarks(childNode);
+        }
+    } else if (children.length > 1) {
+        children.forEach((childNode) => {
+            if (childNode.nodeType === 3) {
+                text.text += childNode.textContent !== null ? childNode.textContent : '';
+            } else if (childNode.nodeName === 'BR') {
+                text.text += '\n';
+            }
+        });
     }
 
     switch (element.nodeName) {
@@ -61,7 +74,7 @@ function deserializeMarks(element: Node): CustomText {
         text.bold = true;
         break;
     default:
-        text.text = element.textContent !== null ? element.textContent : '';
+        break;
     }
 
     return text;

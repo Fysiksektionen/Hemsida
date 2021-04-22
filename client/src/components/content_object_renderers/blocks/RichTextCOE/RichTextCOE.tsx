@@ -1,11 +1,11 @@
 // @refresh reset
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import isHotkey from 'is-hotkey';
-import { createEditor, Descendant } from 'slate';
+import { createEditor, Descendant, Editor } from 'slate';
 import { Editable, withReact, Slate } from 'slate-react';
 import { withHistory } from 'slate-history';
 
-import { toggleMark } from './block_mark_utils';
+import { insertBreak, toggleMark } from './block_mark_utils';
 import { Leaf, Element, ToolbarRow } from './editor_UI';
 import { SlateMarkType, SlateBlockType, HOTKEYS } from './slate_types';
 import { RichTextBlock } from '../../../../types/content_objects/blocks';
@@ -83,6 +83,9 @@ export default function RichTextCOE(props: RichTextEditorProps) {
                                 }
                             }
                             if (props.singleLine && event.key === 'Enter') {
+                                event.preventDefault();
+                            } else if (event.key === 'Enter' && event.shiftKey) {
+                                Editor.insertText(editor, '\n');
                                 event.preventDefault();
                             }
                         }}

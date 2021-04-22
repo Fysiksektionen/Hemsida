@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Locale, LocaleContext, locales } from './contexts';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/header_footer/Header';
+import Footer from './components/header_footer/Footer';
 import { Switch, Route } from 'react-router-dom';
 import { Site } from './types/api_object_types';
 import Admin from './components/admin/Admin';

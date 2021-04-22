@@ -48,7 +48,7 @@ export default function InfoBox2COR(props: {content: OrangeInfoBoxCT}) {
                             <div className='flex-grow-1 my-2'/>
                             <Centered>
                                 <Button
-                                    variant='light'
+                                    variant='white'
                                     href={editing ? '#' : props.content.items.button.attributes.link}
                                     className='font-weight-bold px-3'
                                 >

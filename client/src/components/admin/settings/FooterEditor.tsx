@@ -6,7 +6,7 @@ import {
     locales,
     useCTReducer
 } from '../../../contexts';
-import Footer from '../../Footer';
+import Footer from '../../header_footer/Footer';
 import { SiteFooterCT } from '../../../types/content_objects/content_trees/site';
 import { Button, Col, Row } from 'react-bootstrap';
 import LocaleSelector from '../../LocaleSelector';

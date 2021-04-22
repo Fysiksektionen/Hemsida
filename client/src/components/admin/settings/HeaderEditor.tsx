@@ -6,7 +6,7 @@ import {
     locales,
     useCTReducer
 } from '../../../contexts';
-import Header from '../../Header';
+import Header from '../../header_footer/Header';
 import { SiteHeaderCT } from '../../../types/content_objects/content_trees/site';
 import { Button, Col, Row } from 'react-bootstrap';
 import LocaleSelector from '../../LocaleSelector';

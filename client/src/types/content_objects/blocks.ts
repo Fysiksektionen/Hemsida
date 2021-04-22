@@ -14,7 +14,7 @@ export type HeadingBlock = ContentText & {
 export type BodyTextBlock = ContentText & {
     attributes: {
         blockType: 'bodyText',
-        richTextEditorType: 'only-marks' | 'body-text' | 'all' | 'none'
+        richTextEditorType: 'only-marks' | 'body-text' | 'all' | 'none' // TODO: Add Capitalized type
     }
 }
 
