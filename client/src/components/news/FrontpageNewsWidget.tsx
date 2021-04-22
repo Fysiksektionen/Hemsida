@@ -11,10 +11,10 @@ function FrontpageNewsWidget() {
         <Col xs={12} xl={10}>
             <OffsetTitle title="Nyheter" offsetLeft={2}>
                 <Row>
-                    <Col className="col-7">
+                    <Col className="col-7 px-4">
                         <NewsItemLage {...DummyData2}/>
                     </Col>
-                    <Col className="col-5">
+                    <Col className="col-5 px-4">
                         <NewsFeedSmall items={DummyData}/>
                     </Col>
                 </Row>

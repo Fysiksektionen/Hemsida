@@ -12,15 +12,15 @@ export type NewsItemTinyProps = {
 
 function NewsItemTiny(props : NewsPageMinimal) {
     return (
-        <Row>
-            <Col className="col-5 pl-0">
-                <Image src={props.image.href} width={150} alt='' />
+        <>
+            <Col className="col-5">
+                <Image src={props.image.href} fluid alt='' className='rounded-left'/>
             </Col>
-            <Col className="col-7 pt-2 pl-0">
-                <h6>{props.title}</h6>
-                <small className="position-absolute" style={{ bottom: '0.5rem' }}>{props.publishedAt}</small>
+            <Col className="col-6">
+                <div className='font-weight-bold tight-line-height mt-3'>{props.title}</div>
+                <small className="position-absolute" style={{ bottom: '1rem' }}>{props.publishedAt}</small>
             </Col>
-        </Row>
+        </>
     );
 }
 

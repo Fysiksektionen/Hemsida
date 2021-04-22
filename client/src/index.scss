@@ -30,8 +30,8 @@ $spacers: (
         3: $spacer,
         4: ($spacer * 1.5),
         45: ($spacer * 2.25),
-        5: ($spacer * 3),
-        6: ($spacer * 5)
+5: ($spacer * 3),
+6: ($spacer * 5)
 );
 
 $F-darkest-gray: #141414;
@@ -51,6 +51,7 @@ $body-color: $F-dark-gray;
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
+
 
 // Create your own map
 $custom-colors: (
@@ -190,4 +191,8 @@ $heading-sizes: (1, 2, 3, 4, 5);
         color: inherit;
         cursor: pointer;
     }
+}
+
+.tight-line-height {
+    line-height: 1.25rem;
 }

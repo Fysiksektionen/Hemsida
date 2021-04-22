@@ -20,9 +20,9 @@ function BottomText(props: {opened: boolean}) {
 function NewsItemLarge(props : NewsPageMinimal) {
     const [open, setOpen] = useState(false);
     return (
-        <div onClick={() => setOpen(!open)}>
+        <div onClick={() => setOpen(!open)} className='bg-white'>
             <NewsArticleBase {...props}>
-                <Fadeout fade={!open} color="#f0f0f0" midpoint="50px">
+                <Fadeout fade={!open} color='white' midpoint="50px">
                     <Collapse in={open} className="collapse-with-default-height">
                         <div>
                             <p>

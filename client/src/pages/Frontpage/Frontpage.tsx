@@ -23,7 +23,7 @@ function Frontpage(props: ContentObject) {
                 <Row>
                     <OrangeInfoBoxes {...content.items.orangeBoxes.items}/>
                 </Row>
-                <Row className="py-6 p-5 justify-content-center bg-F-gray">
+                <Row className="py-6 p-5 justify-content-center bg-F-lightest-gray">
                     <FrontpageNewsWidget />
                 </Row>
                 <Row className='py-6 p-5 justify-content-center'>
