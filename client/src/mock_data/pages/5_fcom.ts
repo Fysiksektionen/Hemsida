@@ -30,7 +30,7 @@ export const fcomPage = {
                     blockType: 'heading',
                     richTextEditorType: 'none'
                 },
-                text: '<p>Fcom</p>'
+                text: '<p><span>Fcom</span></p>'
             },
             content: {
                 id: 3,
@@ -61,7 +61,7 @@ export const fcomPage = {
                             blockType: 'heading',
                             richTextEditorType: 'only-headings'
                         },
-                        text: '<h3>Om Kommunikationsnämnden Fcom</h3>'
+                        text: '<h3><span>Om Kommunikationsnämnden Fcom</span></h3>'
                     },
                     {
                         id: 6,
@@ -89,7 +89,7 @@ export const fcomPage = {
                             blockType: 'heading',
                             richTextEditorType: 'only-headings'
                         },
-                        text: '<h3>Engagera dig</h3>'
+                        text: '<h3><span>Engagera dig</span></h3>'
                     },
                     {
                         id: 8,
@@ -128,7 +128,7 @@ export const fcomPage = {
                     blockType: 'heading',
                     richTextEditorType: 'none'
                 },
-                text: '<p>Fcom</p>'
+                text: '<p><span>Fcom</span></p>'
             },
             content: {
                 id: 23,
@@ -159,7 +159,7 @@ export const fcomPage = {
                             blockType: 'heading',
                             richTextEditorType: 'only-headings'
                         },
-                        text: '<h3>Some heading</h3>'
+                        text: '<h3><span>Some heading</span></h3>'
                     }
                 ]
             }

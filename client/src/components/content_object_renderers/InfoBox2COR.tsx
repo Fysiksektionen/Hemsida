@@ -24,9 +24,11 @@ export default function InfoBox2COR(props: {content: OrangeInfoBoxCT}) {
                             className="d-flex flex-column h-100 p-5 py-lg-5 px-lg-3 px-xxl-5"
                             style={{ backgroundColor: props.content.attributes.color }}
                         >
-                            <Centered><h2 className='font-weight-bolder'>
-                                <RichTextCOR content={props.content.items.title} />
-                            </h2></Centered>
+                            <Centered>
+                                <h2 className='font-weight-bolder text-break'>
+                                    <RichTextCOR content={props.content.items.title} />
+                                </h2>
+                            </Centered>
                             <div className="p-3 d-none d-xxl-inline">
                                 <RichTextCOR content={props.content.items.text} />
                             </div>

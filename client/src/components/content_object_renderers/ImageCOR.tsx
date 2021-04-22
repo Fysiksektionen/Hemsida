@@ -23,13 +23,13 @@ export default function ImageCOR(props: ImageCORProps) {
             {editing =>
                 <div className='w-100'>
                     <ImageCOE content={props.content} show={showModal} setShow={setShowModal} />
-                    <a className='nostyle' href={props.href ?? ''}>
-                        <Image
-                            src={props.content.image.href !== '' ? props.content.image.href : placeholder}
-                            {...(props as (ImageProps & React.RefAttributes<HTMLImageElement>))}
-                            onClick={editing ? (event) => { setShowModal(true); event.preventDefault(); } : () => {}}
-                        />
-                    </a>
+                    <Image
+                        src={props.content.image.href !== '' ? props.content.image.href : placeholder}
+                        {...(props as (ImageProps & React.RefAttributes<HTMLImageElement>))}
+                        onClick={editing ? (event) => { setShowModal(true); event.preventDefault(); } : () => {}}
+                    />
+                    {/* <a className='nostyle' href={props.href ?? ''}> */}
+                    {/* </a> */}
                 </div>
             }
         </EditorialModeContext.Consumer>

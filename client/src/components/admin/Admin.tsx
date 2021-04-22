@@ -135,7 +135,7 @@ export default function Admin() {
     return (
         <Container fluid className='mx-0 px-0'>
             {/* Top bar */}
-            <div className='d-flex justify-content-center w-100 text-white bg-secondary'>
+            <div className='d-flex justify-content-center w-100 text-white bg-F-darkest-blue'>
                 <Col xs={10}>
                     <Row className='pt-6 pb-45'>
                         <Image height='85px' src={logo} />
@@ -143,7 +143,7 @@ export default function Admin() {
                 </Col>
             </div>
             <div className='d-none d-lg-block'>
-                <div className='d-flex justify-content-center w-100 text-white bg-secondary sticky-top'>
+                <div className='d-flex justify-content-center w-100 text-white bg-F-darkest-blue sticky-top'>
                     <Col xs={10}>
                         <Row>
                             <Navbar className="w-100 px-1 py-0 adminnav" onSelect={navOnSelect}>
