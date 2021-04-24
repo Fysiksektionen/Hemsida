@@ -19,16 +19,18 @@ export type SiteFooterContentTree = ContentDict & {
     }
 }
 
+
+type d = (ContentDict & {
+    items: {
+        title: ContentText,
+        text: ContentText,
+        actionBtnText: ContentText
+    }
+});
 export type FrontPageContentTree = ContentDict & {
     items: {
         orangeBoxes: ContentList & {
-            items: (ContentDict & {
-                items: {
-                    title: ContentText,
-                    text: ContentText,
-                    actionBtnText: ContentText
-                }
-            })[]
+            items: d[]
         },
         sponsorLogo: ContentImage
     }

@@ -109,7 +109,7 @@ const newsarticleResp: APIResponse<Page> = {
     }
 };
 
-const newsfeedResp: APIResponse<Page> = {
+ const newsfeedResp: APIResponse<Page> = {
     code: 200,
     data: {
         id: 1,
