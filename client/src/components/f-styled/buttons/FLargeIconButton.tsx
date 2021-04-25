@@ -7,7 +7,7 @@ type FLargeIconButtonProps = FButtonProps & {
     Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
 }
 
-export default function FLargeIconButton({ text, Icon, version = 'light', style, props } : FLargeIconButtonProps) {
+export default function FLargeIconButton({ text, Icon, version = 'light', style, onClick, href, props } : FLargeIconButtonProps) {
     let colorString: String;
     switch (version) {
     case 'light':
@@ -17,6 +17,10 @@ export default function FLargeIconButton({ text, Icon, version = 'light', style,
         colorString = 'bg-dark text-white';
         break;
     }
+    if (onClick === undefined) {
+        onClick = () => {};
+    }
+
     return (
         <Button
             className={colorString + ' text-center px-3 py-2 m-1'}
@@ -28,6 +32,8 @@ export default function FLargeIconButton({ text, Icon, version = 'light', style,
                 fontWeight: 'bold',
                 ...style
             }}
+            onClick={onClick}
+            href={href}
             {...props}
         >
             <div
