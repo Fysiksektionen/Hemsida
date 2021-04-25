@@ -4,7 +4,6 @@ import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/pages
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { CenteredText as Centered } from '../Centered';
-import FButton from '../f-styled/buttons/FButton';
 import RichTextCOR from './blocks/RichTextCOR';
 import { Button } from 'react-bootstrap';
 
@@ -13,7 +12,6 @@ import { Button } from 'react-bootstrap';
  */
 export default function InfoBox2COR(props: {content: OrangeInfoBoxCT}) {
     return (
-
         <EditorialModeContext.Consumer>
             {editing =>
                 <div className='h-100'>
