@@ -81,9 +81,10 @@ class ContentCollectionSerializer(DBObjectSerializer):
         depth = 1
 
     def __init__(self, instance=None, data=empty, *args, **kwargs):
-        items = kwargs.pop('items', None)
+        items = kwargs.pop('items',{})
         super().__init__(instance, data, *args, **kwargs)
-        self.initial_data["items"] = items
+        if data is not empty:
+            self.initial_data["items"] = items
 
     def is_valid(self, raise_exception=False):
 
@@ -91,22 +92,27 @@ class ContentCollectionSerializer(DBObjectSerializer):
             super().is_valid()
 
             items = self.initial_data["items"]
-            keys = list(items.keys())
-            self.serlist = list()
+            if hasattr(items, 'keys'):
+                keys = list(items.keys())
+                self._serlist = list()
 
-            for i in range(len(items)):
+                for i in range(len(items)):
 
-                if hasattr(self.validated_data.get("containing_page"),"id"):
-                    items[keys[i]]["containing_page"] = self.validated_data.get("containing_page").id
+                    if hasattr(self.validated_data.get("containing_page"),"id"):
+                        items[keys[i]]["containing_page"] = self.validated_data.get("containing_page").id
 
-                items[keys[i]]["name"] = keys[i]
-                self.serlist.append(ContentObjectBaseSerializer(data=items[keys[i]]))
-                if not self.serlist[i].is_valid():
-                    self._errors.update(self.serlist[i].errors)
+                    items[keys[i]]["name"] = keys[i]
+                    self._serlist.append(ContentObjectBaseSerializer(data=items[keys[i]]))
+                    if not self._serlist[i].is_valid():
+                        self._errors = {**self.errors, **(self._serlist[i].errors)}
+
+            else:
+                self._errors = {**self._errors, **{"items":"Has to be a dictionary or empty"}}
 
             if self._errors:
                 self._validated_data = {}
-                self.serlist.clear()
+                if hasattr(self,"_serlist"):
+                    self._serlist.clear()
 
         if self._errors and raise_exception:
             raise ValidationError(self.errors)
@@ -115,8 +121,8 @@ class ContentCollectionSerializer(DBObjectSerializer):
 
     def save(self, **kwargs):
         super().save(**kwargs)
-        for ser in self.serlist:
-            ser.save(collection= self.instance)
+        for ser in self._serlist:
+            ser.save(collection=self.instance)
         return self.instance
 
 
@@ -129,34 +135,47 @@ class ContentCollectionListSerializer(DBObjectSerializer):
         fields = "__all__"
         depth = 1
 
-    def __init__(self, instance = None, data = empty,*args, **kwargs):
-        items = kwargs.pop('items')
-        super().__init__(instance,data,*args, **kwargs)
+    def __init__(self, instance=None, data=empty, *args, **kwargs):
+        items = kwargs.pop('items', [])
+        super().__init__(instance, data, *args, **kwargs)
         self.initial_data["items"] = items
 
     def is_valid(self, raise_exception=False):
 
-        if not super().is_valid():
-            return False
+        if not hasattr(self, '_validated_data'):
+            super().is_valid()
 
-        items = self.initial_data["items"]
-        self.serlist = list()
-        for i in range(len(items)):
-            items[i]["containing_page"] = self.validated_data.get("containing_page").id
-            items[i]["order"] = i
-            self.serlist.append(ContentObjectBaseSerializer(data=items[i]))
-            if not self.serlist[i].is_valid():
-                #TODO Check if more cleaning has to be done here
-                self.serlist.clear()
+            items = self.initial_data["items"]
+            if isinstance(items, list):
 
-                return False
+                self._serlist = list()
 
-        return True
+                for i in range(len(items)):
+
+                    if hasattr(self.validated_data.get("containing_page"), "id"):
+                        items[i]["containing_page"] = self.validated_data.get("containing_page").id
+                    items[i]["order"] = i
+                    self._serlist.append(ContentObjectBaseSerializer(data=items[i]))
+                    if not self._serlist[i].is_valid():
+                        self._errors = {**self.errors, **(self._serlist[i].errors)}
+
+            else:
+                self._errors = {**self._errors, **{"items": "Has to be a list or empty"}}
+
+            if self._errors:
+                self._validated_data = {}
+                if hasattr(self, "_serlist"):
+                    self._serlist.clear()
+
+        if self._errors and raise_exception:
+            raise ValidationError(self.errors)
+
+        return not bool(self._errors)
 
 
     def save(self, **kwargs):
         super().save(**kwargs)
-        for ser in self.serlist:
+        for ser in self._serlist:
             ser.save(collection=self.instance)
         return self.instance
 
@@ -186,7 +205,7 @@ class ContentObjectBaseSerializer(serializers.BaseSerializer):
             items = self.initial_data.pop("items")
             self.ser = ContentCollectionSerializer(data=self.initial_data, items=items)
         else:
-            raise ValueError("Invalid db_type")
+            raise ValueError("Invalid db_type") #Should this not raise error instead att to self.errors?
 
     def is_valid(self, raise_exception=False):
         assert hasattr(self, 'initial_data'), (
@@ -231,7 +250,7 @@ class ContentObjectBaseSerializer(serializers.BaseSerializer):
             "inspect 'serializer.validated_data' instead. "
         )
 
-        #TODO implement instance check?
+        #TODO implement instance check by implementing create and update?
         return self.ser.save(**kwargs)
 
 
