@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import { ImageBlock } from '../../../types/content_objects/blocks';
 import ImageCOR from '../ImageCOR';
 

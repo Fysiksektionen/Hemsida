@@ -5,7 +5,7 @@ import { createEditor, Descendant, Editor } from 'slate';
 import { Editable, withReact, Slate } from 'slate-react';
 import { withHistory } from 'slate-history';
 
-import { insertBreak, toggleMark } from './block_mark_utils';
+import { toggleMark } from './block_mark_utils';
 import { Leaf, Element, ToolbarRow } from './editor_UI';
 import { SlateMarkType, SlateBlockType, HOTKEYS } from './slate_types';
 import { RichTextBlock } from '../../../../types/content_objects/blocks';

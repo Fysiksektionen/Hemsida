@@ -23,7 +23,6 @@ import FLargeIconButton from '../f-styled/buttons/FLargeIconButton';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import BlockCOR from './blocks/BlockCOR';
 import './BlockFeedCOE.scss';
-import ColumnsBlockCOR from './blocks/ColumnsBlockCOR';
 
 /**
  * Array of available blocks in block chooser popup.

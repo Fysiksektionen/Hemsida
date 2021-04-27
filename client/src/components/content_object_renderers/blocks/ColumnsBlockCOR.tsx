@@ -1,7 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { ColumnsBlock, ImageBlock } from '../../../types/content_objects/blocks';
-import ImageCOR from '../ImageCOR';
+import { ColumnsBlock } from '../../../types/content_objects/blocks';
 import BlockFeedCOR from '../BlockFeedCOR';
 
 /**
