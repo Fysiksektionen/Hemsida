@@ -1,4 +1,4 @@
-import { ContentImage, ContentList, ContentText } from '../api_object_types';
+import { ContentDict, ContentImage, ContentList, ContentText } from '../api_object_types';
 import { ChangeKeyType } from '../general';
 
 /* -----------------------
@@ -34,8 +34,22 @@ export type ImageBlock = ContentImage & {
 }
 
 /* -----------------------
+          Columns
+ ------------------------- */
+export type ColumnsBlock = ContentDict & {
+    attributes : {
+        blockType: 'columns'
+        split: number
+    },
+    items: {
+        left: BlockFeed,
+        right: BlockFeed
+    }
+}
+
+/* -----------------------
           General
  ------------------------- */
-export type Block = RichTextBlock | ImageBlock;
+export type Block = RichTextBlock | ImageBlock | ColumnsBlock;
 export type BlockType = Block['attributes']['blockType'];
 export type BlockFeed = ChangeKeyType<ContentList, 'items', Block[]>;

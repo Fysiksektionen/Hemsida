@@ -1,11 +1,19 @@
 import React, { CSSProperties, useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
-import { Block, BlockFeed, BlockType, ImageBlock, RichTextBlock } from '../../types/content_objects/blocks';
+import {
+    Block,
+    BlockFeed,
+    BlockType,
+    ColumnsBlock,
+    ImageBlock,
+    RichTextBlock
+} from '../../types/content_objects/blocks';
 import { Popover, SvgIconTypeMap } from '@material-ui/core';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
 import FLargeIconButton from '../f-styled/buttons/FLargeIconButton';
 import { OverridableComponent } from '@material-ui/core/OverridableComponent';
 import BlockCOR from './blocks/BlockCOR';
@@ -28,6 +36,11 @@ const blockIcons: { blockType: BlockType, text: string, icon: OverridableCompone
         blockType: 'image',
         text: 'Image',
         icon: ImageIcon
+    },
+    {
+        blockType: 'columns',
+        text: 'Columns',
+        icon: VerticalSplitIcon
     }
 ];
 
@@ -69,7 +82,32 @@ const defaultBlocks: {[key in BlockType]: Block} = {
             detailUrl: '',
             href: ''
         }
-    } as ImageBlock
+    } as ImageBlock,
+    columns: {
+        id: -1,
+        detailUrl: '',
+        dbType: 'dict',
+        attributes: {
+            blockType: 'columns',
+            split: 6
+        },
+        items: {
+            left: {
+                id: -1,
+                detailUrl: '',
+                dbType: 'list',
+                attributes: {},
+                items: []
+            },
+            right: {
+                id: -1,
+                detailUrl: '',
+                dbType: 'list',
+                attributes: {},
+                items: []
+            }
+        }
+    } as ColumnsBlock
 };
 
 type AddBlockButtonProps = {
@@ -90,7 +128,13 @@ function AddBlockButton({ index, content }: AddBlockButtonProps) {
     function add(blockType: BlockType) {
         const newBlock = defaultBlocks[blockType];
         newBlock.id = addIdState.id;
-        addIdState.decrementHook({});
+        if (blockType === 'columns') {
+            (newBlock as ColumnsBlock).items.left.id = addIdState.id - 1;
+            (newBlock as ColumnsBlock).items.right.id = addIdState.id - 2;
+            addIdState.decrementHook({ id: addIdState.id - 3 });
+        } else {
+            addIdState.decrementHook({ id: addIdState.id - 1 });
+        }
 
         const newContent = { ...content };
         const items = content.items.slice(0, index + 1);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { ImageBlock } from '../../../types/content_objects/blocks';
 import ImageCOR from '../ImageCOR';
 
@@ -18,8 +18,8 @@ export default function ImageBlockCOR({ content }: {content: ImageBlock}) {
     const justificationClass = alignments[content.attributes.alignment];
 
     return (
-        <Row className={justificationClass + ' w-100'}>
+        <Col xs={12} className={justificationClass}>
             <ImageCOR content={content} width={content.attributes.width} href={'/'}/>
-        </Row>
+        </Col>
     );
 }
