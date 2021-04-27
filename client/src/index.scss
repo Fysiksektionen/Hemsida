@@ -119,14 +119,6 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
     filter: brightness(110%);
 }
 
-.show-children-on-hover:hover .show-on-parent-hover {
-    visibility: visible;
-}
-
-.show-on-parent-hover {
-    visibility: hidden;
-}
-
 .adminnav {
     overflow: hidden;
     a {
@@ -196,3 +188,4 @@ $heading-sizes: (1, 2, 3, 4, 5);
 .tight-line-height {
     line-height: 1.25rem;
 }
+
