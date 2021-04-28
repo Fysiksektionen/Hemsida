@@ -9,13 +9,10 @@
 .show-on-parent-hover {
   visibility: hidden;
 }
-
 .soft-dashed-border-on-hover {
   border: 2px solid transparent;
-  padding: 5px;
 }
 
 .soft-dashed-border-on-hover:hover {
   border: 2px dashed $F-gray;
-  padding: 5px;
 }

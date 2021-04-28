@@ -119,7 +119,8 @@ const defaultBlocks: {[key in BlockType]: Block} = {
 type AddBlockButtonProps = {
     index: number,
     content: BlockFeed,
-    style?: CSSProperties
+    sizePx: number,
+    positionType: 'horizontal' | 'vertical'
 }
 
 /**
@@ -128,7 +129,7 @@ type AddBlockButtonProps = {
  * @param ListCO The CO containing list of feed as items.
  * @constructor
  */
-function AddBlockButton({ index, content, style }: AddBlockButtonProps) {
+function AddBlockButton({ index, content, sizePx, positionType }: AddBlockButtonProps) {
     const dispatch = useContext(ContentTreeContext);
     const addIdState = useContext(ContentTreeAddIdContext);
 
@@ -161,13 +162,29 @@ function AddBlockButton({ index, content, style }: AddBlockButtonProps) {
     const open = Boolean(anchorEl);
     const popoverId = 'popover-' + index;
 
+    const className = (positionType === 'horizontal'
+        ? 'position-absolute show-children-on-hover text-center mx-auto '
+        : 'position-absolute show-children-on-hover my-auto'
+    );
+
     return (
         <>
-            <div className='d-flex justify-content-center w-100 show-children-on-hover' style={{ height: '30px' }}>
+            <div
+                className={className}
+                style={{
+                    top: '-' + (sizePx / 2).toString() + 'px',
+                    left: 0,
+                    right: 0,
+                    height: sizePx.toString() + 'px'
+                }}
+            >
                 <AddCircleSharpIcon
-                    className='show-on-parent-hover text-center'
+                    className='show-on-parent-hover'
                     aria-describedby={popoverId}
-                    style={style}
+                    style={{
+                        width: sizePx.toString() + 'px',
+                        height: sizePx.toString() + 'px'
+                    }}
                     onClick={onClick}
                 />
             </div>
@@ -239,83 +256,9 @@ function RemoveBlockButton({ index, content, className, style }: RemoveBlockButt
     );
 }
 
-type EditBlockButtonProps = {
-    index: number,
-    content: BlockFeed,
-    style?: CSSProperties
-}
-
-/**
- * Edit the block at index in the list of children of `content`.
- * @param index Index to edit
- * @param content ContentList containing the list from which to edit the item
- * @param style Extra styling added to the <i> tag
- * @constructor
- */
-function EditColumnsBlockButton({ index, content, style }: EditBlockButtonProps) {
-    const dispatch = useContext(ContentTreeContext);
-
-    function updateContent(split: number) {
-        const newCOFeed = {
-            ...content
-        };
-        // @ts-ignore
-        (newCOFeed.items[index] as ColumnsBlock).attributes.split = split;
-        dispatch({ id: content.id, value: newCOFeed });
-    }
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        updateContent(parseInt(event.target.value, 10));
-    };
-
-    const [anchorEl, setAnchorEl] = React.useState<EventTarget & Element | null>(null);
-    function onClick(event: React.MouseEvent) {
-        setAnchorEl(event.currentTarget);
-    }
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const open = Boolean(anchorEl);
-    const popoverId = 'popover-' + index;
-
-    return (
-        <>
-            <SettingsIcon
-                className='position-absolute show-on-parent-hover'
-                aria-describedby={popoverId}
-                style={style}
-                onClick={onClick}
-            />
-            <Popover
-                id={popoverId}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center'
-                }}
-                transformOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center'
-                }}
-                className='zoom-xs-10 zoom-xl-8'
-            >
-                <Container>
-                    <Form>
-                        <Form.Group controlId="formBasicRange">
-                            <Form.Label>Column width (left column)</Form.Label>
-                            <Form.Control type="range" min="1" max="11" step="1" onChange={handleChange} />
-                        </Form.Group>
-                    </Form>
-                </Container>
-            </Popover>
-        </>
-    );
-}
-
 export type BlockFeedCOEProps = {
-    content: BlockFeed
+    content: BlockFeed,
+    bordered?: boolean
 }
 
 /**
@@ -323,33 +266,18 @@ export type BlockFeedCOEProps = {
  * @param content The BlockFeed object to render and edit.
  * @constructor
  */
-export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
+export default function BlockFeedCOE({ content, bordered }: BlockFeedCOEProps) {
     const iconSize = 30;
 
     return (
-        <Col xs={12}>
-            <Row className='soft-dashed-border-on-hover'>
-                <AddBlockButton index={-1} content={content}
-                    style={{
-                        width: iconSize.toString() + 'px',
-                        height: iconSize.toString() + 'px'
-                    }}
-                />
+        <Col xs={12} style={{ minHeight: '50px' }} className={bordered ? 'soft-dashed-border-on-hover' : ''}>
+            <Row className='position-relative show-children-on-hover'>
+                <AddBlockButton index={-1} content={content} sizePx={iconSize} positionType='horizontal'/>
             </Row>
             {content.items.map((obj, index) => {
                 return (
                     <>
                         <Row className='position-relative show-children-on-hover soft-dashed-border-on-hover'>
-                            {obj.attributes.blockType === 'columns' &&
-                                <EditColumnsBlockButton index={index} content={content}
-                                    style={{
-                                        width: iconSize.toString() + 'px',
-                                        height: iconSize.toString() + 'px',
-                                        right: (1.5 * iconSize / 2).toString() + 'px',
-                                        top: '-' + (iconSize / 2).toString() + 'px'
-                                    }}
-                                />
-                            }
                             <RemoveBlockButton index={index} content={content}
                                 style={{
                                     width: iconSize.toString() + 'px',
@@ -360,13 +288,8 @@ export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
                             />
                             <BlockCOR block={obj} />
                         </Row>
-                        <Row className='soft-dashed-border-on-hover'>
-                            <AddBlockButton index={index} content={content}
-                                style={{
-                                    width: iconSize.toString() + 'px',
-                                    height: iconSize.toString() + 'px'
-                                }}
-                            />
+                        <Row className='position-relative show-children-on-hover'>
+                            <AddBlockButton index={index} content={content} sizePx={iconSize} positionType='horizontal'/>
                         </Row>
                     </>
                 );
