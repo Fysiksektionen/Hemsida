@@ -4,7 +4,7 @@
  * This file should only contain types that help us parse the raw response of the server.
  * Do not add related types that are not returned by the server.
  */
-import { SiteFooterContentTree, SiteHeaderContentTree } from './content_object_trees';
+import { SiteFooterCT, SiteHeaderCT } from './content_objects/content_trees/site';
 
 type IDDetail = {
     id: number,
@@ -35,10 +35,10 @@ export type Page = MinimalPage & {
 export type Site = {
     rootUrl: string,
     rootPage: MinimalPage,
-    headerContentSv: SiteHeaderContentTree,
-    headerContentEn: SiteHeaderContentTree,
-    footerContentSv: SiteFooterContentTree,
-    footerContentEn: SiteFooterContentTree
+    headerContentSv: SiteHeaderCT,
+    headerContentEn: SiteHeaderCT,
+    footerContentSv: SiteFooterCT,
+    footerContentEn: SiteFooterCT
 }
 
 export type MenuItem = {
@@ -65,10 +65,10 @@ export type Image = IDDetail & {
     href: string
 } // More to be defined later
 
+// TODO: Flytta till content_objects mappen
 type ContentObjectDBType = 'text' | 'image' | 'menu' | 'page' | 'dict' | 'list'
 
 type ContentObjectBase = IDDetail & {
-    name: string,
     dbType: ContentObjectDBType,
     attributes: object
 }

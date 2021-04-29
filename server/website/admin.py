@@ -4,7 +4,7 @@ from adminsortable.admin import SortableTabularInline, SortableAdmin, TabularInl
 from django.contrib import admin
 from django.utils.text import capfirst
 from django.utils.translation import gettext_lazy as _
-from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect, SiteModel
+from website.models import Menu, MenuItemBase, Page, PageDraft, Redirect, SiteModel, News, NewsDraft
 
 from utils.admin import GuardedModelAdmin
 
@@ -20,9 +20,15 @@ class PageDraftInline(TabularInline):
     fields = ('page_type', 'content_sv', 'content_en')
 
 
+class NewsDraftInline(TabularInline):
+    model = NewsDraft
+    extra = 1
+    fields = ('page_type', 'content_sv', 'content_en')
+
+
 @admin.register(Page)
 class PageModelAdmin(GuardedModelAdmin):
-    list_display = ('name', 'slug', 'published', 'published_at', 'last_edited_at')
+    list_display = ('name', 'slug', 'published', 'first_published_at','publish_time', 'unpublish_time')
     search_fields = ('name', 'url',)
     prepopulated_fields = {'slug': ('name',), }
 
@@ -32,6 +38,9 @@ class PageModelAdmin(GuardedModelAdmin):
         }),
         (capfirst(_('content')), {
             'fields': ('content_sv', 'content_en')
+        }),
+        (capfirst(_('publication info')), {
+            'fields': ('first_published_at', 'publish_time', 'unpublish_time')
         }),
     )
     inlines = [
@@ -123,3 +132,22 @@ class SiteModelAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         """No one can remove object"""
         return False
+
+@admin.register(News)
+class NewsModelAdmin(admin.ModelAdmin):
+    list_display = ('slug', 'published', 'first_published_at', 'publish_time', 'unpublish_time','author')
+    search_fields = ('slug', 'url', 'author')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'url', 'slug', 'page_type')
+        }),
+        (capfirst(_('content')), {
+            'fields': ('content_sv', 'content_en')
+        }),
+        (capfirst(_('publication info')), {
+            'fields': ('first_published_at', 'publish_time', 'unpublish_time', 'author')
+        })
+    )
+    inlines = [
+        NewsDraftInline
+    ]

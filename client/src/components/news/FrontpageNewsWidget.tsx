@@ -8,12 +8,14 @@ import OffsetTitle from '../OffsetTitle';
 
 function NewsWidget() {
     return (
-        <OffsetTitle title="Nyheter" offsetLeft={2}>
-            <Row>
-                <Col className="col-7 pr-0"> <NewsItemCompact {...DummyData2}/> </Col>
-                <Col className="col-5 pl-0"> <NewsFeedTiny items={DummyData}/> </Col>
-            </Row>
-        </OffsetTitle>
+        <Col xs={12} xl={10}>
+            <OffsetTitle title="Nyheter" offsetLeft={2}>
+                <Row>
+                    <Col className="col-7 pr-0"> <NewsItemCompact {...DummyData2}/> </Col>
+                    <Col className="col-5 pl-0"> <NewsFeedTiny items={DummyData}/> </Col>
+                </Row>
+            </OffsetTitle>
+        </Col>
     );
 }
 

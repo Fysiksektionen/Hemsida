@@ -25,10 +25,17 @@ class PageTest(ValidationTestCase):
 
     def test_default_slug(self):
         """Test setting default slug if slug is not specified."""
+        # Create new content objects to avoid validation error
+        self.content_sv = ContentObjectBase()
+        self.content_en = ContentObjectBase()
+
         # Check normal behaviour
         self.page_with_slug = Page(name='0', page_type='0', url="https://f.kth.se/0", slug='fkm',
                                    content_sv=self.content_sv, content_en=self.content_en)
         self.assertEqual(self.page_with_slug.slug, 'fkm')
+
+        # Cleaning page with slug should not raise an error
+        self.assertEqual(self.page_with_slug.clean(), None)
 
         # If slug is not specified -> slug = slugify('name')
         self.page_no_slug = Page(name='1', page_type='0', url="https://f.kth.se/1",
@@ -50,15 +57,17 @@ class PageTest(ValidationTestCase):
         self.page_empty_slug_with_parent = Page(name='4', page_type='0', url="https://f.kth.se/4", slug='',
                                                 parent=self.parent, content_sv=self.content_sv,
                                                 content_en=self.content_en)
-        self.assertRaisesMessage(
-            ValidationError(
+        self.assertRaisesValidationError(
+            err=ValidationError(
                 _("%(slug_field)s cannot be '' if %(parent_field)s is not None."),
                 params={
-                    'slug_field': Page._meta.get_field('slug').verbose_name,
-                    'parent_field': Page._meta.get_field('parent').verbose_name
+                    'slug_field': self.page_empty_slug_with_parent._meta.get_field('slug').verbose_name,
+                    'parent_field': self.page_empty_slug_with_parent._meta.get_field('parent').verbose_name
                 }
             ),
-            self.page_empty_slug_with_parent.full_clean
+            field='__all__',
+            exclusive=True,
+            func=self.page_empty_slug_with_parent.full_clean
         )
 
     def test_get_content(self):

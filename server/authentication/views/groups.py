@@ -1,5 +1,5 @@
 from authentication.models.groups import Group
-from rest_framework import viewsets, mixins, serializers
+from rest_framework import serializers, generics
 from utils.serializers import DBObjectSerializer
 
 
@@ -30,7 +30,13 @@ class GroupSerializer(DBObjectSerializer):
         return {key: val for key, val in Group.GroupType.choices}[obj.group_type]
 
 
-class GroupViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    """A simple ViewSet for listing and retrieving Groups."""
+class GroupsView(generics.ListCreateAPIView):
+    """A simple view for listing and creating users."""
+    serializer_class = GroupSerializer
+    queryset = Group.objects.all()
+
+
+class GroupView(generics.RetrieveUpdateDestroyAPIView):
+    """A simple view for fetching, updating and deleting users."""
     serializer_class = GroupSerializer
     queryset = Group.objects.all()

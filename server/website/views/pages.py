@@ -12,7 +12,8 @@ class PageSerializer(DBObjectSerializer):
     class Meta:
         model = Page
         fields = ['name', 'url', 'slug', 'page_type', 'parent', 'children', 'published',
-                  'published_at', 'last_edited_at', 'page_draft']
+                  'first_published_at', 'last_edited_at', 'publish_time', 'unpublish_time','page_draft']
+
         depth = 1
         nested_serialization = {
             'children': {
@@ -107,7 +108,8 @@ class FullPageSerializer(PageSerializer):
     class Meta:
         model = Page
         fields = ['name', 'url', 'slug', 'page_type', 'parent', 'children', 'published',
-                  'published_at', 'last_edited_at', 'page_draft', 'content']
+                  'first_published_at', 'last_edited_at', 'publish_time', 'unpublish_time',
+                  'content', 'page_draft']
         depth = 1
         nested_serialization = {
             'children': {

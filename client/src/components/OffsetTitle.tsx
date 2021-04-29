@@ -16,7 +16,7 @@ export default function OffsetTitle(props : OffsetTitleProp) {
     const offsetStyle = props.offsetClass ?? (`ml-${props.offsetLeft ?? 5} mt-${props.offsetTop ?? 5}`);
     return (
         <div>
-            <TitleTag className={titleStyle}>Nyheter</TitleTag>
+            <TitleTag className={titleStyle}>{props.title}</TitleTag>
             <div className={offsetStyle}>{props.children}</div>
         </div>
     );
