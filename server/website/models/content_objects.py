@@ -24,9 +24,6 @@ class ContentObjectBase(models.Model):
         verbose_name_plural = _("base content objects")
         ordering = ['order']
 
-    class ObjectMeta:
-        detail_view_name = 'api:website:content-object-detail'
-
     parent_page = models.ForeignKey(
         'Page',
         verbose_name=_('containing page'),
