@@ -12,15 +12,9 @@ import website.views.pages as pages
 def serialize_item(item, context, fields=None, get_children=True):
     """Recursive method used to rebuild content object tree as a dictionary."""
     if item['db_type'] not in ['dict', 'list']:
-        if fields:
-            serialized_item = content_object_value_serializers[item['db_type']](item['object'], context=context, fields=fields).data
-        else:
-            serialized_item = content_object_value_serializers[item['db_type']](item['object'], context=context).data
+        serialized_item = content_object_value_serializers[item['db_type']](item['object'], context=context, fields=fields).data
     else:
-        if fields:
-            serialized_item = ContentObjectBaseSerializer(item['object'], context=context, fields=fields).data
-        else:
-            serialized_item = ContentObjectBaseSerializer(item['object'], context=context).data
+        serialized_item = ContentObjectBaseSerializer(item['object'], context=context, fields=fields).data
 
         if item['db_type'] == 'dict':
             if get_children:
