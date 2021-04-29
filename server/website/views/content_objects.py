@@ -11,23 +11,27 @@ import website.views.pages as pages
 
 def serialize_item(item, context, fields=None, get_children=True):
     """Recursive method used to rebuild content object tree as a dictionary."""
-    if fields:
-        serialized_item = ContentObjectBaseSerializer(item['object'], context=context, fields=fields).data
+    if item['db_type'] not in ['dict', 'list']:
+        if fields:
+            serialized_item = content_object_value_serializers[item['db_type']](item['object'], context=context, fields=fields).data
+        else:
+            serialized_item = content_object_value_serializers[item['db_type']](item['object'], context=context).data
     else:
-        serialized_item = ContentObjectBaseSerializer(item['object'], context=context).data
+        if fields:
+            serialized_item = ContentObjectBaseSerializer(item['object'], context=context, fields=fields).data
+        else:
+            serialized_item = ContentObjectBaseSerializer(item['object'], context=context).data
 
-    if item['db_type'] == 'dict':
-        if get_children:
-            serialized_item['items'] = {}
-            for child in item['items']:
-                serialized_item['items'][child['object'].name] = serialize_item(item=child, context=context)
-    elif item['db_type'] == 'list':
-        if get_children:
-            serialized_item['items'] = []
-            for child in item['items']:
-                serialized_item['items'].append(serialize_item(item=child, context=context))
-    else:
-        serialized_item[item['db_type']] = content_object_value_serializers[item['db_type']](item['object'], context=context).data
+        if item['db_type'] == 'dict':
+            if get_children:
+                serialized_item['items'] = {}
+                for child in item['items']:
+                    serialized_item['items'][child['object'].name] = serialize_item(item=child, context=context)
+        elif item['db_type'] == 'list':
+            if get_children:
+                serialized_item['items'] = []
+                for child in item['items']:
+                    serialized_item['items'].append(serialize_item(item=child, context=context))
 
     return serialized_item
 
@@ -50,35 +54,84 @@ class ContentObjectBaseSerializer(DBObjectSerializer):
                 self.fields.pop(field_name)
 
 
-class ImageSerializer(serializers.Serializer):
+class COImageSerializer(DBObjectSerializer):
+    """Serializer for rendering COMenu."""
     image = serializers.ImageField()
 
+    class Meta:
+        model = ContentImage
+        fields = ['db_type', 'component', 'attributes', 'image']
 
-class TextSerializer(serializers.Serializer):
-    text = serializers.CharField(required=True, allow_blank=True)
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super(COImageSerializer, self).__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
 
 
-class COMenuSerializer(ExtendedModelSerializer):
+class COTextSerializer(DBObjectSerializer):
+    """Serializer for rendering COMenu."""
+
+    class Meta:
+        model = ContentText
+        fields = ['db_type', 'component', 'attributes', 'text']
+
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super(COTextSerializer, self).__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
+
+class COMenuSerializer(DBObjectSerializer):
     """Serializer for rendering COMenu."""
     menu = MenuItemSerializer()
 
     class Meta:
         model = ContentMenu
-        fields = ['menu']
+        fields = ['db_type', 'component', 'attributes', 'menu']
+
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super(COMenuSerializer, self).__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
 
 
-class COPageSerializer(ExtendedModelSerializer):
+class COPageSerializer(DBObjectSerializer):
     """Serializer for rendering COPage."""
     page = pages.PageSerializer()
 
     class Meta:
         model = ContentPage
-        fields = ['page']
+        fields = ['db_type', 'component', 'attributes', 'page']
+
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super(COPageSerializer, self).__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
 
 
 content_object_value_serializers = {
-    'text': TextSerializer,
-    'image': ImageSerializer,
+    'text': COTextSerializer,
+    'image': COImageSerializer,
     'menu': COMenuSerializer,
     'page': COPageSerializer,
 }
