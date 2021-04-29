@@ -1,11 +1,11 @@
 from rest_framework import viewsets, mixins, serializers
-from utils.serializers import DBObjectSerializer
+from utils.serializers import DBObjectSerializer, DynamicFieldsMixin
 from website.models.pages import Page
 from website.selectors.content_objects import get_content_object_trees
 import website.views.content_objects as content_objects
 
 
-class PageSerializer(DBObjectSerializer):
+class PageSerializer(DynamicFieldsMixin, DBObjectSerializer):
     """Serializer for rendering a page without content objects."""
 
     class Meta:
@@ -24,16 +24,6 @@ class PageSerializer(DBObjectSerializer):
                 'fields': ['page_type']
             }
         }
-
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-        super(PageSerializer, self).__init__(*args, **kwargs)
-
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
 
 
 class FullPageSerializer(PageSerializer):

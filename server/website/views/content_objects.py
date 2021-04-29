@@ -1,4 +1,4 @@
-from utils.serializers import DBObjectSerializer, ExtendedModelSerializer
+from utils.serializers import DBObjectSerializer, DynamicFieldsMixin
 from django.core.cache import cache
 from rest_framework import viewsets, mixins, serializers
 
@@ -30,25 +30,15 @@ def serialize_item(item, context, fields=None, get_children=True):
     return serialized_item
 
 
-class ContentObjectBaseSerializer(DBObjectSerializer):
+class ContentObjectBaseSerializer(DynamicFieldsMixin, DBObjectSerializer):
     """Serializer for rendering content objects without all the fields.
     Used when rendering content objects for a page."""
     class Meta:
         model = ContentObjectBase
         fields = ['db_type', 'component', 'attributes']
 
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-        super(ContentObjectBaseSerializer, self).__init__(*args, **kwargs)
 
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
-
-
-class COImageSerializer(DBObjectSerializer):
+class COImageSerializer(DynamicFieldsMixin, DBObjectSerializer):
     """Serializer for rendering COMenu."""
     image = serializers.ImageField()
 
@@ -56,36 +46,16 @@ class COImageSerializer(DBObjectSerializer):
         model = ContentImage
         fields = ['db_type', 'component', 'attributes', 'image']
 
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-        super(COImageSerializer, self).__init__(*args, **kwargs)
 
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
-
-
-class COTextSerializer(DBObjectSerializer):
+class COTextSerializer(DynamicFieldsMixin, DBObjectSerializer):
     """Serializer for rendering COMenu."""
 
     class Meta:
         model = ContentText
         fields = ['db_type', 'component', 'attributes', 'text']
 
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-        super(COTextSerializer, self).__init__(*args, **kwargs)
 
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
-
-
-class COMenuSerializer(DBObjectSerializer):
+class COMenuSerializer(DynamicFieldsMixin, DBObjectSerializer):
     """Serializer for rendering COMenu."""
     menu = MenuItemSerializer()
 
@@ -93,34 +63,14 @@ class COMenuSerializer(DBObjectSerializer):
         model = ContentMenu
         fields = ['db_type', 'component', 'attributes', 'menu']
 
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-        super(COMenuSerializer, self).__init__(*args, **kwargs)
 
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
-
-
-class COPageSerializer(DBObjectSerializer):
+class COPageSerializer(DynamicFieldsMixin, DBObjectSerializer):
     """Serializer for rendering COPage."""
     page = pages.PageSerializer()
 
     class Meta:
         model = ContentPage
         fields = ['db_type', 'component', 'attributes', 'page']
-
-    def __init__(self, *args, **kwargs):
-        fields = kwargs.pop('fields', None)
-        super(COPageSerializer, self).__init__(*args, **kwargs)
-
-        if fields is not None:
-            allowed = set(fields)
-            existing = set(self.fields)
-            for field_name in existing - allowed:
-                self.fields.pop(field_name)
 
 
 content_object_value_serializers = {
