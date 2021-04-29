@@ -57,7 +57,7 @@ class ContentObjectBaseSerializer(DBObjectSerializer):
 
 
 class COImageSerializer(DBObjectSerializer):
-    """Serializer for rendering COMenu."""
+    """Serializer for rendering COImage."""
     image = serializers.ImageField()
 
     class Meta:
@@ -66,7 +66,7 @@ class COImageSerializer(DBObjectSerializer):
 
 
 class COTextSerializer(DBObjectSerializer):
-    """Serializer for rendering COMenu."""
+    """Serializer for rendering COText."""
 
     class Meta:
         model = ContentText
