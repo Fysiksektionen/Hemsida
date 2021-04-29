@@ -95,10 +95,6 @@ msgstr "namn"
 msgid "page type"
 msgstr "sidtyp"
 
-#: .\website\models\base_page.py:21
-msgid "is published"
-msgstr "är publicerad"
-
 #: .\website\models\base_page.py:23
 msgid "first published at"
 msgstr "först publicerad"
@@ -116,21 +112,6 @@ msgstr "av publicerings tid"
 msgid "last edited at"
 msgstr "senast redigerad"
 
-#: .\website\models\base_page.py:27 .\website\models\news.py:22
-#: .\website\models\pages.py:28
-msgid "swedish content"
-msgstr "svenskt innehåll"
-
-#: .\website\models\base_page.py:30 .\website\models\news.py:26
-#: .\website\models\pages.py:32
-msgid "english content"
-msgstr "engelskt innehåll"
-
-#: .\website\models\content_objects.py:23
-#: .\website\models\content_objects.py:23
-msgid "base content object"
-msgstr "basinnehållsobjekt"
-
 #: website/models/content_objects.py:24
 msgid "base content objects"
 msgstr "basinnehållsobjekt"
@@ -139,10 +120,6 @@ msgstr "basinnehållsobjekt"
 msgid "containing page"
 msgstr "innehållande sida"
 
-#: .\website\models\content_objects.py:33 .\website\models\menus.py:23
-#: .\website\models\pages.py:49
-msgid "name"
-msgstr "namn"
 
 #: .\website\models\content_objects.py:36
 msgid "database type"
@@ -327,10 +304,6 @@ msgstr "utkast"
 msgid "page drafts"
 msgstr "utkast"
 
-#: .\website\models\pages.py:18 .\website\models\pages.py:50
-msgid "page type"
-msgstr "sidtyp"
-
 #: .\website\models\pages.py:26 .\website\models\pages.py:62
 msgid "swedish content"
 msgstr "svenskt innehåll"
@@ -339,18 +312,10 @@ msgstr "svenskt innehåll"
 msgid "english content"
 msgstr "engelskt innehåll"
 
-#: .\website\models\pages.py:33 .\website\models\pages.py:60
-msgid "last edited at"
-msgstr "senast redigerad"
-
 #: .\website\models\pages.py:43
 #: .\website\models\pages.py:44
 msgid "pages"
 msgstr "sidor"
-
-#: .\website\models\pages.py:48
-msgid "URL"
-msgstr "URL"
 
 #: .\website\models\pages.py:52
 #: .\website\models\pages.py:48
