@@ -22,7 +22,7 @@ class User(AbstractUser, ModelPermissionCacheMixin):
         verbose_name_plural = _("users")
 
     class ObjectMeta:
-        detail_view_name = 'api:authentication:user-detail'
+        detail_view_name = 'api:authentication:user'
 
     # Override of inherited fields
     is_active = models.BooleanField(verbose_name=_('active'), default=True, editable=False)

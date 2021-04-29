@@ -23,7 +23,7 @@ class Group(DjangoGroup, ModelPermissionCacheMixin):
         verbose_name_plural = _("groups")
 
     class ObjectMeta:
-        detail_view_name = 'api:authentication:group-detail'
+        detail_view_name = 'api:authentication:group'
 
     class GroupType(models.IntegerChoices):
         """Enum type for choices of Group.group_type
