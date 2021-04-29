@@ -12,7 +12,7 @@ class PageSerializer(DBObjectSerializer):
     class Meta:
         model = Page
         fields = ['name', 'url', 'slug', 'page_type', 'parent', 'children', 'published',
-                  'first_published_at', 'last_edited_at', 'publish_time', 'unpublish_time','page_draft']
+                  'first_published_at', 'last_edited_at', 'publish_time', 'unpublish_time', 'page_draft']
 
         depth = 1
         nested_serialization = {
@@ -144,3 +144,4 @@ class PageViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.Gen
     """A simple ViewSet for listing and retrieving Pages."""
     serializer_class = FullPageSerializer
     queryset = Page.objects.all()
+

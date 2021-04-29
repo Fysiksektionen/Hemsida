@@ -24,7 +24,7 @@ class ContentObjectBase(models.Model):
         verbose_name_plural = _("base content objects")
         ordering = ['order']
 
-    parent_page = models.ForeignKey(
+    containing_page = models.ForeignKey(
         'Page',
         verbose_name=_('containing page'),
         null=False, blank=False,
@@ -68,15 +68,14 @@ class ContentObjectBase(models.Model):
     def clean(self):
         """Raises ValidationError if:
 
-        :raises ValidationError if
-            - uniqness of
+        - Parent page and collections parent page are not the same. (containing_page != collection.containing_page)
         """
 
-        if self.collection is not None and self.parent_page != self.collection.parent_page:
+        if self.collection is not None and self.containing_page != self.collection.containing_page:
             raise ValidationError(
-                _('%(parent_page_field)s and %(parent_page_field)s of %(collection_field)s must match.'),
+                _('%(containing_page_field)s and %(containing_page_field)s of %(collection_field)s must match.'),
                 params={
-                    'parent_page_field': self._meta.get_field('parent_page').verbose_name,
+                    'containing_page_field': self._meta.get_field('containing_page').verbose_name,
                     'collection_field': self._meta.get_field('collection').verbose_name
                 }
             )
