@@ -1,14 +1,14 @@
 from django.apps import apps
-from rest_framework import serializers, generics, viewsets, mixins
+from rest_framework import serializers, generics
 from rest_framework.fields import empty
-
-from utils.serializers import ExtendedListSerializer, DBObjectSerializer
+from utils.serializers import  DBObjectSerializer
 from website.models.content_objects import *
 from website.models.pages import Page
 from website.models.menus import Menu
 from website.models.media import Image
 from rest_framework.response import Response
 from rest_framework import status
+from django.utils.translation import gettext_lazy as _
 
 
 
@@ -30,7 +30,7 @@ class ContentTextSerializer(DBObjectSerializer):
             db_type = self.initial_data.get("db_type",None)
             super().is_valid(raise_exception)
             if db_type and db_type != "text":
-                self._errors = {**self.errors, **{"db_type": "Invalid db_type"}}
+                self._errors = {**self.errors, **{"db_type": _("Invalid db_type")}}
 
             if self._errors and raise_exception:
                 raise ValidationError(self.errors)
@@ -64,7 +64,7 @@ class ContentImageSerializer(DBObjectSerializer):
             db_type = self.initial_data.get("db_type", None)
             super().is_valid(raise_exception)
             if db_type and db_type != "image":
-                self._errors = {**self.errors, **{"db_type": "Invalid db_type"}}
+                self._errors = {**self.errors, **{"db_type": _("Invalid db_type")}}
 
         if self._errors and raise_exception:
             raise ValidationError(self.errors)
@@ -95,7 +95,7 @@ class ContentMenuSerializer(DBObjectSerializer):
             db_type = self.initial_data.get("db_type",None)
             super().is_valid(raise_exception)
             if db_type and db_type != "menu":
-                self._errors = {**self.errors, **{"db_type": "Invalid db_type"}}
+                self._errors = {**self.errors, **{"db_type": _("Invalid db_type")}}
 
         if self._errors and raise_exception:
             raise ValidationError(self.errors)
@@ -127,7 +127,7 @@ class ContentPageSerializer(DBObjectSerializer):
             super().is_valid(raise_exception)
 
             if db_type and db_type != "page":
-                self._errors = {**self.errors, **{"db_type": "Invalid db_type"}}
+                self._errors = {**self.errors, **{"db_type": _("Invalid db_type")}}
 
         if self._errors and raise_exception:
             raise ValidationError(self.errors)
@@ -164,10 +164,12 @@ class ContentCollectionSerializer(DBObjectSerializer):
 
             db_type = self.initial_data.get("db_type", None)
             if db_type and db_type != "dict":
-                self._errors = {**self.errors, **{"db_type": "Invalid db_type"}}
+                self._errors = {**self.errors, **{"db_type": _("Invalid db_type")}}
+
+
             if hasattr(items, 'keys'):
                 keys = list(items.keys())
-                self._serlist = list()
+                self._serlist = list() #Serializer list for the items
 
                 for i in range(len(items)):
 
@@ -176,11 +178,12 @@ class ContentCollectionSerializer(DBObjectSerializer):
 
                     items[keys[i]]["name"] = keys[i]
                     self._serlist.append(ContentObjectBaseSerializer(data=items[keys[i]]))
+
                     if not self._serlist[i].is_valid():
                         self._errors = {**self.errors, **(self._serlist[i].errors)}
 
             else:
-                self._errors = {**self._errors, **{"items":"Has to be a dictionary or empty"}}
+                self._errors = {**self._errors, **{"items":_("Has to be a dictionary or empty")}}
 
             if self._errors:
                 self._validated_data = {}
@@ -225,7 +228,7 @@ class ContentCollectionListSerializer(DBObjectSerializer):
 
             db_type = self.initial_data.get("db_type", None)
             if db_type and db_type != "list":
-                self._errors = {**self.errors, **{"db_type": "Invalid db_type"}}
+                self._errors = {**self.errors, **{"db_type": _("Invalid db_type")}}
 
             if isinstance(items, list):
 
@@ -241,7 +244,7 @@ class ContentCollectionListSerializer(DBObjectSerializer):
                         self._errors = {**self.errors, **(self._serlist[i].errors)}
 
             else:
-                self._errors = {**self._errors, **{"items": "Has to be a list or empty"}}
+                self._errors = {**self.errors, **{"items": _("Has to be a list or empty")}}
 
             if self._errors:
                 self._validated_data = {}
@@ -314,7 +317,7 @@ class ContentObjectBaseSerializer(serializers.ModelSerializer):
                 else:
                     self._errors = self.ser.errors
             else:
-                self._errors = {"db_type":"Invalid db_type"}
+                self._errors = {"db_type":_("Invalid db_type")}
 
         if self._errors and raise_exception:
             raise ValidationError(self.errors)
