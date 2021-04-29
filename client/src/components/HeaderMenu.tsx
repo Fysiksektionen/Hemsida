@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IconButton, Drawer } from '@material-ui/core';
 import MenuList from './MenuList';
 import { CloseRounded, Menu } from '@material-ui/icons';
 import FButton from './f-styled/buttons/FButton';
+import { EditorialModeContext } from '../contexts';
 
 export type MenuItem = {
     category: string,
@@ -27,15 +28,10 @@ const mockData: MenuItem[] = [
 
 export default function HeaderMenu() {
     const [isOpen, setIsOpen] = React.useState(false);
+    const edit = useContext(EditorialModeContext);
 
-    const toggleDrawer = (open: boolean) => (
-        event: React.KeyboardEvent | React.MouseEvent
-    ) => {
-        if (
-            event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
-        ) {
+    const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+        if ((event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) || edit) {
             return;
         }
 
@@ -47,7 +43,7 @@ export default function HeaderMenu() {
             <FButton {...{
                 text: 'Meny',
                 Icon: Menu,
-                onClick: () => { toggleDrawer(true); },
+                onClick: toggleDrawer(true),
                 style: { width: '8rem' }
             }}
             />

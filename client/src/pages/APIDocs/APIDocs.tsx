@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import '../../index.css';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
-import logo from '../../Fysiksektionen_logo.svg';
+import logo from '../../mediafiles/placeholder_images/Fysiksektionen_logo.svg';
 
 import FButton from '../../components/f-styled/buttons/FButton';
 import { timeoutPromise } from '../../utils/timeoutPromise';

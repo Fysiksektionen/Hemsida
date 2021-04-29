@@ -3,11 +3,11 @@
  */
 
 import React from 'react';
-import { Page } from './api_object_types';
+import { ContentObject } from './api_object_types';
 
-export type PageComponentProps = Page
+export type ChangeKeyType<T, K extends keyof T, U> = Omit<T, K> & { [k in K]: U };
 
-export type PageComponent = React.FunctionComponent<PageComponentProps>;
+export type PageComponent = React.FunctionComponent<ContentObject>;
 
 // TODO: Change object to content object
 export type COStateUpdateHook = (arg: object) => void

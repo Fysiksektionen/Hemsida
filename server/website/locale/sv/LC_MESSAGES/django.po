@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-29 19:59+0200\n"
+"POT-Creation-Date: 2021-04-11 16:07+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -16,75 +16,126 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\website\admin.py:12
+#: website/admin.py:12
 msgid "Admin page"
 msgstr "Adminsidan"
 
-#: .\website\admin.py:13
+#: website/admin.py:13
 msgid "The Physics Chapter - Administration"
 msgstr "Fysiksektionen - Administration"
 
-#: .\website\admin.py:14
+#: website/admin.py:14
 msgid "Site Management"
 msgstr "Hemsidehantering"
 
-#: .\website\admin.py:33 .\website\admin.py:114
+#: website/admin.py:33 website/admin.py:114
 msgid "content"
 msgstr "innehåll"
 
+#: .\website\admin.py:42 .\website\admin.py:147
+msgid "publication info"
+msgstr "publicerings info"
+
+#: .\website\admin.py:64
 #: .\website\admin.py:55
 msgid "about"
 msgstr "om"
 
-#: .\website\admin.py:58
+#: website/admin.py:58
 msgid "link"
 msgstr "länk"
 
-#: .\website\admin.py:73
+#: website/admin.py:73
 msgid "is sub menu"
 msgstr "är sub-meny"
 
-#: .\website\admin.py:77
+#: website/admin.py:77
 msgid "number of items"
 msgstr "antal menyobjekt"
 
-#: .\website\admin.py:87
+#: website/admin.py:87
 msgid "from"
 msgstr "från"
 
-#: .\website\admin.py:90
+#: website/admin.py:90
 msgid "to"
 msgstr "till"
 
-#: .\website\admin.py:98
+#: website/admin.py:98
 msgid "internal link"
 msgstr "intern länk"
 
-#: .\website\admin.py:102
+#: website/admin.py:102
 msgid "page name"
 msgstr "sidnamn"
 
-#: .\website\admin.py:108
+#: website/admin.py:108
 msgid "URLs"
 msgstr "URLer"
 
-#: .\website\admin.py:111
+#: website/admin.py:111
 msgid "page tree"
 msgstr "sidrot"
 
-#: .\website\apps.py:7
+#: website/apps.py:7
 msgid "website app"
 msgstr "websideappen"
 
+#: .\website\models\base_page.py:16
+msgid "URL"
+msgstr "URL"
+
+#: .\website\models\base_page.py:17 .\website\models\content_objects.py:33
+#: .\website\models\menus.py:23
+msgid "name"
+msgstr "namn"
+
+#: .\website\models\base_page.py:18 .\website\models\news.py:14
+#: .\website\models\pages.py:20
+msgid "page type"
+msgstr "sidtyp"
+
+#: .\website\models\base_page.py:21
+msgid "is published"
+msgstr "är publicerad"
+
+#: .\website\models\base_page.py:23
+msgid "first published at"
+msgstr "först publicerad"
+
+#: .\website\models\base_page.py:24
+msgid "publish time"
+msgstr "publicerings tid"
+
+#: .\website\models\base_page.py:25
+msgid "unpublish time"
+msgstr "av publicerings tid"
+
+#: .\website\models\base_page.py:26 .\website\models\news.py:29
+#: .\website\models\pages.py:35
+msgid "last edited at"
+msgstr "senast redigerad"
+
+#: .\website\models\base_page.py:27 .\website\models\news.py:22
+#: .\website\models\pages.py:28
+msgid "swedish content"
+msgstr "svenskt innehåll"
+
+#: .\website\models\base_page.py:30 .\website\models\news.py:26
+#: .\website\models\pages.py:32
+msgid "english content"
+msgstr "engelskt innehåll"
+
+#: .\website\models\content_objects.py:23
 #: .\website\models\content_objects.py:23
 msgid "base content object"
 msgstr "basinnehållsobjekt"
 
-#: .\website\models\content_objects.py:24
+#: website/models/content_objects.py:24
 msgid "base content objects"
 msgstr "basinnehållsobjekt"
 
-#: .\website\models\content_objects.py:29
+#: website/models/content_objects.py:29
 msgid "containing page"
 msgstr "innehållande sida"
 
@@ -97,159 +148,182 @@ msgstr "namn"
 msgid "database type"
 msgstr "databastyp"
 
-#: .\website\models\content_objects.py:43
+#: website/models/content_objects.py:44
 msgid "attributes"
 msgstr "attribut"
 
-#: .\website\models\content_objects.py:49
+#: website/models/content_objects.py:50
 msgid "collection"
 msgstr "grupp"
 
-#: .\website\models\content_objects.py:56 .\website\models\menus.py:29
+#: website/models/content_objects.py:57 website/models/menus.py:29
 msgid "order"
 msgstr "ordning"
 
-#: .\website\models\content_objects.py:75
-#: .\website\tests\models\test_content_objects.py:102
-#, python-format
+#: website/models/content_objects.py:76
+#: website/tests/models/test_content_objects.py:102
 msgid "%(containing_page_field)s and %(containing_page_field)s of %(collection_field)s must match."
 msgstr "%(containing_page_field)s och %(containing_page_field)s för %(collection_field)s måste matcha."
 
-#: .\website\models\content_objects.py:112
+#: website/models/content_objects.py:113
 msgid "content collection"
 msgstr "innehållsgrupp"
 
-#: .\website\models\content_objects.py:113
+#: website/models/content_objects.py:114
 msgid "content collections"
 msgstr "innehållsgrupper"
 
-#: .\website\models\content_objects.py:116
+#: website/models/content_objects.py:117
 msgid "is ordered"
 msgstr "är ordnad"
 
-#: .\website\models\content_objects.py:134
+#: website/models/content_objects.py:135
 msgid "content collection list"
 msgstr "innehållslista"
 
-#: .\website\models\content_objects.py:135
+#: website/models/content_objects.py:136
 msgid "content collection lists"
 msgstr "innehållslistor"
 
-#: .\website\models\content_objects.py:153
+#: website/models/content_objects.py:154
 msgid "text content object"
 msgstr "textobjekt"
 
-#: .\website\models\content_objects.py:154
+#: website/models/content_objects.py:155
 msgid "text content objects"
 msgstr "textobjekt"
 
-#: .\website\models\content_objects.py:156
+#: website/models/content_objects.py:157
 msgid "text"
 msgstr "text"
 
-#: .\website\models\content_objects.py:173
+#: website/models/content_objects.py:174
 msgid "image content object"
 msgstr "bildobjekt"
 
-#: .\website\models\content_objects.py:174
+#: website/models/content_objects.py:175
 msgid "image content objects"
 msgstr "bildobjekt"
 
-#: .\website\models\content_objects.py:178 .\website\models\media.py:9
-#: .\website\models\media.py:10 .\website\models\media.py:12
+#: website/models/content_objects.py:179 website/models/media.py:9
+#: website/models/media.py:10 website/models/media.py:12
 msgid "image"
 msgstr "bild"
 
-#: .\website\models\content_objects.py:199
+#: website/models/content_objects.py:200
 msgid "menu content object"
 msgstr "menyobjekt"
 
-#: .\website\models\content_objects.py:200
+#: website/models/content_objects.py:201
 msgid "menu content objects"
 msgstr "menyobjekt"
 
-#: .\website\models\content_objects.py:204 .\website\models\menus.py:32
-#: .\website\models\menus.py:77 .\website\models\menus.py:78
-#: .\website\models\menus.py:89 .\website\models\menus.py:201
-#: .\website\tests\models\test_menus.py:79
-#: .\website\tests\models\test_menus.py:141
-#: .\website\tests\models\test_menus.py:158
+#: website/models/content_objects.py:205 website/models/menus.py:32
+#: website/models/menus.py:77 website/models/menus.py:78
+#: website/models/menus.py:89 website/models/menus.py:201
+#: website/tests/models/test_menus.py:79 website/tests/models/test_menus.py:141
+#: website/tests/models/test_menus.py:158
 msgid "menu"
 msgstr "meny"
 
-#: .\website\models\content_objects.py:224
+#: website/models/content_objects.py:226
 msgid "page content object"
 msgstr "sidobjekt"
 
-#: .\website\models\content_objects.py:225
+#: website/models/content_objects.py:227
 msgid "page content objects"
 msgstr "sidobjekt"
 
-#: .\website\models\content_objects.py:229 .\website\models\menus.py:27
-#: .\website\models\menus.py:64 .\website\models\pages.py:22
-#: .\website\models\pages.py:42 .\website\models\redirects.py:39
-#: .\website\models\redirects.py:68 .\website\models\redirects.py:81
-#: .\website\tests\models\test_menus.py:49
-#: .\website\tests\models\test_redirects.py:57
-#: .\website\tests\models\test_redirects.py:68
+#: website/models/content_objects.py:231 website/models/menus.py:27
+#: website/models/menus.py:64 website/models/pages.py:22
+#: website/models/pages.py:42 website/models/redirects.py:39
+#: website/models/redirects.py:68 website/models/redirects.py:81
+#: website/tests/models/test_menus.py:49
+#: website/tests/models/test_redirects.py:57
+#: website/tests/models/test_redirects.py:68
 msgid "page"
 msgstr "sida"
 
-#: .\website\models\menus.py:15
+#: website/models/menus.py:15
 msgid "base menu item"
 msgstr "basmenyobjekt"
 
-#: .\website\models\menus.py:16
+#: website/models/menus.py:16
 msgid "base menu items"
 msgstr "basmenyobjekt"
 
-#: .\website\models\menus.py:26 .\website\models\menus.py:65
-#: .\website\models\redirects.py:38 .\website\models\redirects.py:69
-#: .\website\models\redirects.py:82 .\website\tests\models\test_menus.py:49
-#: .\website\tests\models\test_redirects.py:57
-#: .\website\tests\models\test_redirects.py:68
+#: website/models/menus.py:26 website/models/menus.py:65
+#: website/models/redirects.py:38 website/models/redirects.py:69
+#: website/models/redirects.py:82 website/tests/models/test_menus.py:49
+#: website/tests/models/test_redirects.py:57
+#: website/tests/models/test_redirects.py:68
 msgid "url"
 msgstr "url"
 
-#: .\website\models\menus.py:35
+#: website/models/menus.py:35
 msgid "is menu"
 msgstr "är meny"
 
-#: .\website\models\menus.py:61 .\website\models\redirects.py:65
-#: .\website\tests\models\test_menus.py:48
-#: .\website\tests\models\test_redirects.py:56
+#: website/models/menus.py:61 website/models/redirects.py:65
+#: website/tests/models/test_menus.py:48
+#: website/tests/models/test_redirects.py:56
 #, python-format
 msgid "Link is ambiguous. Set either %(page_field_name)s or %(url_field_name)s, not both."
 msgstr "Länken är tvetydig. Sätt antingen %(page_field_name)s eller %(url_field_name)s, inte båda."
 
-#: .\website\models\menus.py:75 .\website\tests\models\test_menus.py:78
+#: website/models/menus.py:75 website/tests/models/test_menus.py:78
 #, python-format
 msgid "%(menu_field_name)s field must relate to a %(menu_model_name)s object."
 msgstr "%(menu_field_name)s fältet måste länka till ett %(menu_model_name)s object."
 
-#: .\website\models\menus.py:87 .\website\tests\models\test_menus.py:140
-#: .\website\tests\models\test_menus.py:157
+#: website/models/menus.py:87 website/tests/models/test_menus.py:140
+#: website/tests/models/test_menus.py:157
 #, python-format
 msgid "%(menu_model_name)s relates to itself."
 msgstr "%(menu_model_name)s länkar till sig själv."
 
-#: .\website\models\menus.py:146
+#: website/models/menus.py:146
 msgid "menu item"
 msgstr "menyobjekt"
 
-#: .\website\models\menus.py:147
+#: website/models/menus.py:147
 msgid "menu items"
 msgstr "menyobjekt"
 
-#: .\website\models\menus.py:202
+#: website/models/menus.py:202
 msgid "menus"
 msgstr "menyer"
 
+#: .\website\models\news.py:11
+msgid "news draft"
+msgstr "nyhtets utkast"
+
+#: .\website\models\news.py:12
+msgid "news drafts"
+msgstr "nyhets utkast"
+
+#: .\website\models\news.py:18
+msgid "news"
+msgstr "nyheter"
+
+#: .\website\models\news.py:41
+msgid "created by"
+msgstr "skapad av"
+
+#: .\website\models\news.py:42
+msgid "views"
+msgstr "tittningar"
+
+#: .\website\models\news.py:47 .\website\tests\models\test_news.py:52
+msgid "%(slug_field)s cannot be ''."
+msgstr "%(slug_field)s kan inte vara ''."
+
+#: .\website\models\pages.py:17
 #: .\website\models\pages.py:15
 msgid "page draft"
 msgstr "utkast"
 
-#: .\website\models\pages.py:16
+#: website/models/pages.py:16
 msgid "page drafts"
 msgstr "utkast"
 
@@ -270,6 +344,7 @@ msgid "last edited at"
 msgstr "senast redigerad"
 
 #: .\website\models\pages.py:43
+#: .\website\models\pages.py:44
 msgid "pages"
 msgstr "sidor"
 
@@ -278,9 +353,11 @@ msgid "URL"
 msgstr "URL"
 
 #: .\website\models\pages.py:52
+#: .\website\models\pages.py:48
 msgid "parent page"
 msgstr "föräldersida"
 
+#: .\website\models\pages.py:55 .\website\tests\models\test_pages.py:62
 #: .\website\models\pages.py:57
 msgid "is published"
 msgstr "är publicerad"
@@ -294,49 +371,49 @@ msgstr "publicerad"
 msgid "%(slug_field)s cannot be '' if %(parent_field)s is not None."
 msgstr "%(slug_field)s kan inte vara '' om %(parent_field)s inte är None."
 
-#: .\website\models\redirects.py:10 .\website\tests\models\test_redirects.py:78
+#: website/models/redirects.py:10 website/tests/models/test_redirects.py:78
 #, python-format
 msgid "%(value)s is not full path."
 msgstr "%(value)s är inte en fullständig address."
 
-#: .\website\models\redirects.py:23
+#: website/models/redirects.py:23
 msgid "redirect"
 msgstr "omdirigering"
 
-#: .\website\models\redirects.py:24
+#: website/models/redirects.py:24
 msgid "redirects"
 msgstr "omdirigeringar"
 
-#: .\website\models\redirects.py:31
+#: website/models/redirects.py:31
 msgid "from path"
 msgstr "från-adress"
 
-#: .\website\models\redirects.py:78 .\website\tests\models\test_redirects.py:67
+#: website/models/redirects.py:78 website/tests/models/test_redirects.py:67
 #, python-format
 msgid "Link is empty. Set either %(page_field_name)s or %(url_field_name)s."
 msgstr "Länken är tom. Sätt antingen %(page_field_name)s eller %(url_field_name)s."
 
-#: .\website\models\site.py:12 .\website\models\site.py:13
+#: website/models/site.py:12 website/models/site.py:13
 msgid "site manager"
 msgstr "hemsidehanterare"
 
-#: .\website\models\site.py:15
+#: website/models/site.py:15
 msgid "root URL"
 msgstr "root-URL"
 
-#: .\website\models\site.py:16
+#: website/models/site.py:16
 msgid "API root URL"
 msgstr "API root-URL"
 
-#: .\website\models\site.py:18
+#: website/models/site.py:18
 msgid "root page"
 msgstr "root-sida"
 
-#: .\website\models\site.py:21
+#: website/models/site.py:21
 msgid "banner content"
 msgstr "bannerinnehåll"
 
-#: .\website\models\site.py:22
+#: website/models/site.py:22
 msgid "footer content"
 msgstr "footerinnehåll"
 

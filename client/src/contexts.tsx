@@ -35,6 +35,15 @@ export const EditorialModeContext = React.createContext<boolean>(
     false // Default
 );
 
+type AddIdDispatchAction = {
+    id?: number
+};
+
+export const ContentTreeAddIdContext = React.createContext<{ id: number, decrementHook: React.Dispatch<AddIdDispatchAction> }>(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    { id: -1, decrementHook: ({ id }) => {} } // Default
+);
+
 /**
  * ContentObjectTree related providers and contexts.
  * =================================================
@@ -43,46 +52,59 @@ export const EditorialModeContext = React.createContext<boolean>(
  * a reducer
  */
 
-type ContentObjectTreeDispatchAction = {
-    id?: number,
+type CTDispatchAction = {
+    id: number,
     value: ContentObject
 };
 
 /**
  * Context delivering a dispatch method to change context object.
  */
-export const ContentObjectTreeContext = React.createContext<React.Dispatch<ContentObjectTreeDispatchAction>>(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (action: ContentObjectTreeDispatchAction) => {}
+export const ContentTreeContext = React.createContext<React.Dispatch<CTDispatchAction>>(
+    () => {}
 );
 
 /**
- * Replace a sub-tree of a ContentObject-tree.
+ * Replace a sub-tree of a ContentObject-tree. Assumes unique id's.
  *
  * @param tree: The entire tree.
  * @param id: Id of the ContentObject at base of tree to be replaced.
  * @param value: The ContentObject (tree) replacing the tree starting at CO with id.
+ * @returns: Object with the updated ContentObject at value and weather or not the id was found.
  */
-export function replaceAtId(tree: ContentObject, id: number, value: ContentObject) {
+export function replaceAtId(tree: ContentObject, id: number, value: ContentObject): {value: ContentObject, found: boolean} {
     if (tree.id === id) { // If at correct object
-        return value;
+        return { value: value, found: true };
     } else { // Recursive in child.
+        let found = false;
         if (tree.dbType === 'dict') { // If dict
             const items: NodeJS.Dict<ContentObject> = {};
             for (const [name, subTree] of Object.entries(tree.items)) { // Search and update all children
-                if (subTree !== undefined) {
-                    items[name] = replaceAtId(subTree, id, value);
+                if (!found) {
+                    if (subTree !== undefined) {
+                        const ret = replaceAtId(subTree, id, value);
+                        found = ret.found;
+                        items[name] = ret.value;
+                    }
+                } else {
+                    items[name] = subTree;
                 }
             }
-            return { ...tree, items: items };
+            return { value: { ...tree, items: items }, found: found };
         } else if (tree.dbType === 'list') { // If list
             const treeList = tree as ContentList;
             treeList.items = treeList.items.map((subTree) => {
-                return replaceAtId(subTree, id, value);
+                if (!found) {
+                    const ret = replaceAtId(subTree, id, value);
+                    found = ret.found;
+                    return ret.value;
+                } else {
+                    return subTree;
+                }
             }); // Search and update all children
-            return treeList;
+            return { value: treeList, found: found };
         } else { // If not this item and there are no sub-items, return item.
-            return tree;
+            return { value: tree, found: false };
         }
     }
 }
@@ -94,18 +116,23 @@ export function replaceAtId(tree: ContentObject, id: number, value: ContentObjec
  * @param action: Action definition defining hoiw to update state.
  * @returns: New state
  */
-function contentObjectTreeReducer(state: ContentObject, action: ContentObjectTreeDispatchAction) {
-    if (action.id === undefined) { // If no id: update entire tree.
-        return action.value;
-    } else { // If id: find that object and replace subtree with value.
-        return replaceAtId(state, action.id, action.value);
+function CTReducer(state: ContentObject, action: CTDispatchAction) {
+    // Find that object and replace subtree with value.
+    return replaceAtId(state, action.id, action.value).value;
+}
+
+function decrementOrResetReducer(prevState: number, action: AddIdDispatchAction) {
+    if (action.id !== undefined) {
+        return action.id;
+    } else {
+        return prevState - 1;
     }
 }
 
-type ContentObjectTreeProviderProps = {
+type UseCTReducerProps = {
     content: ContentObject
-    preDispatchHook?: (action: ContentObjectTreeDispatchAction) => void,
-    postDispatchHook?: (action: ContentObjectTreeDispatchAction, newState: ContentObject) => void
+    preDispatchHook?: (action: CTDispatchAction, oldState: ContentObject) => void,
+    postDispatchHook?: (action: CTDispatchAction, newState: ContentObject) => void
 }
 
 /**
@@ -115,17 +142,21 @@ type ContentObjectTreeProviderProps = {
  * Note! When props.content.id is changed (aka) the state of the Reducer is updated and current state is lost!
  * See to it that the state is saved in a place where you want it with help of the pre and post hooks.
  */
-export function useContentTreeReducer(props: ContentObjectTreeProviderProps): [ContentObject, React.Dispatch<ContentObjectTreeDispatchAction>] {
-    const [state, dispatch] = React.useReducer(contentObjectTreeReducer, props.content);
-    const [propsContent, setPropsContent] = useState(props.content);
-    if (propsContent.id !== props.content.id) {
-        setPropsContent(props.content);
-        dispatch({ value: props.content });
+export function useCTReducer(props: UseCTReducerProps): [ContentObject, React.Dispatch<CTDispatchAction>, number, React.Dispatch<AddIdDispatchAction>] {
+    const [state, dispatch] = React.useReducer(CTReducer, props.content);
+    const [latestPropsId, setLatestPropsId] = useState(props.content.id); // Save latest props.id
+    const [addId, decrementIdHook] = React.useReducer(decrementOrResetReducer, -1);
+
+    // If top-level id has changed, replace entire state. (Happens when language is changed or when a new page is loaded)
+    if (latestPropsId !== props.content.id) {
+        dispatch({ id: latestPropsId, value: props.content });
+        setLatestPropsId(props.content.id);
     }
 
-    function wrappedDispatch(action: ContentObjectTreeDispatchAction) {
+    // Create new dispatch wrapping the real dispatch in pre and post hooks.
+    function wrappedDispatch(action: CTDispatchAction) {
         if (props.preDispatchHook !== undefined) {
-            props.preDispatchHook(action);
+            props.preDispatchHook(action, state);
         }
         dispatch(action);
         if (props.postDispatchHook !== undefined) {
@@ -133,5 +164,5 @@ export function useContentTreeReducer(props: ContentObjectTreeProviderProps): [C
         }
     }
 
-    return [state, wrappedDispatch];
+    return [state, wrappedDispatch, addId, decrementIdHook];
 }
