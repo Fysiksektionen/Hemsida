@@ -40,8 +40,6 @@ const richTextEditorSettings: {[key in RichTextBlock['attributes']['richTextEdit
  * @constructor
  */
 export default function RichTextCOR({ content }: {content: RichTextBlock}) {
-    // TODO: Allow only some blocks through parameter.
-
     return (
         <div className='w-100'>
             <EditorialModeContext.Consumer>

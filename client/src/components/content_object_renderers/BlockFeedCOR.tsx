@@ -11,6 +11,8 @@ import BlockCOR from './blocks/BlockCOR';
  * @constructor
  */
 export default function BlockFeedCOR({ content }: { content: BlockFeed, borderedEditor?: boolean }) {
+    // TODO: Allow only some blocks through parameter.
+
     return (
         <EditorialModeContext.Consumer>
             {(edit) => (
