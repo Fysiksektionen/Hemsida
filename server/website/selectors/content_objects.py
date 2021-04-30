@@ -45,8 +45,8 @@ def get_content_object_trees(root_content_objects: List[ContentObjectBase]) -> L
         {'object': ContentObject, 'db_type': ContentObject.db_type, 'items': [list of sub-items]}
     """
     # Get all CO's of the relevant pages.
-    page_ids = [obj.parent_page.id for obj in root_content_objects]
-    ids_and_db_types = ContentObjectBase.objects.filter(parent_page_id__in=page_ids).values('id', 'db_type')
+    page_ids = [obj.containing_page.id for obj in root_content_objects]
+    ids_and_db_types = ContentObjectBase.objects.filter(containing_page_id__in=page_ids).values('id', 'db_type')
 
     # Convert all CO'to their true type.
     # Sort on db_type
