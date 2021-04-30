@@ -18,13 +18,11 @@ export const mockSiteResp: APIResponse<Site> = {
         },
         headerContentSv: {
             id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             dbType: 'dict',
             attributes: {},
             items: {
                 logo: {
                     id: 1,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'image',
                     attributes: {},
                     image: {
@@ -35,14 +33,12 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 midMenu: {
                     id: 2,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'menu',
                     attributes: {},
                     menu: headerMidMenuSv
                 },
                 mainMenu: {
                     id: 3,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'menu',
                     attributes: {},
                     menu: mainMenuSv
@@ -51,13 +47,11 @@ export const mockSiteResp: APIResponse<Site> = {
         },
         headerContentEn: {
             id: 4,
-            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             dbType: 'dict',
             attributes: {},
             items: {
                 logo: {
                     id: 4,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'image',
                     attributes: {},
                     image: {
@@ -68,14 +62,12 @@ export const mockSiteResp: APIResponse<Site> = {
                 },
                 midMenu: {
                     id: 5,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'menu',
                     attributes: {},
                     menu: headerMidMenuEn
                 },
                 mainMenu: {
                     id: 6,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'menu',
                     attributes: {},
                     menu: mainMenuEn
@@ -84,39 +76,33 @@ export const mockSiteResp: APIResponse<Site> = {
         },
         footerContentSv: {
             id: 7,
-            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             dbType: 'dict',
             attributes: {},
             items: {
                 address: {
                     id: 10,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'text',
                     attributes: {},
                     text: 'Brinellvägen 89, 114 28 Stockholm'
                 },
                 quickAccess: {
                     id: 11,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'list',
                     attributes: {},
                     items: [
                         {
                             id: 12,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 13,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Kontakt</span></p>'
                                 },
                                 info: {
                                     id: 14,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span><strong>Ordförande<br/>' +
@@ -131,20 +117,17 @@ export const mockSiteResp: APIResponse<Site> = {
                         },
                         {
                             id: 15,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 16,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Hitta snabbt</span></p>'
                                 },
                                 info: {
                                     id: 17,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span>Kontakta' +
@@ -155,20 +138,17 @@ export const mockSiteResp: APIResponse<Site> = {
                         },
                         {
                             id: 18,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 19,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Studiesocialt</span></p>'
                                 },
                                 info: {
                                     id: 20,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span>Klubbmästeriet fkm*</span></p><p><span>Övriga frågor</span></p>'
@@ -177,20 +157,17 @@ export const mockSiteResp: APIResponse<Site> = {
                         },
                         {
                             id: 21,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 22,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Utbildning</span></p>'
                                 },
                                 info: {
                                     id: 23,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span>Studienämnden</span></p>'
@@ -203,39 +180,33 @@ export const mockSiteResp: APIResponse<Site> = {
         },
         footerContentEn: {
             id: 24,
-            detailUrl: 'https://f.kth.se/api/content_objects/1/',
             dbType: 'dict',
             attributes: {},
             items: {
                 address: {
                     id: 25,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'text',
                     attributes: {},
                     text: 'Brinellvägen 89, 114 28 Stockholm, Sweden'
                 },
                 quickAccess: {
                     id: 26,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     dbType: 'list',
                     attributes: {},
                     items: [
                         {
                             id: 27,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 28,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Contact</span></p>'
                                 },
                                 info: {
                                     id: 29,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span><strong>President<br/>' +
@@ -252,20 +223,17 @@ export const mockSiteResp: APIResponse<Site> = {
                         },
                         {
                             id: 30,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 31,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Shortcuts</span></p>'
                                 },
                                 info: {
                                     id: 32,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span>Contact' +
@@ -276,20 +244,17 @@ export const mockSiteResp: APIResponse<Site> = {
                         },
                         {
                             id: 33,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 34,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Social</span></p>'
                                 },
                                 info: {
                                     id: 35,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span>Event committee, fkm*</span></p><p><span>Other social' +
@@ -299,20 +264,17 @@ export const mockSiteResp: APIResponse<Site> = {
                         },
                         {
                             id: 36,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             dbType: 'dict',
                             attributes: {},
                             items: {
                                 header: {
                                     id: 37,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'none' },
                                     text: '<p><span>Education</span></p>'
                                 },
                                 info: {
                                     id: 38,
-                                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                     dbType: 'text',
                                     attributes: { blockType: 'bodyText', richTextEditorType: 'body-text' },
                                     text: '<p><span>Education committee</span></p>'

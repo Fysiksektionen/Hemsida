@@ -68,7 +68,8 @@ export type Image = IDDetail & {
 // TODO: Flytta till content_objects mappen
 type ContentObjectDBType = 'text' | 'image' | 'menu' | 'page' | 'dict' | 'list'
 
-type ContentObjectBase = IDDetail & {
+type ContentObjectBase = {
+    id: number,
     dbType: ContentObjectDBType,
     attributes: object
 }

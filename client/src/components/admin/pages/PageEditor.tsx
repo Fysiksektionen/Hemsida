@@ -77,72 +77,68 @@ export default function PageEditor({ setLocationHook, id, page }: PageEditorProp
 
     return page !== undefined
         ? (
-            <Container fluid>
+            <Container>
                 <div style={{ height: '100px' }}/>
-                <Row className='justify-content-center'>
-                    <Col xs={10} xl={8} className='pl-5'>
-                        {/* Title and save */}
-                        <Row className='mb-4 justify-content-between'>
-                            <h1>Redigera sida</h1>
-                            <div className='d-flex flex-row'>
-                                <div className='my-auto'>
-                                    Språk: <LocaleSelector localeState={pageLocale} setLocaleHook={setPageLocale}/>
-                                </div>
-                                <div className='mx-4'/>
-                                <Button className='my-auto' onClick={saveContent} disabled={!pageDataHasChanged}>
-                                    Spara
-                                </Button>
-                            </div>
-                        </Row>
+                {/* Title and save */}
+                <Row className='mb-4 justify-content-between'>
+                    <h1>Redigera sida</h1>
+                    <div className='d-flex flex-row'>
+                        <div className='my-auto'>
+                            Språk: <LocaleSelector localeState={pageLocale} setLocaleHook={setPageLocale}/>
+                        </div>
+                        <div className='mx-4'/>
+                        <Button className='my-auto' onClick={saveContent} disabled={!pageDataHasChanged}>
+                            Spara
+                        </Button>
+                    </div>
+                </Row>
 
-                        {/* Page meta info */}
-                        <Row>
+                {/* Page meta info */}
+                <Row>
+                    <Col>
+                        <Row className={!showMetaInfo ? 'd-none' : ''}>
                             <Col>
-                                <Row className={!showMetaInfo ? 'd-none' : ''}>
-                                    <Col>
-                                        <PageMetaForm
-                                            page={pageData}
-                                            setPageHook={(page: Page) => setPageData(page)}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row className='text-center'>
-                                    <div
-                                        className='w-100 d-flex flex-column'
-                                        onClick={() => setShowMetaInfo(!showMetaInfo)}
-                                        style={{ cursor: 'click' }}
-                                    >
-                                        {showMetaInfo ? '' : 'Redigera meta-info'}
-                                        <span
-                                            className={'fa fa-angle-' + (showMetaInfo ? 'up' : 'down')}
-                                        />
-                                        {showMetaInfo ? 'Stäng' : ''}
-                                    </div>
-                                </Row>
+                                <PageMetaForm
+                                    page={pageData}
+                                    setPageHook={(page: Page) => setPageData(page)}
+                                />
                             </Col>
                         </Row>
-
-                        {/* Horizontal line */}
-                        <Row className='justify-content-center my-5'>
-                            <div className='border border-bottom' style={{ width: '85%' }}/>
-                        </Row>
-
-                        {/* Page */}
-                        <Row className='zoom-xs-10 zoom-xl-8'>
-                            <LocaleContext.Provider value={pageLocale}>
-                                <EditorialModeContext.Provider value={true}>
-                                    <ContentTreeContext.Provider value={dispatch}>
-                                        <ContentTreeAddIdContext.Provider value={{
-                                            id: addId,
-                                            decrementHook: decrementAddIdHook
-                                        }}>
-                                            <PageTypeLoader page={pageWithNewContent} />
-                                        </ContentTreeAddIdContext.Provider>
-                                    </ContentTreeContext.Provider>
-                                </EditorialModeContext.Provider>
-                            </LocaleContext.Provider>
+                        <Row className='text-center'>
+                            <div
+                                className='w-100 d-flex flex-column'
+                                onClick={() => setShowMetaInfo(!showMetaInfo)}
+                                style={{ cursor: 'click' }}
+                            >
+                                {showMetaInfo ? '' : 'Redigera meta-info'}
+                                <span
+                                    className={'fa fa-angle-' + (showMetaInfo ? 'up' : 'down')}
+                                />
+                                {showMetaInfo ? 'Stäng' : ''}
+                            </div>
                         </Row>
                     </Col>
+                </Row>
+
+                {/* Horizontal line */}
+                <Row className='justify-content-center my-5'>
+                    <div className='border border-bottom' style={{ width: '85%' }}/>
+                </Row>
+
+                {/* Page */}
+                <Row className='zoom-xs-11'>
+                    <LocaleContext.Provider value={pageLocale}>
+                        <EditorialModeContext.Provider value={true}>
+                            <ContentTreeContext.Provider value={dispatch}>
+                                <ContentTreeAddIdContext.Provider value={{
+                                    id: addId,
+                                    decrementHook: decrementAddIdHook
+                                }}>
+                                    <PageTypeLoader page={pageWithNewContent} />
+                                </ContentTreeAddIdContext.Provider>
+                            </ContentTreeContext.Provider>
+                        </EditorialModeContext.Provider>
+                    </LocaleContext.Provider>
                 </Row>
                 <div style={{ height: '100px' }}/>
             </Container>

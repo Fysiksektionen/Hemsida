@@ -1,5 +1,5 @@
 import React, { CSSProperties, useContext } from 'react';
-import { Col, Container, Form, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
 import {
     Block,
@@ -15,7 +15,6 @@ import ImageIcon from '@material-ui/icons/Image';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
 
-import SettingsIcon from '@material-ui/icons/Settings';
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddCircleSharpIcon from '@material-ui/icons/AddCircleSharp';
 
@@ -49,6 +48,14 @@ const blockIcons: { blockType: BlockType, text: string, icon: OverridableCompone
         icon: VerticalSplitIcon
     }
 ];
+
+export const emptyBlockFeed = {
+    id: -1,
+    detailUrl: '',
+    dbType: 'list',
+    attributes: {},
+    items: []
+};
 
 /**
  * Definition of default blocks used for different block types.
@@ -92,35 +99,34 @@ const defaultBlocks: {[key in BlockType]: Block} = {
     columns: {
         id: -1,
         detailUrl: '',
-        dbType: 'dict',
+        dbType: 'list',
         attributes: {
             blockType: 'columns',
-            split: 6
+            sizes: [6, 6]
         },
-        items: {
-            left: {
+        items: [
+            {
                 id: -1,
                 detailUrl: '',
                 dbType: 'list',
                 attributes: {},
                 items: []
             },
-            right: {
+            {
                 id: -1,
                 detailUrl: '',
                 dbType: 'list',
                 attributes: {},
                 items: []
             }
-        }
+        ]
     } as ColumnsBlock
 };
 
 type AddBlockButtonProps = {
     index: number,
     content: BlockFeed,
-    sizePx: number,
-    positionType: 'horizontal' | 'vertical'
+    sizePx: number
 }
 
 /**
@@ -129,7 +135,7 @@ type AddBlockButtonProps = {
  * @param ListCO The CO containing list of feed as items.
  * @constructor
  */
-function AddBlockButton({ index, content, sizePx, positionType }: AddBlockButtonProps) {
+function AddBlockButton({ index, content, sizePx }: AddBlockButtonProps) {
     const dispatch = useContext(ContentTreeContext);
     const addIdState = useContext(ContentTreeAddIdContext);
 
@@ -137,8 +143,8 @@ function AddBlockButton({ index, content, sizePx, positionType }: AddBlockButton
         const newBlock = defaultBlocks[blockType];
         newBlock.id = addIdState.id;
         if (blockType === 'columns') {
-            (newBlock as ColumnsBlock).items.left.id = addIdState.id - 1;
-            (newBlock as ColumnsBlock).items.right.id = addIdState.id - 2;
+            (newBlock as ColumnsBlock).items[0].id = addIdState.id - 1;
+            (newBlock as ColumnsBlock).items[1].id = addIdState.id - 2;
             addIdState.decrementHook({ id: addIdState.id - 3 });
         } else {
             addIdState.decrementHook({ id: addIdState.id - 1 });
@@ -162,10 +168,7 @@ function AddBlockButton({ index, content, sizePx, positionType }: AddBlockButton
     const open = Boolean(anchorEl);
     const popoverId = 'popover-' + index;
 
-    const className = (positionType === 'horizontal'
-        ? 'position-absolute show-children-on-hover text-center mx-auto '
-        : 'position-absolute show-children-on-hover my-auto'
-    );
+    const className = 'position-absolute show-children-on-hover text-center mx-auto';
 
     return (
         <>
@@ -201,7 +204,6 @@ function AddBlockButton({ index, content, sizePx, positionType }: AddBlockButton
                     vertical: 'bottom',
                     horizontal: 'center'
                 }}
-                className='zoom-xs-10 zoom-xl-8'
             >
                 <Container>
                     <Row>
@@ -266,13 +268,13 @@ export type BlockFeedCOEProps = {
  * @param content The BlockFeed object to render and edit.
  * @constructor
  */
-export default function BlockFeedCOE({ content, bordered }: BlockFeedCOEProps) {
+export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
     const iconSize = 30;
 
     return (
-        <Col xs={12} style={{ minHeight: '50px' }} className={bordered ? 'soft-dashed-border-on-hover' : ''}>
+        <Col xs={12} style={{ minHeight: '50px' }}>
             <Row className='position-relative show-children-on-hover'>
-                <AddBlockButton index={-1} content={content} sizePx={iconSize} positionType='horizontal'/>
+                <AddBlockButton index={-1} content={content} sizePx={iconSize} />
             </Row>
             {content.items.map((obj, index) => {
                 return (
@@ -289,7 +291,7 @@ export default function BlockFeedCOE({ content, bordered }: BlockFeedCOEProps) {
                             <BlockCOR block={obj} />
                         </Row>
                         <Row className='position-relative show-children-on-hover'>
-                            <AddBlockButton index={index} content={content} sizePx={iconSize} positionType='horizontal'/>
+                            <AddBlockButton index={index} content={content} sizePx={iconSize} />
                         </Row>
                     </>
                 );

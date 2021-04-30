@@ -29,25 +29,21 @@ export const frontpage = {
     lastEditedAt: '2021-03-15',
     contentSv: {
         id: 1,
-        detailUrl: 'https://f.kth.se/api/content_objects/1/',
         dbType: 'dict',
         attributes: {},
         items: {
             orangeBoxes: {
                 id: 2,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'list',
                 attributes: {},
                 items: [
                     {
                         id: 3,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 4,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'heading',
@@ -57,7 +53,6 @@ export const frontpage = {
                             },
                             text: {
                                 id: 13,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'bodyText',
@@ -73,7 +68,6 @@ export const frontpage = {
                             },
                             button: {
                                 id: 5,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/engagera-dig/' },
                                 text: 'Engagera dig'
@@ -82,13 +76,11 @@ export const frontpage = {
                     },
                     {
                         id: 8,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'dict',
                         attributes: { color: '#dc3545' },
                         items: {
                             title: {
                                 id: 9,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'heading',
@@ -98,7 +90,6 @@ export const frontpage = {
                             },
                             text: {
                                 id: 10,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'bodyText',
@@ -113,7 +104,6 @@ export const frontpage = {
                             },
                             button: {
                                 id: 11,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/fysiksektionen/' },
                                 text: '0m sektionen'
@@ -122,13 +112,11 @@ export const frontpage = {
                     },
                     {
                         id: 14,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 15,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'heading',
@@ -138,7 +126,6 @@ export const frontpage = {
                             },
                             text: {
                                 id: 16,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'bodyText',
@@ -154,7 +141,6 @@ export const frontpage = {
                             },
                             button: {
                                 id: 17,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/event/' },
                                 text: 'Event'
@@ -165,12 +151,10 @@ export const frontpage = {
             },
             sponsorLogo: {
                 id: 20,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'image',
                 attributes: {},
                 image: {
                     id: 1,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     href: ericsson
                 }
             }
@@ -178,25 +162,21 @@ export const frontpage = {
     } as FrontPageCT,
     contentEn: {
         id: 21,
-        detailUrl: 'https://f.kth.se/api/content_objects/1/',
         dbType: 'dict',
         attributes: {},
         items: {
             orangeBoxes: {
                 id: 22,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'list',
                 attributes: {},
                 items: [
                     {
                         id: 23,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 24,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'heading',
@@ -206,7 +186,6 @@ export const frontpage = {
                             },
                             text: {
                                 id: 25,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'bodyText',
@@ -222,7 +201,6 @@ export const frontpage = {
                             },
                             button: {
                                 id: 26,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/engagera-dig/' },
                                 text: 'Get involved'
@@ -231,13 +209,11 @@ export const frontpage = {
                     },
                     {
                         id: 27,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'dict',
                         attributes: { color: '#dc3545' },
                         items: {
                             title: {
                                 id: 28,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'heading',
@@ -247,7 +223,6 @@ export const frontpage = {
                             },
                             text: {
                                 id: 29,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'bodyText',
@@ -262,7 +237,6 @@ export const frontpage = {
                             },
                             button: {
                                 id: 30,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/fysiksektionen/' },
                                 text: 'About the chapter'
@@ -271,13 +245,11 @@ export const frontpage = {
                     },
                     {
                         id: 31,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'dict',
                         attributes: { color: '#ff642b' },
                         items: {
                             title: {
                                 id: 32,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'heading',
@@ -287,7 +259,6 @@ export const frontpage = {
                             },
                             text: {
                                 id: 33,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: {
                                     blockType: 'bodyText',
@@ -303,7 +274,6 @@ export const frontpage = {
                             },
                             button: {
                                 id: 34,
-                                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                                 dbType: 'text',
                                 attributes: { link: 'https://f.kth.se/event/' },
                                 text: 'Events'
@@ -314,12 +284,10 @@ export const frontpage = {
             },
             sponsorLogo: {
                 id: 35,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'image',
                 attributes: {},
                 image: {
                     id: 1,
-                    detailUrl: 'https://f.kth.se/api/content_objects/1/',
                     href: ericsson
                 }
             }

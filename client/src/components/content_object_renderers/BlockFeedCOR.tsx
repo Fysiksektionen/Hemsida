@@ -10,12 +10,12 @@ import BlockCOR from './blocks/BlockCOR';
  * @param content The block feed object to render/edit.
  * @constructor
  */
-export default function BlockFeedCOR({ content, borderedEditor }: { content: BlockFeed, borderedEditor?: boolean }) {
+export default function BlockFeedCOR({ content }: { content: BlockFeed, borderedEditor?: boolean }) {
     return (
         <EditorialModeContext.Consumer>
             {(edit) => (
                 edit
-                    ? <BlockFeedCOE content={content} bordered={borderedEditor} />
+                    ? <BlockFeedCOE content={content} />
                     : <Col>
                         {content.items.map((obj, index) => {
                             return (

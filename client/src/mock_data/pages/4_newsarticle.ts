@@ -17,14 +17,12 @@ export const newsArticle = {
     lastEditedAt: '2021-03-15',
     contentSv: {
         id: 1,
-        detailUrl: 'https://f.kth.se/api/content_objects/1/',
         dbType: 'dict',
         attributes: {},
         items: {}
     } as ContentObject,
     contentEn: {
         id: 1,
-        detailUrl: 'https://f.kth.se/api/content_objects/1/',
         dbType: 'dict',
         attributes: {},
         items: {}

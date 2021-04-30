@@ -18,13 +18,11 @@ export const fcomPage = {
     lastEditedAt: '2021-03-15',
     contentSv: {
         id: 1,
-        detailUrl: 'https://f.kth.se/api/content_objects/1/',
         dbType: 'dict',
         attributes: {},
         items: {
             title: {
                 id: 2,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'text',
                 attributes: {
                     blockType: 'heading',
@@ -34,13 +32,11 @@ export const fcomPage = {
             },
             content: {
                 id: 3,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'list',
                 attributes: {},
                 items: [
                     {
                         id: 4,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'image',
                         attributes: {
                             blockType: 'image',
@@ -49,13 +45,11 @@ export const fcomPage = {
                         },
                         image: {
                             id: 1,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             href: fcom
                         }
                     },
                     {
                         id: 5,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
                             blockType: 'heading',
@@ -65,7 +59,6 @@ export const fcomPage = {
                     },
                     {
                         id: 6,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
                             blockType: 'bodyText',
@@ -83,7 +76,6 @@ export const fcomPage = {
                     },
                     {
                         id: 7,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
                             blockType: 'heading',
@@ -93,7 +85,6 @@ export const fcomPage = {
                     },
                     {
                         id: 8,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
                             blockType: 'bodyText',
@@ -109,6 +100,85 @@ export const fcomPage = {
                             ' nämndens möten, och att vara med i någon av nämndens undergrupper; Force-redaktionen' +
                             ' och programmeringsgruppen F.dev. Fyll i detta formulär om du vill gå med i' +
                             ' Fcom!</span></p>'
+                    },
+                    {
+                        id: 9,
+                        dbType: 'list',
+                        attributes: {
+                            blockType: 'columns',
+                            sizes: [3, 3, 6]
+                        },
+                        items: [
+                            {
+                                id: 10,
+                                dbType: 'list',
+                                attributes: {},
+                                items: [
+                                    {
+                                        id: 11,
+                                        dbType: 'text',
+                                        attributes: {
+                                            blockType: 'heading',
+                                            richTextEditorType: 'only-headings'
+                                        },
+                                        text: '<h3><span>Om oss!</span></h3>'
+                                    },
+                                    {
+                                        id: 12,
+                                        dbType: 'text',
+                                        attributes: {
+                                            blockType: 'bodyText',
+                                            richTextEditorType: 'body-text'
+                                        },
+                                        text: '<p><span>Fysiksektionens Kommunikationsnämnd, även kallad' +
+                                            ' </span><span><strong>Fcom</strong></span><span> arbetar med att stödja' +
+                                            ' sektionen inom allt som är kommunikationsrelaterat. Vår huvuduppgift är att' +
+                                            ' upprätthålla sektionens kommunikationskanaler, och se till att dessa används på rätt' +
+                                            ' sätt.</span></p>'
+                                    }
+                                ]
+                            },
+                            {
+                                id: 13,
+                                dbType: 'list',
+                                attributes: {},
+                                items: [
+                                    {
+                                        id: 14,
+                                        dbType: 'text',
+                                        attributes: {
+                                            blockType: 'bodyText',
+                                            richTextEditorType: 'body-text'
+                                        },
+                                        text: '<p><span>Fysiksektionens Kommunikationsnämnd, även kallad' +
+                                            ' </span><span><strong>Fcom</strong></span><span> arbetar med att stödja' +
+                                            ' sektionen inom allt som är kommunikationsrelaterat. Vår huvuduppgift är att' +
+                                            ' upprätthålla sektionens kommunikationskanaler, och se till att dessa används på rätt' +
+                                            ' sätt.</span></p>'
+                                    }
+                                ]
+                            },
+                            {
+                                id: 15,
+                                dbType: 'list',
+                                attributes: {},
+                                items: [
+                                    {
+                                        id: 16,
+                                        dbType: 'image',
+                                        attributes: {
+                                            blockType: 'image',
+                                            alignment: 'center',
+                                            width: '100%'
+                                        },
+                                        image: {
+                                            id: 1,
+                                            href: fcom
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
@@ -116,13 +186,11 @@ export const fcomPage = {
     } as NamndPageCT,
     contentEn: {
         id: 21,
-        detailUrl: 'https://f.kth.se/api/content_objects/1/',
         dbType: 'dict',
         attributes: {},
         items: {
             title: {
                 id: 22,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'text',
                 attributes: {
                     blockType: 'heading',
@@ -132,13 +200,11 @@ export const fcomPage = {
             },
             content: {
                 id: 23,
-                detailUrl: 'https://f.kth.se/api/content_objects/1/',
                 dbType: 'list',
                 attributes: {},
                 items: [
                     {
                         id: 24,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'image',
                         attributes: {
                             blockType: 'image',
@@ -147,13 +213,11 @@ export const fcomPage = {
                         },
                         image: {
                             id: 1,
-                            detailUrl: 'https://f.kth.se/api/content_objects/1/',
                             href: fcom
                         }
                     },
                     {
                         id: 25,
-                        detailUrl: 'https://f.kth.se/api/content_objects/1/',
                         dbType: 'text',
                         attributes: {
                             blockType: 'heading',
