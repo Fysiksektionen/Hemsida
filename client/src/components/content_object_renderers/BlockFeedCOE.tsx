@@ -175,18 +175,19 @@ function AddBlockButton({ index, content, sizePx }: AddBlockButtonProps) {
             <div
                 className={className}
                 style={{
-                    top: '-' + (sizePx / 2).toString() + 'px',
-                    left: 0,
-                    right: 0,
-                    height: sizePx.toString() + 'px'
+                    top: -sizePx / 2,
+                    left: '25%',
+                    right: '25%',
+                    height: sizePx,
+                    zIndex: 100
                 }}
             >
                 <AddCircleSharpIcon
                     className='show-on-parent-hover'
                     aria-describedby={popoverId}
                     style={{
-                        width: sizePx.toString() + 'px',
-                        height: sizePx.toString() + 'px'
+                        width: sizePx,
+                        height: sizePx
                     }}
                     onClick={onClick}
                 />
@@ -224,8 +225,7 @@ function AddBlockButton({ index, content, sizePx }: AddBlockButtonProps) {
 type RemoveBlockButtonProps = {
     index: number,
     content: BlockFeed,
-    className?: string,
-    style?: CSSProperties
+    sizePx: number
 }
 
 /**
@@ -233,10 +233,10 @@ type RemoveBlockButtonProps = {
  * @param index Index to remove at
  * @param content ContentList containing the list from which to remove the item
  * @param className Extra classNames on the <i> tag
- * @param style Extra styling added to the <i> tag
+ * @param sizePx Size of icon in pixles
  * @constructor
  */
-function RemoveBlockButton({ index, content, className, style }: RemoveBlockButtonProps) {
+function RemoveBlockButton({ index, content, sizePx }: RemoveBlockButtonProps) {
     const dispatch = useContext(ContentTreeContext);
 
     function deleteBlock(index: number) {
@@ -251,9 +251,15 @@ function RemoveBlockButton({ index, content, className, style }: RemoveBlockButt
 
     return (
         <CancelIcon
-            className={'position-absolute show-on-parent-hover ' + className ?? ''}
+            className='position-absolute show-on-parent-hover'
             onClick={() => deleteBlock(index)}
-            style={style}
+            style={{
+                width: sizePx,
+                height: sizePx,
+                right: -sizePx / 2,
+                top: -sizePx / 2,
+                zIndex: 100
+            }}
         />
     );
 }
@@ -272,7 +278,7 @@ export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
     const iconSize = 30;
 
     return (
-        <Col xs={12} style={{ minHeight: '50px' }}>
+        <Col xs={12} style={{ minHeight: '50px' }} className='justify-content-center'>
             <Row className='position-relative show-children-on-hover'>
                 <AddBlockButton index={-1} content={content} sizePx={iconSize} />
             </Row>
@@ -280,14 +286,7 @@ export default function BlockFeedCOE({ content }: BlockFeedCOEProps) {
                 return (
                     <>
                         <Row className='position-relative show-children-on-hover soft-dashed-border-on-hover'>
-                            <RemoveBlockButton index={index} content={content}
-                                style={{
-                                    width: iconSize.toString() + 'px',
-                                    height: iconSize.toString() + 'px',
-                                    right: '-' + (iconSize / 2).toString() + 'px',
-                                    top: '-' + (iconSize / 2).toString() + 'px'
-                                }}
-                            />
+                            <RemoveBlockButton index={index} content={content} sizePx={iconSize} />
                             <BlockCOR block={obj} />
                         </Row>
                         <Row className='position-relative show-children-on-hover'>

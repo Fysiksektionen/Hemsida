@@ -1,4 +1,4 @@
-import React, { CSSProperties, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import { BlockFeed, ColumnsBlock } from '../../../types/content_objects/blocks';
 import BlockFeedCOR from '../BlockFeedCOR';
@@ -11,17 +11,17 @@ import CancelIcon from '@material-ui/icons/Cancel';
 
 type EditBlockButtonProps = {
     content: ColumnsBlock,
-    style?: CSSProperties
+    sizePx: number
 }
 
 /**
  * Edit the block at index in the list of children of `content`.
  * @param index Index to edit
  * @param content ContentList containing the list from which to edit the item
- * @param style Extra styling added to the <i> tag
+ * @param sizePx Size of icon in pixles
  * @constructor
  */
-function EditColumnsBlockButton({ content, style }: EditBlockButtonProps) {
+function EditColumnsBlockButton({ content, sizePx }: EditBlockButtonProps) {
     const dispatch = useContext(ContentTreeContext);
     const [sizes, setSizes] = useState(content.attributes.sizes);
     const [error, setError] = useState(false);
@@ -71,7 +71,13 @@ function EditColumnsBlockButton({ content, style }: EditBlockButtonProps) {
             <SettingsIcon
                 className='position-absolute show-on-parent-hover'
                 aria-describedby={popoverId}
-                style={style}
+                style={{
+                    width: sizePx,
+                    height: sizePx,
+                    right: 1.5 * sizePx / 2,
+                    top: -sizePx / 2,
+                    zIndex: 100
+                }}
                 onClick={onClick}
             />
             <Popover
@@ -137,12 +143,10 @@ function AddColumnButton({ index, content, sizePx }: AddColumnButtonProps) {
         const sizes = new Array(content.items.length + 1);
         const colSize = Math.floor(12 / (content.items.length + 1));
         if (colSize !== 0) {
-            const firstColSize = 12 - colSize * content.items.length;
-            sizes[0] = firstColSize;
+            sizes[0] = 12 - colSize * content.items.length;
             for (let i = 1; i < sizes.length; i++) {
                 sizes[i] = colSize;
             }
-            sizes[0] = firstColSize;
             newContent.attributes.sizes = sizes;
 
             // insert new BlockFeed
@@ -176,8 +180,9 @@ function AddColumnButton({ index, content, sizePx }: AddColumnButtonProps) {
                 style={{
                     top: '25%',
                     bottom: '25%',
-                    left: '-' + (sizePx / 2).toString() + 'px',
-                    width: sizePx.toString() + 'px'
+                    left: -sizePx / 2,
+                    width: sizePx,
+                    zIndex: 100
                 }}
             >
 
@@ -215,27 +220,38 @@ function RemoveColumnButton({ index, content, sizePx }: RemoveBlockButtonProps) 
     const dispatch = useContext(ContentTreeContext);
 
     function deleteBlock(index: number) {
-        const newCOFeed = {
-            ...content
-        };
-        newCOFeed.items = content.items.slice(0, index).concat(content.items.slice(index + 1, undefined)) as BlockFeed[];
-        newCOFeed.attributes.sizes = newCOFeed.attributes.sizes.slice(0, index).concat(content.attributes.sizes.slice(index + 1, undefined));
+        if (content.items.length > 1) {
+            const newCOFeed = {
+                ...content
+            };
 
-        dispatch({ id: content.id, value: newCOFeed });
+            // Calc new sizes. Spread equally, and don't add if full. Fill with first column.
+            const sizes = new Array(content.items.length - 1);
+            const colSize = Math.floor(12 / (content.items.length - 1));
+            sizes[0] = 12 - colSize * (content.items.length - 2);
+            for (let i = 1; i < sizes.length; i++) {
+                sizes[i] = colSize;
+            }
+
+            newCOFeed.items = content.items.slice(0, index).concat(content.items.slice(index + 1, undefined)) as BlockFeed[];
+            newCOFeed.attributes.sizes = sizes;
+            dispatch({ id: content.id, value: newCOFeed });
+        }
     }
 
-    return (
-        <CancelIcon
-            className='position-absolute show-on-parent-hover'
-            onClick={() => deleteBlock(index)}
-            style={{
-                width: sizePx.toString() + 'px',
-                height: sizePx.toString() + 'px',
-                right: '-' + (sizePx / 2).toString() + 'px',
-                top: '-' + (sizePx / 2).toString() + 'px'
-            }}
-        />
-    );
+    return <>{
+        content.items.length > 1 &&
+            <CancelIcon
+                className='position-absolute show-on-parent-hover'
+                onClick={() => deleteBlock(index)}
+                style={{
+                    width: sizePx,
+                    height: sizePx,
+                    right: -sizePx / 2,
+                    top: -sizePx / 2
+                }}
+            />
+    }</>;
 }
 
 /**
@@ -244,49 +260,35 @@ function RemoveColumnButton({ index, content, sizePx }: RemoveBlockButtonProps) 
  * @constructor
  */
 export default function ColumnsBlockCOR({ content }: {content: ColumnsBlock}) {
-    const sizes = content.attributes.sizes;
-    const validSplit = sizes.reduce((a, b) => a + b, 0) <= 12 && content.items.length === sizes.length;
-
     const iconSize = 30;
-
     const edit = useContext(EditorialModeContext);
 
-    console.log(content);
-
-    return (validSplit
-        ? <Col xs={12} className='show-children-on-hover'>
-            {edit &&
-                <EditColumnsBlockButton content={content}
-                    style={{
-                        width: iconSize.toString() + 'px',
-                        height: iconSize.toString() + 'px',
-                        right: (1.5 * iconSize / 2).toString() + 'px',
-                        top: '-' + (iconSize / 2).toString() + 'px'
-                    }}
-                />
-            }
-            <div style={{ minHeight: iconSize.toString() + 'px' }} />
-            <Row>
-                <AddColumnButton content={content} index={-1} sizePx={30} />
-                {content.items.map((blockFeed, i) => {
-                    const paddingClasses = edit ? (((i !== 0) ? 'pl-2 ' : ' ') + ((i !== content.items.length - 1) ? 'pr-2' : ' ')) : '';
-                    return (
-                        <>
-                            <Col xs={12} md={sizes[i]} key={i} className='soft-dashed-border-on-hover show-children-on-hover'>
-                                <RemoveColumnButton index={i} content={content} sizePx={30}/>
-                                <div style={{ minHeight: iconSize.toString() + 'px' }} />
-                                <Row className={paddingClasses}>
-                                    <BlockFeedCOR content={(blockFeed as BlockFeed)} />
-                                </Row>
-                                <div style={{ minHeight: iconSize.toString() + 'px' }} />
-                            </Col>
-                            <AddColumnButton content={content} index={i} sizePx={30} />
-                        </>
-                    );
-                })}
-            </Row>
-            <div style={{ minHeight: iconSize.toString() + 'px' }} />
-        </Col>
-        : <Col className='text-center'>{content.attributes.blockType}</Col>
+    return (
+        <>
+            {edit && <EditColumnsBlockButton content={content} sizePx={iconSize}/>}
+            <Col xs={12} className='show-children-on-hover'>
+                <div style={{ minHeight: iconSize }} />
+                <Row>
+                    <AddColumnButton content={content} index={-1} sizePx={30} />
+                    {content.items.map((blockFeed, i) => {
+                        const paddingClasses = edit ? (((i !== 0) ? 'pl-2 ' : ' ') + ((i !== content.items.length - 1) ? 'pr-2' : ' ')) : '';
+                        return (
+                            <>
+                                <Col xs={12} md={content.attributes.sizes[i]} key={i} className='soft-dashed-border-on-hover show-children-on-hover'>
+                                    <RemoveColumnButton index={i} content={content} sizePx={30}/>
+                                    <div style={{ minHeight: iconSize }} />
+                                    <Row className={paddingClasses}>
+                                        <BlockFeedCOR content={(blockFeed as BlockFeed)} />
+                                    </Row>
+                                    <div style={{ minHeight: iconSize }} />
+                                </Col>
+                                <AddColumnButton content={content} index={i} sizePx={30} />
+                            </>
+                        );
+                    })}
+                </Row>
+                <div style={{ minHeight: iconSize }} />
+            </Col>
+        </>
     );
 }
