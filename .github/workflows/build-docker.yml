@@ -35,4 +35,4 @@ jobs:
           docker tag $IMAGE_NAME:$VERSION $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
         env:
-          VERSION: server.dev
+          VERSION: server-dev
