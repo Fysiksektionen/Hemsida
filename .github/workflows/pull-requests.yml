@@ -9,7 +9,7 @@ jobs:
   test-backend:
     runs-on: ubuntu-latest
     env:
-      server-dir: ./server
+      SERVER_DIR: ./server
 
     steps:
       - name: Setup repo
@@ -26,11 +26,11 @@ jobs:
 
       - name: Install python packages
         run: pip3 install -r requirements.txt
-        working-directory: ${{ env.server-dir }}
+        working-directory: ${{ env.SERVER_DIR }}
 
       - name: Add django root to PYTHONPATH
-        run: export PYTHONPATH="${PYTHONPATH}:${{ env.server-dir }}"
+        run: export PYTHONPATH="${PYTHONPATH}:${{ env.SERVER_DIR }}"
 
       - name: Run Django tests
         run: python3 scripts/manage.py test
-        working-directory: ${{ env.server-dir }}
+        working-directory: ${{ env.SERVER_DIR }}
