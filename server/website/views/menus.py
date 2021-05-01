@@ -10,7 +10,7 @@ class MenuItemSerializer(DBObjectSerializer):
     class Meta:
         model = Menu
         fields = ['name', 'link', 'items', 'is_menu']
-        depth = 3
+        inf_depth = True
         extra_kwargs = {
             'detail_url': {
                 'url_null_deciding_attribute': 'is_menu'
