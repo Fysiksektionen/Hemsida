@@ -33,9 +33,12 @@ assert BASE_SETTINGS_VERSION == LOCAL_SETTINGS_VERSION
 DEBUG = False
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-with open(SECRET_KEY_PATH) as f:
-    SECRET_KEY = f.read().strip()
-
+if SECRET_KEY_PATH:
+    with open(SECRET_KEY_PATH) as f:
+        SECRET_KEY = f.read().strip()
+else:
+    SECRET_KEY = 'NOT-SO-SECRET-DEFAULT-KEY'
+    
 ADMINS = [('admin', 'webmaster@f.kth.se')]
 MANAGERS = ADMINS
 

@@ -8,18 +8,29 @@ on:
 jobs:
   test-backend:
     runs-on: ubuntu-latest
-    
+    env:
+      server-dir: ./server
+
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
-        
-      - name: Move to backend
-        run: cd server
-        
-      - name: Django Test CI
-        # You may pin to the exact commit or the version.
-        # uses: UKnowWhoIm/django-test-action@43d1964e6fbb32ebe3e6f82d63b8291764cad3a7
-        uses: django-test-action@v0.6
+      
+      - uses: mirromutth/mysql-action@v1.1
         with:
-          settings-dir-path: project_settings/
-          requirements-file: requirements.txt
+          mysql root password: 
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install python packages
+        run: pip3 install -r requirements.txt
+        working-directory: ${{ env.server-dir }}
+
+      - name: Add django root to PYTHONPATH
+        run: export PYTHONPATH="${PYTHONPATH}:${{ env.server-dir }}"
+
+      - name: Run Django tests
+        run: python3 scripts/manage.py test
+        working-directory: ${{ env.server-dir }}
