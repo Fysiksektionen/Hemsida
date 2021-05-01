@@ -15,7 +15,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import gettext_lazy as _
 
-from .local import *
+try:
+    from .local import *
+except:
+    from .local_template import *
 
 
 def join_paths(*args, leading_slash=False, trailing_slash=True):
