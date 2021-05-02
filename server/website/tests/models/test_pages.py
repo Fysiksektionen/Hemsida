@@ -12,8 +12,8 @@ class PageTest(ValidationTestCase):
     def setUp(self):
         """Creation of objects"""
         self.parent_page = create_test_page()
-        self.content_sv = ContentObjectBase(containing_page=self.parent_page)
-        self.content_en = ContentObjectBase(containing_page=self.parent_page)
+        self.content_sv = ContentObjectBase(parent_page=self.parent_page)
+        self.content_en = ContentObjectBase(parent_page=self.parent_page)
 
         self.content_sv.save()
         self.content_en.save()

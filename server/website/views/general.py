@@ -22,7 +22,6 @@ class PathResolveView(generics.GenericAPIView):
 
             # Check if we have page at URL
             page = get_page_from_path(path)
-            print(path, page)
             if page is None:  # No direct page-match
                 # Look for redirect to path, else raise Http404
                 redirect = get_object_or_404(Redirect.objects.all(), from_path=path)

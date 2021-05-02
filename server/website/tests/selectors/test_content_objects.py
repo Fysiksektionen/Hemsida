@@ -1,8 +1,10 @@
+from django.db import connections
 from django.apps import apps
+
 from utils.tests import ValidationTestCase
+from website.tests.utils import create_test_page
 from website.models.content_objects import *
 from website.selectors.content_objects import get_collection_items, get_content_object_trees
-from website.tests.utils import create_test_page
 
 
 class ContentObjectSelectorTest(ValidationTestCase):
@@ -10,7 +12,7 @@ class ContentObjectSelectorTest(ValidationTestCase):
 
     def setUp(self):
         """Creation of objects"""
-        self.containing_page = create_test_page()
+        self.parent_page = create_test_page()
 
     def test_get_collection_items(self):
         """Tests the method get_collection_items.
@@ -18,13 +20,13 @@ class ContentObjectSelectorTest(ValidationTestCase):
         Checks correct classes and conservation of ordering.
         """
         # Create a collection
-        self.collection = ContentCollection(containing_page=self.containing_page)
+        self.collection = ContentCollection(parent_page=self.parent_page)
         self.collection.save()
 
         # Create items of all ContentObject types
         list_of_items = []
         for db_type, class_name in CONTENT_DB_TYPES.items():
-            obj = apps.get_model(class_name)(containing_page=self.containing_page, collection=self.collection)
+            obj = apps.get_model(class_name)(parent_page=self.parent_page, collection=self.collection)
             obj.save()
             list_of_items.append(obj)
 
@@ -38,15 +40,15 @@ class ContentObjectSelectorTest(ValidationTestCase):
         Checks for expected return. Tries to test edge-cases, but not guaranteed to catch all.
         """
         # Create small tree and verify correctness
-        root = ContentCollection(containing_page=self.containing_page)
+        root = ContentCollection(parent_page=self.parent_page)
         root.save()
 
-        list_obj = ContentCollectionList(containing_page=self.containing_page)
-        text = ContentText(containing_page=self.containing_page)
-        image = ContentImage(containing_page=self.containing_page)
-        menu = ContentMenu(containing_page=self.containing_page)
-        page = ContentPage(containing_page=self.containing_page)
-        dict_obj = ContentCollection(containing_page=self.containing_page)
+        list_obj = ContentCollectionList(parent_page=self.parent_page)
+        text = ContentText(parent_page=self.parent_page)
+        image = ContentImage(parent_page=self.parent_page)
+        menu = ContentMenu(parent_page=self.parent_page)
+        page = ContentPage(parent_page=self.parent_page)
+        dict_obj = ContentCollection(parent_page=self.parent_page)
 
         all_lvl1_objects = [list_obj, text, image]
         all_lvl2_objects = [menu, page, dict_obj]
@@ -111,41 +113,41 @@ class ContentObjectSelectorTest(ValidationTestCase):
         #              Setup
         # ----------------------------------
         # Create small tree and verify correctness
-        root = ContentCollection(containing_page=self.containing_page)
+        root = ContentCollection(parent_page=self.parent_page)
         root.save()
 
         # Create alot of each type of object directly under
         for _ in range(100):
-            ContentCollectionList(containing_page=self.containing_page, collection=root).save()
-            ContentText(containing_page=self.containing_page, collection=root).save()
-            ContentImage(containing_page=self.containing_page, collection=root).save()
-            ContentMenu(containing_page=self.containing_page, collection=root).save()
-            ContentPage(containing_page=self.containing_page, collection=root).save()
-            ContentCollection(containing_page=self.containing_page, collection=root).save()
+            ContentCollectionList(parent_page=self.parent_page, collection=root).save()
+            ContentText(parent_page=self.parent_page, collection=root).save()
+            ContentImage(parent_page=self.parent_page, collection=root).save()
+            ContentMenu(parent_page=self.parent_page, collection=root).save()
+            ContentPage(parent_page=self.parent_page, collection=root).save()
+            ContentCollection(parent_page=self.parent_page, collection=root).save()
 
         # Do the same at lvl2
-        list_obj = ContentCollectionList(containing_page=self.containing_page, collection=root)
+        list_obj = ContentCollectionList(parent_page=self.parent_page, collection=root)
         list_obj.save()
         for i in range(100):
-            ContentCollectionList(containing_page=self.containing_page, collection=list_obj, order=6 * i).save()
-            ContentText(containing_page=self.containing_page, collection=list_obj, order=6 * i + 1).save()
-            ContentImage(containing_page=self.containing_page, collection=list_obj, order=6 * i + 2).save()
-            ContentMenu(containing_page=self.containing_page, collection=list_obj, order=6 * i + 3).save()
-            ContentPage(containing_page=self.containing_page, collection=list_obj, order=6 * i + 4).save()
-            ContentCollection(containing_page=self.containing_page, collection=list_obj, order=6 * i + 5).save()
+            ContentCollectionList(parent_page=self.parent_page, collection=list_obj, order=6 * i).save()
+            ContentText(parent_page=self.parent_page, collection=list_obj, order=6 * i + 1).save()
+            ContentImage(parent_page=self.parent_page, collection=list_obj, order=6 * i + 2).save()
+            ContentMenu(parent_page=self.parent_page, collection=list_obj, order=6 * i + 3).save()
+            ContentPage(parent_page=self.parent_page, collection=list_obj, order=6 * i + 4).save()
+            ContentCollection(parent_page=self.parent_page, collection=list_obj, order=6 * i + 5).save()
 
         # Go deep in tree
         parent_collection = root
         for _ in range(100):
-            parent_collection = ContentCollection(containing_page=self.containing_page, collection=parent_collection)
+            parent_collection = ContentCollection(parent_page=self.parent_page, collection=parent_collection)
             parent_collection.save()
 
         # Many objects outside page and tree. This is actually going to bee a lot more than 100,
         # but it is fine to check with this
         other_page = create_test_page()
         for _ in range(100):
-            ContentText(containing_page=self.containing_page).save()
-            ContentText(containing_page=other_page).save()
+            ContentText(parent_page=self.parent_page).save()
+            ContentText(parent_page=other_page).save()
 
         # ----------------------------------
         #              Checks
