@@ -15,7 +15,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from django.utils.log import DEFAULT_LOGGING
 from django.utils.translation import gettext_lazy as _
 
-from .local import *
+try:
+    from .local import *
+except:
+    from .local_template import *
 
 
 def join_paths(*args, leading_slash=False, trailing_slash=True):
@@ -33,9 +36,12 @@ assert BASE_SETTINGS_VERSION == LOCAL_SETTINGS_VERSION
 DEBUG = False
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-with open(SECRET_KEY_PATH) as f:
-    SECRET_KEY = f.read().strip()
-
+if SECRET_KEY_PATH:
+    with open(SECRET_KEY_PATH) as f:
+        SECRET_KEY = f.read().strip()
+else:
+    SECRET_KEY = 'NOT-SO-SECRET-DEFAULT-KEY'
+    
 ADMINS = [('admin', 'webmaster@f.kth.se')]
 MANAGERS = ADMINS
 

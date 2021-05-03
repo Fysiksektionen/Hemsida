@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Locale, LocaleContext, locales } from './contexts';
-import Frontpage from './pages/Frontpage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { Switch, Route } from 'react-router-dom';
@@ -12,7 +11,6 @@ import './App.css';
 
 // Import fake data
 import { mockSiteResp } from './mock_data/mock_site_response';
-import { emptyPage } from './mock_data/mock_PageTypeLoader';
 
 function App() {
     const [locale, setLocale] = useState<Locale>(locales.sv);
@@ -26,37 +24,27 @@ function App() {
             <LocaleContext.Provider value={locale}>
                 <Switch>
                     <Route path="/admin">
-                        <Admin adminRootPath={'/admin/'}/>
+                        <Admin />
                     </Route>
                     <Route path="/api-docs">
                         <APIDocs />
                     </Route>
                     <Route>
-                        {siteData
-                            ? <Header content={
-                                locale === locales.sv
-                                    ? siteData.headerContentSv
-                                    : siteData.headerContentEn
-                            } setLocale={setLocale} />
-                            : <></>}
-                        <div className="content container">
-                            <Switch>
-                                {/* Frontpage should maybe be included in the dynamic page loader,
-                                    but left here for illustrative purposes of non-dynamic loading of
-                                    components (i.e. login, admin, etc.). */}
-                                <Route exact={true} path={['/', '/start', '/index', '/hem', '/home']}>
-                                    <Frontpage {...emptyPage} />
-                                </Route>
-                                <Route component={PageTypeLoader}/>
-                            </Switch>
+                        {siteData &&
+                        <Header content={
+                            locale === locales.sv
+                                ? siteData.headerContentSv
+                                : siteData.headerContentEn
+                        } setLocale={setLocale} />}
+                        <div className="content">
+                            <PageTypeLoader />
                         </div>
-                        {siteData
-                            ? <Footer content={
-                                locale === locales.sv
-                                    ? siteData.footerContentSv
-                                    : siteData.footerContentEn
-                            } />
-                            : <></>}
+                        {siteData &&
+                        <Footer content={
+                            locale === locales.sv
+                                ? siteData.footerContentSv
+                                : siteData.footerContentEn
+                        } />}
                     </Route>
 
                 </Switch>

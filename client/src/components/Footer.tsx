@@ -1,13 +1,12 @@
 import React from 'react';
 import GoogleMap from './GoogleMap';
-import './Footer.css';
 import Toe from './Toe';
 import { LocaleContext, locales } from '../contexts';
-import { SiteFooterContentTree } from '../types/content_object_trees';
+import { SiteFooterCT } from '../types/content_objects/content_trees/site';
 import TextCOR from './content_object_renderers/TextCOR';
 
 type FooterProps = {
-    content: SiteFooterContentTree
+    content: SiteFooterCT
 }
 
 function Footer({ content }: FooterProps) {
@@ -15,7 +14,7 @@ function Footer({ content }: FooterProps) {
         <LocaleContext.Consumer>
             {locale =>
                 <div>
-                    <div className="container-fluid py-4 bg-dark text-white text-center">
+                    <div className="py-4 bg-dark text-white text-center">
 
                         <h3>{locale === locales.sv ? 'Hitta hit!' : 'Find us!'}</h3>
 

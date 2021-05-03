@@ -3,9 +3,13 @@
  */
 import React from 'react';
 
-export type AdminPageProps = {
+export type AdminLocation = {
     path: string,
-    getParams?: NodeJS.Dict<string|number|undefined>
+    getParams: NodeJS.Dict<string>
+}
+
+export type AdminPageProps = AdminLocation & {
+    setLocationHook: (props: AdminLocation) => void
 }
 
 export type AdminPage = React.FunctionComponent<AdminPageProps>;

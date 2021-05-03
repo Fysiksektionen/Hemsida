@@ -1,5 +1,5 @@
 from authentication.models.groups import Group
-from rest_framework import viewsets, mixins, serializers
+from rest_framework import serializers, generics
 from utils.serializers import DBObjectSerializer
 
 
@@ -19,13 +19,24 @@ class GroupSerializer(DBObjectSerializer):
             }
         }
 
+    def __init__(self, *args, with_users=True, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not with_users:
+            self.fields.pop('user_set')
+
     @staticmethod
     def get_group_type(obj):
         """Return human readable name instead of number for user_type"""
         return {key: val for key, val in Group.GroupType.choices}[obj.group_type]
 
 
-class GroupViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    """A simple ViewSet for listing and retrieving Groups."""
+class GroupsView(generics.ListCreateAPIView):
+    """A simple view for listing and creating users."""
+    serializer_class = GroupSerializer
+    queryset = Group.objects.all()
+
+
+class GroupView(generics.RetrieveUpdateDestroyAPIView):
+    """A simple view for fetching, updating and deleting users."""
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
