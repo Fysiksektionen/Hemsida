@@ -1,13 +1,17 @@
-import React from "react";
-import {RepresentativesPageContentTree} from '../types/page_specific/types_RepresentativesPage'
-import {APIResponse} from "../types/general";
+import React from 'react';
+import { RepresentativesPageContentTree } from '../types/page_specific/types_RepresentativesPage';
+import { ContentObject } from '../types/api_object_types';
 
-function RepresentativesPage(props: RepresentativesPageContentTree){
-
+export default function RepresentativesPage(props: ContentObject) {
+    const content = props as RepresentativesPageContentTree;
     return (
         <div>
-            {props.items.infoBox.items.text}
-            Hello representatives
+            <h1>
+            {content.items.infoBox.items.title.text}
+            </h1>
+            <p>
+                {content.items.infoBox.items.text.text}
+            </p>
         </div>
-    )
+    );
 }

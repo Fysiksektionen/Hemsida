@@ -5,16 +5,15 @@ export type RepresentativesContent = {
         title: string,
         text: string
     },
-    boardMembers: BoardMembers
+    //boardMembers: BoardMembers
 }
 
 export type RepresentativesPageContentTree = ContentDict & {
 
     items: {
-        infoBox: infoBox,
-        boardMembers: BoardMembers
+        infoBox: infoBox
+       // boardMembers: BoardMembers
     }
-
 }
 
 export type infoBox = ContentDict & {
@@ -24,11 +23,13 @@ export type infoBox = ContentDict & {
     }
 }
 
-type Member = {
-    role: ContentText,
-    name: ContentText,
-    yearCode: ContentText,
-    email: ContentText
+type Member = ContentDict & {
+    items : {
+        role: ContentText,
+        name: ContentText,
+        yearCode: ContentText,
+        email: ContentText
+    }
 }
 
 export type BoardMembers = ContentDict & {
@@ -41,6 +42,4 @@ export type BoardMembers = ContentDict & {
         }
     }
 }
-
-
 

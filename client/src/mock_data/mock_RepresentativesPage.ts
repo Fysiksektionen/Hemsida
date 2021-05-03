@@ -1,82 +1,54 @@
-import { APIResponse } from "../types/general";
-import {ContentText, Page} from '../types/api_object_types';
-import { infoBox } from "../types/page_specific/types_RepresentativesPage";
-import {RepresentativesPageContentTree} from "../types/page_specific/types_RepresentativesPage";
+import { Page } from '../types/api_object_types';
+import { RepresentativesPageContentTree, infoBox } from '../types/page_specific/types_RepresentativesPage';
 
-const baseTextField: Omit<ContentText, "text" | "id" | "name"> = {
-    attributes: {},
-    detailUrl: "https://f.kth.se/api/content_objects/1",
-    dbType: "text"
-}
-
-const defaultText: ContentText = {
-    dbType: "text",
+const contentSv: RepresentativesPageContentTree = {
     id: 1,
-    detailUrl: "https://f.kth.se/api/content_objects/1",
-    text: "NoTextGiven",
+    detailUrl: 'https://f.kth.se/api/content_objects/1',
+    dbType: 'dict',
     attributes: {},
-    name: "titleRepPage"
-}
-
-const infoBox: infoBox  ={
-    detailUrl: "", id: 0,
     items: {
-        text: {
-            ...baseTextField,
-            id: 1,
-            text: "ne",
-            name: "titleRepPage"
-        },
-        title: {
-            ...baseTextField,
+        infoBox: {
             id: 2,
-            text: "infoText",
-            name: "infoText"
-        }
-        },
-    name: "",
-    attributes: {},
-    dbType: "dict"
-
-
-}
-
-const representativesResponse: APIResponse<Page> = {
-    code: 200,
-    data: {
-        id: 1,
-        detailUrl: '',
-        name: '',
-        slug: '',
-        pageType: 'styret',
-        parent: {
-            id: 1,
+            attributes: {},
             detailUrl: '',
-            name: ''
-        },
-        children: [],
-        published: true,
-        publishedAt: '',
-        lastEditedAt: '',
-        contentSv: {
-            id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
-            name: 'root',
             dbType: 'dict',
-            attributes: {},
             items: {
-                infoBox: infoBox
-            }
-        },
-        contentEn: {
-            id: 1,
-            detailUrl: 'https://f.kth.se/api/content_objects/1',
-            name: 'root',
-            dbType: 'dict',
-            attributes: {},
-            items: {
-
+                text: {
+                    id: 3,
+                    attributes: {},
+                    dbType: 'text',
+                    detailUrl: '',
+                    text: 'Text'
+                },
+                title: {
+                    id: 4,
+                    attributes: {},
+                    dbType: 'text',
+                    detailUrl: '',
+                    text: 'Representatives!'
+                }
             }
         }
     }
+};
+
+export const representativesPage: Page = {
+
+    id: 1,
+    detailUrl: '',
+    name: '',
+    slug: '',
+    pageType: 'representatives',
+    parent: {
+        id: 1,
+        detailUrl: '',
+        name: ''
+    },
+    children: [],
+    published: true,
+    publishedAt: '',
+    lastEditedAt: '',
+    contentSv: contentSv,
+    contentEn: contentSv
+
 };
