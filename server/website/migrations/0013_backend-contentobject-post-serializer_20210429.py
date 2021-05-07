@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     replaces = [('website', '0012_auto_20210418_0123'), ('website', '0013_remove_contentobjectbase_component'), ('website', '0014_auto_20210425_1600'), ('website', '0015_auto_20210429_1945')]
 
     dependencies = [
-        ('website', '0011_backend-content-object-tree-selector_20210411'),
+        ('website', '0012_backend-site-admin_20210302'),
     ]
 
     operations = [
