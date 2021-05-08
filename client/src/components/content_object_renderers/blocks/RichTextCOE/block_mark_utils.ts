@@ -69,3 +69,11 @@ export const toggleMark = (editor: CustomEditor, format: SlateMarkType) => {
         Editor.addMark(editor, format, true);
     }
 };
+
+/**
+ * Inserts a break-line at editor position.
+ * @param editor The slate editor
+ */
+export const insertBreak = (editor: CustomEditor) => {
+    Editor.insertBreak(editor);
+};

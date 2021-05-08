@@ -8,6 +8,7 @@ import placeholder from '../../mediafiles/placeholder_images/placeholder_image.p
 
 type ImageCORProps = ImageProps & React.RefAttributes<HTMLImageElement> & {
     content: ContentImage,
+    href?: string
 }
 
 /**
@@ -25,8 +26,10 @@ export default function ImageCOR(props: ImageCORProps) {
                     <Image
                         src={props.content.image.href !== '' ? props.content.image.href : placeholder}
                         {...(props as (ImageProps & React.RefAttributes<HTMLImageElement>))}
-                        onClick={editing ? () => { setShowModal(true); } : () => {}}
+                        onClick={editing ? (event) => { setShowModal(true); event.preventDefault(); } : () => {}}
                     />
+                    {/* <a className='nostyle' href={props.href ?? ''}> */}
+                    {/* </a> */}
                 </div>
             }
         </EditorialModeContext.Consumer>

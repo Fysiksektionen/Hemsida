@@ -1,4 +1,5 @@
-import { ContentDict, ContentImage, ContentText } from '../../api_object_types';
+import { ContentDict, ContentImage, ContentList, ContentMenu, ContentText } from '../../api_object_types';
+import { BodyTextBlock } from '../blocks';
 
 /**
  * ContentTrees of the site object
@@ -6,15 +7,24 @@ import { ContentDict, ContentImage, ContentText } from '../../api_object_types';
 
 export type SiteHeaderCT = ContentDict & {
     items: {
-        name: ContentText,
         logo: ContentImage
+        midMenu: ContentMenu
+        mainMenu: ContentMenu
+    }
+}
+
+export type SiteFooterQuickAccessMenuCT = ContentDict & {
+    items: {
+        header: BodyTextBlock & { attributes: { richTextEditorType: 'none' } }
+        info: BodyTextBlock & { attributes: { richTextEditorType: 'body-text' } }
     }
 }
 
 export type SiteFooterCT = ContentDict & {
     items: {
-        webmaster: ContentText,
-        currYear: ContentText,
-        address: ContentText
+        address: ContentText,
+        quickAccess: ContentList & {
+            items: SiteFooterQuickAccessMenuCT[]
+        }
     }
 }

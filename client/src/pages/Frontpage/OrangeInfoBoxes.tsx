@@ -2,8 +2,8 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { OrangeInfoBoxCT } from '../types/content_objects/content_trees/pages';
-import InfoBox2COR from './content_object_renderers/InfoBox2COR';
+import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/pages';
+import InfoBox2COR from '../../components/content_object_renderers/InfoBox2COR';
 
 /**
  * Component of the InfoBoxes on the start page.

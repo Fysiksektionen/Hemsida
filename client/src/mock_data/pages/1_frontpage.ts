@@ -53,7 +53,7 @@ export const frontpage = {
                                     blockType: 'heading',
                                     richTextEditorType: 'none'
                                 },
-                                text: '<p>Vill du hitta på något?</p>'
+                                text: '<p><span>Vill du hitta på något?</span></p>'
                             },
                             text: {
                                 id: 13,
@@ -94,7 +94,7 @@ export const frontpage = {
                                     blockType: 'heading',
                                     richTextEditorType: 'none'
                                 },
-                                text: '<p>Vad är Fysiksektionen?</p>'
+                                text: '<p><span>Vad är Fysiksektionen?</span></p>'
                             },
                             text: {
                                 id: 10,
@@ -134,7 +134,7 @@ export const frontpage = {
                                     blockType: 'heading',
                                     richTextEditorType: 'none'
                                 },
-                                text: '<p>Vad händer nu?</p>'
+                                text: '<p><span>Vad händer nu?</span></p>'
                             },
                             text: {
                                 id: 16,
@@ -202,7 +202,7 @@ export const frontpage = {
                                     blockType: 'heading',
                                     richTextEditorType: 'none'
                                 },
-                                text: '<p>Want to do something?</p>'
+                                text: '<p><span>Want to do something?</span></p>'
                             },
                             text: {
                                 id: 25,
@@ -243,7 +243,7 @@ export const frontpage = {
                                     blockType: 'heading',
                                     richTextEditorType: 'none'
                                 },
-                                text: '<p>What is the Physics Chapter?</p>'
+                                text: '<p><span>What is the Physics Chapter?</span></p>'
                             },
                             text: {
                                 id: 29,
@@ -283,7 +283,7 @@ export const frontpage = {
                                     blockType: 'heading',
                                     richTextEditorType: 'none'
                                 },
-                                text: '<p>What\'s up next?</p>'
+                                text: '<p><span>What\'s up next?</span></p>'
                             },
                             text: {
                                 id: 33,

@@ -1,7 +1,7 @@
 import StyretPage from './StyretPage';
 import NewsFeedPage from './NewsFeedPage';
 import { PageComponent } from '../types/general';
-import Frontpage from './Frontpage';
+import Frontpage from './Frontpage/Frontpage';
 import NamndPage from './NamndPage';
 
 /**
