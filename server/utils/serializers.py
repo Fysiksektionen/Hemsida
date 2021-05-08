@@ -2,11 +2,13 @@
 import copy
 from collections import OrderedDict
 
+from django.db import models
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 from rest_framework.fields import Field
 from rest_framework.relations import HyperlinkedIdentityField
 from rest_framework.settings import api_settings
-from rest_framework.utils import model_meta
+from rest_framework.utils import model_meta, html
 from rest_framework.utils.field_mapping import get_nested_relation_kwargs
 
 
@@ -249,3 +251,4 @@ class ErrorSerializer(serializers.Serializer):
     error_code = serializers.IntegerField(allow_null=True, min_value=0, required=False)
     # Message for explanation of error. Usually a translated string.
     message = serializers.CharField(allow_null=True, allow_blank=True, required=False)
+

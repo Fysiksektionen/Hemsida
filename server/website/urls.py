@@ -20,5 +20,5 @@ router.register(r'news', NewsViewSet, basename='news')
 urlpatterns = [
     *router.urls,
     path('site/', SiteView.as_view(), name="site"),
-    path('resolve-url/', PathResolveView.as_view(), name="resolve_url")
+    path('resolve-url/', PathResolveView.as_view(), name="resolve_url"),
 ]
