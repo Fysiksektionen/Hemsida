@@ -6,7 +6,6 @@ from website.views.pages import PageViewSet
 from website.views.redirects import RedirectViewSet
 from website.views.site import SiteView
 from website.views.news import NewsViewSet
-from website.views.content_objects import ContentObjectView
 
 app_name = 'website'
 
@@ -22,5 +21,4 @@ urlpatterns = [
     *router.urls,
     path('site/', SiteView.as_view(), name="site"),
     path('resolve-url/', PathResolveView.as_view(), name="resolve_url"),
-    path('content_objects/<int:containing_page_pk>', ContentObjectView.as_view(),name="content_object"),
 ]

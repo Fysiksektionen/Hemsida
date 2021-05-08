@@ -18,6 +18,7 @@ class ContentTextSerializer(DBObjectSerializer):
 
     collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+    attributes = serializers.JSONField()
 
     class Meta:
         model = ContentText
@@ -45,6 +46,7 @@ class ContentImageSerializer(DBObjectSerializer):
     collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
     image = serializers.PrimaryKeyRelatedField(queryset=Image.objects.all(), default=None)
+    attributes = serializers.JSONField()
 
     class Meta:
         model = ContentImage
@@ -75,15 +77,12 @@ class ContentMenuSerializer(DBObjectSerializer):
     collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
     menu = serializers.PrimaryKeyRelatedField(queryset=Menu.objects.all())
+    attributes = serializers.JSONField()
 
     class Meta:
         model = ContentMenu
         fields = "__all__"
         depth = 1
-
-    def __init__(self, instance=None, data=empty, *args, **kwargs):
-        super().__init__(instance, data, *args, **kwargs)
-        self.initial_data["menu"] = data["menu"]["id"]
 
     def is_valid(self, raise_exception=False):
         if not hasattr(self, '_validated_data'):
@@ -105,14 +104,12 @@ class ContentPageSerializer(DBObjectSerializer):
     collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
     page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+    attributes = serializers.JSONField()
 
     class Meta:
         model = ContentPage
         fields = "__all__"
         depth = 1
-
-    def __init__(self, instance=None, data=empty, *args, **kwargs):
-        super().__init__(instance, data, *args, **kwargs)
 
 
     def is_valid(self, raise_exception=False):
@@ -135,6 +132,7 @@ class ContentCollectionSerializer(DBObjectSerializer):
     """
     collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+    attributes = serializers.JSONField()
 
     class Meta:
         model = ContentCollection
@@ -174,7 +172,7 @@ class ContentCollectionSerializer(DBObjectSerializer):
                         self._errors = {**self.errors, **(self._serlist[i].errors)}
 
             else:
-                self._errors = {**self._errors, **{"items": _("Has to be a dictionary or empty")}}
+                self._errors = {**self._errors, **{"items": _("Has to be a dictionary")}}
 
             if self._errors:
                 self._validated_data = {}
@@ -199,6 +197,7 @@ class ContentCollectionListSerializer(DBObjectSerializer):
    """
     collection = serializers.PrimaryKeyRelatedField(queryset=ContentCollection.objects.all(), default=None)
     containing_page = serializers.PrimaryKeyRelatedField(queryset=Page.objects.all())
+    attributes = serializers.JSONField()
 
     class Meta:
         model = ContentCollectionList
@@ -235,7 +234,7 @@ class ContentCollectionListSerializer(DBObjectSerializer):
                         self._errors = {**self.errors, **(self._serlist[i].errors)}
 
             else:
-                self._errors = {**self.errors, **{"items": _("Has to be a list or empty")}}
+                self._errors = {**self.errors, **{"items": _("Has to be a list")}}
 
             if self._errors:
                 self._validated_data = {}
@@ -339,15 +338,4 @@ class ContentObjectBaseSerializer(serializers.ModelSerializer):
         return self.ser.save(**kwargs)
 
 
-class ContentObjectView(generics.CreateAPIView):
-    """Create view for all types of content objects"""
-    serializer_class = ContentObjectBaseSerializer
-    queryset = ContentObjectBase.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        request.data["containing_page"] = kwargs["containing_page_pk"]
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
