@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from utils.serializers import DBObjectSerializer, OptionalHyperlinkedIdentityField
 from website.models.pages import Page
-from website.models.menus import Menu
+from website.models.menus import MenuItem, Menu
 
 
 class MenuItemGetSerializer(DBObjectSerializer):
@@ -14,7 +14,7 @@ class MenuItemGetSerializer(DBObjectSerializer):
     serializer_url_field = OptionalHyperlinkedIdentityField
 
     class Meta:
-        model = Menu
+        model = MenuItem
         fields = ['name', 'link', 'page', 'url', 'items', 'is_menu']
         inf_depth = True
         extra_kwargs = {
@@ -38,7 +38,7 @@ class MenuItemPostSerializer(DBObjectSerializer):
     page = PrimaryKeyRelatedField(queryset=Page.objects.all())
 
     class Meta:
-        model = Menu
+        model = MenuItem
         fields = ['name', 'url', 'page', 'is_menu', 'items']
         inf_depth = True
         nested_serialization = {
