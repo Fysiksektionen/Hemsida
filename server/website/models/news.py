@@ -37,6 +37,7 @@ class News(BasePage):
         verbose_name = "news"
         verbose_name_plural = "news"
 
+    name = models.CharField(verbose_name=_('name'), max_length=255)
     slug = models.SlugField(verbose_name='Slug', null=True, blank=True, unique=True)
     author = models.CharField(verbose_name=_('created by'), max_length=255, blank=True)
     views = models.IntegerField(verbose_name=_('views'), default=0, null=False, blank=False)

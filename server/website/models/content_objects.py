@@ -25,7 +25,7 @@ class ContentObjectBase(models.Model):
         ordering = ['order']
 
     containing_page = models.ForeignKey(
-        'Page',
+        'BasePage',
         verbose_name=_('containing page'),
         null=False, blank=False,
         on_delete=models.CASCADE

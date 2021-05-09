@@ -3,27 +3,30 @@ from django.utils.translation import gettext as _
 from utils.tests import ValidationTestCase
 from website.models.content_objects import ContentObjectBase
 from website.models.news import News, NewsDraft
-
+from website.models.pages import Page
 
 class NewsTest(ValidationTestCase):
     """Test the functionality of News model."""
 
     def setUp(self):
         """Creation of objects"""
-        self.content_sv = ContentObjectBase()
-        self.content_en = ContentObjectBase()
-
+        news = News(name='Parent news', page_type='0', url="https://f.kth.se", slug='parent', views=0)
+        self.content_sv = ContentObjectBase(containing_page=news)
+        self.content_en = ContentObjectBase(containing_page=news)
+        news.content_sv = self.content_sv
+        news.content_en = self.content_en
         self.content_sv.save()
         self.content_en.save()
-        self.parent = News(name='Parent news', page_type='0', url="https://f.kth.se", slug='parent', views=0,
-                           content_sv=self.content_sv, content_en=self.content_en)
+        self.parent = news
         self.parent.save()
 
     def test_default_slug(self):
         """Test setting default slug if slug is not specified."""
         # Create new content objects to avoid validation error
-        self.content_sv = ContentObjectBase()
-        self.content_en = ContentObjectBase()
+        p = Page(url="a")
+        p.save()
+        self.content_sv = ContentObjectBase(containing_page=p)
+        self.content_en = ContentObjectBase(containing_page=p)
 
         # Check normal behaviour
         self.news_with_slug = News(name='0', page_type='0', url="https://f.kth.se/0", slug='fkm', views=0,

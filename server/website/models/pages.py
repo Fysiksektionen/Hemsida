@@ -44,6 +44,8 @@ class Page(BasePage):
         verbose_name_plural = _('pages')
         unique_together = [('name', 'parent'), ('slug', 'parent')]
 
+    name = models.CharField(verbose_name=_('name'), max_length=255)
+    slug = models.SlugField(verbose_name='Slug', null=True, blank=True)
     parent = models.ForeignKey(
         'website.Page', verbose_name=_('parent page'), blank=True, null=True, on_delete=models.SET_NULL,
         related_name='children'
