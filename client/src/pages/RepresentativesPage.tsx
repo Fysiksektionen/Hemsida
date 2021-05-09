@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { RepresentativesPageContentTree, sectionFields, subSectionFields } from '../types/page_specific/types_RepresentativesPage';
+import { RepresentativesPageContentTree, sectionFields, subSectionFields } from '../types/content_objects/content_trees/RepresentativesPageType';
 import { ContentObject, newContentDict } from '../types/api_object_types';
 import { Col, Row } from 'react-bootstrap';
 

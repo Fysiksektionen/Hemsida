@@ -2,7 +2,7 @@ import {
     ContentText,
     newContentDict,
     newContentList
-} from '../api_object_types';
+} from '../../api_object_types';
 
 export type RepresentativesPageContentTree = newContentDict<{
     header: ContentText,

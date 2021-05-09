@@ -4,7 +4,7 @@ import {
     RepresentativesPageContentTree,
     sectionFields,
     subSectionFields
-} from '../../types/page_specific/types_RepresentativesPage';
+} from '../../types/content_objects/content_trees/RepresentativesPageType';
 import { mockDict, mockList, mockText } from '../mock_utils';
 
 const inroText = 'Letar du efter någon speciell person att kontakta inom Fysiksektionen? Då har du kommit rätt! Här nedan listar vi alla förtroendevalda inom Fysiksektionen med tillhörande kontaktuppgifter.\n\n' +
