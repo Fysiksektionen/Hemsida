@@ -1,45 +1,32 @@
-import { ContentDict, ContentImage, ContentList, ContentText } from '../api_object_types';
+import {
+    ContentText,
+    newContentDict,
+    newContentList
+} from '../api_object_types';
 
-export type RepresentativesContent = {
-    infoBox: {
-        title: string,
-        text: string
-    },
-    //boardMembers: BoardMembers
+export type RepresentativesPageContentTree = newContentDict<{
+    header: ContentText,
+    introText: ContentText,
+    sections: newContentList<newContentDict<sectionFields>>
+}>;
+
+// Could be "styrelsen" or "nämnder"
+export type sectionFields = {
+    name: ContentText,
+    email?: ContentText,
+    subsections: newContentList<newContentDict<subSectionFields>>
 }
 
-export type RepresentativesPageContentTree = ContentDict & {
-
-    items: {
-        infoBox: infoBox
-       // boardMembers: BoardMembers
-    }
+// Could be a specifc nämnd of nämnder. If name is left empty then neither name nor email should be rendered
+export type subSectionFields = {
+    name?: ContentText,
+    email?: ContentText
+    members: newContentList<newContentDict<memberFields>>
 }
 
-export type infoBox = ContentDict & {
-    items: {
-        title: ContentText,
-        text: ContentText
-    }
+export type memberFields = {
+    role: ContentText,
+    name: ContentText,
+    yearCode: ContentText,
+    email: ContentText,
 }
-
-type Member = ContentDict & {
-    items : {
-        role: ContentText,
-        name: ContentText,
-        yearCode: ContentText,
-        email: ContentText
-    }
-}
-
-export type BoardMembers = ContentDict & {
-    items: {
-        boardTitle: ContentText,
-        boardEmail: ContentText,
-
-        members: ContentList & {
-            items: Member[]
-        }
-    }
-}
-
