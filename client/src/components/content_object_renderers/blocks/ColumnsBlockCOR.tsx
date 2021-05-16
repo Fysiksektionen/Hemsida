@@ -128,6 +128,7 @@ type AddColumnButtonProps = {
     content: ColumnsBlock,
     sizePx: number
 }
+
 /**
  * Edit the block at index in the list of children of `content`.
  * @constructor

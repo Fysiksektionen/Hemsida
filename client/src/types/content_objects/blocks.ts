@@ -4,6 +4,7 @@ import { ChangeKeyType } from '../general';
 /* -----------------------
          Rich text
  ------------------------- */
+// TODO: bör inte vara två blocktyper...
 export type HeadingBlock = ContentText & {
     attributes: {
         blockType: 'heading',

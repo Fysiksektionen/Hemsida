@@ -1,4 +1,4 @@
-import React, { CSSProperties, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
 import {

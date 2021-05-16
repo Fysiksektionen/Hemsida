@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Locale, LocaleContext } from '../../contexts';
+import React, { useState } from 'react';
+import { Locale } from '../../contexts';
 import HeaderMenu from './HeaderMenu';
 import ImageCOR from '../content_object_renderers/ImageCOR';
 import { Col, Row } from 'react-bootstrap';
@@ -96,7 +96,6 @@ function HeaderMd({ setLocale, content, setMenuOpen }: Props & { setMenuOpen: (o
  * @constructor
  */
 export default function Header({ setLocale, content }: Props) {
-    const locale = useContext(LocaleContext);
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (

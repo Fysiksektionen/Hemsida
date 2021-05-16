@@ -17,6 +17,7 @@ import ColumnsBlockCOR from './ColumnsBlockCOR';
  * @constructor
  */
 export default function BlockCOR({ block }: {block: Block}) {
+    // TODO: changes when block_type changes.
     if ((RichTextBlockTypes as BlockType[]).includes(block.attributes.blockType)) {
         return <RichTextCOR content={block as RichTextBlock} />;
     } else if (block.attributes.blockType === 'image') {
@@ -24,6 +25,6 @@ export default function BlockCOR({ block }: {block: Block}) {
     } else if (block.attributes.blockType === 'columns') {
         return <ColumnsBlockCOR content={block as ColumnsBlock}/>;
     } else {
-        return <>{block.attributes.blockType}</>;
+        return <>Error with block of type: {block.attributes.blockType}. No rendrer found.</>;
     }
 }
