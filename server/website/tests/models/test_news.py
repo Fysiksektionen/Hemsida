@@ -11,6 +11,7 @@ class NewsTest(ValidationTestCase):
     def setUp(self):
         """Creation of objects"""
         news = News(name='Parent news', page_type='0', url="https://f.kth.se", slug='parent', views=0)
+        news.save()
         self.content_sv = ContentObjectBase(containing_page=news)
         self.content_en = ContentObjectBase(containing_page=news)
         news.content_sv = self.content_sv
@@ -27,6 +28,7 @@ class NewsTest(ValidationTestCase):
         p.save()
         self.content_sv = ContentObjectBase(containing_page=p)
         self.content_en = ContentObjectBase(containing_page=p)
+
 
         # Check normal behaviour
         self.news_with_slug = News(name='0', page_type='0', url="https://f.kth.se/0", slug='fkm', views=0,
