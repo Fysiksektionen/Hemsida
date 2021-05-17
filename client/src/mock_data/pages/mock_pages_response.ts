@@ -9,6 +9,7 @@ import { frontpage } from './1_frontpage';
 import { styret } from './2_styret';
 import { newsFeed } from './3_news_feed';
 import { fcomPage } from './5_fcom';
+import { representativesPage } from './6_representatives';
 
 export const mockPageResp: APIResponse<Page[]> = {
     code: 200,
@@ -16,6 +17,7 @@ export const mockPageResp: APIResponse<Page[]> = {
         frontpage,
         styret,
         newsFeed,
-        fcomPage
+        fcomPage,
+        representativesPage
     ]
 };

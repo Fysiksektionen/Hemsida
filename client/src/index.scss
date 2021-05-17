@@ -30,8 +30,8 @@ $spacers: (
         3: $spacer,
         4: ($spacer * 1.5),
         45: ($spacer * 2.25),
-5: ($spacer * 3),
-6: ($spacer * 5)
+        5: ($spacer * 3),
+        6: ($spacer * 5)
 );
 
 $F-darkest-gray: #141414;
@@ -173,6 +173,10 @@ $heading-sizes: (1, 2, 3, 4, 5);
     .h#{$heading-size} {
         @extend h#{$heading-size};
     }
+}
+
+.pre-wrapped-text {
+    white-space: pre-wrap;
 }
 
 .nostyle {

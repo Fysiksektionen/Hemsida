@@ -8,6 +8,7 @@ import { styret } from './2_styret';
 import { newsFeed } from './3_news_feed';
 import { newsArticle } from './4_newsarticle';
 import { fcomPage } from './5_fcom';
+import { representativesPage } from './6_representatives';
 
 export const emptyPage: Page = {
     id: 1,
@@ -49,5 +50,6 @@ export const pathToResp: { [key: string]: APIResponse<Page> } = {
     '/styret': { code: 200, data: styret },
     '/nyheter': { code: 200, data: newsFeed },
     '/newsarticle': { code: 200, data: newsArticle },
-    '/fcom': { code: 200, data: fcomPage }
+    '/fcom': { code: 200, data: fcomPage },
+    '/fortroendevalda': { code: 200, data: representativesPage }
 };

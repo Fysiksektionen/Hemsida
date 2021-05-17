@@ -96,9 +96,19 @@ export type ContentPage = ContentObjectBase & {
     page: MinimalPage
 }
 
+export type newContentDict<T extends NodeJS.Dict<ContentObject>> = ContentObjectBase & {
+    dbType: 'dict',
+    items: T
+}
+
 export type ContentDict = ContentObjectBase & {
     dbType: 'dict',
     items: NodeJS.Dict<ContentObject>
+}
+
+export type newContentList<T extends ContentObject> = ContentObjectBase & {
+    dbType: 'list',
+    items: T[]
 }
 
 export type ContentList = ContentObjectBase & {
