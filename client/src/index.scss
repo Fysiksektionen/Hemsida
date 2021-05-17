@@ -174,3 +174,7 @@ $heading-sizes: (1, 2, 3, 4, 5);
         @extend h#{$heading-size};
     }
 }
+
+.pre-wrapped-text {
+    white-space: pre-wrap;
+}
