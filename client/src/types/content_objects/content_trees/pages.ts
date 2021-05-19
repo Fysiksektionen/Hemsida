@@ -1,4 +1,11 @@
-import { ContentDict, ContentImage, ContentList, ContentText } from '../../api_object_types';
+import {
+    ContentDict,
+    ContentImage,
+    ContentList,
+    ContentText,
+    newContentDict,
+    newContentList
+} from '../../api_object_types';
 import { BlockFeed, HeadingBlock, RichTextBlock } from '../blocks';
 
 /**
@@ -8,29 +15,20 @@ import { BlockFeed, HeadingBlock, RichTextBlock } from '../blocks';
 /* -----------------------
          frontpage
  ------------------------- */
-export type OrangeInfoBoxCT = ContentDict & {
-    attributes: {
-        color: string
-    },
-    items: {
-        title: HeadingBlock,
-        text: RichTextBlock,
-        button: ContentText & {
-            attributes: {
-                link: string
-            }
+export type OrangeInfoBoxCT = newContentDict<{
+    title: HeadingBlock,
+    text: RichTextBlock,
+    button: ContentText & {
+        attributes: {
+            link: string
         }
     }
-}
+}>;
 
-export type FrontPageCT = ContentDict & {
-    items: {
-        orangeBoxes: ContentList & {
-            items: OrangeInfoBoxCT[]
-        },
-        sponsorLogo: ContentImage
-    }
-}
+export type FrontPageCT = newContentDict<{
+    orangeBoxes: newContentList<OrangeInfoBoxCT>,
+    sponsorLogo: ContentImage
+}>;
 
 /* -----------------------
            namnd

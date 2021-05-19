@@ -86,7 +86,6 @@ const namnFunktionarer: newContentDict<sectionFields> =
 
 const contentSv: RepresentativesPageContentTree = {
     id: 1,
-    detailUrl: 'https://f.kth.se/api/content_objects/1',
     dbType: 'dict',
     attributes: {},
     items: {

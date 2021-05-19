@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { RepresentativesPageContentTree, sectionFields, subSectionFields } from '../types/content_objects/content_trees/RepresentativesPageType';
 import { ContentObject, newContentDict } from '../types/api_object_types';
 import { Col, Row } from 'react-bootstrap';
@@ -17,37 +17,34 @@ function renderSubsection(subsection: newContentDict<subSectionFields>) {
     if (subsection.items.name?.text) {
         const email = subsection.items.email?.text ? subsection.items.email?.text : '';
         return (
-            <Fragment>
+            <>
                 <thead>
                     <tr>
                         <th>{subsection.items.name?.text}</th>
                         <th/>
                         <th/>
-                        <td><a href={'mailto: ' + email}>{email}</a></td>
+                        <td><a href={'mailto:' + email}>{email}</a></td>
                     </tr>
                 </thead>
                 <tbody>
                     {memberRows}
                 </tbody>
-            </Fragment>
+            </>
         );
     }
     return (
         <tbody>
             {memberRows}
         </tbody>
-
     );
 }
 
 function renderSection(props: newContentDict<sectionFields>) {
-    const subsections = props.items.subsections.items.map((subsection) =>
-        <Fragment key={subsection.id}>
-            {renderSubsection(subsection)}
-        </Fragment>
-    );
+    const subsections = props.items.subsections.items.map((subsection) => {
+        return renderSubsection(subsection);
+    });
     return (
-        <div className="styrelsen">
+        <div className="styrelsen text-nowrap">
             <Row className='align-items-center'>
                 <Col xs={'auto'}><h3>{props.items.name.text}</h3></Col>
                 <Col xs={'auto'}>

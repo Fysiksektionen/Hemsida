@@ -1,7 +1,11 @@
 import { FrontPageCT } from '../../types/content_objects/content_trees/pages';
 import ericsson from '../../mediafiles/placeholder_images/ERI_vertical_RGB.png';
+import { Page } from '../../types/api_object_types';
+import { mockDict } from '../mock_utils';
 
-export const frontpage = {
+const contentSv: FrontPageCT = mockDict<>
+
+export const frontpage: Page = {
     id: 1,
     detailUrl: 'https://f.kth.se/api/pages/2/',
     name: 'Startsidan',
@@ -12,18 +16,7 @@ export const frontpage = {
         detailUrl: 'https://f.kth.se/api/pages/2/',
         name: 'Startsidan'
     },
-    children: [
-        {
-            id: 2,
-            detailUrl: 'https://f.kth.se/api/pages/2/',
-            name: 'Styret'
-        },
-        {
-            id: 3,
-            detailUrl: 'https://f.kth.se/api/pages/3/',
-            name: 'Nyhetsflöde'
-        }
-    ],
+    children: [],
     published: true,
     publishedAt: '2021-03-15',
     lastEditedAt: '2021-03-15',
