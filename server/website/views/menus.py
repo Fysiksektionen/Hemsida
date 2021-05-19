@@ -9,13 +9,13 @@ from website.models.pages import Page
 from website.models.menus import MenuItem, Menu
 
 
-class MenuItemGetSerializer(DBObjectSerializer):
+class MenuGetSerializer(DBObjectSerializer):
     """Serializer for rendering MenuItem. Recursively renders menu.items with the same rendering as parent."""
     serializer_url_field = OptionalHyperlinkedIdentityField
 
     class Meta:
         model = MenuItem
-        fields = ['name', 'link', 'page', 'url', 'items', 'is_menu']
+        fields = ['name', 'link', 'page', 'url', 'is_menu', 'items']
         inf_depth = True
         extra_kwargs = {
             'detail_url': {
@@ -33,13 +33,13 @@ class MenuItemGetSerializer(DBObjectSerializer):
         }
 
 
-class MenuItemPostSerializer(DBObjectSerializer):
+class MenuPostSerializer(DBObjectSerializer):
     """Serializer for posting MenuItem."""
-    page = PrimaryKeyRelatedField(queryset=Page.objects.all())
+    page = PrimaryKeyRelatedField(queryset=Page.objects.all(), allow_null=True)
 
     class Meta:
-        model = MenuItem
-        fields = ['name', 'url', 'page', 'is_menu', 'items']
+        model = Menu
+        fields = ['name', 'url', 'page', 'items']
         inf_depth = True
         nested_serialization = {
             'items': {
@@ -50,23 +50,26 @@ class MenuItemPostSerializer(DBObjectSerializer):
 
     def __init__(self, instance=None, data=empty, *args, **kwargs):
         if data is not empty:
+            data['is_menu'] = True if 'items' in data else False
             items = data.pop('items', [])
+            if 'page' not in data:
+                data['page'] = None
+
         super().__init__(instance, data, *args, **kwargs)
+
         if data is not empty:
-            self.initial_data["items"] = items
+            self.initial_data['items'] = items
 
     def is_valid(self, raise_exception=False):
         if not hasattr(self, '_validated_data'):
             super().is_valid()
             if self.initial_data['is_menu']:
                 items = self.initial_data["items"]
-                print(items)
                 if isinstance(items, list):
                     self._serlist = list()
                     for i in range(len(items)):
                         items[i]["order"] = i
-                        print(type(MenuItemPostSerializer(data=items[i])))
-                        self._serlist.append(MenuItemPostSerializer(data=items[i]))
+                        self._serlist.append(MenuPostSerializer(data=items[i]))
                         if not self._serlist[i].is_valid():
                             self._errors = {**self.errors, **self._serlist[i].errors}
                 else:
@@ -93,9 +96,9 @@ class MenusView(generics.ListCreateAPIView):
     queryset = Menu.objects.all()
 
     def get_serializer_class(self):
-        if self.request.method == ('GET' or 'LIST'):
-            return MenuItemGetSerializer
-        return MenuItemPostSerializer
+        if self.request.method == 'GET':
+            return MenuGetSerializer
+        return MenuPostSerializer
 
 
 class MenuView(generics.RetrieveUpdateDestroyAPIView):
@@ -104,5 +107,5 @@ class MenuView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
-            return MenuItemGetSerializer
-        return MenuItemPostSerializer
+            return MenuGetSerializer
+        return MenuPostSerializer

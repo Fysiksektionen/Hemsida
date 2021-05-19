@@ -157,7 +157,6 @@ class MenuItem(MenuItemBase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.is_menu = False
 
     def clean(self):
         """Validation method for fields
@@ -212,7 +211,6 @@ class Menu(MenuItemBase):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.is_menu = True
 
     def clean(self):
         """Validation method for fields
