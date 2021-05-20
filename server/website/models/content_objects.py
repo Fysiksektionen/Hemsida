@@ -25,13 +25,12 @@ class ContentObjectBase(models.Model):
         ordering = ['order']
 
     containing_page = models.ForeignKey(
-        'Page',
+        'BasePage',
         verbose_name=_('containing page'),
         null=False, blank=False,
         on_delete=models.CASCADE
     )
     name = models.CharField(verbose_name=_('name'), max_length=255, null=False, blank=True, default="")
-    component = models.CharField(verbose_name=_('component'), max_length=255, null=False, blank=True, default="")
 
     db_type = models.CharField(
         verbose_name=_('database type'),
@@ -154,7 +153,7 @@ class ContentText(ContentObjectBase):
         verbose_name = _("text content object")
         verbose_name_plural = _("text content objects")
 
-    text = models.TextField(verbose_name=_('text'), null=True, blank=True)
+    text = models.TextField(verbose_name=_('text'), null=False, blank=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

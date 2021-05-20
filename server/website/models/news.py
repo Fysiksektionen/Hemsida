@@ -37,9 +37,32 @@ class News(BasePage):
         verbose_name = "news"
         verbose_name_plural = "news"
 
+    name = models.CharField(verbose_name=_('name'), max_length=255)
     slug = models.SlugField(verbose_name='Slug', null=True, blank=True, unique=True)
     author = models.CharField(verbose_name=_('created by'), max_length=255, blank=True)
     views = models.IntegerField(verbose_name=_('views'), default=0, null=False, blank=False)
+
+    def __init__(self, *args, **kwargs):
+        # Set default slug if not specified
+        if 'slug' not in kwargs:
+            if 'name' in kwargs and kwargs['name'] is not None:
+                kwargs['slug'] = slugify(kwargs['name'])
+            else:
+                kwargs['slug'] = ''
+        elif kwargs['slug'] is None:
+            kwargs['slug'] = ''
+        super().__init__(*args, **kwargs)
+
+    def get_content(self, language):
+        if not isinstance(language, str):
+            raise TypeError("Request must be string.")
+        elif language == 'sv':
+            return self.content_sv
+        elif language == 'en':
+            return self.content_en
+        else:
+            raise ValueError("Request is invalid, must be 'sv' or 'en'.")
+
 
     def clean(self):
         if self.slug == '':
