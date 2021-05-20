@@ -1,5 +1,6 @@
-from django.utils.translation import gettext as _
 from utils.tests import ValidationTestCase
+from django.utils.translation import gettext as _
+
 from website.models.content_objects import *
 from website.models.media import Image
 from website.models.menus import Menu
@@ -21,36 +22,36 @@ class ContentObjectModelTest(ValidationTestCase):
         self.menu = Menu(name="Menu")
         self.menu.save()
 
-        self.containing_page = create_test_page()
+        self.parent_page = create_test_page()
 
-        self.content_collection = ContentCollection(containing_page=self.containing_page)
+        self.content_collection = ContentCollection(parent_page=self.parent_page)
         self.content_collection.save()
 
-        self.content_list = ContentCollectionList(containing_page=self.containing_page)
+        self.content_list = ContentCollectionList(parent_page=self.parent_page)
         self.content_list.save()
 
     def test_get_value_property(self):
         """Tests that the get_value() property gives correct value."""
         # Text
-        self.content_text = ContentText(text="Some text", containing_page=self.containing_page)
+        self.content_text = ContentText(text="Some text", parent_page=self.parent_page)
         self.assertEqual(self.content_text.get_value(), "Some text")
 
         # Image
-        self.content_image = ContentImage(image=self.image, containing_page=self.containing_page)
+        self.content_image = ContentImage(image=self.image, parent_page=self.parent_page)
         self.assertIs(self.content_image.get_value(), self.image)
-        self.content_image = ContentImage(containing_page=self.containing_page)
+        self.content_image = ContentImage(parent_page=self.parent_page)
         self.assertIs(self.content_image.get_value(), None)
 
         # Page
-        self.content_page = ContentPage(page=self.page, containing_page=self.containing_page)
+        self.content_page = ContentPage(page=self.page, parent_page=self.parent_page)
         self.assertIs(self.content_page.get_value(), self.page)
-        self.content_page = ContentPage(containing_page=self.containing_page)
+        self.content_page = ContentPage(parent_page=self.parent_page)
         self.assertIs(self.content_page.get_value(), None)
 
         # Menu
-        self.content_menu = ContentMenu(menu=self.menu, containing_page=self.containing_page)
+        self.content_menu = ContentMenu(menu=self.menu, parent_page=self.parent_page)
         self.assertIs(self.content_menu.get_value(), self.menu)
-        self.content_menu = ContentMenu(containing_page=self.containing_page)
+        self.content_menu = ContentMenu(parent_page=self.parent_page)
         self.assertIs(self.content_menu.get_value(), None)
 
         # Collection
@@ -63,12 +64,12 @@ class ContentObjectModelTest(ValidationTestCase):
         self.assertListEqual(get_collection_items(self.content_collection), [self.content_text])
 
     def test_uniqueness(self):
-        self.text1 = ContentText(name="text", collection=self.content_collection, containing_page=self.containing_page)
+        self.text1 = ContentText(name="text", collection=self.content_collection, parent_page=self.parent_page)
         self.text1.save()
 
         # collection <-> name if type(collection) == ContentCollection
         self.text2 = ContentText(name="text", collection=self.content_collection, order=self.text1.order,
-                                 containing_page=self.containing_page)
+                                 parent_page=self.parent_page)
         self.assertRaisesValidationError(
             err=self.text2.unique_error_message(ContentObjectBase, ('collection', 'name')),
             field=None,
@@ -80,7 +81,7 @@ class ContentObjectModelTest(ValidationTestCase):
         self.text1.collection = self.content_list
         self.text1.save()
         self.text2 = ContentText(name="text", collection=self.content_list, order=self.text1.order,
-                                 containing_page=self.containing_page)
+                                 parent_page=self.parent_page)
         self.assertRaisesValidationError(
             err=self.text2.unique_error_message(ContentObjectBase, ('collection', 'order')),
             field=None,
@@ -91,7 +92,7 @@ class ContentObjectModelTest(ValidationTestCase):
     def test_validation(self):
         """Asserts that adding item to collection that is not of the same page is not allowed."""
         some_page = create_test_page()
-        text = ContentText(containing_page=some_page)
+        text = ContentText(parent_page=some_page)
 
         # Assert that save is OK
         self.assertIs(text.save(), None)
@@ -99,9 +100,9 @@ class ContentObjectModelTest(ValidationTestCase):
         text.collection = self.content_collection
         self.assertRaisesValidationError(
             err=ValidationError(
-                _('%(containing_page_field)s and %(containing_page_field)s of %(collection_field)s must match.'),
+                _('%(parent_page_field)s and %(parent_page_field)s of %(collection_field)s must match.'),
                 params={
-                    'containing_page_field': text._meta.get_field('containing_page').verbose_name,
+                    'parent_page_field': text._meta.get_field('parent_page').verbose_name,
                     'collection_field': text._meta.get_field('collection').verbose_name
                 }
             ),
