@@ -1,15 +1,13 @@
-from authentication.views.groups import GroupViewSet
-from authentication.views.users import UserViewSet
-from rest_framework.routers import DefaultRouter
+from authentication.views.groups import GroupsView, GroupView
+from authentication.views.users import UsersView, UserView
+from django.urls import path
 
 app_name = 'authentication'
 
-# Routs/urls for menus and menu-items
-main_router = DefaultRouter()
-main_router.register(r'users', UserViewSet, basename='user')
-main_router.register(r'groups', GroupViewSet, basename='group')
-
 # Url-patterns for website app.
 urlpatterns = [
-    *main_router.urls
+    path('users/', UsersView.as_view(), name='users'),
+    path('users/<int:pk>', UserView.as_view(), name='user'),
+    path('groups/', GroupsView.as_view(), name='groups'),
+    path('groups/<int:pk>', GroupView.as_view(), name='group'),
 ]
