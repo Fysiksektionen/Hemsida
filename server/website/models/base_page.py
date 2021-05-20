@@ -12,7 +12,7 @@ class BasePage(models.Model):
         verbose_name_plural = _("base pages")
 
     class ObjectMeta:
-        detail_view_name = 'api:website:page-detail'
+        detail_view_name = 'api:website:page'
 
     url = models.URLField(verbose_name=_('URL'), blank=False, null=False, unique=True)
     page_type = models.CharField(verbose_name=_('page type'), max_length=255)
