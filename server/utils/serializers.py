@@ -252,3 +252,15 @@ class ErrorSerializer(serializers.Serializer):
     # Message for explanation of error. Usually a translated string.
     message = serializers.CharField(allow_null=True, allow_blank=True, required=False)
 
+
+class DynamicFieldsMixin:
+    """Mixin that allows a serializer to take 'fields' as an optional keyword argument."""
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super().__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
