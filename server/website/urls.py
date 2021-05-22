@@ -6,6 +6,7 @@ from website.views.pages import PageViewSet
 from website.views.redirects import RedirectViewSet
 from website.views.site import SiteView
 from website.views.news import NewsViewSet
+from website.views.image import ImageView, ImagesView
 
 app_name = 'website'
 
@@ -20,5 +21,7 @@ router.register(r'news', NewsViewSet, basename='news')
 urlpatterns = [
     *router.urls,
     path('site/', SiteView.as_view(), name="site"),
-    path('resolve-url/', PathResolveView.as_view(), name="resolve_url")
+    path('resolve-url/', PathResolveView.as_view(), name="resolve_url"),
+    path('images/', ImagesView.as_view(), name='images'),
+    path('image/<int:pk>', ImageView.as_view(), name='images')
 ]
