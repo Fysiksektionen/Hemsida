@@ -1,9 +1,50 @@
-import { FrontPageCT } from '../../types/content_objects/content_trees/pages';
+import { FrontPageCT, FrontPageItems, OrangeInfoBoxCT } from '../../types/content_objects/content_trees/pages';
 import ericsson from '../../mediafiles/placeholder_images/ERI_vertical_RGB.png';
 import { Page } from '../../types/api_object_types';
-import { mockDict } from '../mock_utils';
+import { mockDict, mockImage, mockList, mockRichText, mockText } from '../mock_utils';
+import { HeadingBlock } from '../../types/content_objects/blocks';
 
-const contentSv: FrontPageCT = mockDict<>
+const contentSv: FrontPageCT = mockDict<FrontPageItems>(
+    {
+        orangeBoxes: mockList<OrangeInfoBoxCT>(
+            [
+                mockDict<OrangeInfoBoxCT['items'], OrangeInfoBoxCT['attributes']>(
+                    {
+                        title: mockRichText('<p><span>Vill du hitta på något?</span></p>', 'heading', 'none'),
+                        text: mockRichText('', 'bodyText', 'only-marks'),
+                        button: mockText('Engagera dig')
+                    },
+                    {
+                        color: '#ff642b'
+                    }
+                ),
+                mockDict<OrangeInfoBoxCT['items'], OrangeInfoBoxCT['attributes']>(
+                    {
+                        title: mockRichText('<p><span>Vill du hitta på något?</span></p>', 'heading', 'none'),
+                        text: mockRichText('', 'bodyText', 'only-marks'),
+                        button: mockText('Engagera dig')
+                    },
+                    {
+                        color: '#ff642b'
+                    }
+                ),
+                mockDict<OrangeInfoBoxCT['items'], OrangeInfoBoxCT['attributes']>(
+                    {
+                        title: mockRichText('<p><span>Vill du hitta på något?</span></p>', 'heading', 'none'),
+                        text: mockRichText('', 'bodyText', 'only-marks'),
+                        button: mockText('Engagera dig')
+                    },
+                    {
+                        color: '#ff642b'
+                    }
+                )
+            ],
+            {}
+        ),
+        sponsorLogo: mockImage(ericsson)
+    },
+    {}
+);
 
 export const frontpage: Page = {
     id: 1,
@@ -20,139 +61,7 @@ export const frontpage: Page = {
     published: true,
     publishedAt: '2021-03-15',
     lastEditedAt: '2021-03-15',
-    contentSv: {
-        id: 1,
-        dbType: 'dict',
-        attributes: {},
-        items: {
-            orangeBoxes: {
-                id: 2,
-                dbType: 'list',
-                attributes: {},
-                items: [
-                    {
-                        id: 3,
-                        dbType: 'dict',
-                        attributes: { color: '#ff642b' },
-                        items: {
-                            title: {
-                                id: 4,
-                                dbType: 'text',
-                                attributes: {
-                                    blockType: 'heading',
-                                    richTextEditorType: 'none'
-                                },
-                                text: '<p><span>Vill du hitta på något?</span></p>'
-                            },
-                            text: {
-                                id: 13,
-                                dbType: 'text',
-                                attributes: {
-                                    blockType: 'bodyText',
-                                    richTextEditorType: 'only-marks'
-                                },
-                                text: '<p><span>Vill du vara med och ta emot de som börjar till ' +
-                                    'hösten? Vill du anordna en fest? Vill du gå på en fest? ' +
-                                    'Vill du förbättra utbildningen? Vill du jobba på dina ' +
-                                    'företagskontakter? Vill du bara hänga med andra som ' +
-                                    'pluggar fysik och matte? På Fysiksektionen finns det ' +
-                                    'mängder med sätt att vara med och engagera sig. </span><span><strong>Läs ' +
-                                    'mer om hur du kan vara med genom att följa länken.</strong></span></p>'
-                            },
-                            button: {
-                                id: 5,
-                                dbType: 'text',
-                                attributes: { link: 'https://f.kth.se/engagera-dig/' },
-                                text: 'Engagera dig'
-                            }
-                        }
-                    },
-                    {
-                        id: 8,
-                        dbType: 'dict',
-                        attributes: { color: '#dc3545' },
-                        items: {
-                            title: {
-                                id: 9,
-                                dbType: 'text',
-                                attributes: {
-                                    blockType: 'heading',
-                                    richTextEditorType: 'none'
-                                },
-                                text: '<p><span>Vad är Fysiksektionen?</span></p>'
-                            },
-                            text: {
-                                id: 10,
-                                dbType: 'text',
-                                attributes: {
-                                    blockType: 'bodyText',
-                                    richTextEditorType: 'only-marks'
-                                },
-                                text: '<p><span>Fysiksektionen är en organisation som hittar på roliga, ' +
-                                    'nyttiga, annorlunda, och viktiga saker för alla de som ' +
-                                    'studerar Teknisk fysik och Teknisk matematik vid KTH. ' +
-                                    'Målet är att det ska finnas mer än något för alla som vill ' +
-                                    'ha mer än något. </span><span><strong>Vill du veta mer om Fysiksektionen? ' +
-                                    'Följ då länken nedan.</strong></span></p>'
-                            },
-                            button: {
-                                id: 11,
-                                dbType: 'text',
-                                attributes: { link: 'https://f.kth.se/fysiksektionen/' },
-                                text: '0m sektionen'
-                            }
-                        }
-                    },
-                    {
-                        id: 14,
-                        dbType: 'dict',
-                        attributes: { color: '#ff642b' },
-                        items: {
-                            title: {
-                                id: 15,
-                                dbType: 'text',
-                                attributes: {
-                                    blockType: 'heading',
-                                    richTextEditorType: 'none'
-                                },
-                                text: '<p><span>Vad händer nu?</span></p>'
-                            },
-                            text: {
-                                id: 16,
-                                dbType: 'text',
-                                attributes: {
-                                    blockType: 'bodyText',
-                                    richTextEditorType: 'only-marks'
-                                },
-                                text: '<p><span>På Fysiksektionen är det hela tiden saker på gång. Vi har ' +
-                                    'fester titt som tätt, det hålls bokcirklar, en ' +
-                                    'arbetsmarknadsdag anordnas, ett spex sätts ihop, Åre ' +
-                                    'besöks, de nyantagna tas emot och även om det inte är ' +
-                                    'något annat så kan du räkna med att det är en pub i ' +
-                                    'Konsultatet varje tisdag. </span><span><strong>Vill du veta mer om vilka ' +
-                                    'evenemang som är på gång just nu? Följ länken nedan.</strong></span></p>'
-                            },
-                            button: {
-                                id: 17,
-                                dbType: 'text',
-                                attributes: { link: 'https://f.kth.se/event/' },
-                                text: 'Event'
-                            }
-                        }
-                    }
-                ]
-            },
-            sponsorLogo: {
-                id: 20,
-                dbType: 'image',
-                attributes: {},
-                image: {
-                    id: 1,
-                    href: ericsson
-                }
-            }
-        }
-    } as FrontPageCT,
+    contentSv: contentSv,
     contentEn: {
         id: 21,
         dbType: 'dict',

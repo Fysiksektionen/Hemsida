@@ -1,7 +1,6 @@
 import {
     ContentDict,
     ContentImage,
-    ContentList,
     ContentText,
     newContentDict,
     newContentList
@@ -15,20 +14,23 @@ import { BlockFeed, HeadingBlock, RichTextBlock } from '../blocks';
 /* -----------------------
          frontpage
  ------------------------- */
-export type OrangeInfoBoxCT = newContentDict<{
-    title: HeadingBlock,
-    text: RichTextBlock,
-    button: ContentText & {
-        attributes: {
-            link: string
-        }
+export type OrangeInfoBoxCT = newContentDict<
+    {
+        title: RichTextBlock,
+        text: RichTextBlock,
+        button: ContentText
+    },
+    {
+        color: string
     }
-}>;
+>;
 
-export type FrontPageCT = newContentDict<{
+export type FrontPageItems = {
     orangeBoxes: newContentList<OrangeInfoBoxCT>,
     sponsorLogo: ContentImage
-}>;
+}
+
+export type FrontPageCT = newContentDict<FrontPageItems>;
 
 /* -----------------------
            namnd

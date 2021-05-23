@@ -7,21 +7,21 @@ import { ChangeKeyType } from '../general';
 // TODO: bör inte vara två blocktyper...
 export type HeadingBlock = ContentText & {
     attributes: {
-        blockType: 'heading',
+        blockType: 'bodyText',
         richTextEditorType: 'only-headings' | 'none'
     }
 }
 
-export type BodyTextBlock = ContentText & {
+export type RichTextBlock = ContentText & {
     attributes: {
         blockType: 'bodyText',
         richTextEditorType: 'only-marks' | 'body-text' | 'all' | 'none' // TODO: Add Capitalized type
     }
 }
 
-export type RichTextBlock = HeadingBlock | BodyTextBlock
 export type RichTextBlockType = RichTextBlock['attributes']['blockType'];
-export const RichTextBlockTypes: RichTextBlockType[] = ['heading', 'bodyText'];
+export type RichTextEditorTypes = RichTextBlock['attributes']['richTextEditorType'];
+export const RichTextBlockTypes: RichTextBlockType[] = ['bodyText'];
 
 /* -----------------------
            Image

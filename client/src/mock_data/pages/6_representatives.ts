@@ -26,63 +26,63 @@ const styrelseSection: newContentDict<sectionFields> =
                                 role: mockText('Role'),
                                 email: mockText('emailtothisperson@email'),
                                 name: mockText('Cool name')
-                            }),
+                            }, {}),
                             mockDict<memberFields>({
                                 yearCode: mockText('F-19'),
                                 role: mockText('Role2'),
                                 email: mockText('emailtothisperson@email'),
                                 name: mockText('Other Cool name')
-                            })
-                        ])
-                    })
-                ])
-        }
+                            }, {})
+                        ], {})
+                    }, {})
+                ], {})
+        }, {}
     );
 
-const namnFunktionarer: newContentDict<sectionFields> =
-    mockDict<sectionFields>(
-        {
-            name: mockText('Nämndfunktionärer'),
-            subsections: mockList<newContentDict<subSectionFields>>(
-                [
-                    mockDict<subSectionFields>({
-                        name: mockText('Aktivitetsnämnden'),
-                        email: mockText('aktivitet@kth.se'),
-                        members: mockList<newContentDict<memberFields>>([
-                            mockDict<memberFields>({
-                                yearCode: mockText('F-17'),
-                                role: mockText('Ordförande'),
-                                email: mockText('emailtothisperson@email'),
-                                name: mockText('Namn1')
-                            }),
-                            mockDict<memberFields>({
-                                yearCode: mockText('F-19'),
-                                role: mockText('Role2'),
-                                email: mockText('emailtothisperson@email'),
-                                name: mockText('Other Cool name')
-                            })
-                        ])
-                    }),
-                    mockDict<subSectionFields>({
-                        name: mockText('Fysiklanes stabsledning'),
-                        email: mockText('fysikalen@kth.se'),
-                        members: mockList<newContentDict<memberFields>>([
-                            mockDict<memberFields>({
-                                yearCode: mockText('F-17'),
-                                role: mockText('Kommisare'),
-                                email: mockText('emailtothisperson@email'),
-                                name: mockText('Namn1')
-                            }),
-                            mockDict<memberFields>({
-                                yearCode: mockText('F-19'),
-                                role: mockText('Kassör'),
-                                email: mockText('emailtothisperson@email'),
-                                name: mockText('Other Cool name')
-                            })
-                        ])
-                    })
-                ])
-        });
+// const namnFunktionarer: newContentDict<sectionFields> =
+//     mockDict<sectionFields>(
+//         {
+//             name: mockText('Nämndfunktionärer'),
+//             subsections: mockList<newContentDict<subSectionFields>>(
+//                 [
+//                     mockDict<subSectionFields>({
+//                         name: mockText('Aktivitetsnämnden'),
+//                         email: mockText('aktivitet@kth.se'),
+//                         members: mockList<newContentDict<memberFields>>([
+//                             mockDict<memberFields>({
+//                                 yearCode: mockText('F-17'),
+//                                 role: mockText('Ordförande'),
+//                                 email: mockText('emailtothisperson@email'),
+//                                 name: mockText('Namn1')
+//                             }),
+//                             mockDict<memberFields>({
+//                                 yearCode: mockText('F-19'),
+//                                 role: mockText('Role2'),
+//                                 email: mockText('emailtothisperson@email'),
+//                                 name: mockText('Other Cool name')
+//                             })
+//                         ])
+//                     }),
+//                     mockDict<subSectionFields>({
+//                         name: mockText('Fysiklanes stabsledning'),
+//                         email: mockText('fysikalen@kth.se'),
+//                         members: mockList<newContentDict<memberFields>>([
+//                             mockDict<memberFields>({
+//                                 yearCode: mockText('F-17'),
+//                                 role: mockText('Kommisare'),
+//                                 email: mockText('emailtothisperson@email'),
+//                                 name: mockText('Namn1')
+//                             }),
+//                             mockDict<memberFields>({
+//                                 yearCode: mockText('F-19'),
+//                                 role: mockText('Kassör'),
+//                                 email: mockText('emailtothisperson@email'),
+//                                 name: mockText('Other Cool name')
+//                             })
+//                         ])
+//                     })
+//                 ])
+//         });
 
 const contentSv: RepresentativesPageContentTree = {
     id: 1,
@@ -91,7 +91,7 @@ const contentSv: RepresentativesPageContentTree = {
     items: {
         header: mockText('Förtroendevalda'),
         introText: mockText(inroText),
-        sections: mockList<newContentDict<sectionFields>>([styrelseSection, namnFunktionarer])
+        sections: mockList<newContentDict<sectionFields>>([styrelseSection], {})
     }
 };
 

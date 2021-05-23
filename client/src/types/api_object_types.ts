@@ -71,34 +71,38 @@ type ContentObjectDBType = 'text' | 'image' | 'menu' | 'page' | 'dict' | 'list'
 type ContentObjectBase = {
     id: number,
     dbType: ContentObjectDBType,
-    attributes: object
 }
 
 export type ContentObject = ContentText | ContentImage | ContentMenu | ContentPage | ContentDict | ContentList
 
 export type ContentText = ContentObjectBase & {
     dbType: 'text',
-    text: string
+    text: string,
+    attributes: object
 }
 
 export type ContentImage = ContentObjectBase & {
     dbType: 'image',
-    image: Image
+    image: Image,
+    attributes: object
 }
 
 export type ContentMenu = ContentObjectBase & {
     dbType: 'menu',
-    menu: Menu
+    menu: Menu,
+    attributes: object
 }
 
 export type ContentPage = ContentObjectBase & {
     dbType: 'page',
-    page: MinimalPage
+    page: MinimalPage,
+    attributes: object
 }
 
-export type newContentDict<T extends NodeJS.Dict<ContentObject>> = ContentObjectBase & {
+export type newContentDict<T extends NodeJS.Dict<ContentObject>, A = {}> = ContentObjectBase & {
     dbType: 'dict',
-    items: T
+    items: T,
+    attributes: A
 }
 
 export type ContentDict = ContentObjectBase & {
@@ -106,9 +110,10 @@ export type ContentDict = ContentObjectBase & {
     items: NodeJS.Dict<ContentObject>
 }
 
-export type newContentList<T extends ContentObject> = ContentObjectBase & {
+export type newContentList<T extends ContentObject, A = {}> = ContentObjectBase & {
     dbType: 'list',
-    items: T[]
+    items: T[],
+    attributes: A
 }
 
 export type ContentList = ContentObjectBase & {

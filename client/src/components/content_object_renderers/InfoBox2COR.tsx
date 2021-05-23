@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import React from 'react';
 import { EditorialModeContext } from '../../contexts';
 import { OrangeInfoBoxCT } from '../../types/content_objects/content_trees/pages';
