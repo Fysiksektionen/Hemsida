@@ -23,5 +23,5 @@ urlpatterns = [
     path('site/', SiteView.as_view(), name="site"),
     path('resolve-url/', PathResolveView.as_view(), name="resolve_url"),
     path('images/', ImagesView.as_view(), name='images'),
-    path('image/<int:pk>', ImageView.as_view(), name='images')
+    path('images/<int:pk>', ImageView.as_view(), name='images')
 ]
