@@ -1,4 +1,4 @@
-import { ContentImage, ContentList, ContentText } from '../api_object_types';
+import { ContentImage, ContentList, ContentObject, ContentText, newContentList } from '../api_object_types';
 import { ChangeKeyType } from '../general';
 
 /* -----------------------
@@ -34,8 +34,28 @@ export type ImageBlock = ContentImage & {
 }
 
 /* -----------------------
+           Table
+ ------------------------- */
+
+export type TableBlock = newContentList<TableRow> & {
+    attributes: {
+        blockType: 'table',
+        width: number,
+        height: number
+    }
+}
+
+export type TableRow = newContentList<TableCell>;
+
+export type TableCell = ContentText & {
+    attributes: {
+        headerStyle?: boolean
+    }
+};
+
+/* -----------------------
           General
  ------------------------- */
-export type Block = RichTextBlock | ImageBlock;
+export type Block = RichTextBlock | ImageBlock | TableBlock;
 export type BlockType = Block['attributes']['blockType'];
 export type BlockFeed = ChangeKeyType<ContentList, 'items', Block[]>;

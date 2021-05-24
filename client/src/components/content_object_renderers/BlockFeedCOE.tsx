@@ -1,7 +1,7 @@
 import React, { CSSProperties, useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { ContentTreeAddIdContext, ContentTreeContext } from '../../contexts';
-import { Block, BlockFeed, BlockType, ImageBlock, RichTextBlock } from '../../types/content_objects/blocks';
+import { Block, BlockFeed, BlockType, ImageBlock, RichTextBlock, TableBlock } from '../../types/content_objects/blocks';
 import { Popover, SvgIconTypeMap } from '@material-ui/core';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
@@ -27,6 +27,11 @@ const blockIcons: { blockType: BlockType, text: string, icon: OverridableCompone
     {
         blockType: 'image',
         text: 'Image',
+        icon: ImageIcon
+    },
+    {
+        blockType: 'table',
+        text: 'Table',
         icon: ImageIcon
     }
 ];
@@ -69,7 +74,62 @@ const defaultBlocks: {[key in BlockType]: Block} = {
             detailUrl: '',
             href: ''
         }
-    } as ImageBlock
+    } as ImageBlock,
+    table: {
+        id: -1,
+        detailUrl: '',
+        dbType: 'list',
+        attributes: {
+            blockType: 'table',
+            height: 2,
+            width: 2
+        },
+        items: [
+            {
+                id: -1,
+                detailUrl: '',
+                attributes: {},
+                dbType: 'list',
+                items: [
+                    {
+                        id: -2,
+                        detailUrl: '',
+                        attributes: {},
+                        dbType: 'text',
+                        text: 'Default text'
+                    },
+                    {
+                        id: -3,
+                        detailUrl: '',
+                        attributes: {},
+                        dbType: 'text',
+                        text: 'Default text'
+                    }
+                ]
+            },
+            {
+                id: -4,
+                detailUrl: '',
+                attributes: {},
+                dbType: 'list',
+                items: [
+                    {
+                        id: -5,
+                        detailUrl: '',
+                        attributes: {},
+                        dbType: 'text',
+                        text: 'Default text'
+                    },
+                    {
+                        id: -6,
+                        detailUrl: '',
+                        attributes: {},
+                        dbType: 'text',
+                        text: 'Default text'
+                    }
+                ]
+            }]
+    } as TableBlock
 };
 
 type AddBlockButtonProps = {
