@@ -50,7 +50,8 @@ class MenuPostSerializer(DBObjectSerializer):
 
     def __init__(self, instance=None, data=empty, *args, **kwargs):
         if data is not empty:
-            data['is_menu'] = True if 'items' in data else False
+            is_menu = True if 'items' in data else False
+            data = {**data}
             items = data.pop('items', [])
             if 'page' not in data:
                 data['page'] = None
@@ -59,6 +60,7 @@ class MenuPostSerializer(DBObjectSerializer):
 
         if data is not empty:
             self.initial_data['items'] = items
+            self.initial_data['is_menu'] = is_menu
 
     def is_valid(self, raise_exception=False):
         if not hasattr(self, '_validated_data'):
