@@ -18,7 +18,11 @@ export type OrangeInfoBoxCT = newContentDict<
     {
         title: RichTextBlock,
         text: RichTextBlock,
-        button: ContentText
+        button: ContentText & {
+            attributes: {
+                link: string
+            }
+        }
     },
     {
         color: string

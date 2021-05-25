@@ -107,7 +107,8 @@ export type newContentDict<T extends NodeJS.Dict<ContentObject>, A = {}> = Conte
 
 export type ContentDict = ContentObjectBase & {
     dbType: 'dict',
-    items: NodeJS.Dict<ContentObject>
+    items: NodeJS.Dict<ContentObject>,
+    attributes: {}
 }
 
 export type newContentList<T extends ContentObject, A = {}> = ContentObjectBase & {
@@ -118,7 +119,8 @@ export type newContentList<T extends ContentObject, A = {}> = ContentObjectBase 
 
 export type ContentList = ContentObjectBase & {
     dbType: 'list',
-    items: ContentObject[]
+    items: ContentObject[],
+    attributes: {}
 }
 
 export type User = IDDetail & {

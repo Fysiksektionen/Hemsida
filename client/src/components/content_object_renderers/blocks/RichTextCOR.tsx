@@ -13,11 +13,6 @@ const richTextEditorSettings: {[key in RichTextBlock['attributes']['richTextEdit
         marks: ['bold', 'italic', 'underline', 'code'],
         blocks: ['bulleted-list', 'numbered-list']
     },
-    'only-headings': {
-        marks: [],
-        blocks: ['h1', 'h2', 'h3', 'h4', 'h5'],
-        singleLine: true
-    },
     'only-marks': {
         marks: ['bold', 'italic', 'underline', 'code'],
         blocks: [],

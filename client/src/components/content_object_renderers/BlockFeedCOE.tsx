@@ -28,11 +28,6 @@ import './BlockFeedCOE.scss';
  */
 const blockIcons: { blockType: BlockType, text: string, icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>}[] = [
     {
-        blockType: 'heading',
-        text: 'Heading',
-        icon: TextFieldsIcon
-    },
-    {
         blockType: 'bodyText',
         text: 'Text',
         icon: FormatAlignLeftIcon
@@ -61,16 +56,6 @@ export const emptyBlockFeed = {
  * Definition of default blocks used for different block types.
  */
 const defaultBlocks: {[key in BlockType]: Block} = {
-    heading: {
-        id: -1,
-        detailUrl: '',
-        dbType: 'text',
-        attributes: {
-            blockType: 'heading',
-            richTextEditorType: 'only-headings'
-        },
-        text: '<h3></h3>'
-    } as RichTextBlock,
     bodyText: {
         id: -1,
         detailUrl: '',
