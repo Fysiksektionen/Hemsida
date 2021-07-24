@@ -1,0 +1,8 @@
+[submodule "frontend"]
+	path = client
+	url = git@github.com:Fysiksektionen/Hemsida-Frontend.git
+	branch = backend-connect-test
+[submodule "backend"]
+	path = server
+	url = git@github.com:Fysiksektionen/Hemsida-Backend.git
+	branch = frontend-connect-test
