@@ -6,3 +6,7 @@
 	path = server
 	url = git@github.com:Fysiksektionen/Hemsida-Backend.git
 	branch = frontend-connect-test
+[submodule "docs"]
+	path = docs
+	url = git@github.com:Fysiksektionen/Hemsida-Docs.git
+	branch = up-to-spec
