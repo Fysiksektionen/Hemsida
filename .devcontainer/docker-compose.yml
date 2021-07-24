@@ -1,0 +1,18 @@
+version: '2.4'
+
+networks:
+    backend-net:
+
+# Since this extends the docker-compose.dev.yml from server/, all paths are relative to the server/ directory.
+services:
+  master:
+    build:
+        context: ../..
+        dockerfile: .devcontainer/Dockerfile
+    image: fsh:master-dc
+    volumes:
+        - ../../:/app/
+        - ../.devcontainer/local.py:/app/server/project_settings/local.py
+    networks:
+        - backend-net
+    command: /bin/sh -c "while sleep 1000; do :; done"
