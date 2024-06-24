@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 20:05+0200\n"
+"POT-Creation-Date: 2021-05-09 20:17+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: F.dev <fedv@f.kth.se>\n"
@@ -314,6 +314,7 @@ msgid "views"
 msgstr "tittningar"
 
 #: .\website\models\news.py:47 .\website\tests\models\test_news.py:52
+#, python-format
 msgid "%(slug_field)s cannot be ''."
 msgstr "%(slug_field)s kan inte vara ''."
 
